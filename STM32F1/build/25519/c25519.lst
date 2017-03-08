@@ -1,0 +1,678 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"c25519.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.c25519_smult,"ax",%progbits
+  19              		.align	2
+  20              		.global	c25519_smult
+  21              		.thumb
+  22              		.thumb_func
+  24              	c25519_smult:
+  25              	.LFB4:
+  26              		.file 1 "25519/c25519.c"
+   1:25519/c25519.c **** /* Curve25519 (Montgomery form)
+   2:25519/c25519.c ****  * Daniel Beer <dlbeer@gmail.com>, 18 Apr 2014
+   3:25519/c25519.c ****  *
+   4:25519/c25519.c ****  * This file is in the public domain.
+   5:25519/c25519.c ****  */
+   6:25519/c25519.c **** 
+   7:25519/c25519.c **** #include "c25519.h"
+   8:25519/c25519.c **** 
+   9:25519/c25519.c **** const uint8_t c25519_base_x[F25519_SIZE] = {9};
+  10:25519/c25519.c **** 
+  11:25519/c25519.c **** /* Double an X-coordinate */
+  12:25519/c25519.c **** static void xc_double(uint8_t *x3, uint8_t *z3,
+  13:25519/c25519.c **** 		      const uint8_t *x1, const uint8_t *z1)
+  14:25519/c25519.c **** {
+  15:25519/c25519.c **** 	/* Explicit formulas database: dbl-1987-m
+  16:25519/c25519.c **** 	 *
+  17:25519/c25519.c **** 	 * source 1987 Montgomery "Speeding the Pollard and elliptic
+  18:25519/c25519.c **** 	 *   curve methods of factorization", page 261, fourth display
+  19:25519/c25519.c **** 	 * compute X3 = (X1^2-Z1^2)^2
+  20:25519/c25519.c **** 	 * compute Z3 = 4 X1 Z1 (X1^2 + a X1 Z1 + Z1^2)
+  21:25519/c25519.c **** 	 */
+  22:25519/c25519.c **** 	uint8_t x1sq[F25519_SIZE];
+  23:25519/c25519.c **** 	uint8_t z1sq[F25519_SIZE];
+  24:25519/c25519.c **** 	uint8_t x1z1[F25519_SIZE];
+  25:25519/c25519.c **** 	uint8_t a[F25519_SIZE];
+  26:25519/c25519.c **** 
+  27:25519/c25519.c **** 	f25519_mul__distinct(x1sq, x1, x1);
+  28:25519/c25519.c **** 	f25519_mul__distinct(z1sq, z1, z1);
+  29:25519/c25519.c **** 	f25519_mul__distinct(x1z1, x1, z1);
+  30:25519/c25519.c **** 
+  31:25519/c25519.c **** 	f25519_sub(a, x1sq, z1sq);
+  32:25519/c25519.c **** 	f25519_mul__distinct(x3, a, a);
+  33:25519/c25519.c **** 
+  34:25519/c25519.c **** 	f25519_mul_c(a, x1z1, 486662);
+  35:25519/c25519.c **** 	f25519_add(a, x1sq, a);
+  36:25519/c25519.c **** 	f25519_add(a, z1sq, a);
+  37:25519/c25519.c **** 	f25519_mul__distinct(x1sq, x1z1, a);
+  38:25519/c25519.c **** 	f25519_mul_c(z3, x1sq, 4);
+  39:25519/c25519.c **** }
+  40:25519/c25519.c **** 
+  41:25519/c25519.c **** /* Differential addition */
+  42:25519/c25519.c **** static void xc_diffadd(uint8_t *x5, uint8_t *z5,
+  43:25519/c25519.c **** 		       const uint8_t *x1, const uint8_t *z1,
+  44:25519/c25519.c **** 		       const uint8_t *x2, const uint8_t *z2,
+  45:25519/c25519.c **** 		       const uint8_t *x3, const uint8_t *z3)
+  46:25519/c25519.c **** {
+  47:25519/c25519.c **** 	/* Explicit formulas database: dbl-1987-m3
+  48:25519/c25519.c **** 	 *
+  49:25519/c25519.c **** 	 * source 1987 Montgomery "Speeding the Pollard and elliptic curve
+  50:25519/c25519.c **** 	 *   methods of factorization", page 261, fifth display, plus
+  51:25519/c25519.c **** 	 *   common-subexpression elimination
+  52:25519/c25519.c **** 	 * compute A = X2+Z2
+  53:25519/c25519.c **** 	 * compute B = X2-Z2
+  54:25519/c25519.c **** 	 * compute C = X3+Z3
+  55:25519/c25519.c **** 	 * compute D = X3-Z3
+  56:25519/c25519.c **** 	 * compute DA = D A
+  57:25519/c25519.c **** 	 * compute CB = C B
+  58:25519/c25519.c **** 	 * compute X5 = Z1(DA+CB)^2
+  59:25519/c25519.c **** 	 * compute Z5 = X1(DA-CB)^2
+  60:25519/c25519.c **** 	 */
+  61:25519/c25519.c **** 	uint8_t da[F25519_SIZE];
+  62:25519/c25519.c **** 	uint8_t cb[F25519_SIZE];
+  63:25519/c25519.c **** 	uint8_t a[F25519_SIZE];
+  64:25519/c25519.c **** 	uint8_t b[F25519_SIZE];
+  65:25519/c25519.c **** 
+  66:25519/c25519.c **** 	f25519_add(a, x2, z2);
+  67:25519/c25519.c **** 	f25519_sub(b, x3, z3); /* D */
+  68:25519/c25519.c **** 	f25519_mul__distinct(da, a, b);
+  69:25519/c25519.c **** 
+  70:25519/c25519.c **** 	f25519_sub(b, x2, z2);
+  71:25519/c25519.c **** 	f25519_add(a, x3, z3); /* C */
+  72:25519/c25519.c **** 	f25519_mul__distinct(cb, a, b);
+  73:25519/c25519.c **** 
+  74:25519/c25519.c **** 	f25519_add(a, da, cb);
+  75:25519/c25519.c **** 	f25519_mul__distinct(b, a, a);
+  76:25519/c25519.c **** 	f25519_mul__distinct(x5, z1, b);
+  77:25519/c25519.c **** 
+  78:25519/c25519.c **** 	f25519_sub(a, da, cb);
+  79:25519/c25519.c **** 	f25519_mul__distinct(b, a, a);
+  80:25519/c25519.c **** 	f25519_mul__distinct(z5, x1, b);
+  81:25519/c25519.c **** }
+  82:25519/c25519.c **** 
+  83:25519/c25519.c **** void c25519_smult(uint8_t *result, const uint8_t *q, const uint8_t *e)
+  84:25519/c25519.c **** {
+  27              		.loc 1 84 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 320
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  33              		.cfi_def_cfa_offset 24
+  34              		.cfi_offset 4, -24
+  35              		.cfi_offset 5, -20
+  36              		.cfi_offset 6, -16
+  37              		.cfi_offset 7, -12
+  38              		.cfi_offset 8, -8
+  39              		.cfi_offset 14, -4
+  40 0004 0E46     		mov	r6, r1
+  41 0006 D0B0     		sub	sp, sp, #320
+  42              		.cfi_def_cfa_offset 344
+  43              	.LBB14:
+  44              	.LBB15:
+  45              		.file 2 "25519/f25519.h"
+   1:25519/f25519.h **** /* Arithmetic mod p = 2^255-19
+   2:25519/f25519.h ****  * Daniel Beer <dlbeer@gmail.com>, 8 Jan 2014
+   3:25519/f25519.h ****  *
+   4:25519/f25519.h ****  * This file is in the public domain.
+   5:25519/f25519.h ****  */
+   6:25519/f25519.h **** 
+   7:25519/f25519.h **** #ifndef F25519_H_
+   8:25519/f25519.h **** #define F25519_H_
+   9:25519/f25519.h **** 
+  10:25519/f25519.h **** #include <stdint.h>
+  11:25519/f25519.h **** #include <string.h>
+  12:25519/f25519.h **** 
+  13:25519/f25519.h **** /* Field elements are represented as little-endian byte strings. All
+  14:25519/f25519.h ****  * operations have timings which are independent of input data, so they
+  15:25519/f25519.h ****  * can be safely used for cryptography.
+  16:25519/f25519.h ****  *
+  17:25519/f25519.h ****  * Computation is performed on un-normalized elements. These are byte
+  18:25519/f25519.h ****  * strings which fall into the range 0 <= x < 2p. Use f25519_normalize()
+  19:25519/f25519.h ****  * to convert to a value 0 <= x < p.
+  20:25519/f25519.h ****  *
+  21:25519/f25519.h ****  * Elements received from the outside may greater even than 2p.
+  22:25519/f25519.h ****  * f25519_normalize() will correctly deal with these numbers too.
+  23:25519/f25519.h ****  */
+  24:25519/f25519.h **** #define F25519_SIZE		32
+  25:25519/f25519.h **** 
+  26:25519/f25519.h **** /* Identity constants */
+  27:25519/f25519.h **** extern const uint8_t f25519_zero[F25519_SIZE];
+  28:25519/f25519.h **** extern const uint8_t f25519_one[F25519_SIZE];
+  29:25519/f25519.h **** 
+  30:25519/f25519.h **** /* Load a small constant */
+  31:25519/f25519.h **** void f25519_load(uint8_t *x, uint32_t c);
+  32:25519/f25519.h **** 
+  33:25519/f25519.h **** /* Copy two points */
+  34:25519/f25519.h **** static inline void f25519_copy(uint8_t *x, const uint8_t *a)
+  35:25519/f25519.h **** {
+  36:25519/f25519.h **** 	memcpy(x, a, F25519_SIZE);
+  46              		.loc 2 36 0
+  47 0008 F368     		ldr	r3, [r6, #12]	@ unaligned
+  48              	.LBE15:
+  49              	.LBE14:
+  50              		.loc 1 84 0
+  51 000a 8046     		mov	r8, r0
+  52 000c 1746     		mov	r7, r2
+  53              	.LBB20:
+  54              	.LBB16:
+  55              		.loc 2 36 0
+  56 000e 0868     		ldr	r0, [r1]	@ unaligned
+  57              	.LVL1:
+  58 0010 B268     		ldr	r2, [r6, #8]	@ unaligned
+  59              	.LVL2:
+  60 0012 4968     		ldr	r1, [r1, #4]	@ unaligned
+  61              	.LVL3:
+  62              	.LBE16:
+  63              	.LBE20:
+  85:25519/c25519.c **** 	/* Current point: P_m */
+  86:25519/c25519.c **** 	uint8_t xm[F25519_SIZE];
+  87:25519/c25519.c **** 	uint8_t zm[F25519_SIZE] = {1};
+  64              		.loc 1 87 0
+  65 0014 0024     		movs	r4, #0
+  66 0016 4FF0010C 		mov	ip, #1
+  67              	.LBB21:
+  68              	.LBB17:
+  69              		.loc 2 36 0
+  70 001a EE46     		mov	lr, sp
+  71              	.LBE17:
+  72              	.LBE21:
+  73              		.loc 1 87 0
+  74 001c 0894     		str	r4, [sp, #32]
+  88:25519/c25519.c **** 
+  89:25519/c25519.c **** 	/* Predecessor: P_(m-1) */
+  90:25519/c25519.c **** 	uint8_t xm1[F25519_SIZE] = {1};
+  75              		.loc 1 90 0
+  76 001e 1094     		str	r4, [sp, #64]
+  87:25519/c25519.c **** 	uint8_t zm[F25519_SIZE] = {1};
+  77              		.loc 1 87 0
+  78 0020 0994     		str	r4, [sp, #36]
+  79 0022 0A94     		str	r4, [sp, #40]
+  80 0024 0B94     		str	r4, [sp, #44]
+  81 0026 0C94     		str	r4, [sp, #48]
+  82 0028 0D94     		str	r4, [sp, #52]
+  83 002a 0E94     		str	r4, [sp, #56]
+  84              		.loc 1 90 0
+  85 002c 1194     		str	r4, [sp, #68]
+  86 002e 1294     		str	r4, [sp, #72]
+  87 0030 1394     		str	r4, [sp, #76]
+  88 0032 1494     		str	r4, [sp, #80]
+  89 0034 1594     		str	r4, [sp, #84]
+  90 0036 1694     		str	r4, [sp, #88]
+  91 0038 1794     		str	r4, [sp, #92]
+  91:25519/c25519.c **** 	uint8_t zm1[F25519_SIZE] = {0};
+  92              		.loc 1 91 0
+  93 003a 1894     		str	r4, [sp, #96]
+  94 003c 1994     		str	r4, [sp, #100]
+  95 003e 1A94     		str	r4, [sp, #104]
+  96 0040 1B94     		str	r4, [sp, #108]
+  97 0042 1C94     		str	r4, [sp, #112]
+  98 0044 1D94     		str	r4, [sp, #116]
+  99 0046 1E94     		str	r4, [sp, #120]
+ 100 0048 1F94     		str	r4, [sp, #124]
+ 101              	.LVL4:
+  87:25519/c25519.c **** 	uint8_t zm[F25519_SIZE] = {1};
+ 102              		.loc 1 87 0
+ 103 004a 0F94     		str	r4, [sp, #60]
+ 104 004c 8DF820C0 		strb	ip, [sp, #32]
+  90:25519/c25519.c **** 	uint8_t xm1[F25519_SIZE] = {1};
+ 105              		.loc 1 90 0
+ 106 0050 8DF840C0 		strb	ip, [sp, #64]
+ 107              	.LBB22:
+ 108              	.LBB18:
+ 109              		.loc 2 36 0
+ 110 0054 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 111 0058 3069     		ldr	r0, [r6, #16]	@ unaligned
+ 112 005a 7169     		ldr	r1, [r6, #20]	@ unaligned
+ 113 005c B269     		ldr	r2, [r6, #24]	@ unaligned
+ 114 005e F369     		ldr	r3, [r6, #28]	@ unaligned
+ 115              	.LBE18:
+ 116              	.LBE22:
+  92:25519/c25519.c **** 
+  93:25519/c25519.c **** 	int i;
+  94:25519/c25519.c **** 
+  95:25519/c25519.c **** 	/* Note: bit 254 is assumed to be 1 */
+  96:25519/c25519.c **** 	f25519_copy(xm, q);
+  97:25519/c25519.c **** 
+  98:25519/c25519.c **** 	for (i = 253; i >= 0; i--) {
+ 117              		.loc 1 98 0
+ 118 0060 FD24     		movs	r4, #253
+ 119              	.LBB23:
+ 120              	.LBB19:
+ 121              		.loc 2 36 0
+ 122 0062 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 123              	.LVL5:
+ 124              	.L3:
+ 125              	.LBE19:
+ 126              	.LBE23:
+ 127              	.LBB24:
+  99:25519/c25519.c **** 		const int bit = (e[i >> 3] >> (i & 7)) & 1;
+ 128              		.loc 1 99 0 discriminator 2
+ 129 0066 E310     		asrs	r3, r4, #3
+ 130 0068 FD5C     		ldrb	r5, [r7, r3]	@ zero_extendqisi2
+ 131              	.LBB25:
+ 132              	.LBB26:
+  66:25519/c25519.c **** 	f25519_add(a, x2, z2);
+ 133              		.loc 1 66 0 discriminator 2
+ 134 006a 40A8     		add	r0, sp, #256
+ 135              	.LBE26:
+ 136              	.LBE25:
+ 137              		.loc 1 99 0 discriminator 2
+ 138 006c 04F00703 		and	r3, r4, #7
+ 139              	.LBB29:
+ 140              	.LBB27:
+  66:25519/c25519.c **** 	f25519_add(a, x2, z2);
+ 141              		.loc 1 66 0 discriminator 2
+ 142 0070 6946     		mov	r1, sp
+ 143 0072 08AA     		add	r2, sp, #32
+ 144              	.LBE27:
+ 145              	.LBE29:
+ 146              		.loc 1 99 0 discriminator 2
+ 147 0074 1D41     		asrs	r5, r5, r3
+ 148              	.LBB30:
+ 149              	.LBB28:
+  66:25519/c25519.c **** 	f25519_add(a, x2, z2);
+ 150              		.loc 1 66 0 discriminator 2
+ 151 0076 FFF7FEFF 		bl	f25519_add
+ 152              	.LVL6:
+  67:25519/c25519.c **** 	f25519_sub(b, x3, z3); /* D */
+ 153              		.loc 1 67 0 discriminator 2
+ 154 007a 48A8     		add	r0, sp, #288
+ 155 007c 10A9     		add	r1, sp, #64
+ 156 007e 18AA     		add	r2, sp, #96
+ 157 0080 FFF7FEFF 		bl	f25519_sub
+ 158              	.LVL7:
+  68:25519/c25519.c **** 	f25519_mul__distinct(da, a, b);
+ 159              		.loc 1 68 0 discriminator 2
+ 160 0084 30A8     		add	r0, sp, #192
+ 161 0086 40A9     		add	r1, sp, #256
+ 162 0088 48AA     		add	r2, sp, #288
+ 163 008a FFF7FEFF 		bl	f25519_mul__distinct
+ 164              	.LVL8:
+  70:25519/c25519.c **** 	f25519_sub(b, x2, z2);
+ 165              		.loc 1 70 0 discriminator 2
+ 166 008e 48A8     		add	r0, sp, #288
+ 167 0090 6946     		mov	r1, sp
+ 168 0092 08AA     		add	r2, sp, #32
+ 169 0094 FFF7FEFF 		bl	f25519_sub
+ 170              	.LVL9:
+  71:25519/c25519.c **** 	f25519_add(a, x3, z3); /* C */
+ 171              		.loc 1 71 0 discriminator 2
+ 172 0098 40A8     		add	r0, sp, #256
+ 173 009a 10A9     		add	r1, sp, #64
+ 174 009c 18AA     		add	r2, sp, #96
+ 175 009e FFF7FEFF 		bl	f25519_add
+ 176              	.LVL10:
+  72:25519/c25519.c **** 	f25519_mul__distinct(cb, a, b);
+ 177              		.loc 1 72 0 discriminator 2
+ 178 00a2 38A8     		add	r0, sp, #224
+ 179 00a4 40A9     		add	r1, sp, #256
+ 180 00a6 48AA     		add	r2, sp, #288
+ 181 00a8 FFF7FEFF 		bl	f25519_mul__distinct
+ 182              	.LVL11:
+  74:25519/c25519.c **** 	f25519_add(a, da, cb);
+ 183              		.loc 1 74 0 discriminator 2
+ 184 00ac 40A8     		add	r0, sp, #256
+ 185 00ae 30A9     		add	r1, sp, #192
+ 186 00b0 38AA     		add	r2, sp, #224
+ 187 00b2 FFF7FEFF 		bl	f25519_add
+ 188              	.LVL12:
+  75:25519/c25519.c **** 	f25519_mul__distinct(b, a, a);
+ 189              		.loc 1 75 0 discriminator 2
+ 190 00b6 40A9     		add	r1, sp, #256
+ 191 00b8 0A46     		mov	r2, r1
+ 192 00ba 48A8     		add	r0, sp, #288
+ 193 00bc FFF7FEFF 		bl	f25519_mul__distinct
+ 194              	.LVL13:
+  76:25519/c25519.c **** 	f25519_mul__distinct(x5, z1, b);
+ 195              		.loc 1 76 0 discriminator 2
+ 196 00c0 10A8     		add	r0, sp, #64
+ 197 00c2 5749     		ldr	r1, .L5
+ 198 00c4 48AA     		add	r2, sp, #288
+ 199 00c6 FFF7FEFF 		bl	f25519_mul__distinct
+ 200              	.LVL14:
+  78:25519/c25519.c **** 	f25519_sub(a, da, cb);
+ 201              		.loc 1 78 0 discriminator 2
+ 202 00ca 40A8     		add	r0, sp, #256
+ 203 00cc 30A9     		add	r1, sp, #192
+ 204 00ce 38AA     		add	r2, sp, #224
+ 205 00d0 FFF7FEFF 		bl	f25519_sub
+ 206              	.LVL15:
+  79:25519/c25519.c **** 	f25519_mul__distinct(b, a, a);
+ 207              		.loc 1 79 0 discriminator 2
+ 208 00d4 40A9     		add	r1, sp, #256
+ 209 00d6 0A46     		mov	r2, r1
+ 210 00d8 48A8     		add	r0, sp, #288
+ 211 00da FFF7FEFF 		bl	f25519_mul__distinct
+ 212              	.LVL16:
+  80:25519/c25519.c **** 	f25519_mul__distinct(z5, x1, b);
+ 213              		.loc 1 80 0 discriminator 2
+ 214 00de 18A8     		add	r0, sp, #96
+ 215 00e0 3146     		mov	r1, r6
+ 216 00e2 48AA     		add	r2, sp, #288
+ 217 00e4 FFF7FEFF 		bl	f25519_mul__distinct
+ 218              	.LVL17:
+ 219              	.LBE28:
+ 220              	.LBE30:
+ 221              	.LBB31:
+ 222              	.LBB32:
+  27:25519/c25519.c **** 	f25519_mul__distinct(x1sq, x1, x1);
+ 223              		.loc 1 27 0 discriminator 2
+ 224 00e8 30A8     		add	r0, sp, #192
+ 225 00ea 6946     		mov	r1, sp
+ 226 00ec 6A46     		mov	r2, sp
+ 227 00ee FFF7FEFF 		bl	f25519_mul__distinct
+ 228              	.LVL18:
+  28:25519/c25519.c **** 	f25519_mul__distinct(z1sq, z1, z1);
+ 229              		.loc 1 28 0 discriminator 2
+ 230 00f2 08A9     		add	r1, sp, #32
+ 231 00f4 0A46     		mov	r2, r1
+ 232 00f6 38A8     		add	r0, sp, #224
+ 233 00f8 FFF7FEFF 		bl	f25519_mul__distinct
+ 234              	.LVL19:
+  29:25519/c25519.c **** 	f25519_mul__distinct(x1z1, x1, z1);
+ 235              		.loc 1 29 0 discriminator 2
+ 236 00fc 40A8     		add	r0, sp, #256
+ 237 00fe 6946     		mov	r1, sp
+ 238 0100 08AA     		add	r2, sp, #32
+ 239 0102 FFF7FEFF 		bl	f25519_mul__distinct
+ 240              	.LVL20:
+  31:25519/c25519.c **** 	f25519_sub(a, x1sq, z1sq);
+ 241              		.loc 1 31 0 discriminator 2
+ 242 0106 48A8     		add	r0, sp, #288
+ 243 0108 30A9     		add	r1, sp, #192
+ 244 010a 38AA     		add	r2, sp, #224
+ 245 010c FFF7FEFF 		bl	f25519_sub
+ 246              	.LVL21:
+  32:25519/c25519.c **** 	f25519_mul__distinct(x3, a, a);
+ 247              		.loc 1 32 0 discriminator 2
+ 248 0110 48A9     		add	r1, sp, #288
+ 249 0112 0A46     		mov	r2, r1
+ 250 0114 6846     		mov	r0, sp
+ 251 0116 FFF7FEFF 		bl	f25519_mul__distinct
+ 252              	.LVL22:
+  34:25519/c25519.c **** 	f25519_mul_c(a, x1z1, 486662);
+ 253              		.loc 1 34 0 discriminator 2
+ 254 011a 48A8     		add	r0, sp, #288
+ 255 011c 40A9     		add	r1, sp, #256
+ 256 011e 414A     		ldr	r2, .L5+4
+ 257 0120 FFF7FEFF 		bl	f25519_mul_c
+ 258              	.LVL23:
+  35:25519/c25519.c **** 	f25519_add(a, x1sq, a);
+ 259              		.loc 1 35 0 discriminator 2
+ 260 0124 48A8     		add	r0, sp, #288
+ 261 0126 0246     		mov	r2, r0
+ 262 0128 30A9     		add	r1, sp, #192
+ 263 012a FFF7FEFF 		bl	f25519_add
+ 264              	.LVL24:
+  36:25519/c25519.c **** 	f25519_add(a, z1sq, a);
+ 265              		.loc 1 36 0 discriminator 2
+ 266 012e 48A8     		add	r0, sp, #288
+ 267 0130 0246     		mov	r2, r0
+ 268 0132 38A9     		add	r1, sp, #224
+ 269 0134 FFF7FEFF 		bl	f25519_add
+ 270              	.LVL25:
+  37:25519/c25519.c **** 	f25519_mul__distinct(x1sq, x1z1, a);
+ 271              		.loc 1 37 0 discriminator 2
+ 272 0138 30A8     		add	r0, sp, #192
+ 273 013a 40A9     		add	r1, sp, #256
+ 274 013c 48AA     		add	r2, sp, #288
+ 275 013e FFF7FEFF 		bl	f25519_mul__distinct
+ 276              	.LVL26:
+  38:25519/c25519.c **** 	f25519_mul_c(z3, x1sq, 4);
+ 277              		.loc 1 38 0 discriminator 2
+ 278 0142 08A8     		add	r0, sp, #32
+ 279 0144 30A9     		add	r1, sp, #192
+ 280 0146 0422     		movs	r2, #4
+ 281 0148 FFF7FEFF 		bl	f25519_mul_c
+ 282              	.LVL27:
+ 283              	.LBE32:
+ 284              	.LBE31:
+ 285              	.LBB33:
+ 286              	.LBB34:
+  66:25519/c25519.c **** 	f25519_add(a, x2, z2);
+ 287              		.loc 1 66 0 discriminator 2
+ 288 014c 40A8     		add	r0, sp, #256
+ 289 014e 6946     		mov	r1, sp
+ 290 0150 08AA     		add	r2, sp, #32
+ 291 0152 FFF7FEFF 		bl	f25519_add
+ 292              	.LVL28:
+  67:25519/c25519.c **** 	f25519_sub(b, x3, z3); /* D */
+ 293              		.loc 1 67 0 discriminator 2
+ 294 0156 48A8     		add	r0, sp, #288
+ 295 0158 3146     		mov	r1, r6
+ 296 015a 314A     		ldr	r2, .L5
+ 297 015c FFF7FEFF 		bl	f25519_sub
+ 298              	.LVL29:
+  68:25519/c25519.c **** 	f25519_mul__distinct(da, a, b);
+ 299              		.loc 1 68 0 discriminator 2
+ 300 0160 30A8     		add	r0, sp, #192
+ 301 0162 40A9     		add	r1, sp, #256
+ 302 0164 48AA     		add	r2, sp, #288
+ 303 0166 FFF7FEFF 		bl	f25519_mul__distinct
+ 304              	.LVL30:
+  70:25519/c25519.c **** 	f25519_sub(b, x2, z2);
+ 305              		.loc 1 70 0 discriminator 2
+ 306 016a 48A8     		add	r0, sp, #288
+ 307 016c 6946     		mov	r1, sp
+ 308 016e 08AA     		add	r2, sp, #32
+ 309 0170 FFF7FEFF 		bl	f25519_sub
+ 310              	.LVL31:
+  71:25519/c25519.c **** 	f25519_add(a, x3, z3); /* C */
+ 311              		.loc 1 71 0 discriminator 2
+ 312 0174 40A8     		add	r0, sp, #256
+ 313 0176 3146     		mov	r1, r6
+ 314 0178 294A     		ldr	r2, .L5
+ 315 017a FFF7FEFF 		bl	f25519_add
+ 316              	.LVL32:
+  72:25519/c25519.c **** 	f25519_mul__distinct(cb, a, b);
+ 317              		.loc 1 72 0 discriminator 2
+ 318 017e 38A8     		add	r0, sp, #224
+ 319 0180 40A9     		add	r1, sp, #256
+ 320 0182 48AA     		add	r2, sp, #288
+ 321 0184 FFF7FEFF 		bl	f25519_mul__distinct
+ 322              	.LVL33:
+  74:25519/c25519.c **** 	f25519_add(a, da, cb);
+ 323              		.loc 1 74 0 discriminator 2
+ 324 0188 40A8     		add	r0, sp, #256
+ 325 018a 30A9     		add	r1, sp, #192
+ 326 018c 38AA     		add	r2, sp, #224
+ 327 018e FFF7FEFF 		bl	f25519_add
+ 328              	.LVL34:
+  75:25519/c25519.c **** 	f25519_mul__distinct(b, a, a);
+ 329              		.loc 1 75 0 discriminator 2
+ 330 0192 40A9     		add	r1, sp, #256
+ 331 0194 0A46     		mov	r2, r1
+ 332 0196 48A8     		add	r0, sp, #288
+ 333 0198 FFF7FEFF 		bl	f25519_mul__distinct
+ 334              	.LVL35:
+  76:25519/c25519.c **** 	f25519_mul__distinct(x5, z1, b);
+ 335              		.loc 1 76 0 discriminator 2
+ 336 019c 20A8     		add	r0, sp, #128
+ 337 019e 18A9     		add	r1, sp, #96
+ 338 01a0 48AA     		add	r2, sp, #288
+ 339 01a2 FFF7FEFF 		bl	f25519_mul__distinct
+ 340              	.LVL36:
+  78:25519/c25519.c **** 	f25519_sub(a, da, cb);
+ 341              		.loc 1 78 0 discriminator 2
+ 342 01a6 40A8     		add	r0, sp, #256
+ 343 01a8 30A9     		add	r1, sp, #192
+ 344 01aa 38AA     		add	r2, sp, #224
+ 345 01ac FFF7FEFF 		bl	f25519_sub
+ 346              	.LVL37:
+  79:25519/c25519.c **** 	f25519_mul__distinct(b, a, a);
+ 347              		.loc 1 79 0 discriminator 2
+ 348 01b0 40A9     		add	r1, sp, #256
+ 349 01b2 0A46     		mov	r2, r1
+ 350 01b4 48A8     		add	r0, sp, #288
+ 351 01b6 FFF7FEFF 		bl	f25519_mul__distinct
+ 352              	.LVL38:
+ 353              	.LBE34:
+ 354              	.LBE33:
+ 355              		.loc 1 99 0 discriminator 2
+ 356 01ba 05F00105 		and	r5, r5, #1
+ 357              	.LVL39:
+ 358              	.LBB36:
+ 359              	.LBB35:
+  80:25519/c25519.c **** 	f25519_mul__distinct(z5, x1, b);
+ 360              		.loc 1 80 0 discriminator 2
+ 361 01be 28A8     		add	r0, sp, #160
+ 362              	.LVL40:
+ 363 01c0 10A9     		add	r1, sp, #64
+ 364              	.LVL41:
+ 365 01c2 48AA     		add	r2, sp, #288
+ 366 01c4 FFF7FEFF 		bl	f25519_mul__distinct
+ 367              	.LVL42:
+ 368              	.LBE35:
+ 369              	.LBE36:
+ 100:25519/c25519.c **** 		uint8_t xms[F25519_SIZE];
+ 101:25519/c25519.c **** 		uint8_t zms[F25519_SIZE];
+ 102:25519/c25519.c **** 
+ 103:25519/c25519.c **** 		/* From P_m and P_(m-1), compute P_(2m) and P_(2m-1) */
+ 104:25519/c25519.c **** 		xc_diffadd(xm1, zm1, q, f25519_one, xm, zm, xm1, zm1);
+ 105:25519/c25519.c **** 		xc_double(xm, zm, xm, zm);
+ 106:25519/c25519.c **** 
+ 107:25519/c25519.c **** 		/* Compute P_(2m+1) */
+ 108:25519/c25519.c **** 		xc_diffadd(xms, zms, xm1, zm1, xm, zm, q, f25519_one);
+ 109:25519/c25519.c **** 
+ 110:25519/c25519.c **** 		/* Select:
+ 111:25519/c25519.c **** 		 *   bit = 1 --> (P_(2m+1), P_(2m))
+ 112:25519/c25519.c **** 		 *   bit = 0 --> (P_(2m), P_(2m-1))
+ 113:25519/c25519.c **** 		 */
+ 114:25519/c25519.c **** 		f25519_select(xm1, xm1, xm, bit);
+ 370              		.loc 1 114 0 discriminator 2
+ 371 01c8 EDB2     		uxtb	r5, r5
+ 372              	.LVL43:
+ 373 01ca 10A8     		add	r0, sp, #64
+ 374              	.LVL44:
+ 375 01cc 0146     		mov	r1, r0
+ 376 01ce 2B46     		mov	r3, r5
+ 377 01d0 6A46     		mov	r2, sp
+ 378 01d2 FFF7FEFF 		bl	f25519_select
+ 379              	.LVL45:
+ 115:25519/c25519.c **** 		f25519_select(zm1, zm1, zm, bit);
+ 380              		.loc 1 115 0 discriminator 2
+ 381 01d6 18A8     		add	r0, sp, #96
+ 382              	.LVL46:
+ 383 01d8 0146     		mov	r1, r0
+ 384 01da 08AA     		add	r2, sp, #32
+ 385              	.LVL47:
+ 386 01dc 2B46     		mov	r3, r5
+ 387 01de FFF7FEFF 		bl	f25519_select
+ 388              	.LVL48:
+ 116:25519/c25519.c **** 		f25519_select(xm, xm, xms, bit);
+ 389              		.loc 1 116 0 discriminator 2
+ 390 01e2 6846     		mov	r0, sp
+ 391 01e4 6946     		mov	r1, sp
+ 392 01e6 20AA     		add	r2, sp, #128
+ 393              	.LVL49:
+ 394 01e8 2B46     		mov	r3, r5
+ 395 01ea FFF7FEFF 		bl	f25519_select
+ 396              	.LVL50:
+ 117:25519/c25519.c **** 		f25519_select(zm, zm, zms, bit);
+ 397              		.loc 1 117 0 discriminator 2
+ 398 01ee 08A8     		add	r0, sp, #32
+ 399              	.LVL51:
+ 400 01f0 2B46     		mov	r3, r5
+ 401              	.LBE24:
+  98:25519/c25519.c **** 	for (i = 253; i >= 0; i--) {
+ 402              		.loc 1 98 0 discriminator 2
+ 403 01f2 013C     		subs	r4, r4, #1
+ 404              	.LVL52:
+ 405              	.LBB37:
+ 406              		.loc 1 117 0 discriminator 2
+ 407 01f4 0146     		mov	r1, r0
+ 408 01f6 28AA     		add	r2, sp, #160
+ 409              	.LVL53:
+ 410 01f8 FFF7FEFF 		bl	f25519_select
+ 411              	.LVL54:
+ 412              	.LBE37:
+  98:25519/c25519.c **** 	for (i = 253; i >= 0; i--) {
+ 413              		.loc 1 98 0 discriminator 2
+ 414 01fc 631C     		adds	r3, r4, #1
+ 415 01fe 7FF432AF 		bne	.L3
+ 118:25519/c25519.c **** 	}
+ 119:25519/c25519.c **** 
+ 120:25519/c25519.c **** 	/* Freeze out of projective coordinates */
+ 121:25519/c25519.c **** 	f25519_inv__distinct(zm1, zm);
+ 416              		.loc 1 121 0
+ 417 0202 08A9     		add	r1, sp, #32
+ 418              	.LVL55:
+ 419 0204 18A8     		add	r0, sp, #96
+ 420              	.LVL56:
+ 421 0206 FFF7FEFF 		bl	f25519_inv__distinct
+ 422              	.LVL57:
+ 122:25519/c25519.c **** 	f25519_mul__distinct(result, zm1, xm);
+ 423              		.loc 1 122 0
+ 424 020a 4046     		mov	r0, r8
+ 425 020c 18A9     		add	r1, sp, #96
+ 426              	.LVL58:
+ 427 020e 6A46     		mov	r2, sp
+ 428 0210 FFF7FEFF 		bl	f25519_mul__distinct
+ 429              	.LVL59:
+ 123:25519/c25519.c **** 	f25519_normalize(result);
+ 430              		.loc 1 123 0
+ 431 0214 4046     		mov	r0, r8
+ 432 0216 FFF7FEFF 		bl	f25519_normalize
+ 433              	.LVL60:
+ 124:25519/c25519.c **** }
+ 434              		.loc 1 124 0
+ 435 021a 50B0     		add	sp, sp, #320
+ 436              	.LVL61:
+ 437              		@ sp needed
+ 438 021c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 439              	.LVL62:
+ 440              	.L6:
+ 441              		.align	2
+ 442              	.L5:
+ 443 0220 00000000 		.word	f25519_one
+ 444 0224 066D0700 		.word	486662
+ 445              		.cfi_endproc
+ 446              	.LFE4:
+ 448              		.global	c25519_base_x
+ 449              		.section	.rodata.c25519_base_x,"a",%progbits
+ 450              		.align	2
+ 453              	c25519_base_x:
+ 454 0000 09       		.byte	9
+ 455 0001 00000000 		.space	31
+ 455      00000000 
+ 455      00000000 
+ 455      00000000 
+ 455      00000000 
+ 456              		.text
+ 457              	.Letext0:
+ 458              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
+ 459              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
+DEFINED SYMBOLS
+                            *ABS*:00000000 c25519.c
+C:\Users\haifisch\AppData\Local\Temp\cc9OInOJ.s:19     .text.c25519_smult:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9OInOJ.s:24     .text.c25519_smult:00000000 c25519_smult
+C:\Users\haifisch\AppData\Local\Temp\cc9OInOJ.s:443    .text.c25519_smult:00000220 $d
+C:\Users\haifisch\AppData\Local\Temp\cc9OInOJ.s:453    .rodata.c25519_base_x:00000000 c25519_base_x
+C:\Users\haifisch\AppData\Local\Temp\cc9OInOJ.s:450    .rodata.c25519_base_x:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+f25519_add
+f25519_sub
+f25519_mul__distinct
+f25519_mul_c
+f25519_select
+f25519_inv__distinct
+f25519_normalize
+f25519_one

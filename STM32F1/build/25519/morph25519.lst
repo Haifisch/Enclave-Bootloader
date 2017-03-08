@@ -1,0 +1,429 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"morph25519.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.morph25519_e2m,"ax",%progbits
+  19              		.align	2
+  20              		.global	morph25519_e2m
+  21              		.thumb
+  22              		.thumb_func
+  24              	morph25519_e2m:
+  25              	.LFB2:
+  26              		.file 1 "25519/morph25519.c"
+   1:25519/morph25519.c **** /* Montgomery <-> Edwards isomorphism
+   2:25519/morph25519.c ****  * Daniel Beer <dlbeer@gmail.com>, 18 Jan 2014
+   3:25519/morph25519.c ****  *
+   4:25519/morph25519.c ****  * This file is in the public domain.
+   5:25519/morph25519.c ****  */
+   6:25519/morph25519.c **** 
+   7:25519/morph25519.c **** #include "morph25519.h"
+   8:25519/morph25519.c **** #include "f25519.h"
+   9:25519/morph25519.c **** 
+  10:25519/morph25519.c **** void morph25519_e2m(uint8_t *montgomery, const uint8_t *y)
+  11:25519/morph25519.c **** {
+  27              		.loc 1 11 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 64
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 70B5     		push	{r4, r5, r6, lr}
+  33              		.cfi_def_cfa_offset 16
+  34              		.cfi_offset 4, -16
+  35              		.cfi_offset 5, -12
+  36              		.cfi_offset 6, -8
+  37              		.cfi_offset 14, -4
+  12:25519/morph25519.c **** 	uint8_t yplus[F25519_SIZE];
+  13:25519/morph25519.c **** 	uint8_t yminus[F25519_SIZE];
+  14:25519/morph25519.c **** 
+  15:25519/morph25519.c **** 	f25519_sub(yplus, f25519_one, y);
+  38              		.loc 1 15 0
+  39 0002 0E4E     		ldr	r6, .L2
+  11:25519/morph25519.c **** {
+  40              		.loc 1 11 0
+  41 0004 90B0     		sub	sp, sp, #64
+  42              		.cfi_def_cfa_offset 80
+  11:25519/morph25519.c **** {
+  43              		.loc 1 11 0
+  44 0006 0446     		mov	r4, r0
+  45              		.loc 1 15 0
+  46 0008 0A46     		mov	r2, r1
+  11:25519/morph25519.c **** {
+  47              		.loc 1 11 0
+  48 000a 0D46     		mov	r5, r1
+  49              		.loc 1 15 0
+  50 000c 6846     		mov	r0, sp
+  51              	.LVL1:
+  52 000e 3146     		mov	r1, r6
+  53              	.LVL2:
+  54 0010 FFF7FEFF 		bl	f25519_sub
+  55              	.LVL3:
+  16:25519/morph25519.c **** 	f25519_inv__distinct(yminus, yplus);
+  56              		.loc 1 16 0
+  57 0014 6946     		mov	r1, sp
+  58 0016 08A8     		add	r0, sp, #32
+  59 0018 FFF7FEFF 		bl	f25519_inv__distinct
+  60              	.LVL4:
+  17:25519/morph25519.c **** 	f25519_add(yplus, f25519_one, y);
+  61              		.loc 1 17 0
+  62 001c 6846     		mov	r0, sp
+  63 001e 3146     		mov	r1, r6
+  64 0020 2A46     		mov	r2, r5
+  65 0022 FFF7FEFF 		bl	f25519_add
+  66              	.LVL5:
+  18:25519/morph25519.c **** 	f25519_mul__distinct(montgomery, yplus, yminus);
+  67              		.loc 1 18 0
+  68 0026 2046     		mov	r0, r4
+  69 0028 6946     		mov	r1, sp
+  70 002a 08AA     		add	r2, sp, #32
+  71 002c FFF7FEFF 		bl	f25519_mul__distinct
+  72              	.LVL6:
+  19:25519/morph25519.c **** 	f25519_normalize(montgomery);
+  73              		.loc 1 19 0
+  74 0030 2046     		mov	r0, r4
+  75 0032 FFF7FEFF 		bl	f25519_normalize
+  76              	.LVL7:
+  20:25519/morph25519.c **** }
+  77              		.loc 1 20 0
+  78 0036 10B0     		add	sp, sp, #64
+  79              		@ sp needed
+  80 0038 70BD     		pop	{r4, r5, r6, pc}
+  81              	.LVL8:
+  82              	.L3:
+  83 003a 00BF     		.align	2
+  84              	.L2:
+  85 003c 00000000 		.word	f25519_one
+  86              		.cfi_endproc
+  87              	.LFE2:
+  89              		.section	.text.morph25519_m2e,"ax",%progbits
+  90              		.align	2
+  91              		.global	morph25519_m2e
+  92              		.thumb
+  93              		.thumb_func
+  95              	morph25519_m2e:
+  96              	.LFB5:
+  21:25519/morph25519.c **** 
+  22:25519/morph25519.c **** static void mx2ey(uint8_t *ey, const uint8_t *mx)
+  23:25519/morph25519.c **** {
+  24:25519/morph25519.c **** 	uint8_t n[F25519_SIZE];
+  25:25519/morph25519.c **** 	uint8_t d[F25519_SIZE];
+  26:25519/morph25519.c **** 
+  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
+  28:25519/morph25519.c **** 	f25519_inv__distinct(d, n);
+  29:25519/morph25519.c **** 	f25519_sub(n, mx, f25519_one);
+  30:25519/morph25519.c **** 	f25519_mul__distinct(ey, n, d);
+  31:25519/morph25519.c **** }
+  32:25519/morph25519.c **** 
+  33:25519/morph25519.c **** static uint8_t ey2ex(uint8_t *x, const uint8_t *y, int parity)
+  34:25519/morph25519.c **** {
+  35:25519/morph25519.c **** 	static const uint8_t d[F25519_SIZE] = {
+  36:25519/morph25519.c **** 		0xa3, 0x78, 0x59, 0x13, 0xca, 0x4d, 0xeb, 0x75,
+  37:25519/morph25519.c **** 		0xab, 0xd8, 0x41, 0x41, 0x4d, 0x0a, 0x70, 0x00,
+  38:25519/morph25519.c **** 		0x98, 0xe8, 0x79, 0x77, 0x79, 0x40, 0xc7, 0x8c,
+  39:25519/morph25519.c **** 		0x73, 0xfe, 0x6f, 0x2b, 0xee, 0x6c, 0x03, 0x52
+  40:25519/morph25519.c **** 	};
+  41:25519/morph25519.c **** 
+  42:25519/morph25519.c **** 	uint8_t a[F25519_SIZE];
+  43:25519/morph25519.c **** 	uint8_t b[F25519_SIZE];
+  44:25519/morph25519.c **** 	uint8_t c[F25519_SIZE];
+  45:25519/morph25519.c **** 
+  46:25519/morph25519.c **** 	/* Compute c = y^2 */
+  47:25519/morph25519.c **** 	f25519_mul__distinct(c, y, y);
+  48:25519/morph25519.c **** 
+  49:25519/morph25519.c **** 	/* Compute b = (1+dy^2)^-1 */
+  50:25519/morph25519.c **** 	f25519_mul__distinct(b, c, d);
+  51:25519/morph25519.c **** 	f25519_add(a, b, f25519_one);
+  52:25519/morph25519.c **** 	f25519_inv__distinct(b, a);
+  53:25519/morph25519.c **** 
+  54:25519/morph25519.c **** 	/* Compute a = y^2-1 */
+  55:25519/morph25519.c **** 	f25519_sub(a, c, f25519_one);
+  56:25519/morph25519.c **** 
+  57:25519/morph25519.c **** 	/* Compute c = a*b = (y^2+1)/(1-dy^2) */
+  58:25519/morph25519.c **** 	f25519_mul__distinct(c, a, b);
+  59:25519/morph25519.c **** 
+  60:25519/morph25519.c **** 	/* Compute a, b = +/-sqrt(c), if c is square */
+  61:25519/morph25519.c **** 	f25519_sqrt(a, c);
+  62:25519/morph25519.c **** 	f25519_neg(b, a);
+  63:25519/morph25519.c **** 
+  64:25519/morph25519.c **** 	/* Select one of them, based on the parity bit */
+  65:25519/morph25519.c **** 	f25519_select(x, a, b, (a[0] ^ parity) & 1);
+  66:25519/morph25519.c **** 
+  67:25519/morph25519.c **** 	/* Verify that x^2 = c */
+  68:25519/morph25519.c **** 	f25519_mul__distinct(a, x, x);
+  69:25519/morph25519.c **** 	f25519_normalize(a);
+  70:25519/morph25519.c **** 	f25519_normalize(c);
+  71:25519/morph25519.c **** 
+  72:25519/morph25519.c **** 	return f25519_eq(a, c);
+  73:25519/morph25519.c **** }
+  74:25519/morph25519.c **** 
+  75:25519/morph25519.c **** uint8_t morph25519_m2e(uint8_t *ex, uint8_t *ey,
+  76:25519/morph25519.c **** 		       const uint8_t *mx, int parity)
+  77:25519/morph25519.c **** {
+  97              		.loc 1 77 0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 96
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101              	.LVL9:
+ 102 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 103              		.cfi_def_cfa_offset 24
+ 104              		.cfi_offset 4, -24
+ 105              		.cfi_offset 5, -20
+ 106              		.cfi_offset 6, -16
+ 107              		.cfi_offset 7, -12
+ 108              		.cfi_offset 8, -8
+ 109              		.cfi_offset 14, -4
+ 110              	.LBB6:
+ 111              	.LBB7:
+  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
+ 112              		.loc 1 27 0
+ 113 0004 314E     		ldr	r6, .L5
+ 114              	.LBE7:
+ 115              	.LBE6:
+ 116              		.loc 1 77 0
+ 117 0006 98B0     		sub	sp, sp, #96
+ 118              		.cfi_def_cfa_offset 120
+ 119              		.loc 1 77 0
+ 120 0008 1746     		mov	r7, r2
+ 121 000a 0546     		mov	r5, r0
+ 122 000c 0C46     		mov	r4, r1
+ 123              	.LVL10:
+ 124              	.LBB10:
+ 125              	.LBB8:
+  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
+ 126              		.loc 1 27 0
+ 127 000e 3246     		mov	r2, r6
+ 128              	.LVL11:
+ 129 0010 3946     		mov	r1, r7
+ 130              	.LVL12:
+ 131 0012 08A8     		add	r0, sp, #32
+ 132              	.LVL13:
+ 133              	.LBE8:
+ 134              	.LBE10:
+ 135              		.loc 1 77 0
+ 136 0014 9846     		mov	r8, r3
+ 137              	.LBB11:
+ 138              	.LBB9:
+  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
+ 139              		.loc 1 27 0
+ 140 0016 FFF7FEFF 		bl	f25519_add
+ 141              	.LVL14:
+  28:25519/morph25519.c **** 	f25519_inv__distinct(d, n);
+ 142              		.loc 1 28 0
+ 143 001a 08A9     		add	r1, sp, #32
+ 144 001c 10A8     		add	r0, sp, #64
+ 145 001e FFF7FEFF 		bl	f25519_inv__distinct
+ 146              	.LVL15:
+  29:25519/morph25519.c **** 	f25519_sub(n, mx, f25519_one);
+ 147              		.loc 1 29 0
+ 148 0022 08A8     		add	r0, sp, #32
+ 149 0024 3946     		mov	r1, r7
+ 150 0026 3246     		mov	r2, r6
+ 151 0028 FFF7FEFF 		bl	f25519_sub
+ 152              	.LVL16:
+  30:25519/morph25519.c **** 	f25519_mul__distinct(ey, n, d);
+ 153              		.loc 1 30 0
+ 154 002c 2046     		mov	r0, r4
+ 155 002e 08A9     		add	r1, sp, #32
+ 156 0030 10AA     		add	r2, sp, #64
+ 157 0032 FFF7FEFF 		bl	f25519_mul__distinct
+ 158              	.LVL17:
+ 159              	.LBE9:
+ 160              	.LBE11:
+ 161              	.LBB12:
+ 162              	.LBB13:
+  47:25519/morph25519.c **** 	f25519_mul__distinct(c, y, y);
+ 163              		.loc 1 47 0
+ 164 0036 10A8     		add	r0, sp, #64
+ 165 0038 2146     		mov	r1, r4
+ 166 003a 2246     		mov	r2, r4
+ 167 003c FFF7FEFF 		bl	f25519_mul__distinct
+ 168              	.LVL18:
+  50:25519/morph25519.c **** 	f25519_mul__distinct(b, c, d);
+ 169              		.loc 1 50 0
+ 170 0040 08A8     		add	r0, sp, #32
+ 171 0042 10A9     		add	r1, sp, #64
+ 172 0044 224A     		ldr	r2, .L5+4
+ 173 0046 FFF7FEFF 		bl	f25519_mul__distinct
+ 174              	.LVL19:
+  51:25519/morph25519.c **** 	f25519_add(a, b, f25519_one);
+ 175              		.loc 1 51 0
+ 176 004a 3246     		mov	r2, r6
+ 177 004c 08A9     		add	r1, sp, #32
+ 178 004e 6846     		mov	r0, sp
+ 179 0050 FFF7FEFF 		bl	f25519_add
+ 180              	.LVL20:
+  52:25519/morph25519.c **** 	f25519_inv__distinct(b, a);
+ 181              		.loc 1 52 0
+ 182 0054 08A8     		add	r0, sp, #32
+ 183 0056 6946     		mov	r1, sp
+ 184 0058 FFF7FEFF 		bl	f25519_inv__distinct
+ 185              	.LVL21:
+  55:25519/morph25519.c **** 	f25519_sub(a, c, f25519_one);
+ 186              		.loc 1 55 0
+ 187 005c 6846     		mov	r0, sp
+ 188 005e 10A9     		add	r1, sp, #64
+ 189 0060 3246     		mov	r2, r6
+ 190 0062 FFF7FEFF 		bl	f25519_sub
+ 191              	.LVL22:
+  58:25519/morph25519.c **** 	f25519_mul__distinct(c, a, b);
+ 192              		.loc 1 58 0
+ 193 0066 08AA     		add	r2, sp, #32
+ 194 0068 10A8     		add	r0, sp, #64
+ 195 006a 6946     		mov	r1, sp
+ 196 006c FFF7FEFF 		bl	f25519_mul__distinct
+ 197              	.LVL23:
+  61:25519/morph25519.c **** 	f25519_sqrt(a, c);
+ 198              		.loc 1 61 0
+ 199 0070 6846     		mov	r0, sp
+ 200 0072 10A9     		add	r1, sp, #64
+ 201 0074 FFF7FEFF 		bl	f25519_sqrt
+ 202              	.LVL24:
+  62:25519/morph25519.c **** 	f25519_neg(b, a);
+ 203              		.loc 1 62 0
+ 204 0078 08A8     		add	r0, sp, #32
+ 205 007a 6946     		mov	r1, sp
+ 206 007c FFF7FEFF 		bl	f25519_neg
+ 207              	.LVL25:
+  65:25519/morph25519.c **** 	f25519_select(x, a, b, (a[0] ^ parity) & 1);
+ 208              		.loc 1 65 0
+ 209 0080 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 210 0084 08AA     		add	r2, sp, #32
+ 211 0086 88EA0303 		eor	r3, r8, r3
+ 212 008a 03F00103 		and	r3, r3, #1
+ 213 008e 2846     		mov	r0, r5
+ 214 0090 6946     		mov	r1, sp
+ 215 0092 FFF7FEFF 		bl	f25519_select
+ 216              	.LVL26:
+  68:25519/morph25519.c **** 	f25519_mul__distinct(a, x, x);
+ 217              		.loc 1 68 0
+ 218 0096 2A46     		mov	r2, r5
+ 219 0098 2946     		mov	r1, r5
+ 220 009a 6846     		mov	r0, sp
+ 221 009c FFF7FEFF 		bl	f25519_mul__distinct
+ 222              	.LVL27:
+  69:25519/morph25519.c **** 	f25519_normalize(a);
+ 223              		.loc 1 69 0
+ 224 00a0 6846     		mov	r0, sp
+ 225 00a2 FFF7FEFF 		bl	f25519_normalize
+ 226              	.LVL28:
+  70:25519/morph25519.c **** 	f25519_normalize(c);
+ 227              		.loc 1 70 0
+ 228 00a6 10A8     		add	r0, sp, #64
+ 229 00a8 FFF7FEFF 		bl	f25519_normalize
+ 230              	.LVL29:
+  72:25519/morph25519.c **** 	return f25519_eq(a, c);
+ 231              		.loc 1 72 0
+ 232 00ac 10A9     		add	r1, sp, #64
+ 233 00ae 6846     		mov	r0, sp
+ 234 00b0 FFF7FEFF 		bl	f25519_eq
+ 235              	.LVL30:
+ 236 00b4 0646     		mov	r6, r0
+ 237              	.LBE13:
+ 238              	.LBE12:
+  78:25519/morph25519.c **** 	uint8_t ok;
+  79:25519/morph25519.c **** 
+  80:25519/morph25519.c **** 	mx2ey(ey, mx);
+  81:25519/morph25519.c **** 	ok = ey2ex(ex, ey, parity);
+  82:25519/morph25519.c **** 
+  83:25519/morph25519.c **** 	f25519_normalize(ex);
+ 239              		.loc 1 83 0
+ 240 00b6 2846     		mov	r0, r5
+ 241 00b8 FFF7FEFF 		bl	f25519_normalize
+ 242              	.LVL31:
+  84:25519/morph25519.c **** 	f25519_normalize(ey);
+ 243              		.loc 1 84 0
+ 244 00bc 2046     		mov	r0, r4
+ 245 00be FFF7FEFF 		bl	f25519_normalize
+ 246              	.LVL32:
+  85:25519/morph25519.c **** 
+  86:25519/morph25519.c **** 	return ok;
+  87:25519/morph25519.c **** }
+ 247              		.loc 1 87 0
+ 248 00c2 3046     		mov	r0, r6
+ 249 00c4 18B0     		add	sp, sp, #96
+ 250              		@ sp needed
+ 251 00c6 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 252              	.LVL33:
+ 253              	.L6:
+ 254 00ca 00BF     		.align	2
+ 255              	.L5:
+ 256 00cc 00000000 		.word	f25519_one
+ 257 00d0 00000000 		.word	.LANCHOR0
+ 258              		.cfi_endproc
+ 259              	.LFE5:
+ 261              		.section	.rodata.d.4520,"a",%progbits
+ 262              		.align	2
+ 263              		.set	.LANCHOR0,. + 0
+ 266              	d.4520:
+ 267 0000 A3       		.byte	-93
+ 268 0001 78       		.byte	120
+ 269 0002 59       		.byte	89
+ 270 0003 13       		.byte	19
+ 271 0004 CA       		.byte	-54
+ 272 0005 4D       		.byte	77
+ 273 0006 EB       		.byte	-21
+ 274 0007 75       		.byte	117
+ 275 0008 AB       		.byte	-85
+ 276 0009 D8       		.byte	-40
+ 277 000a 41       		.byte	65
+ 278 000b 41       		.byte	65
+ 279 000c 4D       		.byte	77
+ 280 000d 0A       		.byte	10
+ 281 000e 70       		.byte	112
+ 282 000f 00       		.byte	0
+ 283 0010 98       		.byte	-104
+ 284 0011 E8       		.byte	-24
+ 285 0012 79       		.byte	121
+ 286 0013 77       		.byte	119
+ 287 0014 79       		.byte	121
+ 288 0015 40       		.byte	64
+ 289 0016 C7       		.byte	-57
+ 290 0017 8C       		.byte	-116
+ 291 0018 73       		.byte	115
+ 292 0019 FE       		.byte	-2
+ 293 001a 6F       		.byte	111
+ 294 001b 2B       		.byte	43
+ 295 001c EE       		.byte	-18
+ 296 001d 6C       		.byte	108
+ 297 001e 03       		.byte	3
+ 298 001f 52       		.byte	82
+ 299              		.text
+ 300              	.Letext0:
+ 301              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
+ 302              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
+ 303              		.file 4 "25519/f25519.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 morph25519.c
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:19     .text.morph25519_e2m:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:24     .text.morph25519_e2m:00000000 morph25519_e2m
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:85     .text.morph25519_e2m:0000003c $d
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:90     .text.morph25519_m2e:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:95     .text.morph25519_m2e:00000000 morph25519_m2e
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:256    .text.morph25519_m2e:000000cc $d
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:262    .rodata.d.4520:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:266    .rodata.d.4520:00000000 d.4520
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+f25519_sub
+f25519_inv__distinct
+f25519_add
+f25519_mul__distinct
+f25519_normalize
+f25519_one
+f25519_sqrt
+f25519_neg
+f25519_select
+f25519_eq

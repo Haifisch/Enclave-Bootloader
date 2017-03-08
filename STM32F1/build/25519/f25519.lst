@@ -1,0 +1,4818 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"f25519.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.f25519_load,"ax",%progbits
+  19              		.align	2
+  20              		.global	f25519_load
+  21              		.thumb
+  22              		.thumb_func
+  24              	f25519_load:
+  25              	.LFB1:
+  26              		.file 1 "25519/f25519.c"
+   1:25519/f25519.c **** /* Arithmetic mod p = 2^255-19
+   2:25519/f25519.c ****  * Daniel Beer <dlbeer@gmail.com>, 5 Jan 2014
+   3:25519/f25519.c ****  *
+   4:25519/f25519.c ****  * This file is in the public domain.
+   5:25519/f25519.c ****  */
+   6:25519/f25519.c **** 
+   7:25519/f25519.c **** #include "f25519.h"
+   8:25519/f25519.c **** 
+   9:25519/f25519.c **** const uint8_t f25519_zero[F25519_SIZE] = {0};
+  10:25519/f25519.c **** const uint8_t f25519_one[F25519_SIZE] = {1};
+  11:25519/f25519.c **** 
+  12:25519/f25519.c **** void f25519_load(uint8_t *x, uint32_t c)
+  13:25519/f25519.c **** {
+  27              		.loc 1 13 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+  33 0000 10B4     		push	{r4}
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 4, -4
+  14:25519/f25519.c **** 	int i;
+  15:25519/f25519.c **** 
+  16:25519/f25519.c **** 	for (i = 0; i < sizeof(c); i++) {
+  17:25519/f25519.c **** 		x[i] = c;
+  18:25519/f25519.c **** 		c >>= 8;
+  36              		.loc 1 18 0
+  37 0002 0A0C     		lsrs	r2, r1, #16
+  38 0004 0C0A     		lsrs	r4, r1, #8
+  39              	.LVL1:
+  40 0006 0B0E     		lsrs	r3, r1, #24
+  17:25519/f25519.c **** 		x[i] = c;
+  41              		.loc 1 17 0
+  42 0008 0170     		strb	r1, [r0]
+  43 000a 8270     		strb	r2, [r0, #2]
+  44              	.LVL2:
+  45 000c 4470     		strb	r4, [r0, #1]
+  46 000e C370     		strb	r3, [r0, #3]
+  47              	.LVL3:
+  48 0010 0021     		movs	r1, #0
+  49 0012 0430     		adds	r0, r0, #4
+  50              	.LVL4:
+  51 0014 1C22     		movs	r2, #28
+  52              	.LVL5:
+  19:25519/f25519.c **** 	}
+  20:25519/f25519.c **** 
+  21:25519/f25519.c **** 	for (; i < F25519_SIZE; i++)
+  22:25519/f25519.c **** 		x[i] = 0;
+  23:25519/f25519.c **** }
+  53              		.loc 1 23 0
+  54 0016 5DF8044B 		ldr	r4, [sp], #4
+  55 001a FFF7FEBF 		b	memset
+  56              	.LVL6:
+  57              		.cfi_endproc
+  58              	.LFE1:
+  60 001e 00BF     		.section	.text.f25519_normalize,"ax",%progbits
+  61              		.align	2
+  62              		.global	f25519_normalize
+  63              		.thumb
+  64              		.thumb_func
+  66              	f25519_normalize:
+  67              	.LFB2:
+  24:25519/f25519.c **** 
+  25:25519/f25519.c **** void f25519_normalize(uint8_t *x)
+  26:25519/f25519.c **** {
+  68              		.loc 1 26 0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 32
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		@ link register save eliminated.
+  73              	.LVL7:
+  74 0000 10B4     		push	{r4}
+  75              		.cfi_def_cfa_offset 4
+  76              		.cfi_offset 4, -4
+  27:25519/f25519.c **** 	uint8_t minusp[F25519_SIZE];
+  28:25519/f25519.c **** 	uint16_t c;
+  29:25519/f25519.c **** 	int i;
+  30:25519/f25519.c **** 
+  31:25519/f25519.c **** 	/* Reduce using 2^255 = 19 mod p */
+  32:25519/f25519.c **** 	c = (x[31] >> 7) * 19;
+  77              		.loc 1 32 0
+  78 0002 C47F     		ldrb	r4, [r0, #31]	@ zero_extendqisi2
+  26:25519/f25519.c **** {
+  79              		.loc 1 26 0
+  80 0004 89B0     		sub	sp, sp, #36
+  81              		.cfi_def_cfa_offset 40
+  82              		.loc 1 32 0
+  83 0006 E109     		lsrs	r1, r4, #7
+  84 0008 CA00     		lsls	r2, r1, #3
+  33:25519/f25519.c **** 	x[31] &= 127;
+  85              		.loc 1 33 0
+  86 000a 04F07F04 		and	r4, r4, #127
+  32:25519/f25519.c **** 	c = (x[31] >> 7) * 19;
+  87              		.loc 1 32 0
+  88 000e 0A44     		add	r2, r2, r1
+  34:25519/f25519.c **** 
+  35:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+  89              		.loc 1 35 0
+  90 0010 0023     		movs	r3, #0
+  33:25519/f25519.c **** 	x[31] &= 127;
+  91              		.loc 1 33 0
+  92 0012 C477     		strb	r4, [r0, #31]
+  32:25519/f25519.c **** 	c = (x[31] >> 7) * 19;
+  93              		.loc 1 32 0
+  94 0014 01EB4202 		add	r2, r1, r2, lsl #1
+  95              	.LVL8:
+  96              	.L4:
+  36:25519/f25519.c **** 		c += x[i];
+  97              		.loc 1 36 0 discriminator 2
+  98 0018 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+  99 001a 0A44     		add	r2, r2, r1
+ 100              	.LVL9:
+  37:25519/f25519.c **** 		x[i] = c;
+ 101              		.loc 1 37 0 discriminator 2
+ 102 001c C254     		strb	r2, [r0, r3]
+  35:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 103              		.loc 1 35 0 discriminator 2
+ 104 001e 0133     		adds	r3, r3, #1
+ 105              	.LVL10:
+ 106 0020 202B     		cmp	r3, #32
+  38:25519/f25519.c **** 		c >>= 8;
+ 107              		.loc 1 38 0 discriminator 2
+ 108 0022 C2F30F22 		ubfx	r2, r2, #8, #16
+ 109              	.LVL11:
+  35:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 110              		.loc 1 35 0 discriminator 2
+ 111 0026 F7D1     		bne	.L4
+  35:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 112              		.loc 1 35 0 is_stmt 0
+ 113 0028 0023     		movs	r3, #0
+ 114              	.LVL12:
+ 115 002a 1322     		movs	r2, #19
+ 116              	.LVL13:
+ 117              	.L6:
+  39:25519/f25519.c **** 	}
+  40:25519/f25519.c **** 
+  41:25519/f25519.c **** 	/* The number is now less than 2^255 + 18, and therefore less than
+  42:25519/f25519.c **** 	 * 2p. Try subtracting p, and conditionally load the subtracted
+  43:25519/f25519.c **** 	 * value if underflow did not occur.
+  44:25519/f25519.c **** 	 */
+  45:25519/f25519.c **** 	c = 19;
+  46:25519/f25519.c **** 
+  47:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+  48:25519/f25519.c **** 		c += x[i];
+ 118              		.loc 1 48 0 is_stmt 1 discriminator 2
+ 119 002c C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 120 002e 0A44     		add	r2, r2, r1
+ 121              	.LVL14:
+  49:25519/f25519.c **** 		minusp[i] = c;
+ 122              		.loc 1 49 0 discriminator 2
+ 123 0030 0DF80320 		strb	r2, [sp, r3]
+  47:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 124              		.loc 1 47 0 discriminator 2
+ 125 0034 0133     		adds	r3, r3, #1
+ 126              	.LVL15:
+ 127 0036 1F2B     		cmp	r3, #31
+  50:25519/f25519.c **** 		c >>= 8;
+ 128              		.loc 1 50 0 discriminator 2
+ 129 0038 C2F30F22 		ubfx	r2, r2, #8, #16
+ 130              	.LVL16:
+  47:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 131              		.loc 1 47 0 discriminator 2
+ 132 003c F6D1     		bne	.L6
+  51:25519/f25519.c **** 	}
+  52:25519/f25519.c **** 
+  53:25519/f25519.c **** 	c += ((uint16_t)x[i]) - 128;
+ 133              		.loc 1 53 0
+ 134 003e C17F     		ldrb	r1, [r0, #31]	@ zero_extendqisi2
+ 135              	.LBB10:
+ 136              	.LBB11:
+  54:25519/f25519.c **** 	minusp[31] = c;
+  55:25519/f25519.c **** 
+  56:25519/f25519.c **** 	/* Load x-p if no underflow */
+  57:25519/f25519.c **** 	f25519_select(x, minusp, x, (c >> 15) & 1);
+  58:25519/f25519.c **** }
+  59:25519/f25519.c **** 
+  60:25519/f25519.c **** uint8_t f25519_eq(const uint8_t *x, const uint8_t *y)
+  61:25519/f25519.c **** {
+  62:25519/f25519.c **** 	uint8_t sum = 0;
+  63:25519/f25519.c **** 	int i;
+  64:25519/f25519.c **** 
+  65:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+  66:25519/f25519.c **** 		sum |= x[i] ^ y[i];
+  67:25519/f25519.c **** 
+  68:25519/f25519.c **** 	sum |= (sum >> 4);
+  69:25519/f25519.c **** 	sum |= (sum >> 2);
+  70:25519/f25519.c **** 	sum |= (sum >> 1);
+  71:25519/f25519.c **** 
+  72:25519/f25519.c **** 	return (sum ^ 1) & 1;
+  73:25519/f25519.c **** }
+  74:25519/f25519.c **** 
+  75:25519/f25519.c **** void f25519_select(uint8_t *dst,
+  76:25519/f25519.c **** 		   const uint8_t *zero, const uint8_t *one,
+  77:25519/f25519.c **** 		   uint8_t condition)
+  78:25519/f25519.c **** {
+  79:25519/f25519.c **** 	const uint8_t mask = -condition;
+  80:25519/f25519.c **** 	int i;
+  81:25519/f25519.c **** 
+  82:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 137              		.loc 1 82 0
+ 138 0040 0023     		movs	r3, #0
+ 139              	.LVL17:
+ 140              	.LBE11:
+ 141              	.LBE10:
+  53:25519/f25519.c **** 	c += ((uint16_t)x[i]) - 128;
+ 142              		.loc 1 53 0
+ 143 0042 8039     		subs	r1, r1, #128
+ 144 0044 0A44     		add	r2, r2, r1
+ 145              	.LVL18:
+ 146 0046 92B2     		uxth	r2, r2
+ 147              	.LVL19:
+ 148              	.LBB14:
+ 149              	.LBB12:
+  79:25519/f25519.c **** 	const uint8_t mask = -condition;
+ 150              		.loc 1 79 0
+ 151 0048 42F3C034 		sbfx	r4, r2, #15, #1
+ 152              	.LBE12:
+ 153              	.LBE14:
+  54:25519/f25519.c **** 	minusp[31] = c;
+ 154              		.loc 1 54 0
+ 155 004c 8DF81F20 		strb	r2, [sp, #31]
+ 156              	.LVL20:
+ 157              	.LBB15:
+ 158              	.LBB13:
+  79:25519/f25519.c **** 	const uint8_t mask = -condition;
+ 159              		.loc 1 79 0
+ 160 0050 E4B2     		uxtb	r4, r4
+ 161              	.LVL21:
+ 162              	.L9:
+  83:25519/f25519.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
+ 163              		.loc 1 83 0
+ 164 0052 1DF80320 		ldrb	r2, [sp, r3]	@ zero_extendqisi2
+ 165 0056 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 166 0058 5140     		eors	r1, r1, r2
+ 167 005a 2140     		ands	r1, r1, r4
+ 168 005c 4A40     		eors	r2, r2, r1
+ 169 005e C254     		strb	r2, [r0, r3]
+  82:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 170              		.loc 1 82 0
+ 171 0060 0133     		adds	r3, r3, #1
+ 172              	.LVL22:
+ 173 0062 202B     		cmp	r3, #32
+ 174 0064 F5D1     		bne	.L9
+ 175              	.LBE13:
+ 176              	.LBE15:
+  58:25519/f25519.c **** }
+ 177              		.loc 1 58 0
+ 178 0066 09B0     		add	sp, sp, #36
+ 179              	.LVL23:
+ 180              		@ sp needed
+ 181 0068 5DF8044B 		ldr	r4, [sp], #4
+ 182              	.LVL24:
+ 183 006c 7047     		bx	lr
+ 184              		.cfi_endproc
+ 185              	.LFE2:
+ 187 006e 00BF     		.section	.text.f25519_eq,"ax",%progbits
+ 188              		.align	2
+ 189              		.global	f25519_eq
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	f25519_eq:
+ 194              	.LFB3:
+  61:25519/f25519.c **** {
+ 195              		.loc 1 61 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		@ link register save eliminated.
+ 200              	.LVL25:
+ 201 0000 40EA0103 		orr	r3, r0, r1
+ 202 0004 9B07     		lsls	r3, r3, #30
+ 203 0006 F0B4     		push	{r4, r5, r6, r7}
+ 204              		.cfi_def_cfa_offset 16
+ 205              		.cfi_offset 4, -16
+ 206              		.cfi_offset 5, -12
+ 207              		.cfi_offset 6, -8
+ 208              		.cfi_offset 7, -4
+ 209 0008 3CD1     		bne	.L15
+ 210              	.LVL26:
+  66:25519/f25519.c **** 		sum |= x[i] ^ y[i];
+ 211              		.loc 1 66 0
+ 212 000a 0768     		ldr	r7, [r0]
+ 213 000c 4268     		ldr	r2, [r0, #4]
+ 214 000e 4B68     		ldr	r3, [r1, #4]
+ 215 0010 0E68     		ldr	r6, [r1]
+ 216 0012 8568     		ldr	r5, [r0, #8]
+ 217 0014 8C68     		ldr	r4, [r1, #8]
+ 218 0016 82EA030C 		eor	ip, r2, r3
+ 219 001a 7E40     		eors	r6, r6, r7
+ 220 001c C268     		ldr	r2, [r0, #12]
+ 221 001e CB68     		ldr	r3, [r1, #12]
+ 222 0020 46EA0C06 		orr	r6, r6, ip
+ 223 0024 85EA040C 		eor	ip, r5, r4
+ 224 0028 0569     		ldr	r5, [r0, #16]
+ 225 002a 0C69     		ldr	r4, [r1, #16]
+ 226 002c 46EA0C0C 		orr	ip, r6, ip
+ 227 0030 82EA0306 		eor	r6, r2, r3
+ 228 0034 4269     		ldr	r2, [r0, #20]
+ 229 0036 4B69     		ldr	r3, [r1, #20]
+ 230 0038 4CEA060C 		orr	ip, ip, r6
+ 231 003c 8769     		ldr	r7, [r0, #24]
+ 232 003e 8E69     		ldr	r6, [r1, #24]
+ 233 0040 6C40     		eors	r4, r4, r5
+ 234 0042 4CEA0404 		orr	r4, ip, r4
+ 235 0046 5340     		eors	r3, r3, r2
+ 236 0048 C069     		ldr	r0, [r0, #28]
+ 237              	.LVL27:
+ 238 004a C969     		ldr	r1, [r1, #28]
+ 239              	.LVL28:
+ 240 004c 44EA0302 		orr	r2, r4, r3
+ 241 0050 87EA0604 		eor	r4, r7, r6
+ 242 0054 2243     		orrs	r2, r2, r4
+ 243 0056 80EA0103 		eor	r3, r0, r1
+ 244 005a 1343     		orrs	r3, r3, r2
+ 245 005c 43EA1322 		orr	r2, r3, r3, lsr #8
+ 246 0060 42EA1342 		orr	r2, r2, r3, lsr #16
+ 247 0064 02F0FF02 		and	r2, r2, #255
+ 248 0068 42EA1362 		orr	r2, r2, r3, lsr #24
+ 249              	.L16:
+  68:25519/f25519.c **** 	sum |= (sum >> 4);
+ 250              		.loc 1 68 0
+ 251 006c 42EA1212 		orr	r2, r2, r2, lsr #4
+ 252              	.LVL29:
+  69:25519/f25519.c **** 	sum |= (sum >> 2);
+ 253              		.loc 1 69 0
+ 254 0070 42EA9202 		orr	r2, r2, r2, lsr #2
+ 255              	.LVL30:
+  70:25519/f25519.c **** 	sum |= (sum >> 1);
+ 256              		.loc 1 70 0
+ 257 0074 42EA5202 		orr	r2, r2, r2, lsr #1
+ 258              	.LVL31:
+  72:25519/f25519.c **** 	return (sum ^ 1) & 1;
+ 259              		.loc 1 72 0
+ 260 0078 02F00100 		and	r0, r2, #1
+  73:25519/f25519.c **** }
+ 261              		.loc 1 73 0
+ 262 007c 80F00100 		eor	r0, r0, #1
+ 263 0080 F0BC     		pop	{r4, r5, r6, r7}
+ 264 0082 7047     		bx	lr
+ 265              	.LVL32:
+ 266              	.L15:
+  65:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 267              		.loc 1 65 0
+ 268 0084 0023     		movs	r3, #0
+  62:25519/f25519.c **** 	uint8_t sum = 0;
+ 269              		.loc 1 62 0
+ 270 0086 1A46     		mov	r2, r3
+ 271              	.LVL33:
+ 272              	.L17:
+  66:25519/f25519.c **** 		sum |= x[i] ^ y[i];
+ 273              		.loc 1 66 0
+ 274 0088 C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
+ 275 008a CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
+  65:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 276              		.loc 1 65 0
+ 277 008c 0133     		adds	r3, r3, #1
+ 278              	.LVL34:
+  66:25519/f25519.c **** 		sum |= x[i] ^ y[i];
+ 279              		.loc 1 66 0
+ 280 008e 6C40     		eors	r4, r4, r5
+  65:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 281              		.loc 1 65 0
+ 282 0090 202B     		cmp	r3, #32
+  66:25519/f25519.c **** 		sum |= x[i] ^ y[i];
+ 283              		.loc 1 66 0
+ 284 0092 42EA0402 		orr	r2, r2, r4
+ 285              	.LVL35:
+  65:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 286              		.loc 1 65 0
+ 287 0096 F7D1     		bne	.L17
+ 288 0098 E8E7     		b	.L16
+ 289              		.cfi_endproc
+ 290              	.LFE3:
+ 292 009a 00BF     		.section	.text.f25519_select,"ax",%progbits
+ 293              		.align	2
+ 294              		.global	f25519_select
+ 295              		.thumb
+ 296              		.thumb_func
+ 298              	f25519_select:
+ 299              	.LFB4:
+  78:25519/f25519.c **** {
+ 300              		.loc 1 78 0
+ 301              		.cfi_startproc
+ 302              		@ args = 0, pretend = 0, frame = 0
+ 303              		@ frame_needed = 0, uses_anonymous_args = 0
+ 304              		@ link register save eliminated.
+ 305              	.LVL36:
+ 306 0000 F0B4     		push	{r4, r5, r6, r7}
+ 307              		.cfi_def_cfa_offset 16
+ 308              		.cfi_offset 4, -16
+ 309              		.cfi_offset 5, -12
+ 310              		.cfi_offset 6, -8
+ 311              		.cfi_offset 7, -4
+ 312 0002 041D     		adds	r4, r0, #4
+ 313 0004 0F1D     		adds	r7, r1, #4
+ 314 0006 B842     		cmp	r0, r7
+ 315 0008 38BF     		it	cc
+ 316 000a A142     		cmpcc	r1, r4
+ 317 000c 02F10405 		add	r5, r2, #4
+ 318 0010 34BF     		ite	cc
+ 319 0012 0027     		movcc	r7, #0
+ 320 0014 0127     		movcs	r7, #1
+ 321 0016 A842     		cmp	r0, r5
+ 322 0018 38BF     		it	cc
+ 323 001a A242     		cmpcc	r2, r4
+ 324 001c 34BF     		ite	cc
+ 325 001e 0024     		movcc	r4, #0
+ 326 0020 0124     		movcs	r4, #1
+  79:25519/f25519.c **** 	const uint8_t mask = -condition;
+ 327              		.loc 1 79 0
+ 328 0022 5B42     		negs	r3, r3
+ 329              	.LVL37:
+ 330 0024 2742     		tst	r7, r4
+ 331 0026 DEB2     		uxtb	r6, r3
+ 332              	.LVL38:
+ 333 0028 3FD0     		beq	.L23
+ 334 002a 41EA0203 		orr	r3, r1, r2
+ 335              	.LVL39:
+ 336 002e 0343     		orrs	r3, r3, r0
+ 337 0030 9B07     		lsls	r3, r3, #30
+ 338 0032 3AD1     		bne	.L23
+ 339 0034 0023     		movs	r3, #0
+ 340 0036 66F30703 		bfi	r3, r6, #0, #8
+ 341              		.loc 1 83 0
+ 342 003a 0C68     		ldr	r4, [r1]
+ 343 003c 1568     		ldr	r5, [r2]
+ 344 003e 66F30F23 		bfi	r3, r6, #8, #8
+ 345 0042 66F31743 		bfi	r3, r6, #16, #8
+ 346 0046 66F31F63 		bfi	r3, r6, #24, #8
+ 347              	.LVL40:
+ 348 004a 6540     		eors	r5, r5, r4
+ 349 004c 1D40     		ands	r5, r5, r3
+ 350 004e 6C40     		eors	r4, r4, r5
+ 351 0050 0460     		str	r4, [r0]
+ 352 0052 4C68     		ldr	r4, [r1, #4]
+ 353 0054 5568     		ldr	r5, [r2, #4]
+ 354 0056 6540     		eors	r5, r5, r4
+ 355 0058 1D40     		ands	r5, r5, r3
+ 356 005a 6C40     		eors	r4, r4, r5
+ 357 005c 4460     		str	r4, [r0, #4]
+ 358 005e 8C68     		ldr	r4, [r1, #8]
+ 359 0060 9568     		ldr	r5, [r2, #8]
+ 360 0062 6540     		eors	r5, r5, r4
+ 361 0064 1D40     		ands	r5, r5, r3
+ 362 0066 6C40     		eors	r4, r4, r5
+ 363 0068 8460     		str	r4, [r0, #8]
+ 364 006a CC68     		ldr	r4, [r1, #12]
+ 365 006c D568     		ldr	r5, [r2, #12]
+ 366 006e 6540     		eors	r5, r5, r4
+ 367 0070 1D40     		ands	r5, r5, r3
+ 368 0072 6C40     		eors	r4, r4, r5
+ 369 0074 C460     		str	r4, [r0, #12]
+ 370 0076 0C69     		ldr	r4, [r1, #16]
+ 371 0078 1569     		ldr	r5, [r2, #16]
+ 372 007a 6540     		eors	r5, r5, r4
+ 373 007c 1D40     		ands	r5, r5, r3
+ 374 007e 6C40     		eors	r4, r4, r5
+ 375 0080 0461     		str	r4, [r0, #16]
+ 376 0082 4C69     		ldr	r4, [r1, #20]
+ 377 0084 5569     		ldr	r5, [r2, #20]
+ 378 0086 6540     		eors	r5, r5, r4
+ 379 0088 1D40     		ands	r5, r5, r3
+ 380 008a 6C40     		eors	r4, r4, r5
+ 381 008c 4461     		str	r4, [r0, #20]
+ 382 008e 8C69     		ldr	r4, [r1, #24]
+ 383 0090 9569     		ldr	r5, [r2, #24]
+ 384 0092 6540     		eors	r5, r5, r4
+ 385 0094 1D40     		ands	r5, r5, r3
+ 386 0096 6C40     		eors	r4, r4, r5
+ 387 0098 8461     		str	r4, [r0, #24]
+ 388 009a C969     		ldr	r1, [r1, #28]
+ 389              	.LVL41:
+ 390 009c D269     		ldr	r2, [r2, #28]
+ 391              	.LVL42:
+  84:25519/f25519.c **** }
+ 392              		.loc 1 84 0
+ 393 009e F0BC     		pop	{r4, r5, r6, r7}
+ 394              	.LVL43:
+  83:25519/f25519.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
+ 395              		.loc 1 83 0
+ 396 00a0 4A40     		eors	r2, r2, r1
+ 397 00a2 1340     		ands	r3, r3, r2
+ 398 00a4 5940     		eors	r1, r1, r3
+ 399 00a6 C161     		str	r1, [r0, #28]
+ 400              		.loc 1 84 0
+ 401 00a8 7047     		bx	lr
+ 402              	.LVL44:
+ 403              	.L23:
+  82:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 404              		.loc 1 82 0
+ 405 00aa 0023     		movs	r3, #0
+ 406              	.LVL45:
+ 407              	.L25:
+  83:25519/f25519.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
+ 408              		.loc 1 83 0
+ 409 00ac CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
+ 410 00ae D55C     		ldrb	r5, [r2, r3]	@ zero_extendqisi2
+ 411 00b0 6540     		eors	r5, r5, r4
+ 412 00b2 3540     		ands	r5, r5, r6
+ 413 00b4 6C40     		eors	r4, r4, r5
+ 414 00b6 C454     		strb	r4, [r0, r3]
+  82:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++)
+ 415              		.loc 1 82 0
+ 416 00b8 0133     		adds	r3, r3, #1
+ 417              	.LVL46:
+ 418 00ba 202B     		cmp	r3, #32
+ 419 00bc F6D1     		bne	.L25
+ 420              		.loc 1 84 0
+ 421 00be F0BC     		pop	{r4, r5, r6, r7}
+ 422              	.LVL47:
+ 423 00c0 7047     		bx	lr
+ 424              		.cfi_endproc
+ 425              	.LFE4:
+ 427 00c2 00BF     		.section	.text.f25519_add,"ax",%progbits
+ 428              		.align	2
+ 429              		.global	f25519_add
+ 430              		.thumb
+ 431              		.thumb_func
+ 433              	f25519_add:
+ 434              	.LFB5:
+  85:25519/f25519.c **** 
+  86:25519/f25519.c **** void f25519_add(uint8_t *r, const uint8_t *a, const uint8_t *b)
+  87:25519/f25519.c **** {
+ 435              		.loc 1 87 0
+ 436              		.cfi_startproc
+ 437              		@ args = 0, pretend = 0, frame = 0
+ 438              		@ frame_needed = 0, uses_anonymous_args = 0
+ 439              		@ link register save eliminated.
+ 440              	.LVL48:
+  88:25519/f25519.c **** 	uint16_t c = 0;
+  89:25519/f25519.c **** 	int i;
+  90:25519/f25519.c **** 
+  91:25519/f25519.c **** 	/* Add */
+  92:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 441              		.loc 1 92 0
+ 442 0000 0023     		movs	r3, #0
+  87:25519/f25519.c **** {
+ 443              		.loc 1 87 0
+ 444 0002 70B4     		push	{r4, r5, r6}
+ 445              		.cfi_def_cfa_offset 12
+ 446              		.cfi_offset 4, -12
+ 447              		.cfi_offset 5, -8
+ 448              		.cfi_offset 6, -4
+  88:25519/f25519.c **** 	uint16_t c = 0;
+ 449              		.loc 1 88 0
+ 450 0004 1C46     		mov	r4, r3
+ 451              	.LVL49:
+ 452              	.L38:
+  93:25519/f25519.c **** 		c >>= 8;
+  94:25519/f25519.c **** 		c += ((uint16_t)a[i]) + ((uint16_t)b[i]);
+ 453              		.loc 1 94 0 discriminator 2
+ 454 0006 CE5C     		ldrb	r6, [r1, r3]	@ zero_extendqisi2
+ 455 0008 D55C     		ldrb	r5, [r2, r3]	@ zero_extendqisi2
+ 456 000a 3544     		add	r5, r5, r6
+ 457 000c 05EB1424 		add	r4, r5, r4, lsr #8
+ 458              	.LVL50:
+  95:25519/f25519.c **** 		r[i] = c;
+ 459              		.loc 1 95 0 discriminator 2
+ 460 0010 C454     		strb	r4, [r0, r3]
+  92:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 461              		.loc 1 92 0 discriminator 2
+ 462 0012 0133     		adds	r3, r3, #1
+ 463              	.LVL51:
+ 464 0014 202B     		cmp	r3, #32
+ 465 0016 F6D1     		bne	.L38
+  96:25519/f25519.c **** 	}
+  97:25519/f25519.c **** 
+  98:25519/f25519.c **** 	/* Reduce with 2^255 = 19 mod p */
+  99:25519/f25519.c **** 	r[31] &= 127;
+ 100:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 466              		.loc 1 100 0
+ 467 0018 C4F3CF14 		ubfx	r4, r4, #7, #16
+ 468              	.LVL52:
+  99:25519/f25519.c **** 	r[31] &= 127;
+ 469              		.loc 1 99 0
+ 470 001c C37F     		ldrb	r3, [r0, #31]	@ zero_extendqisi2
+ 471              	.LVL53:
+ 472              		.loc 1 100 0
+ 473 001e 04EBC402 		add	r2, r4, r4, lsl #3
+ 474              	.LVL54:
+  99:25519/f25519.c **** 	r[31] &= 127;
+ 475              		.loc 1 99 0
+ 476 0022 03F07F03 		and	r3, r3, #127
+ 477              		.loc 1 100 0
+ 478 0026 04EB4202 		add	r2, r4, r2, lsl #1
+  99:25519/f25519.c **** 	r[31] &= 127;
+ 479              		.loc 1 99 0
+ 480 002a C377     		strb	r3, [r0, #31]
+ 481              		.loc 1 100 0
+ 482 002c 92B2     		uxth	r2, r2
+ 483              	.LVL55:
+ 101:25519/f25519.c **** 
+ 102:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 484              		.loc 1 102 0
+ 485 002e 0023     		movs	r3, #0
+ 486              	.LVL56:
+ 487              	.L40:
+ 103:25519/f25519.c **** 		c += r[i];
+ 488              		.loc 1 103 0 discriminator 2
+ 489 0030 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 490 0032 0A44     		add	r2, r2, r1
+ 491              	.LVL57:
+ 492 0034 92B2     		uxth	r2, r2
+ 493              	.LVL58:
+ 104:25519/f25519.c **** 		r[i] = c;
+ 494              		.loc 1 104 0 discriminator 2
+ 495 0036 C254     		strb	r2, [r0, r3]
+ 102:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 496              		.loc 1 102 0 discriminator 2
+ 497 0038 0133     		adds	r3, r3, #1
+ 498              	.LVL59:
+ 499 003a 202B     		cmp	r3, #32
+ 105:25519/f25519.c **** 		c >>= 8;
+ 500              		.loc 1 105 0 discriminator 2
+ 501 003c 4FEA1222 		lsr	r2, r2, #8
+ 502              	.LVL60:
+ 102:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 503              		.loc 1 102 0 discriminator 2
+ 504 0040 F6D1     		bne	.L40
+ 106:25519/f25519.c **** 	}
+ 107:25519/f25519.c **** }
+ 505              		.loc 1 107 0
+ 506 0042 70BC     		pop	{r4, r5, r6}
+ 507 0044 7047     		bx	lr
+ 508              		.cfi_endproc
+ 509              	.LFE5:
+ 511 0046 00BF     		.section	.text.f25519_sub,"ax",%progbits
+ 512              		.align	2
+ 513              		.global	f25519_sub
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	f25519_sub:
+ 518              	.LFB6:
+ 108:25519/f25519.c **** 
+ 109:25519/f25519.c **** void f25519_sub(uint8_t *r, const uint8_t *a, const uint8_t *b)
+ 110:25519/f25519.c **** {
+ 519              		.loc 1 110 0
+ 520              		.cfi_startproc
+ 521              		@ args = 0, pretend = 0, frame = 0
+ 522              		@ frame_needed = 0, uses_anonymous_args = 0
+ 523              		@ link register save eliminated.
+ 524              	.LVL61:
+ 525 0000 70B4     		push	{r4, r5, r6}
+ 526              		.cfi_def_cfa_offset 12
+ 527              		.cfi_offset 4, -12
+ 528              		.cfi_offset 5, -8
+ 529              		.cfi_offset 6, -4
+ 111:25519/f25519.c **** 	uint32_t c = 0;
+ 112:25519/f25519.c **** 	int i;
+ 113:25519/f25519.c **** 
+ 114:25519/f25519.c **** 	/* Calculate a + 2p - b, to avoid underflow */
+ 115:25519/f25519.c **** 	c = 218;
+ 116:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 530              		.loc 1 116 0
+ 531 0002 0023     		movs	r3, #0
+ 115:25519/f25519.c **** 	c = 218;
+ 532              		.loc 1 115 0
+ 533 0004 DA24     		movs	r4, #218
+ 534              	.LVL62:
+ 535              	.L45:
+ 117:25519/f25519.c **** 		c += 65280 + ((uint32_t)a[i]) - ((uint32_t)b[i]);
+ 536              		.loc 1 117 0 discriminator 2
+ 537 0006 CD5C     		ldrb	r5, [r1, r3]	@ zero_extendqisi2
+ 538 0008 D65C     		ldrb	r6, [r2, r3]	@ zero_extendqisi2
+ 539 000a 05F57F45 		add	r5, r5, #65280
+ 540 000e AD1B     		subs	r5, r5, r6
+ 541 0010 2C44     		add	r4, r4, r5
+ 542              	.LVL63:
+ 118:25519/f25519.c **** 		r[i] = c;
+ 543              		.loc 1 118 0 discriminator 2
+ 544 0012 C454     		strb	r4, [r0, r3]
+ 116:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 545              		.loc 1 116 0 discriminator 2
+ 546 0014 0133     		adds	r3, r3, #1
+ 547              	.LVL64:
+ 548 0016 1F2B     		cmp	r3, #31
+ 119:25519/f25519.c **** 		c >>= 8;
+ 549              		.loc 1 119 0 discriminator 2
+ 550 0018 4FEA1424 		lsr	r4, r4, #8
+ 551              	.LVL65:
+ 116:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 552              		.loc 1 116 0 discriminator 2
+ 553 001c F3D1     		bne	.L45
+ 120:25519/f25519.c **** 	}
+ 121:25519/f25519.c **** 
+ 122:25519/f25519.c **** 	c += ((uint32_t)a[31]) - ((uint32_t)b[31]);
+ 554              		.loc 1 122 0
+ 555 001e C97F     		ldrb	r1, [r1, #31]	@ zero_extendqisi2
+ 556              	.LVL66:
+ 557 0020 D27F     		ldrb	r2, [r2, #31]	@ zero_extendqisi2
+ 558              	.LVL67:
+ 123:25519/f25519.c **** 	r[31] = c & 127;
+ 124:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 125:25519/f25519.c **** 
+ 126:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 559              		.loc 1 126 0
+ 560 0022 0023     		movs	r3, #0
+ 561              	.LVL68:
+ 122:25519/f25519.c **** 	c += ((uint32_t)a[31]) - ((uint32_t)b[31]);
+ 562              		.loc 1 122 0
+ 563 0024 8A1A     		subs	r2, r1, r2
+ 564 0026 1444     		add	r4, r4, r2
+ 565              	.LVL69:
+ 124:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 566              		.loc 1 124 0
+ 567 0028 E209     		lsrs	r2, r4, #7
+ 568 002a 02EBC201 		add	r1, r2, r2, lsl #3
+ 123:25519/f25519.c **** 	r[31] = c & 127;
+ 569              		.loc 1 123 0
+ 570 002e 04F07F04 		and	r4, r4, #127
+ 571              	.LVL70:
+ 572 0032 C477     		strb	r4, [r0, #31]
+ 124:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 573              		.loc 1 124 0
+ 574 0034 02EB4102 		add	r2, r2, r1, lsl #1
+ 575              	.LVL71:
+ 576              	.L47:
+ 127:25519/f25519.c **** 		c += r[i];
+ 577              		.loc 1 127 0 discriminator 2
+ 578 0038 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 579 003a 0A44     		add	r2, r2, r1
+ 580              	.LVL72:
+ 128:25519/f25519.c **** 		r[i] = c;
+ 581              		.loc 1 128 0 discriminator 2
+ 582 003c C254     		strb	r2, [r0, r3]
+ 126:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 583              		.loc 1 126 0 discriminator 2
+ 584 003e 0133     		adds	r3, r3, #1
+ 585              	.LVL73:
+ 586 0040 202B     		cmp	r3, #32
+ 129:25519/f25519.c **** 		c >>= 8;
+ 587              		.loc 1 129 0 discriminator 2
+ 588 0042 4FEA1222 		lsr	r2, r2, #8
+ 589              	.LVL74:
+ 126:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 590              		.loc 1 126 0 discriminator 2
+ 591 0046 F7D1     		bne	.L47
+ 130:25519/f25519.c **** 	}
+ 131:25519/f25519.c **** }
+ 592              		.loc 1 131 0
+ 593 0048 70BC     		pop	{r4, r5, r6}
+ 594 004a 7047     		bx	lr
+ 595              		.cfi_endproc
+ 596              	.LFE6:
+ 598              		.section	.text.f25519_neg,"ax",%progbits
+ 599              		.align	2
+ 600              		.global	f25519_neg
+ 601              		.thumb
+ 602              		.thumb_func
+ 604              	f25519_neg:
+ 605              	.LFB7:
+ 132:25519/f25519.c **** 
+ 133:25519/f25519.c **** void f25519_neg(uint8_t *r, const uint8_t *a)
+ 134:25519/f25519.c **** {
+ 606              		.loc 1 134 0
+ 607              		.cfi_startproc
+ 608              		@ args = 0, pretend = 0, frame = 0
+ 609              		@ frame_needed = 0, uses_anonymous_args = 0
+ 610              		@ link register save eliminated.
+ 611              	.LVL75:
+ 612 0000 10B4     		push	{r4}
+ 613              		.cfi_def_cfa_offset 4
+ 614              		.cfi_offset 4, -4
+ 135:25519/f25519.c **** 	uint32_t c = 0;
+ 136:25519/f25519.c **** 	int i;
+ 137:25519/f25519.c **** 
+ 138:25519/f25519.c **** 	/* Calculate 2p - a, to avoid underflow */
+ 139:25519/f25519.c **** 	c = 218;
+ 140:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 615              		.loc 1 140 0
+ 616 0002 0023     		movs	r3, #0
+ 139:25519/f25519.c **** 	c = 218;
+ 617              		.loc 1 139 0
+ 618 0004 DA22     		movs	r2, #218
+ 619              	.LVL76:
+ 620              	.L52:
+ 141:25519/f25519.c **** 		c += 65280 - ((uint32_t)a[i]);
+ 621              		.loc 1 141 0 discriminator 2
+ 622 0006 CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
+ 623 0008 C4F57F44 		rsb	r4, r4, #65280
+ 624 000c 2244     		add	r2, r2, r4
+ 625              	.LVL77:
+ 142:25519/f25519.c **** 		r[i] = c;
+ 626              		.loc 1 142 0 discriminator 2
+ 627 000e C254     		strb	r2, [r0, r3]
+ 140:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 628              		.loc 1 140 0 discriminator 2
+ 629 0010 0133     		adds	r3, r3, #1
+ 630              	.LVL78:
+ 631 0012 1F2B     		cmp	r3, #31
+ 143:25519/f25519.c **** 		c >>= 8;
+ 632              		.loc 1 143 0 discriminator 2
+ 633 0014 4FEA1222 		lsr	r2, r2, #8
+ 634              	.LVL79:
+ 140:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 635              		.loc 1 140 0 discriminator 2
+ 636 0018 F5D1     		bne	.L52
+ 144:25519/f25519.c **** 	}
+ 145:25519/f25519.c **** 
+ 146:25519/f25519.c **** 	c -= ((uint32_t)a[31]);
+ 637              		.loc 1 146 0
+ 638 001a C97F     		ldrb	r1, [r1, #31]	@ zero_extendqisi2
+ 639              	.LVL80:
+ 147:25519/f25519.c **** 	r[31] = c & 127;
+ 148:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 149:25519/f25519.c **** 
+ 150:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 640              		.loc 1 150 0
+ 641 001c 0023     		movs	r3, #0
+ 642              	.LVL81:
+ 146:25519/f25519.c **** 	c -= ((uint32_t)a[31]);
+ 643              		.loc 1 146 0
+ 644 001e 521A     		subs	r2, r2, r1
+ 645              	.LVL82:
+ 148:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 646              		.loc 1 148 0
+ 647 0020 D109     		lsrs	r1, r2, #7
+ 147:25519/f25519.c **** 	r[31] = c & 127;
+ 648              		.loc 1 147 0
+ 649 0022 02F07F04 		and	r4, r2, #127
+ 148:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 650              		.loc 1 148 0
+ 651 0026 01EBC102 		add	r2, r1, r1, lsl #3
+ 652              	.LVL83:
+ 147:25519/f25519.c **** 	r[31] = c & 127;
+ 653              		.loc 1 147 0
+ 654 002a C477     		strb	r4, [r0, #31]
+ 148:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 655              		.loc 1 148 0
+ 656 002c 01EB4202 		add	r2, r1, r2, lsl #1
+ 657              	.LVL84:
+ 658              	.L54:
+ 151:25519/f25519.c **** 		c += r[i];
+ 659              		.loc 1 151 0 discriminator 2
+ 660 0030 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 661 0032 0A44     		add	r2, r2, r1
+ 662              	.LVL85:
+ 152:25519/f25519.c **** 		r[i] = c;
+ 663              		.loc 1 152 0 discriminator 2
+ 664 0034 C254     		strb	r2, [r0, r3]
+ 150:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 665              		.loc 1 150 0 discriminator 2
+ 666 0036 0133     		adds	r3, r3, #1
+ 667              	.LVL86:
+ 668 0038 202B     		cmp	r3, #32
+ 153:25519/f25519.c **** 		c >>= 8;
+ 669              		.loc 1 153 0 discriminator 2
+ 670 003a 4FEA1222 		lsr	r2, r2, #8
+ 671              	.LVL87:
+ 150:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 672              		.loc 1 150 0 discriminator 2
+ 673 003e F7D1     		bne	.L54
+ 154:25519/f25519.c **** 	}
+ 155:25519/f25519.c **** }
+ 674              		.loc 1 155 0
+ 675 0040 5DF8044B 		ldr	r4, [sp], #4
+ 676 0044 7047     		bx	lr
+ 677              		.cfi_endproc
+ 678              	.LFE7:
+ 680 0046 00BF     		.section	.text.f25519_mul__distinct,"ax",%progbits
+ 681              		.align	2
+ 682              		.global	f25519_mul__distinct
+ 683              		.thumb
+ 684              		.thumb_func
+ 686              	f25519_mul__distinct:
+ 687              	.LFB8:
+ 156:25519/f25519.c **** 
+ 157:25519/f25519.c **** void f25519_mul__distinct(uint8_t *r, const uint8_t *a, const uint8_t *b)
+ 158:25519/f25519.c **** {
+ 688              		.loc 1 158 0
+ 689              		.cfi_startproc
+ 690              		@ args = 0, pretend = 0, frame = 0
+ 691              		@ frame_needed = 0, uses_anonymous_args = 0
+ 692              		@ link register save eliminated.
+ 693              	.LVL88:
+ 694 0000 2DE9F003 		push	{r4, r5, r6, r7, r8, r9}
+ 695              		.cfi_def_cfa_offset 24
+ 696              		.cfi_offset 4, -24
+ 697              		.cfi_offset 5, -20
+ 698              		.cfi_offset 6, -16
+ 699              		.cfi_offset 7, -12
+ 700              		.cfi_offset 8, -8
+ 701              		.cfi_offset 9, -4
+ 159:25519/f25519.c **** 	uint32_t c = 0;
+ 160:25519/f25519.c **** 	int i;
+ 161:25519/f25519.c **** 
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 702              		.loc 1 162 0
+ 703 0004 4FF00008 		mov	r8, #0
+ 159:25519/f25519.c **** 	uint32_t c = 0;
+ 704              		.loc 1 159 0
+ 705 0008 4346     		mov	r3, r8
+ 706              	.LBB17:
+ 163:25519/f25519.c **** 		int j;
+ 164:25519/f25519.c **** 
+ 165:25519/f25519.c **** 		c >>= 8;
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 168:25519/f25519.c **** 
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 707              		.loc 1 170 0
+ 708 000a 4FF02609 		mov	r9, #38
+ 709              	.LVL89:
+ 710              	.L63:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 711              		.loc 1 165 0
+ 712 000e 1B0A     		lsrs	r3, r3, #8
+ 713              	.LVL90:
+ 714 0010 02EB0805 		add	r5, r2, r8
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 715              		.loc 1 166 0
+ 716 0014 0024     		movs	r4, #0
+ 717              	.LVL91:
+ 718              	.L59:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 719              		.loc 1 167 0 discriminator 2
+ 720 0016 0F5D     		ldrb	r7, [r1, r4]	@ zero_extendqisi2
+ 721 0018 15F80169 		ldrb	r6, [r5], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 722              		.loc 1 166 0 discriminator 2
+ 723 001c 0134     		adds	r4, r4, #1
+ 724              	.LVL92:
+ 725 001e 4445     		cmp	r4, r8
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 726              		.loc 1 167 0 discriminator 2
+ 727 0020 07FB0633 		mla	r3, r7, r6, r3
+ 728              	.LVL93:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 729              		.loc 1 166 0 discriminator 2
+ 730 0024 F7DD     		ble	.L59
+ 731 0026 28EAE875 		bic	r5, r8, r8, asr #31
+ 732 002a 6C1C     		adds	r4, r5, #1
+ 733              	.LVL94:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 734              		.loc 1 169 0 discriminator 1
+ 735 002c 202C     		cmp	r4, #32
+ 736 002e 0FD0     		beq	.L60
+ 737 0030 C5EB0806 		rsb	r6, r5, r8
+ 738 0034 2036     		adds	r6, r6, #32
+ 739 0036 1644     		add	r6, r6, r2
+ 740 0038 0D44     		add	r5, r5, r1
+ 741              	.L61:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 742              		.loc 1 171 0 discriminator 2
+ 743 003a 16F8017D 		ldrb	r7, [r6, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 744              		.loc 1 170 0 discriminator 2
+ 745 003e 15F801CF 		ldrb	ip, [r5, #1]!	@ zero_extendqisi2
+ 746 0042 09FB07F7 		mul	r7, r9, r7
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 747              		.loc 1 169 0 discriminator 2
+ 748 0046 0134     		adds	r4, r4, #1
+ 749              	.LVL95:
+ 750 0048 202C     		cmp	r4, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 751              		.loc 1 170 0 discriminator 2
+ 752 004a 0CFB0733 		mla	r3, ip, r7, r3
+ 753              	.LVL96:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 754              		.loc 1 169 0 discriminator 2
+ 755 004e F4D1     		bne	.L61
+ 756              	.L60:
+ 172:25519/f25519.c **** 
+ 173:25519/f25519.c **** 		r[i] = c;
+ 757              		.loc 1 173 0
+ 758 0050 00F80830 		strb	r3, [r0, r8]
+ 759              	.LBE17:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 760              		.loc 1 162 0
+ 761 0054 08F10108 		add	r8, r8, #1
+ 762              	.LVL97:
+ 763 0058 B8F1200F 		cmp	r8, #32
+ 764 005c D7D1     		bne	.L63
+ 174:25519/f25519.c **** 	}
+ 175:25519/f25519.c **** 
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 765              		.loc 1 176 0
+ 766 005e C17F     		ldrb	r1, [r0, #31]	@ zero_extendqisi2
+ 767              	.LVL98:
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 768              		.loc 1 177 0
+ 769 0060 DB09     		lsrs	r3, r3, #7
+ 770              	.LVL99:
+ 771 0062 03EBC302 		add	r2, r3, r3, lsl #3
+ 772              	.LVL100:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 773              		.loc 1 176 0
+ 774 0066 01F07F01 		and	r1, r1, #127
+ 775              		.loc 1 177 0
+ 776 006a 03EB4202 		add	r2, r3, r2, lsl #1
+ 777              	.LVL101:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 778              		.loc 1 176 0
+ 779 006e C177     		strb	r1, [r0, #31]
+ 178:25519/f25519.c **** 
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 780              		.loc 1 179 0
+ 781 0070 0023     		movs	r3, #0
+ 782              	.LVL102:
+ 783              	.L65:
+ 180:25519/f25519.c **** 		c += r[i];
+ 784              		.loc 1 180 0 discriminator 2
+ 785 0072 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 786 0074 0A44     		add	r2, r2, r1
+ 787              	.LVL103:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 788              		.loc 1 181 0 discriminator 2
+ 789 0076 C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 790              		.loc 1 179 0 discriminator 2
+ 791 0078 0133     		adds	r3, r3, #1
+ 792              	.LVL104:
+ 793 007a 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 794              		.loc 1 182 0 discriminator 2
+ 795 007c 4FEA1222 		lsr	r2, r2, #8
+ 796              	.LVL105:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 797              		.loc 1 179 0 discriminator 2
+ 798 0080 F7D1     		bne	.L65
+ 183:25519/f25519.c **** 	}
+ 184:25519/f25519.c **** }
+ 799              		.loc 1 184 0
+ 800 0082 BDE8F003 		pop	{r4, r5, r6, r7, r8, r9}
+ 801              	.LVL106:
+ 802 0086 7047     		bx	lr
+ 803              		.cfi_endproc
+ 804              	.LFE8:
+ 806              		.section	.text.f25519_mul,"ax",%progbits
+ 807              		.align	2
+ 808              		.global	f25519_mul
+ 809              		.thumb
+ 810              		.thumb_func
+ 812              	f25519_mul:
+ 813              	.LFB9:
+ 185:25519/f25519.c **** 
+ 186:25519/f25519.c **** void f25519_mul(uint8_t *r, const uint8_t *a, const uint8_t *b)
+ 187:25519/f25519.c **** {
+ 814              		.loc 1 187 0
+ 815              		.cfi_startproc
+ 816              		@ args = 0, pretend = 0, frame = 32
+ 817              		@ frame_needed = 0, uses_anonymous_args = 0
+ 818              		@ link register save eliminated.
+ 819              	.LVL107:
+ 820 0000 2DE9F003 		push	{r4, r5, r6, r7, r8, r9}
+ 821              		.cfi_def_cfa_offset 24
+ 822              		.cfi_offset 4, -24
+ 823              		.cfi_offset 5, -20
+ 824              		.cfi_offset 6, -16
+ 825              		.cfi_offset 7, -12
+ 826              		.cfi_offset 8, -8
+ 827              		.cfi_offset 9, -4
+ 828              	.LBB23:
+ 829              	.LBB24:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 830              		.loc 1 162 0
+ 831 0004 4FF00009 		mov	r9, #0
+ 832              	.LBE24:
+ 833              	.LBE23:
+ 834              		.loc 1 187 0
+ 835 0008 8046     		mov	r8, r0
+ 836 000a 88B0     		sub	sp, sp, #32
+ 837              		.cfi_def_cfa_offset 56
+ 838              	.LVL108:
+ 839              	.LBB27:
+ 840              	.LBB26:
+ 159:25519/f25519.c **** 	uint32_t c = 0;
+ 841              		.loc 1 159 0
+ 842 000c 4B46     		mov	r3, r9
+ 843              	.LBB25:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 844              		.loc 1 170 0
+ 845 000e 2620     		movs	r0, #38
+ 846              	.LVL109:
+ 847              	.L81:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 848              		.loc 1 165 0
+ 849 0010 1B0A     		lsrs	r3, r3, #8
+ 850              	.LVL110:
+ 851 0012 02EB0905 		add	r5, r2, r9
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 852              		.loc 1 166 0
+ 853 0016 0024     		movs	r4, #0
+ 854              	.LVL111:
+ 855              	.L77:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 856              		.loc 1 167 0
+ 857 0018 0F5D     		ldrb	r7, [r1, r4]	@ zero_extendqisi2
+ 858 001a 15F80169 		ldrb	r6, [r5], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 859              		.loc 1 166 0
+ 860 001e 0134     		adds	r4, r4, #1
+ 861              	.LVL112:
+ 862 0020 4C45     		cmp	r4, r9
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 863              		.loc 1 167 0
+ 864 0022 07FB0633 		mla	r3, r7, r6, r3
+ 865              	.LVL113:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 866              		.loc 1 166 0
+ 867 0026 F7DD     		ble	.L77
+ 868 0028 29EAE975 		bic	r5, r9, r9, asr #31
+ 869 002c 6C1C     		adds	r4, r5, #1
+ 870              	.LVL114:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 871              		.loc 1 169 0
+ 872 002e 202C     		cmp	r4, #32
+ 873 0030 0FD0     		beq	.L78
+ 874 0032 C5EB0906 		rsb	r6, r5, r9
+ 875 0036 2036     		adds	r6, r6, #32
+ 876 0038 1644     		add	r6, r6, r2
+ 877 003a 0D44     		add	r5, r5, r1
+ 878              	.L79:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 879              		.loc 1 171 0
+ 880 003c 16F8017D 		ldrb	r7, [r6, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 881              		.loc 1 170 0
+ 882 0040 15F801CF 		ldrb	ip, [r5, #1]!	@ zero_extendqisi2
+ 883 0044 00FB07F7 		mul	r7, r0, r7
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 884              		.loc 1 169 0
+ 885 0048 0134     		adds	r4, r4, #1
+ 886              	.LVL115:
+ 887 004a 202C     		cmp	r4, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 888              		.loc 1 170 0
+ 889 004c 0CFB0733 		mla	r3, ip, r7, r3
+ 890              	.LVL116:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 891              		.loc 1 169 0
+ 892 0050 F4D1     		bne	.L79
+ 893              	.L78:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 894              		.loc 1 173 0
+ 895 0052 0DF80930 		strb	r3, [sp, r9]
+ 896              	.LBE25:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 897              		.loc 1 162 0
+ 898 0056 09F10109 		add	r9, r9, #1
+ 899              	.LVL117:
+ 900 005a B9F1200F 		cmp	r9, #32
+ 901 005e D7D1     		bne	.L81
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 902              		.loc 1 176 0
+ 903 0060 9DF81F10 		ldrb	r1, [sp, #31]	@ zero_extendqisi2
+ 904              	.LVL118:
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 905              		.loc 1 177 0
+ 906 0064 DB09     		lsrs	r3, r3, #7
+ 907              	.LVL119:
+ 908 0066 03EBC302 		add	r2, r3, r3, lsl #3
+ 909              	.LVL120:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 910              		.loc 1 176 0
+ 911 006a 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 912              		.loc 1 177 0
+ 913 006e 03EB4202 		add	r2, r3, r2, lsl #1
+ 914              	.LVL121:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 915              		.loc 1 176 0
+ 916 0072 8DF81F10 		strb	r1, [sp, #31]
+ 917 0076 6B46     		mov	r3, sp
+ 918 0078 08A8     		add	r0, sp, #32
+ 919              	.LVL122:
+ 920              	.L83:
+ 180:25519/f25519.c **** 		c += r[i];
+ 921              		.loc 1 180 0
+ 922 007a 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 923 007c 0A44     		add	r2, r2, r1
+ 924              	.LVL123:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 925              		.loc 1 181 0
+ 926 007e 03F8012B 		strb	r2, [r3], #1
+ 927              	.LVL124:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 928              		.loc 1 179 0
+ 929 0082 8342     		cmp	r3, r0
+ 182:25519/f25519.c **** 		c >>= 8;
+ 930              		.loc 1 182 0
+ 931 0084 4FEA1222 		lsr	r2, r2, #8
+ 932              	.LVL125:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 933              		.loc 1 179 0
+ 934 0088 F7D1     		bne	.L83
+ 935              	.LVL126:
+ 936              	.LBE26:
+ 937              	.LBE27:
+ 938              	.LBB28:
+ 939              	.LBB29:
+ 940              		.file 2 "25519/f25519.h"
+   1:25519/f25519.h **** /* Arithmetic mod p = 2^255-19
+   2:25519/f25519.h ****  * Daniel Beer <dlbeer@gmail.com>, 8 Jan 2014
+   3:25519/f25519.h ****  *
+   4:25519/f25519.h ****  * This file is in the public domain.
+   5:25519/f25519.h ****  */
+   6:25519/f25519.h **** 
+   7:25519/f25519.h **** #ifndef F25519_H_
+   8:25519/f25519.h **** #define F25519_H_
+   9:25519/f25519.h **** 
+  10:25519/f25519.h **** #include <stdint.h>
+  11:25519/f25519.h **** #include <string.h>
+  12:25519/f25519.h **** 
+  13:25519/f25519.h **** /* Field elements are represented as little-endian byte strings. All
+  14:25519/f25519.h ****  * operations have timings which are independent of input data, so they
+  15:25519/f25519.h ****  * can be safely used for cryptography.
+  16:25519/f25519.h ****  *
+  17:25519/f25519.h ****  * Computation is performed on un-normalized elements. These are byte
+  18:25519/f25519.h ****  * strings which fall into the range 0 <= x < 2p. Use f25519_normalize()
+  19:25519/f25519.h ****  * to convert to a value 0 <= x < p.
+  20:25519/f25519.h ****  *
+  21:25519/f25519.h ****  * Elements received from the outside may greater even than 2p.
+  22:25519/f25519.h ****  * f25519_normalize() will correctly deal with these numbers too.
+  23:25519/f25519.h ****  */
+  24:25519/f25519.h **** #define F25519_SIZE		32
+  25:25519/f25519.h **** 
+  26:25519/f25519.h **** /* Identity constants */
+  27:25519/f25519.h **** extern const uint8_t f25519_zero[F25519_SIZE];
+  28:25519/f25519.h **** extern const uint8_t f25519_one[F25519_SIZE];
+  29:25519/f25519.h **** 
+  30:25519/f25519.h **** /* Load a small constant */
+  31:25519/f25519.h **** void f25519_load(uint8_t *x, uint32_t c);
+  32:25519/f25519.h **** 
+  33:25519/f25519.h **** /* Copy two points */
+  34:25519/f25519.h **** static inline void f25519_copy(uint8_t *x, const uint8_t *a)
+  35:25519/f25519.h **** {
+  36:25519/f25519.h **** 	memcpy(x, a, F25519_SIZE);
+ 941              		.loc 2 36 0
+ 942 008a 6C46     		mov	r4, sp
+ 943              	.LVL127:
+ 944 008c 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 945              	.LVL128:
+ 946 008e C8F80000 		str	r0, [r8]	@ unaligned
+ 947 0092 C8F80410 		str	r1, [r8, #4]	@ unaligned
+ 948 0096 C8F80820 		str	r2, [r8, #8]	@ unaligned
+ 949 009a C8F80C30 		str	r3, [r8, #12]	@ unaligned
+ 950 009e 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 951 00a0 C8F81000 		str	r0, [r8, #16]	@ unaligned
+ 952 00a4 C8F81410 		str	r1, [r8, #20]	@ unaligned
+ 953 00a8 C8F81820 		str	r2, [r8, #24]	@ unaligned
+ 954 00ac C8F81C30 		str	r3, [r8, #28]	@ unaligned
+ 955              	.LBE29:
+ 956              	.LBE28:
+ 188:25519/f25519.c **** 	uint8_t tmp[F25519_SIZE];
+ 189:25519/f25519.c **** 
+ 190:25519/f25519.c **** 	f25519_mul__distinct(tmp, a, b);
+ 191:25519/f25519.c **** 	f25519_copy(r, tmp);
+ 192:25519/f25519.c **** }
+ 957              		.loc 1 192 0
+ 958 00b0 08B0     		add	sp, sp, #32
+ 959              	.LVL129:
+ 960              		@ sp needed
+ 961 00b2 BDE8F003 		pop	{r4, r5, r6, r7, r8, r9}
+ 962              	.LVL130:
+ 963 00b6 7047     		bx	lr
+ 964              		.cfi_endproc
+ 965              	.LFE9:
+ 967              		.section	.text.f25519_mul_c,"ax",%progbits
+ 968              		.align	2
+ 969              		.global	f25519_mul_c
+ 970              		.thumb
+ 971              		.thumb_func
+ 973              	f25519_mul_c:
+ 974              	.LFB10:
+ 193:25519/f25519.c **** 
+ 194:25519/f25519.c **** void f25519_mul_c(uint8_t *r, const uint8_t *a, uint32_t b)
+ 195:25519/f25519.c **** {
+ 975              		.loc 1 195 0
+ 976              		.cfi_startproc
+ 977              		@ args = 0, pretend = 0, frame = 0
+ 978              		@ frame_needed = 0, uses_anonymous_args = 0
+ 979              		@ link register save eliminated.
+ 980              	.LVL131:
+ 196:25519/f25519.c **** 	uint32_t c = 0;
+ 197:25519/f25519.c **** 	int i;
+ 198:25519/f25519.c **** 
+ 199:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 981              		.loc 1 199 0
+ 982 0000 0023     		movs	r3, #0
+ 195:25519/f25519.c **** {
+ 983              		.loc 1 195 0
+ 984 0002 30B4     		push	{r4, r5}
+ 985              		.cfi_def_cfa_offset 8
+ 986              		.cfi_offset 4, -8
+ 987              		.cfi_offset 5, -4
+ 196:25519/f25519.c **** 	uint32_t c = 0;
+ 988              		.loc 1 196 0
+ 989 0004 1C46     		mov	r4, r3
+ 990              	.LVL132:
+ 991              	.L95:
+ 200:25519/f25519.c **** 		c >>= 8;
+ 201:25519/f25519.c **** 		c += b * ((uint32_t)a[i]);
+ 992              		.loc 1 201 0 discriminator 2
+ 993 0006 CD5C     		ldrb	r5, [r1, r3]	@ zero_extendqisi2
+ 994 0008 02FB05F5 		mul	r5, r2, r5
+ 995 000c 05EB1424 		add	r4, r5, r4, lsr #8
+ 996              	.LVL133:
+ 202:25519/f25519.c **** 		r[i] = c;
+ 997              		.loc 1 202 0 discriminator 2
+ 998 0010 C454     		strb	r4, [r0, r3]
+ 199:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 999              		.loc 1 199 0 discriminator 2
+ 1000 0012 0133     		adds	r3, r3, #1
+ 1001              	.LVL134:
+ 1002 0014 202B     		cmp	r3, #32
+ 1003 0016 F6D1     		bne	.L95
+ 203:25519/f25519.c **** 	}
+ 204:25519/f25519.c **** 
+ 205:25519/f25519.c **** 	r[31] &= 127;
+ 1004              		.loc 1 205 0
+ 1005 0018 C37F     		ldrb	r3, [r0, #31]	@ zero_extendqisi2
+ 1006              	.LVL135:
+ 206:25519/f25519.c **** 	c >>= 7;
+ 1007              		.loc 1 206 0
+ 1008 001a E409     		lsrs	r4, r4, #7
+ 1009              	.LVL136:
+ 205:25519/f25519.c **** 	r[31] &= 127;
+ 1010              		.loc 1 205 0
+ 1011 001c 03F07F03 		and	r3, r3, #127
+ 207:25519/f25519.c **** 	c *= 19;
+ 1012              		.loc 1 207 0
+ 1013 0020 04EBC402 		add	r2, r4, r4, lsl #3
+ 1014              	.LVL137:
+ 205:25519/f25519.c **** 	r[31] &= 127;
+ 1015              		.loc 1 205 0
+ 1016 0024 C377     		strb	r3, [r0, #31]
+ 1017              		.loc 1 207 0
+ 1018 0026 04EB4204 		add	r4, r4, r2, lsl #1
+ 1019              	.LVL138:
+ 208:25519/f25519.c **** 
+ 209:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1020              		.loc 1 209 0
+ 1021 002a 0023     		movs	r3, #0
+ 1022              	.LVL139:
+ 1023              	.L97:
+ 210:25519/f25519.c **** 		c += r[i];
+ 1024              		.loc 1 210 0 discriminator 2
+ 1025 002c C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+ 1026 002e 1444     		add	r4, r4, r2
+ 1027              	.LVL140:
+ 211:25519/f25519.c **** 		r[i] = c;
+ 1028              		.loc 1 211 0 discriminator 2
+ 1029 0030 C454     		strb	r4, [r0, r3]
+ 209:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1030              		.loc 1 209 0 discriminator 2
+ 1031 0032 0133     		adds	r3, r3, #1
+ 1032              	.LVL141:
+ 1033 0034 202B     		cmp	r3, #32
+ 212:25519/f25519.c **** 		c >>= 8;
+ 1034              		.loc 1 212 0 discriminator 2
+ 1035 0036 4FEA1424 		lsr	r4, r4, #8
+ 1036              	.LVL142:
+ 209:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1037              		.loc 1 209 0 discriminator 2
+ 1038 003a F7D1     		bne	.L97
+ 213:25519/f25519.c **** 	}
+ 214:25519/f25519.c **** }
+ 1039              		.loc 1 214 0
+ 1040 003c 30BC     		pop	{r4, r5}
+ 1041              	.LVL143:
+ 1042 003e 7047     		bx	lr
+ 1043              		.cfi_endproc
+ 1044              	.LFE10:
+ 1046              		.section	.text.f25519_inv__distinct,"ax",%progbits
+ 1047              		.align	2
+ 1048              		.global	f25519_inv__distinct
+ 1049              		.thumb
+ 1050              		.thumb_func
+ 1052              	f25519_inv__distinct:
+ 1053              	.LFB11:
+ 215:25519/f25519.c **** 
+ 216:25519/f25519.c **** void f25519_inv__distinct(uint8_t *r, const uint8_t *x)
+ 217:25519/f25519.c **** {
+ 1054              		.loc 1 217 0
+ 1055              		.cfi_startproc
+ 1056              		@ args = 0, pretend = 0, frame = 32
+ 1057              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1058              		@ link register save eliminated.
+ 1059              	.LVL144:
+ 1060 0000 2DE9F00F 		push	{r4, r5, r6, r7, r8, r9, r10, fp}
+ 1061              		.cfi_def_cfa_offset 32
+ 1062              		.cfi_offset 4, -32
+ 1063              		.cfi_offset 5, -28
+ 1064              		.cfi_offset 6, -24
+ 1065              		.cfi_offset 7, -20
+ 1066              		.cfi_offset 8, -16
+ 1067              		.cfi_offset 9, -12
+ 1068              		.cfi_offset 10, -8
+ 1069              		.cfi_offset 11, -4
+ 1070              	.LBB66:
+ 1071              	.LBB67:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1072              		.loc 1 162 0
+ 1073 0004 0026     		movs	r6, #0
+ 1074              	.LBE67:
+ 1075              	.LBE66:
+ 1076              		.loc 1 217 0
+ 1077 0006 88B0     		sub	sp, sp, #32
+ 1078              		.cfi_def_cfa_offset 64
+ 1079              	.LVL145:
+ 1080              	.LBB70:
+ 1081              	.LBB69:
+ 159:25519/f25519.c **** 	uint32_t c = 0;
+ 1082              		.loc 1 159 0
+ 1083 0008 3346     		mov	r3, r6
+ 1084              	.LBB68:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1085              		.loc 1 170 0
+ 1086 000a 4FF02608 		mov	r8, #38
+ 1087              	.LVL146:
+ 1088              	.L106:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1089              		.loc 1 165 0
+ 1090 000e 1B0A     		lsrs	r3, r3, #8
+ 1091              	.LVL147:
+ 1092 0010 7418     		adds	r4, r6, r1
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1093              		.loc 1 166 0
+ 1094 0012 0022     		movs	r2, #0
+ 1095              	.LVL148:
+ 1096              	.L102:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1097              		.loc 1 167 0
+ 1098 0014 8F5C     		ldrb	r7, [r1, r2]	@ zero_extendqisi2
+ 1099 0016 14F80159 		ldrb	r5, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1100              		.loc 1 166 0
+ 1101 001a 0132     		adds	r2, r2, #1
+ 1102              	.LVL149:
+ 1103 001c B242     		cmp	r2, r6
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1104              		.loc 1 167 0
+ 1105 001e 07FB0533 		mla	r3, r7, r5, r3
+ 1106              	.LVL150:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1107              		.loc 1 166 0
+ 1108 0022 F7DD     		ble	.L102
+ 1109 0024 26EAE674 		bic	r4, r6, r6, asr #31
+ 1110 0028 621C     		adds	r2, r4, #1
+ 1111              	.LVL151:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1112              		.loc 1 169 0
+ 1113 002a 202A     		cmp	r2, #32
+ 1114 002c 0ED0     		beq	.L103
+ 1115 002e 351B     		subs	r5, r6, r4
+ 1116 0030 2035     		adds	r5, r5, #32
+ 1117 0032 0D44     		add	r5, r5, r1
+ 1118 0034 0C44     		add	r4, r4, r1
+ 1119              	.L104:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1120              		.loc 1 171 0
+ 1121 0036 15F8017D 		ldrb	r7, [r5, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1122              		.loc 1 170 0
+ 1123 003a 14F801CF 		ldrb	ip, [r4, #1]!	@ zero_extendqisi2
+ 1124 003e 08FB07F7 		mul	r7, r8, r7
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1125              		.loc 1 169 0
+ 1126 0042 0132     		adds	r2, r2, #1
+ 1127              	.LVL152:
+ 1128 0044 202A     		cmp	r2, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1129              		.loc 1 170 0
+ 1130 0046 0CFB0733 		mla	r3, ip, r7, r3
+ 1131              	.LVL153:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1132              		.loc 1 169 0
+ 1133 004a F4D1     		bne	.L104
+ 1134              	.L103:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1135              		.loc 1 173 0
+ 1136 004c 0DF80630 		strb	r3, [sp, r6]
+ 1137              	.LBE68:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1138              		.loc 1 162 0
+ 1139 0050 0136     		adds	r6, r6, #1
+ 1140              	.LVL154:
+ 1141 0052 202E     		cmp	r6, #32
+ 1142 0054 DBD1     		bne	.L106
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1143              		.loc 1 176 0
+ 1144 0056 9DF81F40 		ldrb	r4, [sp, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1145              		.loc 1 177 0
+ 1146 005a DB09     		lsrs	r3, r3, #7
+ 1147              	.LVL155:
+ 1148 005c 03EBC302 		add	r2, r3, r3, lsl #3
+ 1149              	.LVL156:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1150              		.loc 1 176 0
+ 1151 0060 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1152              		.loc 1 177 0
+ 1153 0064 03EB4202 		add	r2, r3, r2, lsl #1
+ 1154              	.LVL157:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1155              		.loc 1 176 0
+ 1156 0068 8DF81F40 		strb	r4, [sp, #31]
+ 1157 006c 08AF     		add	r7, sp, #32
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1158              		.loc 1 177 0
+ 1159 006e 6B46     		mov	r3, sp
+ 1160              	.LVL158:
+ 1161              	.L108:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1162              		.loc 1 180 0
+ 1163 0070 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 1164 0072 2244     		add	r2, r2, r4
+ 1165              	.LVL159:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1166              		.loc 1 181 0
+ 1167 0074 03F8012B 		strb	r2, [r3], #1
+ 1168              	.LVL160:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1169              		.loc 1 179 0
+ 1170 0078 BB42     		cmp	r3, r7
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1171              		.loc 1 182 0
+ 1172 007a 4FEA1222 		lsr	r2, r2, #8
+ 1173              	.LVL161:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1174              		.loc 1 179 0
+ 1175 007e F7D1     		bne	.L108
+ 1176 0080 0025     		movs	r5, #0
+ 1177 0082 0DEB0502 		add	r2, sp, r5
+ 1178              	.LVL162:
+ 1179 0086 2B46     		mov	r3, r5
+ 1180              	.LVL163:
+ 1181 0088 02F11F09 		add	r9, r2, #31
+ 1182              	.LBE69:
+ 1183              	.LBE70:
+ 1184              	.LBB71:
+ 1185              	.LBB72:
+ 1186              	.LBB73:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1187              		.loc 1 170 0
+ 1188 008c 4FF02608 		mov	r8, #38
+ 1189              	.L114:
+ 1190              	.LVL164:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1191              		.loc 1 165 0
+ 1192 0090 1B0A     		lsrs	r3, r3, #8
+ 1193              	.LVL165:
+ 1194 0092 4C19     		adds	r4, r1, r5
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1195              		.loc 1 166 0
+ 1196 0094 0022     		movs	r2, #0
+ 1197              	.LVL166:
+ 1198              	.L110:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1199              		.loc 1 167 0
+ 1200 0096 1DF802C0 		ldrb	ip, [sp, r2]	@ zero_extendqisi2
+ 1201 009a 14F80169 		ldrb	r6, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1202              		.loc 1 166 0
+ 1203 009e 0132     		adds	r2, r2, #1
+ 1204              	.LVL167:
+ 1205 00a0 AA42     		cmp	r2, r5
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1206              		.loc 1 167 0
+ 1207 00a2 0CFB0633 		mla	r3, ip, r6, r3
+ 1208              	.LVL168:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1209              		.loc 1 166 0
+ 1210 00a6 F6DD     		ble	.L110
+ 1211 00a8 25EAE572 		bic	r2, r5, r5, asr #31
+ 1212              	.LVL169:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1213              		.loc 1 169 0
+ 1214 00ac 1F2A     		cmp	r2, #31
+ 1215 00ae 0ED0     		beq	.L111
+ 1216 00b0 AC1A     		subs	r4, r5, r2
+ 1217 00b2 2034     		adds	r4, r4, #32
+ 1218 00b4 00AE     		add	r6, sp, #0
+ 1219 00b6 0C44     		add	r4, r4, r1
+ 1220 00b8 3244     		add	r2, r2, r6
+ 1221              	.LVL170:
+ 1222              	.L112:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1223              		.loc 1 171 0
+ 1224 00ba 14F8016D 		ldrb	r6, [r4, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1225              		.loc 1 170 0
+ 1226 00be 12F801CF 		ldrb	ip, [r2, #1]!	@ zero_extendqisi2
+ 1227              	.LVL171:
+ 1228 00c2 08FB06F6 		mul	r6, r8, r6
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1229              		.loc 1 169 0
+ 1230 00c6 4A45     		cmp	r2, r9
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1231              		.loc 1 170 0
+ 1232 00c8 0CFB0633 		mla	r3, ip, r6, r3
+ 1233              	.LVL172:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1234              		.loc 1 169 0
+ 1235 00cc F5D1     		bne	.L112
+ 1236              	.LVL173:
+ 1237              	.L111:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1238              		.loc 1 173 0
+ 1239 00ce 4355     		strb	r3, [r0, r5]
+ 1240              	.LBE73:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1241              		.loc 1 162 0
+ 1242 00d0 0135     		adds	r5, r5, #1
+ 1243              	.LVL174:
+ 1244 00d2 202D     		cmp	r5, #32
+ 1245 00d4 DCD1     		bne	.L114
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1246              		.loc 1 176 0
+ 1247 00d6 C47F     		ldrb	r4, [r0, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1248              		.loc 1 177 0
+ 1249 00d8 DB09     		lsrs	r3, r3, #7
+ 1250              	.LVL175:
+ 1251 00da 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1252              		.loc 1 176 0
+ 1253 00de 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1254              		.loc 1 177 0
+ 1255 00e2 03EB4202 		add	r2, r3, r2, lsl #1
+ 1256              	.LVL176:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1257              		.loc 1 176 0
+ 1258 00e6 C477     		strb	r4, [r0, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1259              		.loc 1 179 0
+ 1260 00e8 0023     		movs	r3, #0
+ 1261              	.LVL177:
+ 1262              	.L117:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1263              		.loc 1 180 0
+ 1264 00ea C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+ 1265 00ec 2244     		add	r2, r2, r4
+ 1266              	.LVL178:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1267              		.loc 1 181 0
+ 1268 00ee C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1269              		.loc 1 179 0
+ 1270 00f0 0133     		adds	r3, r3, #1
+ 1271              	.LVL179:
+ 1272 00f2 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1273              		.loc 1 182 0
+ 1274 00f4 4FEA1222 		lsr	r2, r2, #8
+ 1275              	.LVL180:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1276              		.loc 1 179 0
+ 1277 00f8 F7D1     		bne	.L117
+ 1278 00fa 4FF0F80C 		mov	ip, #248
+ 1279              	.LBE72:
+ 1280              	.LBE71:
+ 1281              	.LBB75:
+ 1282              	.LBB76:
+ 1283              	.LBB77:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1284              		.loc 1 170 0
+ 1285 00fe 2625     		movs	r5, #38
+ 1286 0100 0DF11F06 		add	r6, sp, #31
+ 1287              	.LVL181:
+ 1288              	.L116:
+ 1289              	.LBE77:
+ 1290              	.LBE76:
+ 1291              	.LBE75:
+ 1292              	.LBB80:
+ 1293              	.LBB74:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1294              		.loc 1 179 0
+ 1295 0104 4FF00009 		mov	r9, #0
+ 1296 0108 4B46     		mov	r3, r9
+ 1297              	.LVL182:
+ 1298              	.L134:
+ 1299              	.LBE74:
+ 1300              	.LBE80:
+ 1301              	.LBB81:
+ 1302              	.LBB79:
+ 1303              	.LBB78:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1304              		.loc 1 165 0
+ 1305 010a 1B0A     		lsrs	r3, r3, #8
+ 1306              	.LVL183:
+ 1307 010c 09EB0004 		add	r4, r9, r0
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1308              		.loc 1 166 0
+ 1309 0110 0022     		movs	r2, #0
+ 1310              	.LVL184:
+ 1311              	.L119:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1312              		.loc 1 167 0
+ 1313 0112 10F802A0 		ldrb	r10, [r0, r2]	@ zero_extendqisi2
+ 1314 0116 14F80189 		ldrb	r8, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1315              		.loc 1 166 0
+ 1316 011a 0132     		adds	r2, r2, #1
+ 1317              	.LVL185:
+ 1318 011c 4A45     		cmp	r2, r9
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1319              		.loc 1 167 0
+ 1320 011e 0AFB0833 		mla	r3, r10, r8, r3
+ 1321              	.LVL186:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1322              		.loc 1 166 0
+ 1323 0122 F6DD     		ble	.L119
+ 1324 0124 29EAE974 		bic	r4, r9, r9, asr #31
+ 1325 0128 621C     		adds	r2, r4, #1
+ 1326              	.LVL187:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1327              		.loc 1 169 0
+ 1328 012a 202A     		cmp	r2, #32
+ 1329 012c 10D0     		beq	.L120
+ 1330 012e C4EB0908 		rsb	r8, r4, r9
+ 1331 0132 08F12008 		add	r8, r8, #32
+ 1332 0136 8044     		add	r8, r8, r0
+ 1333 0138 0444     		add	r4, r4, r0
+ 1334              	.L121:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1335              		.loc 1 171 0
+ 1336 013a 18F801AD 		ldrb	r10, [r8, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1337              		.loc 1 170 0
+ 1338 013e 14F801BF 		ldrb	fp, [r4, #1]!	@ zero_extendqisi2
+ 1339 0142 05FB0AFA 		mul	r10, r5, r10
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1340              		.loc 1 169 0
+ 1341 0146 0132     		adds	r2, r2, #1
+ 1342              	.LVL188:
+ 1343 0148 202A     		cmp	r2, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1344              		.loc 1 170 0
+ 1345 014a 0BFB0A33 		mla	r3, fp, r10, r3
+ 1346              	.LVL189:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1347              		.loc 1 169 0
+ 1348 014e F4D1     		bne	.L121
+ 1349              	.L120:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1350              		.loc 1 173 0
+ 1351 0150 0DF80930 		strb	r3, [sp, r9]
+ 1352              	.LBE78:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1353              		.loc 1 162 0
+ 1354 0154 09F10109 		add	r9, r9, #1
+ 1355              	.LVL190:
+ 1356 0158 B9F1200F 		cmp	r9, #32
+ 1357 015c D5D1     		bne	.L134
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1358              		.loc 1 176 0
+ 1359 015e 9DF81F40 		ldrb	r4, [sp, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1360              		.loc 1 177 0
+ 1361 0162 DB09     		lsrs	r3, r3, #7
+ 1362              	.LVL191:
+ 1363 0164 03EBC302 		add	r2, r3, r3, lsl #3
+ 1364              	.LVL192:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1365              		.loc 1 176 0
+ 1366 0168 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1367              		.loc 1 177 0
+ 1368 016c 03EB4202 		add	r2, r3, r2, lsl #1
+ 1369              	.LVL193:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1370              		.loc 1 176 0
+ 1371 0170 8DF81F40 		strb	r4, [sp, #31]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1372              		.loc 1 177 0
+ 1373 0174 00AB     		add	r3, sp, #0
+ 1374              	.LVL194:
+ 1375              	.L124:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1376              		.loc 1 180 0
+ 1377 0176 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 1378 0178 2244     		add	r2, r2, r4
+ 1379              	.LVL195:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1380              		.loc 1 181 0
+ 1381 017a 03F8012B 		strb	r2, [r3], #1
+ 1382              	.LVL196:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1383              		.loc 1 179 0
+ 1384 017e 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1385              		.loc 1 182 0
+ 1386 0180 4FEA1222 		lsr	r2, r2, #8
+ 1387              	.LVL197:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1388              		.loc 1 179 0
+ 1389 0184 F7D1     		bne	.L124
+ 1390 0186 4FF00009 		mov	r9, #0
+ 1391 018a 4B46     		mov	r3, r9
+ 1392              	.LVL198:
+ 1393              	.L130:
+ 1394              	.LBE79:
+ 1395              	.LBE81:
+ 1396              	.LBB82:
+ 1397              	.LBB83:
+ 1398              	.LBB84:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1399              		.loc 1 165 0
+ 1400 018c 1B0A     		lsrs	r3, r3, #8
+ 1401              	.LVL199:
+ 1402 018e 01EB0904 		add	r4, r1, r9
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1403              		.loc 1 166 0
+ 1404 0192 0022     		movs	r2, #0
+ 1405              	.LVL200:
+ 1406              	.L126:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1407              		.loc 1 167 0
+ 1408 0194 1DF802A0 		ldrb	r10, [sp, r2]	@ zero_extendqisi2
+ 1409 0198 14F80189 		ldrb	r8, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1410              		.loc 1 166 0
+ 1411 019c 0132     		adds	r2, r2, #1
+ 1412              	.LVL201:
+ 1413 019e 4A45     		cmp	r2, r9
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1414              		.loc 1 167 0
+ 1415 01a0 0AFB0833 		mla	r3, r10, r8, r3
+ 1416              	.LVL202:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1417              		.loc 1 166 0
+ 1418 01a4 F6DD     		ble	.L126
+ 1419 01a6 29EAE972 		bic	r2, r9, r9, asr #31
+ 1420              	.LVL203:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1421              		.loc 1 169 0
+ 1422 01aa 1F2A     		cmp	r2, #31
+ 1423 01ac 10D0     		beq	.L127
+ 1424 01ae C2EB0904 		rsb	r4, r2, r9
+ 1425 01b2 2034     		adds	r4, r4, #32
+ 1426 01b4 0DF10008 		add	r8, sp, #0
+ 1427 01b8 0C44     		add	r4, r4, r1
+ 1428 01ba 4244     		add	r2, r2, r8
+ 1429              	.LVL204:
+ 1430              	.L128:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1431              		.loc 1 171 0
+ 1432 01bc 14F8018D 		ldrb	r8, [r4, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1433              		.loc 1 170 0
+ 1434 01c0 12F801AF 		ldrb	r10, [r2, #1]!	@ zero_extendqisi2
+ 1435              	.LVL205:
+ 1436 01c4 05FB08F8 		mul	r8, r5, r8
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1437              		.loc 1 169 0
+ 1438 01c8 B242     		cmp	r2, r6
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1439              		.loc 1 170 0
+ 1440 01ca 0AFB0833 		mla	r3, r10, r8, r3
+ 1441              	.LVL206:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1442              		.loc 1 169 0
+ 1443 01ce F5D1     		bne	.L128
+ 1444              	.LVL207:
+ 1445              	.L127:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1446              		.loc 1 173 0
+ 1447 01d0 00F80930 		strb	r3, [r0, r9]
+ 1448              	.LBE84:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1449              		.loc 1 162 0
+ 1450 01d4 09F10109 		add	r9, r9, #1
+ 1451              	.LVL208:
+ 1452 01d8 B9F1200F 		cmp	r9, #32
+ 1453 01dc D6D1     		bne	.L130
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1454              		.loc 1 176 0
+ 1455 01de C47F     		ldrb	r4, [r0, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1456              		.loc 1 177 0
+ 1457 01e0 DB09     		lsrs	r3, r3, #7
+ 1458              	.LVL209:
+ 1459 01e2 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1460              		.loc 1 176 0
+ 1461 01e6 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1462              		.loc 1 177 0
+ 1463 01ea 03EB4202 		add	r2, r3, r2, lsl #1
+ 1464              	.LVL210:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1465              		.loc 1 176 0
+ 1466 01ee C477     		strb	r4, [r0, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1467              		.loc 1 179 0
+ 1468 01f0 0023     		movs	r3, #0
+ 1469              	.LVL211:
+ 1470              	.L132:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1471              		.loc 1 180 0
+ 1472 01f2 C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+ 1473 01f4 2244     		add	r2, r2, r4
+ 1474              	.LVL212:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1475              		.loc 1 181 0
+ 1476 01f6 C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1477              		.loc 1 179 0
+ 1478 01f8 0133     		adds	r3, r3, #1
+ 1479              	.LVL213:
+ 1480 01fa 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1481              		.loc 1 182 0
+ 1482 01fc 4FEA1222 		lsr	r2, r2, #8
+ 1483              	.LVL214:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1484              		.loc 1 179 0
+ 1485 0200 F7D1     		bne	.L132
+ 1486              	.LVL215:
+ 1487              	.LBE83:
+ 1488              	.LBE82:
+ 218:25519/f25519.c **** 	uint8_t s[F25519_SIZE];
+ 219:25519/f25519.c **** 	int i;
+ 220:25519/f25519.c **** 
+ 221:25519/f25519.c **** 	/* This is a prime field, so by Fermat's little theorem:
+ 222:25519/f25519.c **** 	 *
+ 223:25519/f25519.c **** 	 *     x^(p-1) = 1 mod p
+ 224:25519/f25519.c **** 	 *
+ 225:25519/f25519.c **** 	 * Therefore, raise to (p-2) = 2^255-21 to get a multiplicative
+ 226:25519/f25519.c **** 	 * inverse.
+ 227:25519/f25519.c **** 	 *
+ 228:25519/f25519.c **** 	 * This is a 255-bit binary number with the digits:
+ 229:25519/f25519.c **** 	 *
+ 230:25519/f25519.c **** 	 *     11111111... 01011
+ 231:25519/f25519.c **** 	 *
+ 232:25519/f25519.c **** 	 * We compute the result by the usual binary chain, but
+ 233:25519/f25519.c **** 	 * alternate between keeping the accumulator in r and s, so as
+ 234:25519/f25519.c **** 	 * to avoid copying temporaries.
+ 235:25519/f25519.c **** 	 */
+ 236:25519/f25519.c **** 
+ 237:25519/f25519.c **** 	/* 1 1 */
+ 238:25519/f25519.c **** 	f25519_mul__distinct(s, x, x);
+ 239:25519/f25519.c **** 	f25519_mul__distinct(r, s, x);
+ 240:25519/f25519.c **** 
+ 241:25519/f25519.c **** 	/* 1 x 248 */
+ 242:25519/f25519.c **** 	for (i = 0; i < 248; i++) {
+ 1489              		.loc 1 242 0 discriminator 2
+ 1490 0202 BCF1010C 		subs	ip, ip, #1
+ 1491 0206 7FF47DAF 		bne	.L116
+ 1492              		.loc 1 242 0 is_stmt 0
+ 1493 020a 6346     		mov	r3, ip
+ 1494              	.LVL216:
+ 1495              	.LBB85:
+ 1496              	.LBB86:
+ 1497              	.LBB87:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1498              		.loc 1 170 0 is_stmt 1
+ 1499 020c 4FF02609 		mov	r9, #38
+ 1500              	.LVL217:
+ 1501              	.L140:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1502              		.loc 1 165 0
+ 1503 0210 1B0A     		lsrs	r3, r3, #8
+ 1504              	.LVL218:
+ 1505 0212 00EB0C04 		add	r4, r0, ip
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1506              		.loc 1 166 0
+ 1507 0216 0022     		movs	r2, #0
+ 1508              	.LVL219:
+ 1509              	.L136:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1510              		.loc 1 167 0
+ 1511 0218 865C     		ldrb	r6, [r0, r2]	@ zero_extendqisi2
+ 1512 021a 14F80159 		ldrb	r5, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1513              		.loc 1 166 0
+ 1514 021e 0132     		adds	r2, r2, #1
+ 1515              	.LVL220:
+ 1516 0220 6245     		cmp	r2, ip
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1517              		.loc 1 167 0
+ 1518 0222 06FB0533 		mla	r3, r6, r5, r3
+ 1519              	.LVL221:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1520              		.loc 1 166 0
+ 1521 0226 F7DD     		ble	.L136
+ 1522 0228 2CEAEC74 		bic	r4, ip, ip, asr #31
+ 1523 022c 621C     		adds	r2, r4, #1
+ 1524              	.LVL222:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1525              		.loc 1 169 0
+ 1526 022e 202A     		cmp	r2, #32
+ 1527 0230 0FD0     		beq	.L137
+ 1528 0232 C4EB0C05 		rsb	r5, r4, ip
+ 1529 0236 2035     		adds	r5, r5, #32
+ 1530 0238 0544     		add	r5, r5, r0
+ 1531 023a 0444     		add	r4, r4, r0
+ 1532              	.L138:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1533              		.loc 1 171 0
+ 1534 023c 15F8016D 		ldrb	r6, [r5, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1535              		.loc 1 170 0
+ 1536 0240 14F8018F 		ldrb	r8, [r4, #1]!	@ zero_extendqisi2
+ 1537 0244 09FB06F6 		mul	r6, r9, r6
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1538              		.loc 1 169 0
+ 1539 0248 0132     		adds	r2, r2, #1
+ 1540              	.LVL223:
+ 1541 024a 202A     		cmp	r2, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1542              		.loc 1 170 0
+ 1543 024c 08FB0633 		mla	r3, r8, r6, r3
+ 1544              	.LVL224:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1545              		.loc 1 169 0
+ 1546 0250 F4D1     		bne	.L138
+ 1547              	.L137:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1548              		.loc 1 173 0
+ 1549 0252 0DF80C30 		strb	r3, [sp, ip]
+ 1550              	.LBE87:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1551              		.loc 1 162 0
+ 1552 0256 0CF1010C 		add	ip, ip, #1
+ 1553              	.LVL225:
+ 1554 025a BCF1200F 		cmp	ip, #32
+ 1555 025e D7D1     		bne	.L140
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1556              		.loc 1 176 0
+ 1557 0260 9DF81F40 		ldrb	r4, [sp, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1558              		.loc 1 177 0
+ 1559 0264 DB09     		lsrs	r3, r3, #7
+ 1560              	.LVL226:
+ 1561 0266 03EBC302 		add	r2, r3, r3, lsl #3
+ 1562              	.LVL227:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1563              		.loc 1 176 0
+ 1564 026a 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1565              		.loc 1 177 0
+ 1566 026e 03EB4202 		add	r2, r3, r2, lsl #1
+ 1567              	.LVL228:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1568              		.loc 1 176 0
+ 1569 0272 8DF81F40 		strb	r4, [sp, #31]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1570              		.loc 1 177 0
+ 1571 0276 00AB     		add	r3, sp, #0
+ 1572              	.LVL229:
+ 1573              	.L142:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1574              		.loc 1 180 0
+ 1575 0278 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 1576 027a 2244     		add	r2, r2, r4
+ 1577              	.LVL230:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1578              		.loc 1 181 0
+ 1579 027c 03F8012B 		strb	r2, [r3], #1
+ 1580              	.LVL231:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1581              		.loc 1 179 0
+ 1582 0280 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1583              		.loc 1 182 0
+ 1584 0282 4FEA1222 		lsr	r2, r2, #8
+ 1585              	.LVL232:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1586              		.loc 1 179 0
+ 1587 0286 F7D1     		bne	.L142
+ 1588 0288 0025     		movs	r5, #0
+ 1589 028a 0DEB0502 		add	r2, sp, r5
+ 1590              	.LVL233:
+ 1591 028e 2B46     		mov	r3, r5
+ 1592              	.LVL234:
+ 1593 0290 02F11F09 		add	r9, r2, #31
+ 1594              	.LBE86:
+ 1595              	.LBE85:
+ 1596              	.LBB88:
+ 1597              	.LBB89:
+ 1598              	.LBB90:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1599              		.loc 1 170 0
+ 1600 0294 4FF02608 		mov	r8, #38
+ 1601              	.L148:
+ 1602              	.LVL235:
+ 1603 0298 00AC     		add	r4, sp, #0
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1604              		.loc 1 165 0
+ 1605 029a 1B0A     		lsrs	r3, r3, #8
+ 1606              	.LVL236:
+ 1607 029c 2C44     		add	r4, r4, r5
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1608              		.loc 1 166 0
+ 1609 029e 0022     		movs	r2, #0
+ 1610              	.LVL237:
+ 1611              	.L144:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1612              		.loc 1 167 0
+ 1613 02a0 1DF802C0 		ldrb	ip, [sp, r2]	@ zero_extendqisi2
+ 1614 02a4 14F80169 		ldrb	r6, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1615              		.loc 1 166 0
+ 1616 02a8 0132     		adds	r2, r2, #1
+ 1617              	.LVL238:
+ 1618 02aa AA42     		cmp	r2, r5
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1619              		.loc 1 167 0
+ 1620 02ac 0CFB0633 		mla	r3, ip, r6, r3
+ 1621              	.LVL239:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1622              		.loc 1 166 0
+ 1623 02b0 F6DD     		ble	.L144
+ 1624 02b2 25EAE572 		bic	r2, r5, r5, asr #31
+ 1625              	.LVL240:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1626              		.loc 1 169 0
+ 1627 02b6 1F2A     		cmp	r2, #31
+ 1628 02b8 0ED0     		beq	.L145
+ 1629 02ba AC1A     		subs	r4, r5, r2
+ 1630 02bc 00AE     		add	r6, sp, #0
+ 1631 02be 2034     		adds	r4, r4, #32
+ 1632 02c0 3444     		add	r4, r4, r6
+ 1633 02c2 3244     		add	r2, r2, r6
+ 1634              	.LVL241:
+ 1635              	.L146:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1636              		.loc 1 171 0
+ 1637 02c4 14F8016D 		ldrb	r6, [r4, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1638              		.loc 1 170 0
+ 1639 02c8 12F801CF 		ldrb	ip, [r2, #1]!	@ zero_extendqisi2
+ 1640              	.LVL242:
+ 1641 02cc 08FB06F6 		mul	r6, r8, r6
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1642              		.loc 1 169 0
+ 1643 02d0 4A45     		cmp	r2, r9
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1644              		.loc 1 170 0
+ 1645 02d2 0CFB0633 		mla	r3, ip, r6, r3
+ 1646              	.LVL243:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1647              		.loc 1 169 0
+ 1648 02d6 F5D1     		bne	.L146
+ 1649              	.LVL244:
+ 1650              	.L145:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1651              		.loc 1 173 0
+ 1652 02d8 4355     		strb	r3, [r0, r5]
+ 1653              	.LBE90:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1654              		.loc 1 162 0
+ 1655 02da 0135     		adds	r5, r5, #1
+ 1656              	.LVL245:
+ 1657 02dc 202D     		cmp	r5, #32
+ 1658 02de DBD1     		bne	.L148
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1659              		.loc 1 176 0
+ 1660 02e0 C47F     		ldrb	r4, [r0, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1661              		.loc 1 177 0
+ 1662 02e2 DB09     		lsrs	r3, r3, #7
+ 1663              	.LVL246:
+ 1664 02e4 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1665              		.loc 1 176 0
+ 1666 02e8 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1667              		.loc 1 177 0
+ 1668 02ec 03EB4202 		add	r2, r3, r2, lsl #1
+ 1669              	.LVL247:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1670              		.loc 1 176 0
+ 1671 02f0 C477     		strb	r4, [r0, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1672              		.loc 1 179 0
+ 1673 02f2 0023     		movs	r3, #0
+ 1674              	.LVL248:
+ 1675              	.L150:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1676              		.loc 1 180 0
+ 1677 02f4 C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+ 1678 02f6 2244     		add	r2, r2, r4
+ 1679              	.LVL249:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1680              		.loc 1 181 0
+ 1681 02f8 C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1682              		.loc 1 179 0
+ 1683 02fa 0133     		adds	r3, r3, #1
+ 1684              	.LVL250:
+ 1685 02fc 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1686              		.loc 1 182 0
+ 1687 02fe 4FEA1222 		lsr	r2, r2, #8
+ 1688              	.LVL251:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1689              		.loc 1 179 0
+ 1690 0302 F7D1     		bne	.L150
+ 1691 0304 0026     		movs	r6, #0
+ 1692 0306 3346     		mov	r3, r6
+ 1693              	.LVL252:
+ 1694              	.LBE89:
+ 1695              	.LBE88:
+ 1696              	.LBB91:
+ 1697              	.LBB92:
+ 1698              	.LBB93:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1699              		.loc 1 170 0
+ 1700 0308 4FF02609 		mov	r9, #38
+ 1701              	.LVL253:
+ 1702              	.L156:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1703              		.loc 1 165 0
+ 1704 030c 1B0A     		lsrs	r3, r3, #8
+ 1705              	.LVL254:
+ 1706 030e 8C19     		adds	r4, r1, r6
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1707              		.loc 1 166 0
+ 1708 0310 0022     		movs	r2, #0
+ 1709              	.LVL255:
+ 1710              	.L152:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1711              		.loc 1 167 0
+ 1712 0312 10F802C0 		ldrb	ip, [r0, r2]	@ zero_extendqisi2
+ 1713 0316 14F80159 		ldrb	r5, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1714              		.loc 1 166 0
+ 1715 031a 0132     		adds	r2, r2, #1
+ 1716              	.LVL256:
+ 1717 031c B242     		cmp	r2, r6
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1718              		.loc 1 167 0
+ 1719 031e 0CFB0533 		mla	r3, ip, r5, r3
+ 1720              	.LVL257:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1721              		.loc 1 166 0
+ 1722 0322 F6DD     		ble	.L152
+ 1723 0324 26EAE674 		bic	r4, r6, r6, asr #31
+ 1724 0328 621C     		adds	r2, r4, #1
+ 1725              	.LVL258:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1726              		.loc 1 169 0
+ 1727 032a 202A     		cmp	r2, #32
+ 1728 032c 0ED0     		beq	.L153
+ 1729 032e 351B     		subs	r5, r6, r4
+ 1730 0330 2035     		adds	r5, r5, #32
+ 1731 0332 0D44     		add	r5, r5, r1
+ 1732 0334 0444     		add	r4, r4, r0
+ 1733              	.L154:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1734              		.loc 1 171 0
+ 1735 0336 15F801CD 		ldrb	ip, [r5, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1736              		.loc 1 170 0
+ 1737 033a 14F8018F 		ldrb	r8, [r4, #1]!	@ zero_extendqisi2
+ 1738 033e 09FB0CFC 		mul	ip, r9, ip
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1739              		.loc 1 169 0
+ 1740 0342 0132     		adds	r2, r2, #1
+ 1741              	.LVL259:
+ 1742 0344 202A     		cmp	r2, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1743              		.loc 1 170 0
+ 1744 0346 08FB0C33 		mla	r3, r8, ip, r3
+ 1745              	.LVL260:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1746              		.loc 1 169 0
+ 1747 034a F4D1     		bne	.L154
+ 1748              	.L153:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1749              		.loc 1 173 0
+ 1750 034c 0DF80630 		strb	r3, [sp, r6]
+ 1751              	.LBE93:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1752              		.loc 1 162 0
+ 1753 0350 0136     		adds	r6, r6, #1
+ 1754              	.LVL261:
+ 1755 0352 202E     		cmp	r6, #32
+ 1756 0354 DAD1     		bne	.L156
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1757              		.loc 1 176 0
+ 1758 0356 9DF81F40 		ldrb	r4, [sp, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1759              		.loc 1 177 0
+ 1760 035a DB09     		lsrs	r3, r3, #7
+ 1761              	.LVL262:
+ 1762 035c 03EBC302 		add	r2, r3, r3, lsl #3
+ 1763              	.LVL263:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1764              		.loc 1 176 0
+ 1765 0360 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1766              		.loc 1 177 0
+ 1767 0364 03EB4202 		add	r2, r3, r2, lsl #1
+ 1768              	.LVL264:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1769              		.loc 1 176 0
+ 1770 0368 8DF81F40 		strb	r4, [sp, #31]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1771              		.loc 1 177 0
+ 1772 036c 00AB     		add	r3, sp, #0
+ 1773              	.LVL265:
+ 1774              	.L158:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1775              		.loc 1 180 0
+ 1776 036e 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 1777 0370 2244     		add	r2, r2, r4
+ 1778              	.LVL266:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1779              		.loc 1 181 0
+ 1780 0372 03F8012B 		strb	r2, [r3], #1
+ 1781              	.LVL267:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1782              		.loc 1 179 0
+ 1783 0376 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1784              		.loc 1 182 0
+ 1785 0378 4FEA1222 		lsr	r2, r2, #8
+ 1786              	.LVL268:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1787              		.loc 1 179 0
+ 1788 037c F7D1     		bne	.L158
+ 1789 037e 0025     		movs	r5, #0
+ 1790 0380 0DEB0508 		add	r8, sp, r5
+ 1791 0384 08F11F09 		add	r9, r8, #31
+ 1792 0388 2B46     		mov	r3, r5
+ 1793              	.LVL269:
+ 1794              	.LBE92:
+ 1795              	.LBE91:
+ 1796              	.LBB94:
+ 1797              	.LBB95:
+ 1798              	.LBB96:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1799              		.loc 1 170 0
+ 1800 038a 4FF02608 		mov	r8, #38
+ 1801              	.LVL270:
+ 1802              	.L164:
+ 1803 038e 00AC     		add	r4, sp, #0
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1804              		.loc 1 165 0
+ 1805 0390 1B0A     		lsrs	r3, r3, #8
+ 1806              	.LVL271:
+ 1807 0392 2C44     		add	r4, r4, r5
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1808              		.loc 1 166 0
+ 1809 0394 0022     		movs	r2, #0
+ 1810              	.LVL272:
+ 1811              	.L160:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1812              		.loc 1 167 0
+ 1813 0396 1DF802C0 		ldrb	ip, [sp, r2]	@ zero_extendqisi2
+ 1814 039a 14F80169 		ldrb	r6, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1815              		.loc 1 166 0
+ 1816 039e 0132     		adds	r2, r2, #1
+ 1817              	.LVL273:
+ 1818 03a0 AA42     		cmp	r2, r5
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1819              		.loc 1 167 0
+ 1820 03a2 0CFB0633 		mla	r3, ip, r6, r3
+ 1821              	.LVL274:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1822              		.loc 1 166 0
+ 1823 03a6 F6DD     		ble	.L160
+ 1824 03a8 25EAE572 		bic	r2, r5, r5, asr #31
+ 1825              	.LVL275:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1826              		.loc 1 169 0
+ 1827 03ac 1F2A     		cmp	r2, #31
+ 1828 03ae 0ED0     		beq	.L161
+ 1829 03b0 AC1A     		subs	r4, r5, r2
+ 1830 03b2 00AE     		add	r6, sp, #0
+ 1831 03b4 2034     		adds	r4, r4, #32
+ 1832 03b6 3444     		add	r4, r4, r6
+ 1833 03b8 3244     		add	r2, r2, r6
+ 1834              	.LVL276:
+ 1835              	.L162:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1836              		.loc 1 171 0
+ 1837 03ba 14F8016D 		ldrb	r6, [r4, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1838              		.loc 1 170 0
+ 1839 03be 12F801CF 		ldrb	ip, [r2, #1]!	@ zero_extendqisi2
+ 1840              	.LVL277:
+ 1841 03c2 08FB06F6 		mul	r6, r8, r6
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1842              		.loc 1 169 0
+ 1843 03c6 4A45     		cmp	r2, r9
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1844              		.loc 1 170 0
+ 1845 03c8 0CFB0633 		mla	r3, ip, r6, r3
+ 1846              	.LVL278:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1847              		.loc 1 169 0
+ 1848 03cc F5D1     		bne	.L162
+ 1849              	.LVL279:
+ 1850              	.L161:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1851              		.loc 1 173 0
+ 1852 03ce 4355     		strb	r3, [r0, r5]
+ 1853              	.LBE96:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1854              		.loc 1 162 0
+ 1855 03d0 0135     		adds	r5, r5, #1
+ 1856              	.LVL280:
+ 1857 03d2 202D     		cmp	r5, #32
+ 1858 03d4 DBD1     		bne	.L164
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1859              		.loc 1 176 0
+ 1860 03d6 C47F     		ldrb	r4, [r0, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1861              		.loc 1 177 0
+ 1862 03d8 DB09     		lsrs	r3, r3, #7
+ 1863              	.LVL281:
+ 1864 03da 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1865              		.loc 1 176 0
+ 1866 03de 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1867              		.loc 1 177 0
+ 1868 03e2 03EB4202 		add	r2, r3, r2, lsl #1
+ 1869              	.LVL282:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1870              		.loc 1 176 0
+ 1871 03e6 C477     		strb	r4, [r0, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1872              		.loc 1 179 0
+ 1873 03e8 0023     		movs	r3, #0
+ 1874              	.LVL283:
+ 1875              	.L166:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1876              		.loc 1 180 0
+ 1877 03ea C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+ 1878 03ec 2244     		add	r2, r2, r4
+ 1879              	.LVL284:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1880              		.loc 1 181 0
+ 1881 03ee C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1882              		.loc 1 179 0
+ 1883 03f0 0133     		adds	r3, r3, #1
+ 1884              	.LVL285:
+ 1885 03f2 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1886              		.loc 1 182 0
+ 1887 03f4 4FEA1222 		lsr	r2, r2, #8
+ 1888              	.LVL286:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1889              		.loc 1 179 0
+ 1890 03f8 F7D1     		bne	.L166
+ 1891 03fa 0026     		movs	r6, #0
+ 1892 03fc 3346     		mov	r3, r6
+ 1893              	.LVL287:
+ 1894              	.LBE95:
+ 1895              	.LBE94:
+ 1896              	.LBB97:
+ 1897              	.LBB98:
+ 1898              	.LBB99:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1899              		.loc 1 170 0
+ 1900 03fe 4FF02609 		mov	r9, #38
+ 1901              	.LVL288:
+ 1902              	.L172:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 1903              		.loc 1 165 0
+ 1904 0402 1B0A     		lsrs	r3, r3, #8
+ 1905              	.LVL289:
+ 1906 0404 8419     		adds	r4, r0, r6
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1907              		.loc 1 166 0
+ 1908 0406 0022     		movs	r2, #0
+ 1909              	.LVL290:
+ 1910              	.L168:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1911              		.loc 1 167 0
+ 1912 0408 10F802C0 		ldrb	ip, [r0, r2]	@ zero_extendqisi2
+ 1913 040c 14F80159 		ldrb	r5, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1914              		.loc 1 166 0
+ 1915 0410 0132     		adds	r2, r2, #1
+ 1916              	.LVL291:
+ 1917 0412 B242     		cmp	r2, r6
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 1918              		.loc 1 167 0
+ 1919 0414 0CFB0533 		mla	r3, ip, r5, r3
+ 1920              	.LVL292:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 1921              		.loc 1 166 0
+ 1922 0418 F6DD     		ble	.L168
+ 1923 041a 26EAE674 		bic	r4, r6, r6, asr #31
+ 1924 041e 621C     		adds	r2, r4, #1
+ 1925              	.LVL293:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1926              		.loc 1 169 0
+ 1927 0420 202A     		cmp	r2, #32
+ 1928 0422 0ED0     		beq	.L169
+ 1929 0424 351B     		subs	r5, r6, r4
+ 1930 0426 2035     		adds	r5, r5, #32
+ 1931 0428 0544     		add	r5, r5, r0
+ 1932 042a 0444     		add	r4, r4, r0
+ 1933              	.L170:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 1934              		.loc 1 171 0
+ 1935 042c 15F801CD 		ldrb	ip, [r5, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1936              		.loc 1 170 0
+ 1937 0430 14F8018F 		ldrb	r8, [r4, #1]!	@ zero_extendqisi2
+ 1938 0434 09FB0CFC 		mul	ip, r9, ip
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1939              		.loc 1 169 0
+ 1940 0438 0132     		adds	r2, r2, #1
+ 1941              	.LVL294:
+ 1942 043a 202A     		cmp	r2, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1943              		.loc 1 170 0
+ 1944 043c 08FB0C33 		mla	r3, r8, ip, r3
+ 1945              	.LVL295:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 1946              		.loc 1 169 0
+ 1947 0440 F4D1     		bne	.L170
+ 1948              	.L169:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 1949              		.loc 1 173 0
+ 1950 0442 0DF80630 		strb	r3, [sp, r6]
+ 1951              	.LBE99:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1952              		.loc 1 162 0
+ 1953 0446 0136     		adds	r6, r6, #1
+ 1954              	.LVL296:
+ 1955 0448 202E     		cmp	r6, #32
+ 1956 044a DAD1     		bne	.L172
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1957              		.loc 1 176 0
+ 1958 044c 9DF81F40 		ldrb	r4, [sp, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1959              		.loc 1 177 0
+ 1960 0450 DB09     		lsrs	r3, r3, #7
+ 1961              	.LVL297:
+ 1962 0452 03EBC302 		add	r2, r3, r3, lsl #3
+ 1963              	.LVL298:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1964              		.loc 1 176 0
+ 1965 0456 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1966              		.loc 1 177 0
+ 1967 045a 03EB4202 		add	r2, r3, r2, lsl #1
+ 1968              	.LVL299:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 1969              		.loc 1 176 0
+ 1970 045e 8DF81F40 		strb	r4, [sp, #31]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 1971              		.loc 1 177 0
+ 1972 0462 00AB     		add	r3, sp, #0
+ 1973              	.LVL300:
+ 1974              	.L174:
+ 180:25519/f25519.c **** 		c += r[i];
+ 1975              		.loc 1 180 0
+ 1976 0464 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 1977 0466 2244     		add	r2, r2, r4
+ 1978              	.LVL301:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 1979              		.loc 1 181 0
+ 1980 0468 03F8012B 		strb	r2, [r3], #1
+ 1981              	.LVL302:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1982              		.loc 1 179 0
+ 1983 046c 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 1984              		.loc 1 182 0
+ 1985 046e 4FEA1222 		lsr	r2, r2, #8
+ 1986              	.LVL303:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 1987              		.loc 1 179 0
+ 1988 0472 F7D1     		bne	.L174
+ 1989 0474 0025     		movs	r5, #0
+ 1990 0476 0DEB0508 		add	r8, sp, r5
+ 1991 047a 08F11F09 		add	r9, r8, #31
+ 1992 047e 2B46     		mov	r3, r5
+ 1993              	.LVL304:
+ 1994              	.LBE98:
+ 1995              	.LBE97:
+ 1996              	.LBB100:
+ 1997              	.LBB101:
+ 1998              	.LBB102:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 1999              		.loc 1 170 0
+ 2000 0480 4FF02608 		mov	r8, #38
+ 2001              	.LVL305:
+ 2002              	.L180:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2003              		.loc 1 165 0
+ 2004 0484 1B0A     		lsrs	r3, r3, #8
+ 2005              	.LVL306:
+ 2006 0486 4C19     		adds	r4, r1, r5
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2007              		.loc 1 166 0
+ 2008 0488 0022     		movs	r2, #0
+ 2009              	.LVL307:
+ 2010              	.L176:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2011              		.loc 1 167 0
+ 2012 048a 1DF802C0 		ldrb	ip, [sp, r2]	@ zero_extendqisi2
+ 2013 048e 14F80169 		ldrb	r6, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2014              		.loc 1 166 0
+ 2015 0492 0132     		adds	r2, r2, #1
+ 2016              	.LVL308:
+ 2017 0494 AA42     		cmp	r2, r5
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2018              		.loc 1 167 0
+ 2019 0496 0CFB0633 		mla	r3, ip, r6, r3
+ 2020              	.LVL309:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2021              		.loc 1 166 0
+ 2022 049a F6DD     		ble	.L176
+ 2023 049c 25EAE572 		bic	r2, r5, r5, asr #31
+ 2024              	.LVL310:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2025              		.loc 1 169 0
+ 2026 04a0 1F2A     		cmp	r2, #31
+ 2027 04a2 0ED0     		beq	.L177
+ 2028 04a4 AC1A     		subs	r4, r5, r2
+ 2029 04a6 2034     		adds	r4, r4, #32
+ 2030 04a8 00AE     		add	r6, sp, #0
+ 2031 04aa 0C44     		add	r4, r4, r1
+ 2032 04ac 3244     		add	r2, r2, r6
+ 2033              	.LVL311:
+ 2034              	.L178:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2035              		.loc 1 171 0
+ 2036 04ae 14F8016D 		ldrb	r6, [r4, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2037              		.loc 1 170 0
+ 2038 04b2 12F801CF 		ldrb	ip, [r2, #1]!	@ zero_extendqisi2
+ 2039              	.LVL312:
+ 2040 04b6 08FB06F6 		mul	r6, r8, r6
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2041              		.loc 1 169 0
+ 2042 04ba 4A45     		cmp	r2, r9
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2043              		.loc 1 170 0
+ 2044 04bc 0CFB0633 		mla	r3, ip, r6, r3
+ 2045              	.LVL313:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2046              		.loc 1 169 0
+ 2047 04c0 F5D1     		bne	.L178
+ 2048              	.LVL314:
+ 2049              	.L177:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2050              		.loc 1 173 0
+ 2051 04c2 4355     		strb	r3, [r0, r5]
+ 2052              	.LBE102:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2053              		.loc 1 162 0
+ 2054 04c4 0135     		adds	r5, r5, #1
+ 2055              	.LVL315:
+ 2056 04c6 202D     		cmp	r5, #32
+ 2057 04c8 DCD1     		bne	.L180
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2058              		.loc 1 176 0
+ 2059 04ca C47F     		ldrb	r4, [r0, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2060              		.loc 1 177 0
+ 2061 04cc DB09     		lsrs	r3, r3, #7
+ 2062              	.LVL316:
+ 2063 04ce 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2064              		.loc 1 176 0
+ 2065 04d2 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2066              		.loc 1 177 0
+ 2067 04d6 03EB4202 		add	r2, r3, r2, lsl #1
+ 2068              	.LVL317:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2069              		.loc 1 176 0
+ 2070 04da C477     		strb	r4, [r0, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2071              		.loc 1 179 0
+ 2072 04dc 0023     		movs	r3, #0
+ 2073              	.LVL318:
+ 2074              	.L182:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2075              		.loc 1 180 0
+ 2076 04de C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+ 2077 04e0 2244     		add	r2, r2, r4
+ 2078              	.LVL319:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2079              		.loc 1 181 0
+ 2080 04e2 C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2081              		.loc 1 179 0
+ 2082 04e4 0133     		adds	r3, r3, #1
+ 2083              	.LVL320:
+ 2084 04e6 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2085              		.loc 1 182 0
+ 2086 04e8 4FEA1222 		lsr	r2, r2, #8
+ 2087              	.LVL321:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2088              		.loc 1 179 0
+ 2089 04ec F7D1     		bne	.L182
+ 2090 04ee 0026     		movs	r6, #0
+ 2091 04f0 3346     		mov	r3, r6
+ 2092              	.LVL322:
+ 2093              	.LBE101:
+ 2094              	.LBE100:
+ 2095              	.LBB103:
+ 2096              	.LBB104:
+ 2097              	.LBB105:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2098              		.loc 1 170 0
+ 2099 04f2 4FF02609 		mov	r9, #38
+ 2100              	.LVL323:
+ 2101              	.L188:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2102              		.loc 1 165 0
+ 2103 04f6 1B0A     		lsrs	r3, r3, #8
+ 2104              	.LVL324:
+ 2105 04f8 8419     		adds	r4, r0, r6
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2106              		.loc 1 166 0
+ 2107 04fa 0022     		movs	r2, #0
+ 2108              	.LVL325:
+ 2109              	.L184:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2110              		.loc 1 167 0
+ 2111 04fc 10F802C0 		ldrb	ip, [r0, r2]	@ zero_extendqisi2
+ 2112 0500 14F80159 		ldrb	r5, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2113              		.loc 1 166 0
+ 2114 0504 0132     		adds	r2, r2, #1
+ 2115              	.LVL326:
+ 2116 0506 B242     		cmp	r2, r6
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2117              		.loc 1 167 0
+ 2118 0508 0CFB0533 		mla	r3, ip, r5, r3
+ 2119              	.LVL327:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2120              		.loc 1 166 0
+ 2121 050c F6DD     		ble	.L184
+ 2122 050e 26EAE674 		bic	r4, r6, r6, asr #31
+ 2123 0512 621C     		adds	r2, r4, #1
+ 2124              	.LVL328:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2125              		.loc 1 169 0
+ 2126 0514 202A     		cmp	r2, #32
+ 2127 0516 0ED0     		beq	.L185
+ 2128 0518 351B     		subs	r5, r6, r4
+ 2129 051a 2035     		adds	r5, r5, #32
+ 2130 051c 0544     		add	r5, r5, r0
+ 2131 051e 0444     		add	r4, r4, r0
+ 2132              	.L186:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2133              		.loc 1 171 0
+ 2134 0520 15F801CD 		ldrb	ip, [r5, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2135              		.loc 1 170 0
+ 2136 0524 14F8018F 		ldrb	r8, [r4, #1]!	@ zero_extendqisi2
+ 2137 0528 09FB0CFC 		mul	ip, r9, ip
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2138              		.loc 1 169 0
+ 2139 052c 0132     		adds	r2, r2, #1
+ 2140              	.LVL329:
+ 2141 052e 202A     		cmp	r2, #32
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2142              		.loc 1 170 0
+ 2143 0530 08FB0C33 		mla	r3, r8, ip, r3
+ 2144              	.LVL330:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2145              		.loc 1 169 0
+ 2146 0534 F4D1     		bne	.L186
+ 2147              	.L185:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2148              		.loc 1 173 0
+ 2149 0536 0DF80630 		strb	r3, [sp, r6]
+ 2150              	.LBE105:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2151              		.loc 1 162 0
+ 2152 053a 0136     		adds	r6, r6, #1
+ 2153              	.LVL331:
+ 2154 053c 202E     		cmp	r6, #32
+ 2155 053e DAD1     		bne	.L188
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2156              		.loc 1 176 0
+ 2157 0540 9DF81F40 		ldrb	r4, [sp, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2158              		.loc 1 177 0
+ 2159 0544 DB09     		lsrs	r3, r3, #7
+ 2160              	.LVL332:
+ 2161 0546 03EBC302 		add	r2, r3, r3, lsl #3
+ 2162              	.LVL333:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2163              		.loc 1 176 0
+ 2164 054a 04F07F04 		and	r4, r4, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2165              		.loc 1 177 0
+ 2166 054e 03EB4202 		add	r2, r3, r2, lsl #1
+ 2167              	.LVL334:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2168              		.loc 1 176 0
+ 2169 0552 8DF81F40 		strb	r4, [sp, #31]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2170              		.loc 1 177 0
+ 2171 0556 00AB     		add	r3, sp, #0
+ 2172              	.LVL335:
+ 2173              	.L190:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2174              		.loc 1 180 0
+ 2175 0558 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 2176 055a 2244     		add	r2, r2, r4
+ 2177              	.LVL336:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2178              		.loc 1 181 0
+ 2179 055c 03F8012B 		strb	r2, [r3], #1
+ 2180              	.LVL337:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2181              		.loc 1 179 0
+ 2182 0560 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2183              		.loc 1 182 0
+ 2184 0562 4FEA1222 		lsr	r2, r2, #8
+ 2185              	.LVL338:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2186              		.loc 1 179 0
+ 2187 0566 F7D1     		bne	.L190
+ 2188 0568 0025     		movs	r5, #0
+ 2189 056a 0DEB0502 		add	r2, sp, r5
+ 2190              	.LVL339:
+ 2191 056e 2B46     		mov	r3, r5
+ 2192              	.LVL340:
+ 2193 0570 02F11F08 		add	r8, r2, #31
+ 2194              	.LBE104:
+ 2195              	.LBE103:
+ 2196              	.LBB106:
+ 2197              	.LBB107:
+ 2198              	.LBB108:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2199              		.loc 1 170 0
+ 2200 0574 4FF0260C 		mov	ip, #38
+ 2201              	.L196:
+ 2202              	.LVL341:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2203              		.loc 1 165 0
+ 2204 0578 1B0A     		lsrs	r3, r3, #8
+ 2205              	.LVL342:
+ 2206 057a 4C19     		adds	r4, r1, r5
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2207              		.loc 1 166 0
+ 2208 057c 0022     		movs	r2, #0
+ 2209              	.LVL343:
+ 2210              	.L192:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2211              		.loc 1 167 0
+ 2212 057e 1DF80270 		ldrb	r7, [sp, r2]	@ zero_extendqisi2
+ 2213 0582 14F80169 		ldrb	r6, [r4], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2214              		.loc 1 166 0
+ 2215 0586 0132     		adds	r2, r2, #1
+ 2216              	.LVL344:
+ 2217 0588 AA42     		cmp	r2, r5
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2218              		.loc 1 167 0
+ 2219 058a 07FB0633 		mla	r3, r7, r6, r3
+ 2220              	.LVL345:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2221              		.loc 1 166 0
+ 2222 058e F6DD     		ble	.L192
+ 2223 0590 25EAE572 		bic	r2, r5, r5, asr #31
+ 2224              	.LVL346:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2225              		.loc 1 169 0
+ 2226 0594 1F2A     		cmp	r2, #31
+ 2227 0596 0ED0     		beq	.L193
+ 2228 0598 AC1A     		subs	r4, r5, r2
+ 2229 059a 2034     		adds	r4, r4, #32
+ 2230 059c 00AE     		add	r6, sp, #0
+ 2231 059e 0C44     		add	r4, r4, r1
+ 2232 05a0 3244     		add	r2, r2, r6
+ 2233              	.LVL347:
+ 2234              	.L194:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2235              		.loc 1 171 0
+ 2236 05a2 14F8016D 		ldrb	r6, [r4, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2237              		.loc 1 170 0
+ 2238 05a6 12F8017F 		ldrb	r7, [r2, #1]!	@ zero_extendqisi2
+ 2239              	.LVL348:
+ 2240 05aa 0CFB06F6 		mul	r6, ip, r6
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2241              		.loc 1 169 0
+ 2242 05ae 4245     		cmp	r2, r8
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2243              		.loc 1 170 0
+ 2244 05b0 07FB0633 		mla	r3, r7, r6, r3
+ 2245              	.LVL349:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2246              		.loc 1 169 0
+ 2247 05b4 F5D1     		bne	.L194
+ 2248              	.LVL350:
+ 2249              	.L193:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2250              		.loc 1 173 0
+ 2251 05b6 4355     		strb	r3, [r0, r5]
+ 2252              	.LBE108:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2253              		.loc 1 162 0
+ 2254 05b8 0135     		adds	r5, r5, #1
+ 2255              	.LVL351:
+ 2256 05ba 202D     		cmp	r5, #32
+ 2257 05bc DCD1     		bne	.L196
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2258              		.loc 1 176 0
+ 2259 05be C17F     		ldrb	r1, [r0, #31]	@ zero_extendqisi2
+ 2260              	.LVL352:
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2261              		.loc 1 177 0
+ 2262 05c0 DB09     		lsrs	r3, r3, #7
+ 2263              	.LVL353:
+ 2264 05c2 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2265              		.loc 1 176 0
+ 2266 05c6 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2267              		.loc 1 177 0
+ 2268 05ca 03EB4202 		add	r2, r3, r2, lsl #1
+ 2269              	.LVL354:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2270              		.loc 1 176 0
+ 2271 05ce C177     		strb	r1, [r0, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2272              		.loc 1 179 0
+ 2273 05d0 0023     		movs	r3, #0
+ 2274              	.LVL355:
+ 2275              	.L198:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2276              		.loc 1 180 0
+ 2277 05d2 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 2278 05d4 0A44     		add	r2, r2, r1
+ 2279              	.LVL356:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2280              		.loc 1 181 0
+ 2281 05d6 C254     		strb	r2, [r0, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2282              		.loc 1 179 0
+ 2283 05d8 0133     		adds	r3, r3, #1
+ 2284              	.LVL357:
+ 2285 05da 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2286              		.loc 1 182 0
+ 2287 05dc 4FEA1222 		lsr	r2, r2, #8
+ 2288              	.LVL358:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2289              		.loc 1 179 0
+ 2290 05e0 F7D1     		bne	.L198
+ 2291              	.LBE107:
+ 2292              	.LBE106:
+ 243:25519/f25519.c **** 		f25519_mul__distinct(s, r, r);
+ 244:25519/f25519.c **** 		f25519_mul__distinct(r, s, x);
+ 245:25519/f25519.c **** 	}
+ 246:25519/f25519.c **** 
+ 247:25519/f25519.c **** 	/* 0 */
+ 248:25519/f25519.c **** 	f25519_mul__distinct(s, r, r);
+ 249:25519/f25519.c **** 
+ 250:25519/f25519.c **** 	/* 1 */
+ 251:25519/f25519.c **** 	f25519_mul__distinct(r, s, s);
+ 252:25519/f25519.c **** 	f25519_mul__distinct(s, r, x);
+ 253:25519/f25519.c **** 
+ 254:25519/f25519.c **** 	/* 0 */
+ 255:25519/f25519.c **** 	f25519_mul__distinct(r, s, s);
+ 256:25519/f25519.c **** 
+ 257:25519/f25519.c **** 	/* 1 */
+ 258:25519/f25519.c **** 	f25519_mul__distinct(s, r, r);
+ 259:25519/f25519.c **** 	f25519_mul__distinct(r, s, x);
+ 260:25519/f25519.c **** 
+ 261:25519/f25519.c **** 	/* 1 */
+ 262:25519/f25519.c **** 	f25519_mul__distinct(s, r, r);
+ 263:25519/f25519.c **** 	f25519_mul__distinct(r, s, x);
+ 264:25519/f25519.c **** }
+ 2293              		.loc 1 264 0
+ 2294 05e2 08B0     		add	sp, sp, #32
+ 2295              	.LVL359:
+ 2296              		@ sp needed
+ 2297 05e4 BDE8F00F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp}
+ 2298              	.LVL360:
+ 2299 05e8 7047     		bx	lr
+ 2300              		.cfi_endproc
+ 2301              	.LFE11:
+ 2303 05ea 00BF     		.section	.text.f25519_inv,"ax",%progbits
+ 2304              		.align	2
+ 2305              		.global	f25519_inv
+ 2306              		.thumb
+ 2307              		.thumb_func
+ 2309              	f25519_inv:
+ 2310              	.LFB12:
+ 265:25519/f25519.c **** 
+ 266:25519/f25519.c **** void f25519_inv(uint8_t *r, const uint8_t *x)
+ 267:25519/f25519.c **** {
+ 2311              		.loc 1 267 0
+ 2312              		.cfi_startproc
+ 2313              		@ args = 0, pretend = 0, frame = 32
+ 2314              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2315              	.LVL361:
+ 2316 0000 30B5     		push	{r4, r5, lr}
+ 2317              		.cfi_def_cfa_offset 12
+ 2318              		.cfi_offset 4, -12
+ 2319              		.cfi_offset 5, -8
+ 2320              		.cfi_offset 14, -4
+ 2321 0002 89B0     		sub	sp, sp, #36
+ 2322              		.cfi_def_cfa_offset 48
+ 2323              		.loc 1 267 0
+ 2324 0004 0546     		mov	r5, r0
+ 268:25519/f25519.c **** 	uint8_t tmp[F25519_SIZE];
+ 269:25519/f25519.c **** 
+ 270:25519/f25519.c **** 	f25519_inv__distinct(tmp, x);
+ 2325              		.loc 1 270 0
+ 2326 0006 6846     		mov	r0, sp
+ 2327              	.LVL362:
+ 2328 0008 FFF7FEFF 		bl	f25519_inv__distinct
+ 2329              	.LVL363:
+ 2330              	.LBB109:
+ 2331              	.LBB110:
+ 2332              		.loc 2 36 0
+ 2333 000c 6C46     		mov	r4, sp
+ 2334 000e 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 2335 0010 2860     		str	r0, [r5]	@ unaligned
+ 2336 0012 6960     		str	r1, [r5, #4]	@ unaligned
+ 2337 0014 AA60     		str	r2, [r5, #8]	@ unaligned
+ 2338 0016 EB60     		str	r3, [r5, #12]	@ unaligned
+ 2339 0018 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 2340 001a 2861     		str	r0, [r5, #16]	@ unaligned
+ 2341 001c 6961     		str	r1, [r5, #20]	@ unaligned
+ 2342 001e AA61     		str	r2, [r5, #24]	@ unaligned
+ 2343 0020 EB61     		str	r3, [r5, #28]	@ unaligned
+ 2344              	.LBE110:
+ 2345              	.LBE109:
+ 271:25519/f25519.c **** 	f25519_copy(r, tmp);
+ 272:25519/f25519.c **** }
+ 2346              		.loc 1 272 0
+ 2347 0022 09B0     		add	sp, sp, #36
+ 2348              	.LVL364:
+ 2349              		@ sp needed
+ 2350 0024 30BD     		pop	{r4, r5, pc}
+ 2351              		.cfi_endproc
+ 2352              	.LFE12:
+ 2354 0026 00BF     		.section	.text.f25519_sqrt,"ax",%progbits
+ 2355              		.align	2
+ 2356              		.global	f25519_sqrt
+ 2357              		.thumb
+ 2358              		.thumb_func
+ 2360              	f25519_sqrt:
+ 2361              	.LFB14:
+ 273:25519/f25519.c **** 
+ 274:25519/f25519.c **** /* Raise x to the power of (p-5)/8 = 2^252-3, using s for temporary
+ 275:25519/f25519.c ****  * storage.
+ 276:25519/f25519.c ****  */
+ 277:25519/f25519.c **** static void exp2523(uint8_t *r, const uint8_t *x, uint8_t *s)
+ 278:25519/f25519.c **** {
+ 279:25519/f25519.c **** 	int i;
+ 280:25519/f25519.c **** 
+ 281:25519/f25519.c **** 	/* This number is a 252-bit number with the binary expansion:
+ 282:25519/f25519.c **** 	 *
+ 283:25519/f25519.c **** 	 *     111111... 01
+ 284:25519/f25519.c **** 	 */
+ 285:25519/f25519.c **** 
+ 286:25519/f25519.c **** 	/* 1 1 */
+ 287:25519/f25519.c **** 	f25519_mul__distinct(r, x, x);
+ 288:25519/f25519.c **** 	f25519_mul__distinct(s, r, x);
+ 289:25519/f25519.c **** 
+ 290:25519/f25519.c **** 	/* 1 x 248 */
+ 291:25519/f25519.c **** 	for (i = 0; i < 248; i++) {
+ 292:25519/f25519.c **** 		f25519_mul__distinct(r, s, s);
+ 293:25519/f25519.c **** 		f25519_mul__distinct(s, r, x);
+ 294:25519/f25519.c **** 	}
+ 295:25519/f25519.c **** 
+ 296:25519/f25519.c **** 	/* 0 */
+ 297:25519/f25519.c **** 	f25519_mul__distinct(r, s, s);
+ 298:25519/f25519.c **** 
+ 299:25519/f25519.c **** 	/* 1 */
+ 300:25519/f25519.c **** 	f25519_mul__distinct(s, r, r);
+ 301:25519/f25519.c **** 	f25519_mul__distinct(r, s, x);
+ 302:25519/f25519.c **** }
+ 303:25519/f25519.c **** 
+ 304:25519/f25519.c **** void f25519_sqrt(uint8_t *r, const uint8_t *a)
+ 305:25519/f25519.c **** {
+ 2362              		.loc 1 305 0
+ 2363              		.cfi_startproc
+ 2364              		@ args = 0, pretend = 0, frame = 144
+ 2365              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2366              		@ link register save eliminated.
+ 2367              	.LVL365:
+ 2368 0000 2DE9F00F 		push	{r4, r5, r6, r7, r8, r9, r10, fp}
+ 2369              		.cfi_def_cfa_offset 32
+ 2370              		.cfi_offset 4, -32
+ 2371              		.cfi_offset 5, -28
+ 2372              		.cfi_offset 6, -24
+ 2373              		.cfi_offset 7, -20
+ 2374              		.cfi_offset 8, -16
+ 2375              		.cfi_offset 9, -12
+ 2376              		.cfi_offset 10, -8
+ 2377              		.cfi_offset 11, -4
+ 2378              	.LBB152:
+ 2379              	.LBB153:
+ 199:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2380              		.loc 1 199 0
+ 2381 0004 0023     		movs	r3, #0
+ 2382              	.LBE153:
+ 2383              	.LBE152:
+ 2384              		.loc 1 305 0
+ 2385 0006 A4B0     		sub	sp, sp, #144
+ 2386              		.cfi_def_cfa_offset 176
+ 2387              	.LVL366:
+ 2388              		.loc 1 305 0
+ 2389 0008 0290     		str	r0, [sp, #8]
+ 2390 000a 0391     		str	r1, [sp, #12]
+ 2391              	.LVL367:
+ 2392              	.LBB155:
+ 2393              	.LBB154:
+ 196:25519/f25519.c **** 	uint32_t c = 0;
+ 2394              		.loc 1 196 0
+ 2395 000c 1A46     		mov	r2, r3
+ 2396 000e 14AE     		add	r6, sp, #80
+ 2397              	.LVL368:
+ 2398 0010 0846     		mov	r0, r1
+ 2399              	.LVL369:
+ 2400              	.L291:
+ 201:25519/f25519.c **** 		c += b * ((uint32_t)a[i]);
+ 2401              		.loc 1 201 0
+ 2402 0012 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 2403 0014 4900     		lsls	r1, r1, #1
+ 2404 0016 01EB1222 		add	r2, r1, r2, lsr #8
+ 2405              	.LVL370:
+ 202:25519/f25519.c **** 		r[i] = c;
+ 2406              		.loc 1 202 0
+ 2407 001a F254     		strb	r2, [r6, r3]
+ 199:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2408              		.loc 1 199 0
+ 2409 001c 0133     		adds	r3, r3, #1
+ 2410              	.LVL371:
+ 2411 001e 202B     		cmp	r3, #32
+ 2412 0020 F7D1     		bne	.L291
+ 205:25519/f25519.c **** 	r[31] &= 127;
+ 2413              		.loc 1 205 0
+ 2414 0022 9DF86F30 		ldrb	r3, [sp, #111]	@ zero_extendqisi2
+ 2415              	.LVL372:
+ 206:25519/f25519.c **** 	c >>= 7;
+ 2416              		.loc 1 206 0
+ 2417 0026 D209     		lsrs	r2, r2, #7
+ 2418              	.LVL373:
+ 205:25519/f25519.c **** 	r[31] &= 127;
+ 2419              		.loc 1 205 0
+ 2420 0028 03F07F03 		and	r3, r3, #127
+ 207:25519/f25519.c **** 	c *= 19;
+ 2421              		.loc 1 207 0
+ 2422 002c 02EBC201 		add	r1, r2, r2, lsl #3
+ 205:25519/f25519.c **** 	r[31] &= 127;
+ 2423              		.loc 1 205 0
+ 2424 0030 8DF86F30 		strb	r3, [sp, #111]
+ 207:25519/f25519.c **** 	c *= 19;
+ 2425              		.loc 1 207 0
+ 2426 0034 02EB4102 		add	r2, r2, r1, lsl #1
+ 2427              	.LVL374:
+ 2428 0038 1CA8     		add	r0, sp, #112
+ 2429              	.LVL375:
+ 2430 003a 3346     		mov	r3, r6
+ 2431              	.LVL376:
+ 2432              	.L293:
+ 210:25519/f25519.c **** 		c += r[i];
+ 2433              		.loc 1 210 0
+ 2434 003c 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 2435 003e 0A44     		add	r2, r2, r1
+ 2436              	.LVL377:
+ 211:25519/f25519.c **** 		r[i] = c;
+ 2437              		.loc 1 211 0
+ 2438 0040 03F8012B 		strb	r2, [r3], #1
+ 2439              	.LVL378:
+ 209:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2440              		.loc 1 209 0
+ 2441 0044 8342     		cmp	r3, r0
+ 212:25519/f25519.c **** 		c >>= 8;
+ 2442              		.loc 1 212 0
+ 2443 0046 4FEA1222 		lsr	r2, r2, #8
+ 2444              	.LVL379:
+ 209:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2445              		.loc 1 209 0
+ 2446 004a F7D1     		bne	.L293
+ 2447 004c 0024     		movs	r4, #0
+ 2448 004e 2346     		mov	r3, r4
+ 2449              	.LVL380:
+ 2450 0050 06F11F0C 		add	ip, r6, #31
+ 2451              	.LBE154:
+ 2452              	.LBE155:
+ 2453              	.LBB156:
+ 2454              	.LBB157:
+ 2455              	.LBB158:
+ 2456              	.LBB159:
+ 2457              	.LBB160:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2458              		.loc 1 170 0
+ 2459 0054 2627     		movs	r7, #38
+ 2460              	.LVL381:
+ 2461              	.L299:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2462              		.loc 1 165 0
+ 2463 0056 1B0A     		lsrs	r3, r3, #8
+ 2464              	.LVL382:
+ 2465 0058 3119     		adds	r1, r6, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2466              		.loc 1 166 0
+ 2467 005a 0022     		movs	r2, #0
+ 2468              	.LVL383:
+ 2469              	.L295:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2470              		.loc 1 167 0
+ 2471 005c 16F80280 		ldrb	r8, [r6, r2]	@ zero_extendqisi2
+ 2472 0060 11F80159 		ldrb	r5, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2473              		.loc 1 166 0
+ 2474 0064 0132     		adds	r2, r2, #1
+ 2475              	.LVL384:
+ 2476 0066 A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2477              		.loc 1 167 0
+ 2478 0068 08FB0533 		mla	r3, r8, r5, r3
+ 2479              	.LVL385:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2480              		.loc 1 166 0
+ 2481 006c F6DD     		ble	.L295
+ 2482 006e 24EAE472 		bic	r2, r4, r4, asr #31
+ 2483              	.LVL386:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2484              		.loc 1 169 0
+ 2485 0072 1F2A     		cmp	r2, #31
+ 2486 0074 0DD0     		beq	.L296
+ 2487 0076 A11A     		subs	r1, r4, r2
+ 2488 0078 2031     		adds	r1, r1, #32
+ 2489 007a 3144     		add	r1, r1, r6
+ 2490 007c 3244     		add	r2, r2, r6
+ 2491              	.LVL387:
+ 2492              	.L297:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2493              		.loc 1 171 0
+ 2494 007e 11F8015D 		ldrb	r5, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2495              		.loc 1 170 0
+ 2496 0082 12F8018F 		ldrb	r8, [r2, #1]!	@ zero_extendqisi2
+ 2497              	.LVL388:
+ 2498 0086 07FB05F5 		mul	r5, r7, r5
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2499              		.loc 1 169 0
+ 2500 008a 6245     		cmp	r2, ip
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2501              		.loc 1 170 0
+ 2502 008c 08FB0533 		mla	r3, r8, r5, r3
+ 2503              	.LVL389:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2504              		.loc 1 169 0
+ 2505 0090 F5D1     		bne	.L297
+ 2506              	.LVL390:
+ 2507              	.L296:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2508              		.loc 1 173 0
+ 2509 0092 04A9     		add	r1, sp, #16
+ 2510 0094 0B55     		strb	r3, [r1, r4]
+ 2511              	.LBE160:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2512              		.loc 1 162 0
+ 2513 0096 0134     		adds	r4, r4, #1
+ 2514              	.LVL391:
+ 2515 0098 202C     		cmp	r4, #32
+ 2516 009a DCD1     		bne	.L299
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2517              		.loc 1 176 0
+ 2518 009c 9DF82F10 		ldrb	r1, [sp, #47]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2519              		.loc 1 177 0
+ 2520 00a0 DB09     		lsrs	r3, r3, #7
+ 2521              	.LVL392:
+ 2522 00a2 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2523              		.loc 1 176 0
+ 2524 00a6 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2525              		.loc 1 177 0
+ 2526 00aa 03EB4202 		add	r2, r3, r2, lsl #1
+ 2527              	.LVL393:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2528              		.loc 1 176 0
+ 2529 00ae 8DF82F10 		strb	r1, [sp, #47]
+ 2530 00b2 0CAF     		add	r7, sp, #48
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2531              		.loc 1 177 0
+ 2532 00b4 04AB     		add	r3, sp, #16
+ 2533              	.LVL394:
+ 2534              	.L301:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2535              		.loc 1 180 0
+ 2536 00b6 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 2537 00b8 0A44     		add	r2, r2, r1
+ 2538              	.LVL395:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2539              		.loc 1 181 0
+ 2540 00ba 03F8012B 		strb	r2, [r3], #1
+ 2541              	.LVL396:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2542              		.loc 1 179 0
+ 2543 00be BB42     		cmp	r3, r7
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2544              		.loc 1 182 0
+ 2545 00c0 4FEA1222 		lsr	r2, r2, #8
+ 2546              	.LVL397:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2547              		.loc 1 179 0
+ 2548 00c4 F7D1     		bne	.L301
+ 2549 00c6 0024     		movs	r4, #0
+ 2550 00c8 2346     		mov	r3, r4
+ 2551              	.LVL398:
+ 2552 00ca 0DF12F0C 		add	ip, sp, #47
+ 2553              	.LBE159:
+ 2554              	.LBE158:
+ 2555              	.LBB161:
+ 2556              	.LBB162:
+ 2557              	.LBB163:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2558              		.loc 1 170 0
+ 2559 00ce 2625     		movs	r5, #38
+ 2560              	.LVL399:
+ 2561              	.L307:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2562              		.loc 1 165 0
+ 2563 00d0 1B0A     		lsrs	r3, r3, #8
+ 2564              	.LVL400:
+ 2565 00d2 3119     		adds	r1, r6, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2566              		.loc 1 166 0
+ 2567 00d4 0022     		movs	r2, #0
+ 2568              	.LVL401:
+ 2569              	.L303:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2570              		.loc 1 167 0
+ 2571 00d6 0DF1100A 		add	r10, sp, #16
+ 2572 00da 1AF80290 		ldrb	r9, [r10, r2]	@ zero_extendqisi2
+ 2573 00de 11F80189 		ldrb	r8, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2574              		.loc 1 166 0
+ 2575 00e2 0132     		adds	r2, r2, #1
+ 2576              	.LVL402:
+ 2577 00e4 A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2578              		.loc 1 167 0
+ 2579 00e6 09FB0833 		mla	r3, r9, r8, r3
+ 2580              	.LVL403:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2581              		.loc 1 166 0
+ 2582 00ea F4DD     		ble	.L303
+ 2583 00ec 24EAE472 		bic	r2, r4, r4, asr #31
+ 2584              	.LVL404:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2585              		.loc 1 169 0
+ 2586 00f0 1F2A     		cmp	r2, #31
+ 2587 00f2 0DD0     		beq	.L304
+ 2588 00f4 A11A     		subs	r1, r4, r2
+ 2589 00f6 2031     		adds	r1, r1, #32
+ 2590 00f8 3144     		add	r1, r1, r6
+ 2591 00fa 5244     		add	r2, r2, r10
+ 2592              	.LVL405:
+ 2593              	.L305:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2594              		.loc 1 171 0
+ 2595 00fc 11F8018D 		ldrb	r8, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2596              		.loc 1 170 0
+ 2597 0100 12F8019F 		ldrb	r9, [r2, #1]!	@ zero_extendqisi2
+ 2598              	.LVL406:
+ 2599 0104 05FB08F8 		mul	r8, r5, r8
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2600              		.loc 1 169 0
+ 2601 0108 6245     		cmp	r2, ip
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2602              		.loc 1 170 0
+ 2603 010a 09FB0833 		mla	r3, r9, r8, r3
+ 2604              	.LVL407:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2605              		.loc 1 169 0
+ 2606 010e F5D1     		bne	.L305
+ 2607              	.LVL408:
+ 2608              	.L304:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2609              		.loc 1 173 0
+ 2610 0110 0355     		strb	r3, [r0, r4]
+ 2611              	.LBE163:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2612              		.loc 1 162 0
+ 2613 0112 0134     		adds	r4, r4, #1
+ 2614              	.LVL409:
+ 2615 0114 202C     		cmp	r4, #32
+ 2616 0116 DBD1     		bne	.L307
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2617              		.loc 1 176 0
+ 2618 0118 9DF88F10 		ldrb	r1, [sp, #143]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2619              		.loc 1 177 0
+ 2620 011c DB09     		lsrs	r3, r3, #7
+ 2621              	.LVL410:
+ 2622 011e 03EBC302 		add	r2, r3, r3, lsl #3
+ 2623 0122 0DF1900B 		add	fp, sp, #144
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2624              		.loc 1 176 0
+ 2625 0126 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2626              		.loc 1 177 0
+ 2627 012a 03EB4202 		add	r2, r3, r2, lsl #1
+ 2628              	.LVL411:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2629              		.loc 1 176 0
+ 2630 012e 8DF88F10 		strb	r1, [sp, #143]
+ 2631 0132 CDF800B0 		str	fp, [sp]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2632              		.loc 1 177 0
+ 2633 0136 0346     		mov	r3, r0
+ 2634 0138 DC46     		mov	ip, fp
+ 2635              	.LVL412:
+ 2636              	.L310:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2637              		.loc 1 180 0
+ 2638 013a 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 2639 013c 0A44     		add	r2, r2, r1
+ 2640              	.LVL413:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2641              		.loc 1 181 0
+ 2642 013e 03F8012B 		strb	r2, [r3], #1
+ 2643              	.LVL414:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2644              		.loc 1 179 0
+ 2645 0142 6345     		cmp	r3, ip
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2646              		.loc 1 182 0
+ 2647 0144 4FEA1222 		lsr	r2, r2, #8
+ 2648              	.LVL415:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2649              		.loc 1 179 0
+ 2650 0148 F7D1     		bne	.L310
+ 2651 014a F821     		movs	r1, #248
+ 2652 014c 0191     		str	r1, [sp, #4]
+ 2653 014e 00F11F05 		add	r5, r0, #31
+ 2654              	.LBE162:
+ 2655              	.LBE161:
+ 2656              	.LBB165:
+ 2657              	.LBB166:
+ 2658              	.LBB167:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2659              		.loc 1 170 0
+ 2660 0152 2621     		movs	r1, #38
+ 2661 0154 0DF12F04 		add	r4, sp, #47
+ 2662              	.LVL416:
+ 2663              	.L309:
+ 2664              	.LBE167:
+ 2665              	.LBE166:
+ 2666              	.LBE165:
+ 2667              	.LBB170:
+ 2668              	.LBB164:
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2669              		.loc 1 177 0
+ 2670 0158 4FF00009 		mov	r9, #0
+ 2671 015c 4B46     		mov	r3, r9
+ 2672              	.LVL417:
+ 2673              	.L327:
+ 2674              	.LBE164:
+ 2675              	.LBE170:
+ 2676              	.LBB171:
+ 2677              	.LBB169:
+ 2678              	.LBB168:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2679              		.loc 1 165 0
+ 2680 015e 1B0A     		lsrs	r3, r3, #8
+ 2681              	.LVL418:
+ 2682 0160 00EB0908 		add	r8, r0, r9
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2683              		.loc 1 166 0
+ 2684 0164 0022     		movs	r2, #0
+ 2685              	.LVL419:
+ 2686              	.L312:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2687              		.loc 1 167 0
+ 2688 0166 10F802B0 		ldrb	fp, [r0, r2]	@ zero_extendqisi2
+ 2689 016a 18F801A9 		ldrb	r10, [r8], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2690              		.loc 1 166 0
+ 2691 016e 0132     		adds	r2, r2, #1
+ 2692              	.LVL420:
+ 2693 0170 4A45     		cmp	r2, r9
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2694              		.loc 1 167 0
+ 2695 0172 0BFB0A33 		mla	r3, fp, r10, r3
+ 2696              	.LVL421:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2697              		.loc 1 166 0
+ 2698 0176 F6DD     		ble	.L312
+ 2699 0178 29EAE972 		bic	r2, r9, r9, asr #31
+ 2700              	.LVL422:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2701              		.loc 1 169 0
+ 2702 017c 1F2A     		cmp	r2, #31
+ 2703 017e 0FD0     		beq	.L313
+ 2704 0180 C2EB0908 		rsb	r8, r2, r9
+ 2705 0184 08F12008 		add	r8, r8, #32
+ 2706 0188 8044     		add	r8, r8, r0
+ 2707 018a 0244     		add	r2, r2, r0
+ 2708              	.LVL423:
+ 2709              	.L314:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2710              		.loc 1 171 0
+ 2711 018c 18F801AD 		ldrb	r10, [r8, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2712              		.loc 1 170 0
+ 2713 0190 12F801BF 		ldrb	fp, [r2, #1]!	@ zero_extendqisi2
+ 2714              	.LVL424:
+ 2715 0194 01FB0AFA 		mul	r10, r1, r10
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2716              		.loc 1 169 0
+ 2717 0198 AA42     		cmp	r2, r5
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2718              		.loc 1 170 0
+ 2719 019a 0BFB0A33 		mla	r3, fp, r10, r3
+ 2720              	.LVL425:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2721              		.loc 1 169 0
+ 2722 019e F5D1     		bne	.L314
+ 2723              	.LVL426:
+ 2724              	.L313:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2725              		.loc 1 173 0
+ 2726 01a0 0DF11008 		add	r8, sp, #16
+ 2727 01a4 08F80930 		strb	r3, [r8, r9]
+ 2728              	.LBE168:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2729              		.loc 1 162 0
+ 2730 01a8 09F10109 		add	r9, r9, #1
+ 2731              	.LVL427:
+ 2732 01ac B9F1200F 		cmp	r9, #32
+ 2733 01b0 D5D1     		bne	.L327
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2734              		.loc 1 176 0
+ 2735 01b2 9DF82F80 		ldrb	r8, [sp, #47]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2736              		.loc 1 177 0
+ 2737 01b6 DB09     		lsrs	r3, r3, #7
+ 2738              	.LVL428:
+ 2739 01b8 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2740              		.loc 1 176 0
+ 2741 01bc 08F07F08 		and	r8, r8, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2742              		.loc 1 177 0
+ 2743 01c0 03EB4202 		add	r2, r3, r2, lsl #1
+ 2744              	.LVL429:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2745              		.loc 1 176 0
+ 2746 01c4 8DF82F80 		strb	r8, [sp, #47]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2747              		.loc 1 177 0
+ 2748 01c8 04AB     		add	r3, sp, #16
+ 2749              	.LVL430:
+ 2750              	.L317:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2751              		.loc 1 180 0
+ 2752 01ca 93F80080 		ldrb	r8, [r3]	@ zero_extendqisi2
+ 2753 01ce 4244     		add	r2, r2, r8
+ 2754              	.LVL431:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2755              		.loc 1 181 0
+ 2756 01d0 03F8012B 		strb	r2, [r3], #1
+ 2757              	.LVL432:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2758              		.loc 1 179 0
+ 2759 01d4 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2760              		.loc 1 182 0
+ 2761 01d6 4FEA1222 		lsr	r2, r2, #8
+ 2762              	.LVL433:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2763              		.loc 1 179 0
+ 2764 01da F6D1     		bne	.L317
+ 2765 01dc 4FF00009 		mov	r9, #0
+ 2766 01e0 4B46     		mov	r3, r9
+ 2767              	.LVL434:
+ 2768              	.L323:
+ 2769              	.LBE169:
+ 2770              	.LBE171:
+ 2771              	.LBB172:
+ 2772              	.LBB173:
+ 2773              	.LBB174:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2774              		.loc 1 165 0
+ 2775 01e2 1B0A     		lsrs	r3, r3, #8
+ 2776              	.LVL435:
+ 2777 01e4 06EB0908 		add	r8, r6, r9
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2778              		.loc 1 166 0
+ 2779 01e8 0022     		movs	r2, #0
+ 2780              	.LVL436:
+ 2781              	.L319:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2782              		.loc 1 167 0
+ 2783 01ea 0DF1100C 		add	ip, sp, #16
+ 2784 01ee 1CF802B0 		ldrb	fp, [ip, r2]	@ zero_extendqisi2
+ 2785 01f2 18F801A9 		ldrb	r10, [r8], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2786              		.loc 1 166 0
+ 2787 01f6 0132     		adds	r2, r2, #1
+ 2788              	.LVL437:
+ 2789 01f8 4A45     		cmp	r2, r9
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2790              		.loc 1 167 0
+ 2791 01fa 0BFB0A33 		mla	r3, fp, r10, r3
+ 2792              	.LVL438:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2793              		.loc 1 166 0
+ 2794 01fe F4DD     		ble	.L319
+ 2795 0200 29EAE972 		bic	r2, r9, r9, asr #31
+ 2796              	.LVL439:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2797              		.loc 1 169 0
+ 2798 0204 1F2A     		cmp	r2, #31
+ 2799 0206 0FD0     		beq	.L320
+ 2800 0208 C2EB0908 		rsb	r8, r2, r9
+ 2801 020c 08F12008 		add	r8, r8, #32
+ 2802 0210 B044     		add	r8, r8, r6
+ 2803 0212 6244     		add	r2, r2, ip
+ 2804              	.LVL440:
+ 2805              	.L321:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2806              		.loc 1 171 0
+ 2807 0214 18F801AD 		ldrb	r10, [r8, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2808              		.loc 1 170 0
+ 2809 0218 12F801BF 		ldrb	fp, [r2, #1]!	@ zero_extendqisi2
+ 2810              	.LVL441:
+ 2811 021c 01FB0AFA 		mul	r10, r1, r10
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2812              		.loc 1 169 0
+ 2813 0220 A242     		cmp	r2, r4
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2814              		.loc 1 170 0
+ 2815 0222 0BFB0A33 		mla	r3, fp, r10, r3
+ 2816              	.LVL442:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2817              		.loc 1 169 0
+ 2818 0226 F5D1     		bne	.L321
+ 2819              	.LVL443:
+ 2820              	.L320:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2821              		.loc 1 173 0
+ 2822 0228 00F80930 		strb	r3, [r0, r9]
+ 2823              	.LBE174:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2824              		.loc 1 162 0
+ 2825 022c 09F10109 		add	r9, r9, #1
+ 2826              	.LVL444:
+ 2827 0230 B9F1200F 		cmp	r9, #32
+ 2828 0234 D5D1     		bne	.L323
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2829              		.loc 1 176 0
+ 2830 0236 9DF88F80 		ldrb	r8, [sp, #143]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2831              		.loc 1 177 0
+ 2832 023a DB09     		lsrs	r3, r3, #7
+ 2833              	.LVL445:
+ 2834 023c 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2835              		.loc 1 176 0
+ 2836 0240 08F07F08 		and	r8, r8, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2837              		.loc 1 177 0
+ 2838 0244 03EB4202 		add	r2, r3, r2, lsl #1
+ 2839              	.LVL446:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2840              		.loc 1 176 0
+ 2841 0248 8DF88F80 		strb	r8, [sp, #143]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2842              		.loc 1 177 0
+ 2843 024c 0346     		mov	r3, r0
+ 2844              	.LVL447:
+ 2845              	.L325:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2846              		.loc 1 180 0
+ 2847 024e 93F80080 		ldrb	r8, [r3]	@ zero_extendqisi2
+ 2848 0252 4244     		add	r2, r2, r8
+ 2849              	.LVL448:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2850              		.loc 1 179 0
+ 2851 0254 DDF80080 		ldr	r8, [sp]
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2852              		.loc 1 181 0
+ 2853 0258 03F8012B 		strb	r2, [r3], #1
+ 2854              	.LVL449:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2855              		.loc 1 179 0
+ 2856 025c 9845     		cmp	r8, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2857              		.loc 1 182 0
+ 2858 025e 4FEA1222 		lsr	r2, r2, #8
+ 2859              	.LVL450:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2860              		.loc 1 179 0
+ 2861 0262 F4D1     		bne	.L325
+ 2862              	.LVL451:
+ 2863              	.LBE173:
+ 2864              	.LBE172:
+ 291:25519/f25519.c **** 	for (i = 0; i < 248; i++) {
+ 2865              		.loc 1 291 0
+ 2866 0264 019A     		ldr	r2, [sp, #4]
+ 2867              	.LVL452:
+ 2868 0266 013A     		subs	r2, r2, #1
+ 2869 0268 0192     		str	r2, [sp, #4]
+ 2870 026a 7FF475AF 		bne	.L309
+ 2871 026e 1446     		mov	r4, r2
+ 2872 0270 1346     		mov	r3, r2
+ 2873              	.LVL453:
+ 2874 0272 00F11F08 		add	r8, r0, #31
+ 2875              	.LBB175:
+ 2876              	.LBB176:
+ 2877              	.LBB177:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2878              		.loc 1 170 0
+ 2879 0276 2625     		movs	r5, #38
+ 2880              	.L333:
+ 2881              	.LVL454:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2882              		.loc 1 165 0
+ 2883 0278 1B0A     		lsrs	r3, r3, #8
+ 2884              	.LVL455:
+ 2885 027a 0119     		adds	r1, r0, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2886              		.loc 1 166 0
+ 2887 027c 0022     		movs	r2, #0
+ 2888              	.LVL456:
+ 2889              	.L329:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2890              		.loc 1 167 0
+ 2891 027e 10F802A0 		ldrb	r10, [r0, r2]	@ zero_extendqisi2
+ 2892 0282 11F80199 		ldrb	r9, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2893              		.loc 1 166 0
+ 2894 0286 0132     		adds	r2, r2, #1
+ 2895              	.LVL457:
+ 2896 0288 A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2897              		.loc 1 167 0
+ 2898 028a 0AFB0933 		mla	r3, r10, r9, r3
+ 2899              	.LVL458:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2900              		.loc 1 166 0
+ 2901 028e F6DD     		ble	.L329
+ 2902 0290 24EAE472 		bic	r2, r4, r4, asr #31
+ 2903              	.LVL459:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2904              		.loc 1 169 0
+ 2905 0294 1F2A     		cmp	r2, #31
+ 2906 0296 0DD0     		beq	.L330
+ 2907 0298 A11A     		subs	r1, r4, r2
+ 2908 029a 2031     		adds	r1, r1, #32
+ 2909 029c 0144     		add	r1, r1, r0
+ 2910 029e 0244     		add	r2, r2, r0
+ 2911              	.LVL460:
+ 2912              	.L331:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 2913              		.loc 1 171 0
+ 2914 02a0 11F8019D 		ldrb	r9, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2915              		.loc 1 170 0
+ 2916 02a4 12F801AF 		ldrb	r10, [r2, #1]!	@ zero_extendqisi2
+ 2917              	.LVL461:
+ 2918 02a8 05FB09F9 		mul	r9, r5, r9
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2919              		.loc 1 169 0
+ 2920 02ac 4245     		cmp	r2, r8
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2921              		.loc 1 170 0
+ 2922 02ae 0AFB0933 		mla	r3, r10, r9, r3
+ 2923              	.LVL462:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 2924              		.loc 1 169 0
+ 2925 02b2 F5D1     		bne	.L331
+ 2926              	.LVL463:
+ 2927              	.L330:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 2928              		.loc 1 173 0
+ 2929 02b4 0DF1100A 		add	r10, sp, #16
+ 2930 02b8 0AF80430 		strb	r3, [r10, r4]
+ 2931              	.LBE177:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2932              		.loc 1 162 0
+ 2933 02bc 0134     		adds	r4, r4, #1
+ 2934              	.LVL464:
+ 2935 02be 202C     		cmp	r4, #32
+ 2936 02c0 DAD1     		bne	.L333
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2937              		.loc 1 176 0
+ 2938 02c2 9DF82F10 		ldrb	r1, [sp, #47]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2939              		.loc 1 177 0
+ 2940 02c6 DB09     		lsrs	r3, r3, #7
+ 2941              	.LVL465:
+ 2942 02c8 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2943              		.loc 1 176 0
+ 2944 02cc 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2945              		.loc 1 177 0
+ 2946 02d0 03EB4202 		add	r2, r3, r2, lsl #1
+ 2947              	.LVL466:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 2948              		.loc 1 176 0
+ 2949 02d4 8DF82F10 		strb	r1, [sp, #47]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 2950              		.loc 1 177 0
+ 2951 02d8 5346     		mov	r3, r10
+ 2952              	.LVL467:
+ 2953              	.L335:
+ 180:25519/f25519.c **** 		c += r[i];
+ 2954              		.loc 1 180 0
+ 2955 02da 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 2956 02dc 0A44     		add	r2, r2, r1
+ 2957              	.LVL468:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 2958              		.loc 1 181 0
+ 2959 02de 03F8012B 		strb	r2, [r3], #1
+ 2960              	.LVL469:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2961              		.loc 1 179 0
+ 2962 02e2 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 2963              		.loc 1 182 0
+ 2964 02e4 4FEA1222 		lsr	r2, r2, #8
+ 2965              	.LVL470:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 2966              		.loc 1 179 0
+ 2967 02e8 F7D1     		bne	.L335
+ 2968 02ea 0024     		movs	r4, #0
+ 2969 02ec 2346     		mov	r3, r4
+ 2970              	.LVL471:
+ 2971 02ee 0DF12F08 		add	r8, sp, #47
+ 2972              	.LBE176:
+ 2973              	.LBE175:
+ 2974              	.LBB178:
+ 2975              	.LBB179:
+ 2976              	.LBB180:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 2977              		.loc 1 170 0
+ 2978 02f2 2625     		movs	r5, #38
+ 2979              	.LVL472:
+ 2980              	.L341:
+ 2981 02f4 04A9     		add	r1, sp, #16
+ 165:25519/f25519.c **** 		c >>= 8;
+ 2982              		.loc 1 165 0
+ 2983 02f6 1B0A     		lsrs	r3, r3, #8
+ 2984              	.LVL473:
+ 2985 02f8 2144     		add	r1, r1, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2986              		.loc 1 166 0
+ 2987 02fa 0022     		movs	r2, #0
+ 2988              	.LVL474:
+ 2989              	.L337:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2990              		.loc 1 167 0
+ 2991 02fc 0DF1100C 		add	ip, sp, #16
+ 2992 0300 1CF802A0 		ldrb	r10, [ip, r2]	@ zero_extendqisi2
+ 2993 0304 11F80199 		ldrb	r9, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 2994              		.loc 1 166 0
+ 2995 0308 0132     		adds	r2, r2, #1
+ 2996              	.LVL475:
+ 2997 030a A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 2998              		.loc 1 167 0
+ 2999 030c 0AFB0933 		mla	r3, r10, r9, r3
+ 3000              	.LVL476:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3001              		.loc 1 166 0
+ 3002 0310 F4DD     		ble	.L337
+ 3003 0312 24EAE472 		bic	r2, r4, r4, asr #31
+ 3004              	.LVL477:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3005              		.loc 1 169 0
+ 3006 0316 1F2A     		cmp	r2, #31
+ 3007 0318 0DD0     		beq	.L338
+ 3008 031a A11A     		subs	r1, r4, r2
+ 3009 031c 2031     		adds	r1, r1, #32
+ 3010 031e 6144     		add	r1, r1, ip
+ 3011 0320 6244     		add	r2, r2, ip
+ 3012              	.LVL478:
+ 3013              	.L339:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 3014              		.loc 1 171 0
+ 3015 0322 11F8019D 		ldrb	r9, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3016              		.loc 1 170 0
+ 3017 0326 12F801AF 		ldrb	r10, [r2, #1]!	@ zero_extendqisi2
+ 3018              	.LVL479:
+ 3019 032a 05FB09F9 		mul	r9, r5, r9
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3020              		.loc 1 169 0
+ 3021 032e 4245     		cmp	r2, r8
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3022              		.loc 1 170 0
+ 3023 0330 0AFB0933 		mla	r3, r10, r9, r3
+ 3024              	.LVL480:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3025              		.loc 1 169 0
+ 3026 0334 F5D1     		bne	.L339
+ 3027              	.LVL481:
+ 3028              	.L338:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 3029              		.loc 1 173 0
+ 3030 0336 0355     		strb	r3, [r0, r4]
+ 3031              	.LBE180:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3032              		.loc 1 162 0
+ 3033 0338 0134     		adds	r4, r4, #1
+ 3034              	.LVL482:
+ 3035 033a 202C     		cmp	r4, #32
+ 3036 033c DAD1     		bne	.L341
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3037              		.loc 1 176 0
+ 3038 033e 9DF88F10 		ldrb	r1, [sp, #143]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3039              		.loc 1 177 0
+ 3040 0342 DB09     		lsrs	r3, r3, #7
+ 3041              	.LVL483:
+ 3042 0344 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3043              		.loc 1 176 0
+ 3044 0348 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3045              		.loc 1 177 0
+ 3046 034c 03EB4202 		add	r2, r3, r2, lsl #1
+ 3047              	.LVL484:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3048              		.loc 1 176 0
+ 3049 0350 8DF88F10 		strb	r1, [sp, #143]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3050              		.loc 1 177 0
+ 3051 0354 0346     		mov	r3, r0
+ 3052              	.LVL485:
+ 3053              	.L343:
+ 180:25519/f25519.c **** 		c += r[i];
+ 3054              		.loc 1 180 0
+ 3055 0356 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 3056 0358 0A44     		add	r2, r2, r1
+ 3057              	.LVL486:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3058              		.loc 1 179 0
+ 3059 035a 0099     		ldr	r1, [sp]
+ 181:25519/f25519.c **** 		r[i] = c;
+ 3060              		.loc 1 181 0
+ 3061 035c 03F8012B 		strb	r2, [r3], #1
+ 3062              	.LVL487:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3063              		.loc 1 179 0
+ 3064 0360 9942     		cmp	r1, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 3065              		.loc 1 182 0
+ 3066 0362 4FEA1222 		lsr	r2, r2, #8
+ 3067              	.LVL488:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3068              		.loc 1 179 0
+ 3069 0366 F6D1     		bne	.L343
+ 3070 0368 0024     		movs	r4, #0
+ 3071 036a 2346     		mov	r3, r4
+ 3072              	.LVL489:
+ 3073 036c 00F11F08 		add	r8, r0, #31
+ 3074              	.LBE179:
+ 3075              	.LBE178:
+ 3076              	.LBB181:
+ 3077              	.LBB182:
+ 3078              	.LBB183:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3079              		.loc 1 170 0
+ 3080 0370 2625     		movs	r5, #38
+ 3081              	.LVL490:
+ 3082              	.L349:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 3083              		.loc 1 165 0
+ 3084 0372 1B0A     		lsrs	r3, r3, #8
+ 3085              	.LVL491:
+ 3086 0374 3119     		adds	r1, r6, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3087              		.loc 1 166 0
+ 3088 0376 0022     		movs	r2, #0
+ 3089              	.LVL492:
+ 3090              	.L345:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3091              		.loc 1 167 0
+ 3092 0378 10F802A0 		ldrb	r10, [r0, r2]	@ zero_extendqisi2
+ 3093 037c 11F80199 		ldrb	r9, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3094              		.loc 1 166 0
+ 3095 0380 0132     		adds	r2, r2, #1
+ 3096              	.LVL493:
+ 3097 0382 A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3098              		.loc 1 167 0
+ 3099 0384 0AFB0933 		mla	r3, r10, r9, r3
+ 3100              	.LVL494:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3101              		.loc 1 166 0
+ 3102 0388 F6DD     		ble	.L345
+ 3103 038a 24EAE472 		bic	r2, r4, r4, asr #31
+ 3104              	.LVL495:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3105              		.loc 1 169 0
+ 3106 038e 1F2A     		cmp	r2, #31
+ 3107 0390 0DD0     		beq	.L346
+ 3108 0392 A11A     		subs	r1, r4, r2
+ 3109 0394 2031     		adds	r1, r1, #32
+ 3110 0396 3144     		add	r1, r1, r6
+ 3111 0398 0244     		add	r2, r2, r0
+ 3112              	.LVL496:
+ 3113              	.L347:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 3114              		.loc 1 171 0
+ 3115 039a 11F8019D 		ldrb	r9, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3116              		.loc 1 170 0
+ 3117 039e 12F801AF 		ldrb	r10, [r2, #1]!	@ zero_extendqisi2
+ 3118              	.LVL497:
+ 3119 03a2 05FB09F9 		mul	r9, r5, r9
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3120              		.loc 1 169 0
+ 3121 03a6 4245     		cmp	r2, r8
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3122              		.loc 1 170 0
+ 3123 03a8 0AFB0933 		mla	r3, r10, r9, r3
+ 3124              	.LVL498:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3125              		.loc 1 169 0
+ 3126 03ac F5D1     		bne	.L347
+ 3127              	.LVL499:
+ 3128              	.L346:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 3129              		.loc 1 173 0
+ 3130 03ae 04AA     		add	r2, sp, #16
+ 3131 03b0 1355     		strb	r3, [r2, r4]
+ 3132              	.LBE183:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3133              		.loc 1 162 0
+ 3134 03b2 0134     		adds	r4, r4, #1
+ 3135              	.LVL500:
+ 3136 03b4 202C     		cmp	r4, #32
+ 3137 03b6 DCD1     		bne	.L349
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3138              		.loc 1 176 0
+ 3139 03b8 9DF82F10 		ldrb	r1, [sp, #47]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3140              		.loc 1 177 0
+ 3141 03bc DB09     		lsrs	r3, r3, #7
+ 3142              	.LVL501:
+ 3143 03be 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3144              		.loc 1 176 0
+ 3145 03c2 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3146              		.loc 1 177 0
+ 3147 03c6 03EB4202 		add	r2, r3, r2, lsl #1
+ 3148              	.LVL502:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3149              		.loc 1 176 0
+ 3150 03ca 8DF82F10 		strb	r1, [sp, #47]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3151              		.loc 1 177 0
+ 3152 03ce 04AB     		add	r3, sp, #16
+ 3153              	.LVL503:
+ 3154              	.L351:
+ 180:25519/f25519.c **** 		c += r[i];
+ 3155              		.loc 1 180 0
+ 3156 03d0 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 3157 03d2 0A44     		add	r2, r2, r1
+ 3158              	.LVL504:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 3159              		.loc 1 181 0
+ 3160 03d4 03F8012B 		strb	r2, [r3], #1
+ 3161              	.LVL505:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3162              		.loc 1 179 0
+ 3163 03d8 9F42     		cmp	r7, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 3164              		.loc 1 182 0
+ 3165 03da 4FEA1222 		lsr	r2, r2, #8
+ 3166              	.LVL506:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3167              		.loc 1 179 0
+ 3168 03de F7D1     		bne	.L351
+ 3169 03e0 0024     		movs	r4, #0
+ 3170 03e2 2346     		mov	r3, r4
+ 3171              	.LVL507:
+ 3172 03e4 0DF12F08 		add	r8, sp, #47
+ 3173              	.LBE182:
+ 3174              	.LBE181:
+ 3175              	.LBE157:
+ 3176              	.LBE156:
+ 3177              	.LBB184:
+ 3178              	.LBB185:
+ 3179              	.LBB186:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3180              		.loc 1 170 0
+ 3181 03e8 2625     		movs	r5, #38
+ 3182              	.LVL508:
+ 3183              	.L357:
+ 3184 03ea 04A9     		add	r1, sp, #16
+ 165:25519/f25519.c **** 		c >>= 8;
+ 3185              		.loc 1 165 0
+ 3186 03ec 1B0A     		lsrs	r3, r3, #8
+ 3187              	.LVL509:
+ 3188 03ee 2144     		add	r1, r1, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3189              		.loc 1 166 0
+ 3190 03f0 0022     		movs	r2, #0
+ 3191              	.LVL510:
+ 3192              	.L353:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3193              		.loc 1 167 0
+ 3194 03f2 0DF1100B 		add	fp, sp, #16
+ 3195 03f6 1BF802A0 		ldrb	r10, [fp, r2]	@ zero_extendqisi2
+ 3196 03fa 11F80199 		ldrb	r9, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3197              		.loc 1 166 0
+ 3198 03fe 0132     		adds	r2, r2, #1
+ 3199              	.LVL511:
+ 3200 0400 A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3201              		.loc 1 167 0
+ 3202 0402 0AFB0933 		mla	r3, r10, r9, r3
+ 3203              	.LVL512:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3204              		.loc 1 166 0
+ 3205 0406 F4DD     		ble	.L353
+ 3206 0408 24EAE472 		bic	r2, r4, r4, asr #31
+ 3207              	.LVL513:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3208              		.loc 1 169 0
+ 3209 040c 1F2A     		cmp	r2, #31
+ 3210 040e 0DD0     		beq	.L354
+ 3211 0410 A11A     		subs	r1, r4, r2
+ 3212 0412 2031     		adds	r1, r1, #32
+ 3213 0414 5944     		add	r1, r1, fp
+ 3214 0416 5A44     		add	r2, r2, fp
+ 3215              	.LVL514:
+ 3216              	.L355:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 3217              		.loc 1 171 0
+ 3218 0418 11F8019D 		ldrb	r9, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3219              		.loc 1 170 0
+ 3220 041c 12F801AF 		ldrb	r10, [r2, #1]!	@ zero_extendqisi2
+ 3221              	.LVL515:
+ 3222 0420 05FB09F9 		mul	r9, r5, r9
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3223              		.loc 1 169 0
+ 3224 0424 4245     		cmp	r2, r8
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3225              		.loc 1 170 0
+ 3226 0426 0AFB0933 		mla	r3, r10, r9, r3
+ 3227              	.LVL516:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3228              		.loc 1 169 0
+ 3229 042a F5D1     		bne	.L355
+ 3230              	.LVL517:
+ 3231              	.L354:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 3232              		.loc 1 173 0
+ 3233 042c 0355     		strb	r3, [r0, r4]
+ 3234              	.LBE186:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3235              		.loc 1 162 0
+ 3236 042e 0134     		adds	r4, r4, #1
+ 3237              	.LVL518:
+ 3238 0430 202C     		cmp	r4, #32
+ 3239 0432 DAD1     		bne	.L357
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3240              		.loc 1 176 0
+ 3241 0434 9DF88F10 		ldrb	r1, [sp, #143]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3242              		.loc 1 177 0
+ 3243 0438 DB09     		lsrs	r3, r3, #7
+ 3244              	.LVL519:
+ 3245 043a 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3246              		.loc 1 176 0
+ 3247 043e 01F07F01 		and	r1, r1, #127
+ 3248 0442 DDF800C0 		ldr	ip, [sp]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3249              		.loc 1 177 0
+ 3250 0446 03EB4202 		add	r2, r3, r2, lsl #1
+ 3251              	.LVL520:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3252              		.loc 1 176 0
+ 3253 044a 8DF88F10 		strb	r1, [sp, #143]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3254              		.loc 1 177 0
+ 3255 044e 0346     		mov	r3, r0
+ 3256              	.LVL521:
+ 3257              	.L359:
+ 180:25519/f25519.c **** 		c += r[i];
+ 3258              		.loc 1 180 0
+ 3259 0450 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 3260 0452 0A44     		add	r2, r2, r1
+ 3261              	.LVL522:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 3262              		.loc 1 181 0
+ 3263 0454 03F8012B 		strb	r2, [r3], #1
+ 3264              	.LVL523:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3265              		.loc 1 179 0
+ 3266 0458 9C45     		cmp	ip, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 3267              		.loc 1 182 0
+ 3268 045a 4FEA1222 		lsr	r2, r2, #8
+ 3269              	.LVL524:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3270              		.loc 1 179 0
+ 3271 045e F7D1     		bne	.L359
+ 3272 0460 0024     		movs	r4, #0
+ 3273 0462 2346     		mov	r3, r4
+ 3274              	.LVL525:
+ 3275 0464 06F11F0C 		add	ip, r6, #31
+ 3276              	.LBE185:
+ 3277              	.LBE184:
+ 3278              	.LBB187:
+ 3279              	.LBB188:
+ 3280              	.LBB189:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3281              		.loc 1 170 0
+ 3282 0468 2625     		movs	r5, #38
+ 3283              	.LVL526:
+ 3284              	.L365:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 3285              		.loc 1 165 0
+ 3286 046a 1B0A     		lsrs	r3, r3, #8
+ 3287              	.LVL527:
+ 3288 046c 0119     		adds	r1, r0, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3289              		.loc 1 166 0
+ 3290 046e 0022     		movs	r2, #0
+ 3291              	.LVL528:
+ 3292              	.L361:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3293              		.loc 1 167 0
+ 3294 0470 16F80290 		ldrb	r9, [r6, r2]	@ zero_extendqisi2
+ 3295 0474 11F80189 		ldrb	r8, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3296              		.loc 1 166 0
+ 3297 0478 0132     		adds	r2, r2, #1
+ 3298              	.LVL529:
+ 3299 047a A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3300              		.loc 1 167 0
+ 3301 047c 09FB0833 		mla	r3, r9, r8, r3
+ 3302              	.LVL530:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3303              		.loc 1 166 0
+ 3304 0480 F6DD     		ble	.L361
+ 3305 0482 24EAE472 		bic	r2, r4, r4, asr #31
+ 3306              	.LVL531:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3307              		.loc 1 169 0
+ 3308 0486 1F2A     		cmp	r2, #31
+ 3309 0488 0DD0     		beq	.L362
+ 3310 048a A11A     		subs	r1, r4, r2
+ 3311 048c 2031     		adds	r1, r1, #32
+ 3312 048e 0144     		add	r1, r1, r0
+ 3313 0490 3244     		add	r2, r2, r6
+ 3314              	.LVL532:
+ 3315              	.L363:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 3316              		.loc 1 171 0
+ 3317 0492 11F8018D 		ldrb	r8, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3318              		.loc 1 170 0
+ 3319 0496 12F8019F 		ldrb	r9, [r2, #1]!	@ zero_extendqisi2
+ 3320              	.LVL533:
+ 3321 049a 05FB08F8 		mul	r8, r5, r8
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3322              		.loc 1 169 0
+ 3323 049e 6245     		cmp	r2, ip
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3324              		.loc 1 170 0
+ 3325 04a0 09FB0833 		mla	r3, r9, r8, r3
+ 3326              	.LVL534:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3327              		.loc 1 169 0
+ 3328 04a4 F5D1     		bne	.L363
+ 3329              	.LVL535:
+ 3330              	.L362:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 3331              		.loc 1 173 0
+ 3332 04a6 3B55     		strb	r3, [r7, r4]
+ 3333              	.LBE189:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3334              		.loc 1 162 0
+ 3335 04a8 0134     		adds	r4, r4, #1
+ 3336              	.LVL536:
+ 3337 04aa 202C     		cmp	r4, #32
+ 3338 04ac DDD1     		bne	.L365
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3339              		.loc 1 176 0
+ 3340 04ae 9DF84F10 		ldrb	r1, [sp, #79]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3341              		.loc 1 177 0
+ 3342 04b2 DB09     		lsrs	r3, r3, #7
+ 3343              	.LVL537:
+ 3344 04b4 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3345              		.loc 1 176 0
+ 3346 04b8 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3347              		.loc 1 177 0
+ 3348 04bc 03EB4202 		add	r2, r3, r2, lsl #1
+ 3349              	.LVL538:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3350              		.loc 1 176 0
+ 3351 04c0 8DF84F10 		strb	r1, [sp, #79]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3352              		.loc 1 177 0
+ 3353 04c4 3B46     		mov	r3, r7
+ 3354              	.LVL539:
+ 3355              	.L367:
+ 180:25519/f25519.c **** 		c += r[i];
+ 3356              		.loc 1 180 0
+ 3357 04c6 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 3358 04c8 0A44     		add	r2, r2, r1
+ 3359              	.LVL540:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 3360              		.loc 1 181 0
+ 3361 04ca 03F8012B 		strb	r2, [r3], #1
+ 3362              	.LVL541:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3363              		.loc 1 179 0
+ 3364 04ce B342     		cmp	r3, r6
+ 182:25519/f25519.c **** 		c >>= 8;
+ 3365              		.loc 1 182 0
+ 3366 04d0 4FEA1222 		lsr	r2, r2, #8
+ 3367              	.LVL542:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3368              		.loc 1 179 0
+ 3369 04d4 F7D1     		bne	.L367
+ 3370              	.LVL543:
+ 3371 04d6 0023     		movs	r3, #0
+ 3372              	.LVL544:
+ 3373              	.LBE188:
+ 3374              	.LBE187:
+ 3375              	.LBB190:
+ 3376              	.LBB191:
+  17:25519/f25519.c **** 		x[i] = c;
+ 3377              		.loc 1 17 0
+ 3378 04d8 0122     		movs	r2, #1
+ 3379              	.LVL545:
+ 3380 04da 1C92     		str	r2, [sp, #112]
+ 3381              	.LVL546:
+ 3382 04dc 1D93     		str	r3, [sp, #116]
+ 3383 04de 1E93     		str	r3, [sp, #120]
+ 3384 04e0 1F93     		str	r3, [sp, #124]
+ 3385 04e2 2093     		str	r3, [sp, #128]
+ 3386 04e4 2193     		str	r3, [sp, #132]
+ 3387 04e6 2293     		str	r3, [sp, #136]
+ 3388 04e8 2393     		str	r3, [sp, #140]
+ 3389 04ea DA22     		movs	r2, #218
+ 3390              	.L369:
+ 3391              	.LVL547:
+ 3392              	.LBE191:
+ 3393              	.LBE190:
+ 3394              	.LBB192:
+ 3395              	.LBB193:
+ 117:25519/f25519.c **** 		c += 65280 + ((uint32_t)a[i]) - ((uint32_t)b[i]);
+ 3396              		.loc 1 117 0
+ 3397 04ec FC5C     		ldrb	r4, [r7, r3]	@ zero_extendqisi2
+ 3398 04ee C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
+ 3399 04f0 04F57F44 		add	r4, r4, #65280
+ 3400 04f4 611A     		subs	r1, r4, r1
+ 3401 04f6 0A44     		add	r2, r2, r1
+ 3402              	.LVL548:
+ 118:25519/f25519.c **** 		r[i] = c;
+ 3403              		.loc 1 118 0
+ 3404 04f8 FA54     		strb	r2, [r7, r3]
+ 116:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 3405              		.loc 1 116 0
+ 3406 04fa 0133     		adds	r3, r3, #1
+ 3407              	.LVL549:
+ 3408 04fc 1F2B     		cmp	r3, #31
+ 119:25519/f25519.c **** 		c >>= 8;
+ 3409              		.loc 1 119 0
+ 3410 04fe 4FEA1222 		lsr	r2, r2, #8
+ 3411              	.LVL550:
+ 116:25519/f25519.c **** 	for (i = 0; i + 1 < F25519_SIZE; i++) {
+ 3412              		.loc 1 116 0
+ 3413 0502 F3D1     		bne	.L369
+ 122:25519/f25519.c **** 	c += ((uint32_t)a[31]) - ((uint32_t)b[31]);
+ 3414              		.loc 1 122 0
+ 3415 0504 9DF84F40 		ldrb	r4, [sp, #79]	@ zero_extendqisi2
+ 3416 0508 9DF88F10 		ldrb	r1, [sp, #143]	@ zero_extendqisi2
+ 124:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3417              		.loc 1 124 0
+ 3418 050c 3B46     		mov	r3, r7
+ 3419              	.LVL551:
+ 122:25519/f25519.c **** 	c += ((uint32_t)a[31]) - ((uint32_t)b[31]);
+ 3420              		.loc 1 122 0
+ 3421 050e 611A     		subs	r1, r4, r1
+ 3422 0510 1144     		add	r1, r1, r2
+ 3423              	.LVL552:
+ 124:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3424              		.loc 1 124 0
+ 3425 0512 CA09     		lsrs	r2, r1, #7
+ 3426 0514 02EBC204 		add	r4, r2, r2, lsl #3
+ 123:25519/f25519.c **** 	r[31] = c & 127;
+ 3427              		.loc 1 123 0
+ 3428 0518 01F07F01 		and	r1, r1, #127
+ 3429              	.LVL553:
+ 3430 051c 8DF84F10 		strb	r1, [sp, #79]
+ 124:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3431              		.loc 1 124 0
+ 3432 0520 02EB4402 		add	r2, r2, r4, lsl #1
+ 3433              	.LVL554:
+ 3434              	.L371:
+ 127:25519/f25519.c **** 		c += r[i];
+ 3435              		.loc 1 127 0
+ 3436 0524 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 3437 0526 0A44     		add	r2, r2, r1
+ 3438              	.LVL555:
+ 128:25519/f25519.c **** 		r[i] = c;
+ 3439              		.loc 1 128 0
+ 3440 0528 03F8012B 		strb	r2, [r3], #1
+ 3441              	.LVL556:
+ 126:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3442              		.loc 1 126 0
+ 3443 052c 9E42     		cmp	r6, r3
+ 129:25519/f25519.c **** 		c >>= 8;
+ 3444              		.loc 1 129 0
+ 3445 052e 4FEA1222 		lsr	r2, r2, #8
+ 3446              	.LVL557:
+ 126:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3447              		.loc 1 126 0
+ 3448 0532 F7D1     		bne	.L371
+ 3449 0534 0024     		movs	r4, #0
+ 3450              	.LBE193:
+ 3451              	.LBE192:
+ 3452              	.LBB195:
+ 3453              	.LBB196:
+ 3454              	.LBB197:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3455              		.loc 1 170 0
+ 3456 0536 DDF80C90 		ldr	r9, [sp, #12]
+ 3457              	.LBE197:
+ 3458              	.LBE196:
+ 3459              	.LBE195:
+ 3460              	.LBB200:
+ 3461              	.LBB194:
+ 126:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3462              		.loc 1 126 0
+ 3463 053a 2346     		mov	r3, r4
+ 3464              	.LVL558:
+ 3465 053c 0DF12F0C 		add	ip, sp, #47
+ 3466              	.LBE194:
+ 3467              	.LBE200:
+ 3468              	.LBB201:
+ 3469              	.LBB199:
+ 3470              	.LBB198:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3471              		.loc 1 170 0
+ 3472 0540 2625     		movs	r5, #38
+ 3473              	.LVL559:
+ 3474              	.L377:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 3475              		.loc 1 165 0
+ 3476 0542 1B0A     		lsrs	r3, r3, #8
+ 3477              	.LVL560:
+ 3478 0544 09EB0401 		add	r1, r9, r4
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3479              		.loc 1 166 0
+ 3480 0548 0022     		movs	r2, #0
+ 3481              	.LVL561:
+ 3482              	.L373:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3483              		.loc 1 167 0
+ 3484 054a 0DF1100B 		add	fp, sp, #16
+ 3485 054e 1BF802A0 		ldrb	r10, [fp, r2]	@ zero_extendqisi2
+ 3486 0552 11F80189 		ldrb	r8, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3487              		.loc 1 166 0
+ 3488 0556 0132     		adds	r2, r2, #1
+ 3489              	.LVL562:
+ 3490 0558 A242     		cmp	r2, r4
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3491              		.loc 1 167 0
+ 3492 055a 0AFB0833 		mla	r3, r10, r8, r3
+ 3493              	.LVL563:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3494              		.loc 1 166 0
+ 3495 055e F4DD     		ble	.L373
+ 3496 0560 24EAE472 		bic	r2, r4, r4, asr #31
+ 3497              	.LVL564:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3498              		.loc 1 169 0
+ 3499 0564 1F2A     		cmp	r2, #31
+ 3500 0566 0DD0     		beq	.L374
+ 3501 0568 A11A     		subs	r1, r4, r2
+ 3502 056a 2031     		adds	r1, r1, #32
+ 3503 056c 4944     		add	r1, r1, r9
+ 3504 056e 5A44     		add	r2, r2, fp
+ 3505              	.LVL565:
+ 3506              	.L375:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 3507              		.loc 1 171 0
+ 3508 0570 11F8018D 		ldrb	r8, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3509              		.loc 1 170 0
+ 3510 0574 12F801AF 		ldrb	r10, [r2, #1]!	@ zero_extendqisi2
+ 3511              	.LVL566:
+ 3512 0578 05FB08F8 		mul	r8, r5, r8
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3513              		.loc 1 169 0
+ 3514 057c 6245     		cmp	r2, ip
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3515              		.loc 1 170 0
+ 3516 057e 0AFB0833 		mla	r3, r10, r8, r3
+ 3517              	.LVL567:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3518              		.loc 1 169 0
+ 3519 0582 F5D1     		bne	.L375
+ 3520              	.LVL568:
+ 3521              	.L374:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 3522              		.loc 1 173 0
+ 3523 0584 3355     		strb	r3, [r6, r4]
+ 3524              	.LBE198:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3525              		.loc 1 162 0
+ 3526 0586 0134     		adds	r4, r4, #1
+ 3527              	.LVL569:
+ 3528 0588 202C     		cmp	r4, #32
+ 3529 058a DAD1     		bne	.L377
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3530              		.loc 1 176 0
+ 3531 058c 9DF86F10 		ldrb	r1, [sp, #111]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3532              		.loc 1 177 0
+ 3533 0590 DB09     		lsrs	r3, r3, #7
+ 3534              	.LVL570:
+ 3535 0592 03EBC302 		add	r2, r3, r3, lsl #3
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3536              		.loc 1 176 0
+ 3537 0596 01F07F01 		and	r1, r1, #127
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3538              		.loc 1 177 0
+ 3539 059a 03EB4202 		add	r2, r3, r2, lsl #1
+ 3540              	.LVL571:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3541              		.loc 1 176 0
+ 3542 059e 8DF86F10 		strb	r1, [sp, #111]
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3543              		.loc 1 177 0
+ 3544 05a2 3346     		mov	r3, r6
+ 3545              	.LVL572:
+ 3546              	.L379:
+ 180:25519/f25519.c **** 		c += r[i];
+ 3547              		.loc 1 180 0
+ 3548 05a4 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 3549 05a6 0A44     		add	r2, r2, r1
+ 3550              	.LVL573:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 3551              		.loc 1 181 0
+ 3552 05a8 03F8012B 		strb	r2, [r3], #1
+ 3553              	.LVL574:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3554              		.loc 1 179 0
+ 3555 05ac 9842     		cmp	r0, r3
+ 182:25519/f25519.c **** 		c >>= 8;
+ 3556              		.loc 1 182 0
+ 3557 05ae 4FEA1222 		lsr	r2, r2, #8
+ 3558              	.LVL575:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3559              		.loc 1 179 0
+ 3560 05b2 F7D1     		bne	.L379
+ 3561 05b4 0020     		movs	r0, #0
+ 3562 05b6 0346     		mov	r3, r0
+ 3563              	.LVL576:
+ 3564 05b8 06F11F08 		add	r8, r6, #31
+ 3565              	.LBE199:
+ 3566              	.LBE201:
+ 3567              	.LBB202:
+ 3568              	.LBB203:
+ 3569              	.LBB204:
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3570              		.loc 1 170 0
+ 3571 05bc 4FF0260C 		mov	ip, #38
+ 3572              	.LVL577:
+ 3573              	.L385:
+ 165:25519/f25519.c **** 		c >>= 8;
+ 3574              		.loc 1 165 0
+ 3575 05c0 1B0A     		lsrs	r3, r3, #8
+ 3576              	.LVL578:
+ 3577 05c2 3918     		adds	r1, r7, r0
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3578              		.loc 1 166 0
+ 3579 05c4 0022     		movs	r2, #0
+ 3580              	.LVL579:
+ 3581              	.L381:
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3582              		.loc 1 167 0
+ 3583 05c6 B55C     		ldrb	r5, [r6, r2]	@ zero_extendqisi2
+ 3584 05c8 11F80149 		ldrb	r4, [r1], #-1	@ zero_extendqisi2
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3585              		.loc 1 166 0
+ 3586 05cc 0132     		adds	r2, r2, #1
+ 3587              	.LVL580:
+ 3588 05ce 8242     		cmp	r2, r0
+ 167:25519/f25519.c **** 			c += ((uint32_t)a[j]) * ((uint32_t)b[i - j]);
+ 3589              		.loc 1 167 0
+ 3590 05d0 05FB0433 		mla	r3, r5, r4, r3
+ 3591              	.LVL581:
+ 166:25519/f25519.c **** 		for (j = 0; j <= i; j++)
+ 3592              		.loc 1 166 0
+ 3593 05d4 F7DD     		ble	.L381
+ 3594 05d6 20EAE072 		bic	r2, r0, r0, asr #31
+ 3595              	.LVL582:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3596              		.loc 1 169 0
+ 3597 05da 1F2A     		cmp	r2, #31
+ 3598 05dc 0DD0     		beq	.L382
+ 3599 05de 811A     		subs	r1, r0, r2
+ 3600 05e0 2031     		adds	r1, r1, #32
+ 3601 05e2 3944     		add	r1, r1, r7
+ 3602 05e4 3244     		add	r2, r2, r6
+ 3603              	.LVL583:
+ 3604              	.L383:
+ 171:25519/f25519.c **** 			     ((uint32_t)b[i + F25519_SIZE - j]) * 38;
+ 3605              		.loc 1 171 0
+ 3606 05e6 11F8014D 		ldrb	r4, [r1, #-1]!	@ zero_extendqisi2
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3607              		.loc 1 170 0
+ 3608 05ea 12F8015F 		ldrb	r5, [r2, #1]!	@ zero_extendqisi2
+ 3609              	.LVL584:
+ 3610 05ee 0CFB04F4 		mul	r4, ip, r4
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3611              		.loc 1 169 0
+ 3612 05f2 4245     		cmp	r2, r8
+ 170:25519/f25519.c **** 			c += ((uint32_t)a[j]) *
+ 3613              		.loc 1 170 0
+ 3614 05f4 05FB0433 		mla	r3, r5, r4, r3
+ 3615              	.LVL585:
+ 169:25519/f25519.c **** 		for (; j < F25519_SIZE; j++)
+ 3616              		.loc 1 169 0
+ 3617 05f8 F5D1     		bne	.L383
+ 3618              	.LVL586:
+ 3619              	.L382:
+ 173:25519/f25519.c **** 		r[i] = c;
+ 3620              		.loc 1 173 0
+ 3621 05fa 029A     		ldr	r2, [sp, #8]
+ 3622 05fc 1354     		strb	r3, [r2, r0]
+ 3623              	.LBE204:
+ 162:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3624              		.loc 1 162 0
+ 3625 05fe 0130     		adds	r0, r0, #1
+ 3626              	.LVL587:
+ 3627 0600 2028     		cmp	r0, #32
+ 3628 0602 DDD1     		bne	.L385
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3629              		.loc 1 177 0
+ 3630 0604 DB09     		lsrs	r3, r3, #7
+ 3631              	.LVL588:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3632              		.loc 1 176 0
+ 3633 0606 D17F     		ldrb	r1, [r2, #31]	@ zero_extendqisi2
+ 177:25519/f25519.c **** 	c = (c >> 7) * 19;
+ 3634              		.loc 1 177 0
+ 3635 0608 03EBC302 		add	r2, r3, r3, lsl #3
+ 3636 060c 03EB4202 		add	r2, r3, r2, lsl #1
+ 3637              	.LVL589:
+ 176:25519/f25519.c **** 	r[31] &= 127;
+ 3638              		.loc 1 176 0
+ 3639 0610 029B     		ldr	r3, [sp, #8]
+ 3640 0612 01F07F01 		and	r1, r1, #127
+ 3641 0616 D977     		strb	r1, [r3, #31]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3642              		.loc 1 179 0
+ 3643 0618 0299     		ldr	r1, [sp, #8]
+ 3644 061a 0023     		movs	r3, #0
+ 3645              	.LVL590:
+ 3646              	.L387:
+ 180:25519/f25519.c **** 		c += r[i];
+ 3647              		.loc 1 180 0
+ 3648 061c C85C     		ldrb	r0, [r1, r3]	@ zero_extendqisi2
+ 3649 061e 0244     		add	r2, r2, r0
+ 3650              	.LVL591:
+ 181:25519/f25519.c **** 		r[i] = c;
+ 3651              		.loc 1 181 0
+ 3652 0620 CA54     		strb	r2, [r1, r3]
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3653              		.loc 1 179 0
+ 3654 0622 0133     		adds	r3, r3, #1
+ 3655              	.LVL592:
+ 3656 0624 202B     		cmp	r3, #32
+ 182:25519/f25519.c **** 		c >>= 8;
+ 3657              		.loc 1 182 0
+ 3658 0626 4FEA1222 		lsr	r2, r2, #8
+ 3659              	.LVL593:
+ 179:25519/f25519.c **** 	for (i = 0; i < F25519_SIZE; i++) {
+ 3660              		.loc 1 179 0
+ 3661 062a F7D1     		bne	.L387
+ 3662              	.LBE203:
+ 3663              	.LBE202:
+ 306:25519/f25519.c **** 	uint8_t v[F25519_SIZE];
+ 307:25519/f25519.c **** 	uint8_t i[F25519_SIZE];
+ 308:25519/f25519.c **** 	uint8_t x[F25519_SIZE];
+ 309:25519/f25519.c **** 	uint8_t y[F25519_SIZE];
+ 310:25519/f25519.c **** 
+ 311:25519/f25519.c **** 	/* v = (2a)^((p-5)/8) [x = 2a] */
+ 312:25519/f25519.c **** 	f25519_mul_c(x, a, 2);
+ 313:25519/f25519.c **** 	exp2523(v, x, y);
+ 314:25519/f25519.c **** 
+ 315:25519/f25519.c **** 	/* i = 2av^2 - 1 */
+ 316:25519/f25519.c **** 	f25519_mul__distinct(y, v, v);
+ 317:25519/f25519.c **** 	f25519_mul__distinct(i, x, y);
+ 318:25519/f25519.c **** 	f25519_load(y, 1);
+ 319:25519/f25519.c **** 	f25519_sub(i, i, y);
+ 320:25519/f25519.c **** 
+ 321:25519/f25519.c **** 	/* r = avi */
+ 322:25519/f25519.c **** 	f25519_mul__distinct(x, v, a);
+ 323:25519/f25519.c **** 	f25519_mul__distinct(r, x, i);
+ 324:25519/f25519.c **** }
+ 3664              		.loc 1 324 0
+ 3665 062c 24B0     		add	sp, sp, #144
+ 3666              		@ sp needed
+ 3667 062e BDE8F00F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp}
+ 3668              	.LVL594:
+ 3669 0632 7047     		bx	lr
+ 3670              		.cfi_endproc
+ 3671              	.LFE14:
+ 3673              		.global	f25519_one
+ 3674              		.global	f25519_zero
+ 3675              		.section	.rodata.f25519_one,"a",%progbits
+ 3676              		.align	2
+ 3679              	f25519_one:
+ 3680 0000 01       		.byte	1
+ 3681 0001 00000000 		.space	31
+ 3681      00000000 
+ 3681      00000000 
+ 3681      00000000 
+ 3681      00000000 
+ 3682              		.section	.rodata.f25519_zero,"a",%progbits
+ 3683              		.align	2
+ 3686              	f25519_zero:
+ 3687 0000 00000000 		.space	32
+ 3687      00000000 
+ 3687      00000000 
+ 3687      00000000 
+ 3687      00000000 
+ 3688              		.text
+ 3689              	.Letext0:
+ 3690              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
+ 3691              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
+DEFINED SYMBOLS
+                            *ABS*:00000000 f25519.c
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:19     .text.f25519_load:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:24     .text.f25519_load:00000000 f25519_load
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:61     .text.f25519_normalize:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:66     .text.f25519_normalize:00000000 f25519_normalize
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:188    .text.f25519_eq:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:193    .text.f25519_eq:00000000 f25519_eq
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:293    .text.f25519_select:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:298    .text.f25519_select:00000000 f25519_select
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:428    .text.f25519_add:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:433    .text.f25519_add:00000000 f25519_add
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:512    .text.f25519_sub:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:517    .text.f25519_sub:00000000 f25519_sub
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:599    .text.f25519_neg:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:604    .text.f25519_neg:00000000 f25519_neg
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:681    .text.f25519_mul__distinct:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:686    .text.f25519_mul__distinct:00000000 f25519_mul__distinct
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:807    .text.f25519_mul:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:812    .text.f25519_mul:00000000 f25519_mul
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:968    .text.f25519_mul_c:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:973    .text.f25519_mul_c:00000000 f25519_mul_c
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:1047   .text.f25519_inv__distinct:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:1052   .text.f25519_inv__distinct:00000000 f25519_inv__distinct
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:2304   .text.f25519_inv:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:2309   .text.f25519_inv:00000000 f25519_inv
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:2355   .text.f25519_sqrt:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:2360   .text.f25519_sqrt:00000000 f25519_sqrt
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:3679   .rodata.f25519_one:00000000 f25519_one
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:3686   .rodata.f25519_zero:00000000 f25519_zero
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:3676   .rodata.f25519_one:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc9hj1n5.s:3683   .rodata.f25519_zero:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memset

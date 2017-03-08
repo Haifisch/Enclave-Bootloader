@@ -1,0 +1,938 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"edsign.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.edsign_sec_to_pub,"ax",%progbits
+  19              		.align	2
+  20              		.global	edsign_sec_to_pub
+  21              		.thumb
+  22              		.thumb_func
+  24              	edsign_sec_to_pub:
+  25              	.LFB9:
+  26              		.file 1 "25519/edsign.c"
+   1:25519/edsign.c **** /* Edwards curve signature system
+   2:25519/edsign.c ****  * Daniel Beer <dlbeer@gmail.com>, 22 Apr 2014
+   3:25519/edsign.c ****  *
+   4:25519/edsign.c ****  * This file is in the public domain.
+   5:25519/edsign.c ****  */
+   6:25519/edsign.c **** 
+   7:25519/edsign.c **** #include "ed25519.h"
+   8:25519/edsign.c **** #include "sha512.h"
+   9:25519/edsign.c **** #include "fprime.h"
+  10:25519/edsign.c **** #include "edsign.h"
+  11:25519/edsign.c **** 
+  12:25519/edsign.c **** #define EXPANDED_SIZE		64
+  13:25519/edsign.c **** 
+  14:25519/edsign.c **** static const uint8_t ed25519_order[FPRIME_SIZE] = {
+  15:25519/edsign.c **** 	0xed, 0xd3, 0xf5, 0x5c, 0x1a, 0x63, 0x12, 0x58,
+  16:25519/edsign.c **** 	0xd6, 0x9c, 0xf7, 0xa2, 0xde, 0xf9, 0xde, 0x14,
+  17:25519/edsign.c **** 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  18:25519/edsign.c **** 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10
+  19:25519/edsign.c **** };
+  20:25519/edsign.c **** 
+  21:25519/edsign.c **** static void expand_key(uint8_t *expanded, const uint8_t *secret)
+  22:25519/edsign.c **** {
+  23:25519/edsign.c **** 	struct sha512_state s;
+  24:25519/edsign.c **** 
+  25:25519/edsign.c **** 	sha512_init(&s);
+  26:25519/edsign.c **** 	sha512_final(&s, secret, EDSIGN_SECRET_KEY_SIZE);
+  27:25519/edsign.c **** 	sha512_get(&s, expanded, 0, EXPANDED_SIZE);
+  28:25519/edsign.c **** 	ed25519_prepare(expanded);
+  29:25519/edsign.c **** }
+  30:25519/edsign.c **** 
+  31:25519/edsign.c **** static uint8_t upp(struct ed25519_pt *p, const uint8_t *packed)
+  32:25519/edsign.c **** {
+  33:25519/edsign.c **** 	uint8_t x[F25519_SIZE];
+  34:25519/edsign.c **** 	uint8_t y[F25519_SIZE];
+  35:25519/edsign.c **** 	uint8_t ok = ed25519_try_unpack(x, y, packed);
+  36:25519/edsign.c **** 
+  37:25519/edsign.c **** 	ed25519_project(p, x, y);
+  38:25519/edsign.c **** 	return ok;
+  39:25519/edsign.c **** }
+  40:25519/edsign.c **** 
+  41:25519/edsign.c **** static void pp(uint8_t *packed, const struct ed25519_pt *p)
+  42:25519/edsign.c **** {
+  43:25519/edsign.c **** 	uint8_t x[F25519_SIZE];
+  44:25519/edsign.c **** 	uint8_t y[F25519_SIZE];
+  45:25519/edsign.c **** 
+  46:25519/edsign.c **** 	ed25519_unproject(x, y, p);
+  47:25519/edsign.c **** 	ed25519_pack(packed, x, y);
+  48:25519/edsign.c **** }
+  49:25519/edsign.c **** 
+  50:25519/edsign.c **** static void sm_pack(uint8_t *r, const uint8_t *k)
+  51:25519/edsign.c **** {
+  52:25519/edsign.c **** 	struct ed25519_pt p;
+  53:25519/edsign.c **** 
+  54:25519/edsign.c **** 	ed25519_smult(&p, &ed25519_base, k);
+  55:25519/edsign.c **** 	pp(r, &p);
+  56:25519/edsign.c **** }
+  57:25519/edsign.c **** 
+  58:25519/edsign.c **** void edsign_sec_to_pub(uint8_t *pub, const uint8_t *secret)
+  59:25519/edsign.c **** {
+  27              		.loc 1 59 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 256
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  33              		.cfi_def_cfa_offset 20
+  34              		.cfi_offset 4, -20
+  35              		.cfi_offset 5, -16
+  36              		.cfi_offset 6, -12
+  37              		.cfi_offset 7, -8
+  38              		.cfi_offset 14, -4
+  39              	.LBB22:
+  40              	.LBB23:
+  41              	.LBB24:
+  42              	.LBB25:
+  43              		.file 2 "25519/sha512.h"
+   1:25519/sha512.h **** /* SHA512
+   2:25519/sha512.h ****  * Daniel Beer <dlbeer@gmail.com>, 22 Apr 2014
+   3:25519/sha512.h ****  *
+   4:25519/sha512.h ****  * This file is in the public domain.
+   5:25519/sha512.h ****  */
+   6:25519/sha512.h **** 
+   7:25519/sha512.h **** #ifndef SHA512_H_
+   8:25519/sha512.h **** #define SHA512_H_
+   9:25519/sha512.h **** 
+  10:25519/sha512.h **** #include <stdint.h>
+  11:25519/sha512.h **** #include <stddef.h>
+  12:25519/sha512.h **** #include <string.h>
+  13:25519/sha512.h **** 
+  14:25519/sha512.h **** /* SHA512 state. State is updated as data is fed in, and then the final
+  15:25519/sha512.h ****  * hash can be read out in slices.
+  16:25519/sha512.h ****  *
+  17:25519/sha512.h ****  * Data is fed in as a sequence of full blocks terminated by a single
+  18:25519/sha512.h ****  * partial block.
+  19:25519/sha512.h ****  */
+  20:25519/sha512.h **** struct sha512_state {
+  21:25519/sha512.h **** 	uint64_t	h[8];
+  22:25519/sha512.h **** };
+  23:25519/sha512.h **** 
+  24:25519/sha512.h **** /* Initial state */
+  25:25519/sha512.h **** extern const struct sha512_state sha512_initial_state;
+  26:25519/sha512.h **** 
+  27:25519/sha512.h **** /* Set up a new context */
+  28:25519/sha512.h **** static inline void sha512_init(struct sha512_state *s)
+  29:25519/sha512.h **** {
+  30:25519/sha512.h **** 	memcpy(s, &sha512_initial_state, sizeof(*s));
+  44              		.loc 2 30 0
+  45 0002 1C4D     		ldr	r5, .L2
+  46              	.LBE25:
+  47              	.LBE24:
+  48              	.LBE23:
+  49              	.LBE22:
+  50              		.loc 1 59 0
+  51 0004 C1B0     		sub	sp, sp, #260
+  52              		.cfi_def_cfa_offset 280
+  53              	.LVL1:
+  54              	.LBB40:
+  55              	.LBB36:
+  56              	.LBB28:
+  57              	.LBB26:
+  58              		.loc 2 30 0
+  59 0006 20AC     		add	r4, sp, #128
+  60              	.LBE26:
+  61              	.LBE28:
+  62              	.LBE36:
+  63              	.LBE40:
+  64              		.loc 1 59 0
+  65 0008 0646     		mov	r6, r0
+  66 000a 0F46     		mov	r7, r1
+  67              	.LVL2:
+  68              	.LBB41:
+  69              	.LBB37:
+  70              	.LBB29:
+  71              	.LBB27:
+  72              		.loc 2 30 0
+  73 000c 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+  74              	.LVL3:
+  75 000e 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+  76              	.LVL4:
+  77 0010 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+  78 0012 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+  79              	.LVL5:
+  80 0014 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+  81 0016 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+  82              	.LVL6:
+  83 0018 95E80F00 		ldmia	r5, {r0, r1, r2, r3}
+  84 001c 84E80F00 		stmia	r4, {r0, r1, r2, r3}
+  85              	.LBE27:
+  86              	.LBE29:
+  26:25519/edsign.c **** 	sha512_final(&s, secret, EDSIGN_SECRET_KEY_SIZE);
+  87              		.loc 1 26 0
+  88 0020 3946     		mov	r1, r7
+  89 0022 20A8     		add	r0, sp, #128
+  90              	.LVL7:
+  91 0024 2022     		movs	r2, #32
+  92 0026 FFF7FEFF 		bl	sha512_final
+  93              	.LVL8:
+  27:25519/edsign.c **** 	sha512_get(&s, expanded, 0, EXPANDED_SIZE);
+  94              		.loc 1 27 0
+  95 002a 20A8     		add	r0, sp, #128
+  96              	.LVL9:
+  97 002c 10A9     		add	r1, sp, #64
+  98              	.LVL10:
+  99 002e 0022     		movs	r2, #0
+ 100 0030 4023     		movs	r3, #64
+ 101 0032 FFF7FEFF 		bl	sha512_get
+ 102              	.LVL11:
+ 103              	.LBB30:
+ 104              	.LBB31:
+ 105              		.file 3 "25519/ed25519.h"
+   1:25519/ed25519.h **** /* Edwards curve operations
+   2:25519/ed25519.h ****  * Daniel Beer <dlbeer@gmail.com>, 9 Jan 2014
+   3:25519/ed25519.h ****  *
+   4:25519/ed25519.h ****  * This file is in the public domain.
+   5:25519/ed25519.h ****  */
+   6:25519/ed25519.h **** 
+   7:25519/ed25519.h **** #ifndef ED25519_H_
+   8:25519/ed25519.h **** #define ED25519_H_
+   9:25519/ed25519.h **** 
+  10:25519/ed25519.h **** #include "f25519.h"
+  11:25519/ed25519.h **** 
+  12:25519/ed25519.h **** /* This is not the Ed25519 signature system. Rather, we're implementing
+  13:25519/ed25519.h ****  * basic operations on the twisted Edwards curve over (Z mod 2^255-19):
+  14:25519/ed25519.h ****  *
+  15:25519/ed25519.h ****  *     -x^2 + y^2 = 1 - (121665/121666)x^2y^2
+  16:25519/ed25519.h ****  *
+  17:25519/ed25519.h ****  * With the positive-x base point y = 4/5.
+  18:25519/ed25519.h ****  *
+  19:25519/ed25519.h ****  * These functions will not leak secret data through timing.
+  20:25519/ed25519.h ****  *
+  21:25519/ed25519.h ****  * For more information, see:
+  22:25519/ed25519.h ****  *
+  23:25519/ed25519.h ****  *     Bernstein, D.J. & Lange, T. (2007) "Faster addition and doubling on
+  24:25519/ed25519.h ****  *     elliptic curves". Document ID: 95616567a6ba20f575c5f25e7cebaf83.
+  25:25519/ed25519.h ****  *
+  26:25519/ed25519.h ****  *     Hisil, H. & Wong, K K. & Carter, G. & Dawson, E. (2008) "Twisted
+  27:25519/ed25519.h ****  *     Edwards curves revisited". Advances in Cryptology, ASIACRYPT 2008,
+  28:25519/ed25519.h ****  *     Vol. 5350, pp. 326-343.
+  29:25519/ed25519.h ****  */
+  30:25519/ed25519.h **** 
+  31:25519/ed25519.h **** /* Projective coordinates */
+  32:25519/ed25519.h **** struct ed25519_pt {
+  33:25519/ed25519.h **** 	uint8_t		x[F25519_SIZE];
+  34:25519/ed25519.h **** 	uint8_t		y[F25519_SIZE];
+  35:25519/ed25519.h **** 	uint8_t		t[F25519_SIZE];
+  36:25519/ed25519.h **** 	uint8_t		z[F25519_SIZE];
+  37:25519/ed25519.h **** };
+  38:25519/ed25519.h **** 
+  39:25519/ed25519.h **** extern const struct ed25519_pt ed25519_base;
+  40:25519/ed25519.h **** extern const struct ed25519_pt ed25519_neutral;
+  41:25519/ed25519.h **** 
+  42:25519/ed25519.h **** /* Convert between projective and affine coordinates (x/y in F25519) */
+  43:25519/ed25519.h **** void ed25519_project(struct ed25519_pt *p,
+  44:25519/ed25519.h **** 		     const uint8_t *x, const uint8_t *y);
+  45:25519/ed25519.h **** 
+  46:25519/ed25519.h **** void ed25519_unproject(uint8_t *x, uint8_t *y,
+  47:25519/ed25519.h **** 		       const struct ed25519_pt *p);
+  48:25519/ed25519.h **** 
+  49:25519/ed25519.h **** /* Compress/uncompress points. try_unpack() will check that the
+  50:25519/ed25519.h ****  * compressed point is on the curve, returning 1 if the unpacked point
+  51:25519/ed25519.h ****  * is valid, and 0 otherwise.
+  52:25519/ed25519.h ****  */
+  53:25519/ed25519.h **** #define ED25519_PACK_SIZE	F25519_SIZE
+  54:25519/ed25519.h **** 
+  55:25519/ed25519.h **** void ed25519_pack(uint8_t *c, const uint8_t *x, const uint8_t *y);
+  56:25519/ed25519.h **** uint8_t ed25519_try_unpack(uint8_t *x, uint8_t *y, const uint8_t *c);
+  57:25519/ed25519.h **** 
+  58:25519/ed25519.h **** /* Add, double and scalar multiply */
+  59:25519/ed25519.h **** #define ED25519_EXPONENT_SIZE	32
+  60:25519/ed25519.h **** 
+  61:25519/ed25519.h **** /* Prepare an exponent by clamping appropriate bits */
+  62:25519/ed25519.h **** static inline void ed25519_prepare(uint8_t *e)
+  63:25519/ed25519.h **** {
+  64:25519/ed25519.h **** 	e[0] &= 0xf8;
+  65:25519/ed25519.h **** 	e[31] &= 0x7f;
+ 106              		.loc 3 65 0
+ 107 0036 9DF85F40 		ldrb	r4, [sp, #95]	@ zero_extendqisi2
+ 108              	.LVL12:
+  64:25519/ed25519.h **** 	e[0] &= 0xf8;
+ 109              		.loc 3 64 0
+ 110 003a 9DF84030 		ldrb	r3, [sp, #64]	@ zero_extendqisi2
+ 111              		.loc 3 65 0
+ 112 003e 04F07F04 		and	r4, r4, #127
+  64:25519/ed25519.h **** 	e[0] &= 0xf8;
+ 113              		.loc 3 64 0
+ 114 0042 23F00703 		bic	r3, r3, #7
+ 115              	.LBE31:
+ 116              	.LBE30:
+ 117              	.LBE37:
+ 118              	.LBE41:
+ 119              	.LBB42:
+ 120              	.LBB43:
+  54:25519/edsign.c **** 	ed25519_smult(&p, &ed25519_base, k);
+ 121              		.loc 1 54 0
+ 122 0046 10AA     		add	r2, sp, #64
+ 123              	.LVL13:
+ 124 0048 20A8     		add	r0, sp, #128
+ 125              	.LVL14:
+ 126              	.LBE43:
+ 127              	.LBE42:
+ 128              	.LBB48:
+ 129              	.LBB38:
+ 130              	.LBB34:
+ 131              	.LBB32:
+  66:25519/ed25519.h **** 	e[31] |= 0x40;
+ 132              		.loc 3 66 0
+ 133 004a 44F04004 		orr	r4, r4, #64
+ 134              	.LBE32:
+ 135              	.LBE34:
+ 136              	.LBE38:
+ 137              	.LBE48:
+ 138              	.LBB49:
+ 139              	.LBB46:
+  54:25519/edsign.c **** 	ed25519_smult(&p, &ed25519_base, k);
+ 140              		.loc 1 54 0
+ 141 004e 0A49     		ldr	r1, .L2+4
+ 142              	.LBE46:
+ 143              	.LBE49:
+ 144              	.LBB50:
+ 145              	.LBB39:
+ 146              	.LBB35:
+ 147              	.LBB33:
+  64:25519/ed25519.h **** 	e[0] &= 0xf8;
+ 148              		.loc 3 64 0
+ 149 0050 8DF84030 		strb	r3, [sp, #64]
+ 150              		.loc 3 66 0
+ 151 0054 8DF85F40 		strb	r4, [sp, #95]
+ 152              	.LVL15:
+ 153              	.LBE33:
+ 154              	.LBE35:
+ 155              	.LBE39:
+ 156              	.LBE50:
+ 157              	.LBB51:
+ 158              	.LBB47:
+  54:25519/edsign.c **** 	ed25519_smult(&p, &ed25519_base, k);
+ 159              		.loc 1 54 0
+ 160 0058 FFF7FEFF 		bl	ed25519_smult
+ 161              	.LVL16:
+ 162              	.LBB44:
+ 163              	.LBB45:
+  46:25519/edsign.c **** 	ed25519_unproject(x, y, p);
+ 164              		.loc 1 46 0
+ 165 005c 20AA     		add	r2, sp, #128
+ 166              	.LVL17:
+ 167 005e 6846     		mov	r0, sp
+ 168 0060 08A9     		add	r1, sp, #32
+ 169 0062 FFF7FEFF 		bl	ed25519_unproject
+ 170              	.LVL18:
+  47:25519/edsign.c **** 	ed25519_pack(packed, x, y);
+ 171              		.loc 1 47 0
+ 172 0066 3046     		mov	r0, r6
+ 173 0068 6946     		mov	r1, sp
+ 174 006a 08AA     		add	r2, sp, #32
+ 175 006c FFF7FEFF 		bl	ed25519_pack
+ 176              	.LVL19:
+ 177              	.LBE45:
+ 178              	.LBE44:
+ 179              	.LBE47:
+ 180              	.LBE51:
+  60:25519/edsign.c **** 	uint8_t expanded[EXPANDED_SIZE];
+  61:25519/edsign.c **** 
+  62:25519/edsign.c **** 	expand_key(expanded, secret);
+  63:25519/edsign.c **** 	sm_pack(pub, expanded);
+  64:25519/edsign.c **** }
+ 181              		.loc 1 64 0
+ 182 0070 41B0     		add	sp, sp, #260
+ 183              		@ sp needed
+ 184 0072 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 185              	.LVL20:
+ 186              	.L3:
+ 187              		.align	2
+ 188              	.L2:
+ 189 0074 00000000 		.word	sha512_initial_state
+ 190 0078 00000000 		.word	ed25519_base
+ 191              		.cfi_endproc
+ 192              	.LFE9:
+ 194              		.section	.text.edsign_verify,"ax",%progbits
+ 195              		.align	2
+ 196              		.global	edsign_verify
+ 197              		.thumb
+ 198              		.thumb_func
+ 200              	edsign_verify:
+ 201              	.LFB13:
+  65:25519/edsign.c **** 
+  66:25519/edsign.c **** static void hash_with_prefix(uint8_t *out_fp,
+  67:25519/edsign.c **** 			     uint8_t *init_block, int prefix_size,
+  68:25519/edsign.c **** 			     const uint8_t *message, size_t len)
+  69:25519/edsign.c **** {
+  70:25519/edsign.c **** 	struct sha512_state s;
+  71:25519/edsign.c **** 
+  72:25519/edsign.c **** 	sha512_init(&s);
+  73:25519/edsign.c **** 
+  74:25519/edsign.c **** 	if (len < SHA512_BLOCK_SIZE - prefix_size) {
+  75:25519/edsign.c **** 		memcpy(init_block + prefix_size, message, len);
+  76:25519/edsign.c **** 		sha512_final(&s, init_block, len + prefix_size);
+  77:25519/edsign.c **** 	} else {
+  78:25519/edsign.c **** 		size_t i;
+  79:25519/edsign.c **** 
+  80:25519/edsign.c **** 		memcpy(init_block + prefix_size, message,
+  81:25519/edsign.c **** 		       SHA512_BLOCK_SIZE - prefix_size);
+  82:25519/edsign.c **** 		sha512_block(&s, init_block);
+  83:25519/edsign.c **** 
+  84:25519/edsign.c **** 		for (i = SHA512_BLOCK_SIZE - prefix_size;
+  85:25519/edsign.c **** 		     i + SHA512_BLOCK_SIZE <= len;
+  86:25519/edsign.c **** 		     i += SHA512_BLOCK_SIZE)
+  87:25519/edsign.c **** 			sha512_block(&s, message + i);
+  88:25519/edsign.c **** 
+  89:25519/edsign.c **** 		sha512_final(&s, message + i, len + prefix_size);
+  90:25519/edsign.c **** 	}
+  91:25519/edsign.c **** 
+  92:25519/edsign.c **** 	sha512_get(&s, init_block, 0, SHA512_HASH_SIZE);
+  93:25519/edsign.c **** 	fprime_from_bytes(out_fp, init_block, SHA512_HASH_SIZE, ed25519_order);
+  94:25519/edsign.c **** }
+  95:25519/edsign.c **** 
+  96:25519/edsign.c **** static void generate_k(uint8_t *k, const uint8_t *kgen_key,
+  97:25519/edsign.c **** 		       const uint8_t *message, size_t len)
+  98:25519/edsign.c **** {
+  99:25519/edsign.c **** 	uint8_t block[SHA512_BLOCK_SIZE];
+ 100:25519/edsign.c **** 
+ 101:25519/edsign.c **** 	memcpy(block, kgen_key, 32);
+ 102:25519/edsign.c **** 	hash_with_prefix(k, block, 32, message, len);
+ 103:25519/edsign.c **** }
+ 104:25519/edsign.c **** 
+ 105:25519/edsign.c **** static void hash_message(uint8_t *z, const uint8_t *r, const uint8_t *a,
+ 106:25519/edsign.c **** 			 const uint8_t *m, size_t len)
+ 107:25519/edsign.c **** {
+ 108:25519/edsign.c **** 	uint8_t block[SHA512_BLOCK_SIZE];
+ 109:25519/edsign.c **** 
+ 110:25519/edsign.c **** 	memcpy(block, r, 32);
+ 111:25519/edsign.c **** 	memcpy(block + 32, a, 32);
+ 112:25519/edsign.c **** 	hash_with_prefix(z, block, 64, m, len);
+ 113:25519/edsign.c **** }
+ 114:25519/edsign.c **** 
+ 115:25519/edsign.c **** /* we dont sign anything here so save some space
+ 116:25519/edsign.c **** void edsign_sign(uint8_t *signature, const uint8_t *pub,
+ 117:25519/edsign.c **** 		 const uint8_t *secret,
+ 118:25519/edsign.c **** 		 const uint8_t *message, size_t len)
+ 119:25519/edsign.c **** {
+ 120:25519/edsign.c **** 	uint8_t expanded[EXPANDED_SIZE];
+ 121:25519/edsign.c **** 	uint8_t e[FPRIME_SIZE];
+ 122:25519/edsign.c **** 	uint8_t s[FPRIME_SIZE];
+ 123:25519/edsign.c **** 	uint8_t k[FPRIME_SIZE];
+ 124:25519/edsign.c **** 	uint8_t z[FPRIME_SIZE];
+ 125:25519/edsign.c **** 
+ 126:25519/edsign.c **** 	expand_key(expanded, secret);
+ 127:25519/edsign.c **** 
+ 128:25519/edsign.c **** 	generate_k(k, expanded + 32, message, len);
+ 129:25519/edsign.c **** 	sm_pack(signature, k);
+ 130:25519/edsign.c **** 
+ 131:25519/edsign.c **** 	hash_message(z, signature, pub, message, len);
+ 132:25519/edsign.c **** 
+ 133:25519/edsign.c **** 	fprime_from_bytes(e, expanded, 32, ed25519_order);
+ 134:25519/edsign.c **** 
+ 135:25519/edsign.c **** 	fprime_mul(s, z, e, ed25519_order);
+ 136:25519/edsign.c **** 	fprime_add(s, k, ed25519_order);
+ 137:25519/edsign.c **** 	memcpy(signature + 32, s, 32);
+ 138:25519/edsign.c **** }
+ 139:25519/edsign.c **** */
+ 140:25519/edsign.c **** uint8_t edsign_verify(const uint8_t *signature, const uint8_t *pub,
+ 141:25519/edsign.c **** 		      const uint8_t *message, size_t len)
+ 142:25519/edsign.c **** {
+ 202              		.loc 1 142 0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 416
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206              	.LVL21:
+ 207 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 208              		.cfi_def_cfa_offset 28
+ 209              		.cfi_offset 4, -28
+ 210              		.cfi_offset 5, -24
+ 211              		.cfi_offset 6, -20
+ 212              		.cfi_offset 7, -16
+ 213              		.cfi_offset 8, -12
+ 214              		.cfi_offset 9, -8
+ 215              		.cfi_offset 14, -4
+ 216 0004 0646     		mov	r6, r0
+ 217 0006 0F46     		mov	r7, r1
+ 218 0008 E9B0     		sub	sp, sp, #420
+ 219              		.cfi_def_cfa_offset 448
+ 220              	.LVL22:
+ 221              	.LBB69:
+ 222              	.LBB70:
+ 110:25519/edsign.c **** 	memcpy(block, r, 32);
+ 223              		.loc 1 110 0
+ 224 000a 0068     		ldr	r0, [r0]	@ unaligned
+ 225              	.LVL23:
+ 226 000c 7168     		ldr	r1, [r6, #4]	@ unaligned
+ 227              	.LVL24:
+ 228              	.LBE70:
+ 229              	.LBE69:
+ 230              		.loc 1 142 0
+ 231 000e 9846     		mov	r8, r3
+ 232 0010 9146     		mov	r9, r2
+ 233              	.LVL25:
+ 234              	.LBB91:
+ 235              	.LBB89:
+ 110:25519/edsign.c **** 	memcpy(block, r, 32);
+ 236              		.loc 1 110 0
+ 237 0012 F368     		ldr	r3, [r6, #12]	@ unaligned
+ 238              	.LVL26:
+ 239 0014 B268     		ldr	r2, [r6, #8]	@ unaligned
+ 240              	.LVL27:
+ 241 0016 48AC     		add	r4, sp, #288
+ 242 0018 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 243 001a 3069     		ldr	r0, [r6, #16]	@ unaligned
+ 244 001c 7169     		ldr	r1, [r6, #20]	@ unaligned
+ 245 001e B269     		ldr	r2, [r6, #24]	@ unaligned
+ 246 0020 F369     		ldr	r3, [r6, #28]	@ unaligned
+ 111:25519/edsign.c **** 	memcpy(block + 32, a, 32);
+ 247              		.loc 1 111 0
+ 248 0022 0DF5A07E 		add	lr, sp, #320
+ 110:25519/edsign.c **** 	memcpy(block, r, 32);
+ 249              		.loc 1 110 0
+ 250 0026 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 111:25519/edsign.c **** 	memcpy(block + 32, a, 32);
+ 251              		.loc 1 111 0
+ 252 0028 3868     		ldr	r0, [r7]	@ unaligned
+ 253 002a 7968     		ldr	r1, [r7, #4]	@ unaligned
+ 254 002c BA68     		ldr	r2, [r7, #8]	@ unaligned
+ 255 002e FB68     		ldr	r3, [r7, #12]	@ unaligned
+ 256              	.LBB71:
+ 257              	.LBB72:
+ 258              	.LBB73:
+ 259              	.LBB74:
+ 260              		.loc 2 30 0
+ 261 0030 4F4D     		ldr	r5, .L15
+ 262              	.LBE74:
+ 263              	.LBE73:
+ 264              	.LBE72:
+ 265              	.LBE71:
+ 111:25519/edsign.c **** 	memcpy(block + 32, a, 32);
+ 266              		.loc 1 111 0
+ 267 0032 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 268 0036 3869     		ldr	r0, [r7, #16]	@ unaligned
+ 269 0038 7969     		ldr	r1, [r7, #20]	@ unaligned
+ 270 003a BA69     		ldr	r2, [r7, #24]	@ unaligned
+ 271 003c FB69     		ldr	r3, [r7, #28]	@ unaligned
+ 272              	.LBB86:
+ 273              	.LBB83:
+ 274              	.LBB78:
+ 275              	.LBB75:
+ 276              		.loc 2 30 0
+ 277 003e 28AC     		add	r4, sp, #160
+ 278              	.LBE75:
+ 279              	.LBE78:
+ 280              	.LBE83:
+ 281              	.LBE86:
+ 111:25519/edsign.c **** 	memcpy(block + 32, a, 32);
+ 282              		.loc 1 111 0
+ 283 0040 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 284              	.LVL28:
+ 285              	.LBB87:
+ 286              	.LBB84:
+ 287              	.LBB79:
+ 288              	.LBB76:
+ 289              		.loc 2 30 0
+ 290 0044 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 291 0046 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 292              	.LVL29:
+ 293 0048 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 294 004a 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 295              	.LVL30:
+ 296 004c 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 297 004e 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 298              	.LVL31:
+ 299 0050 95E80F00 		ldmia	r5, {r0, r1, r2, r3}
+ 300              	.LBE76:
+ 301              	.LBE79:
+  74:25519/edsign.c **** 	if (len < SHA512_BLOCK_SIZE - prefix_size) {
+ 302              		.loc 1 74 0
+ 303 0054 B8F13F0F 		cmp	r8, #63
+ 304              	.LBB80:
+ 305              	.LBB77:
+ 306              		.loc 2 30 0
+ 307 0058 84E80F00 		stmia	r4, {r0, r1, r2, r3}
+ 308              	.LBE77:
+ 309              	.LBE80:
+  74:25519/edsign.c **** 	if (len < SHA512_BLOCK_SIZE - prefix_size) {
+ 310              		.loc 1 74 0
+ 311 005c 2AD9     		bls	.L13
+ 312              	.LBB81:
+  80:25519/edsign.c **** 		memcpy(init_block + prefix_size, message,
+ 313              		.loc 1 80 0
+ 314 005e 4C46     		mov	r4, r9
+ 315              	.LVL32:
+ 316 0060 0DF5B07E 		add	lr, sp, #352
+ 317 0064 09F1400C 		add	ip, r9, #64
+ 318              	.L7:
+ 319 0068 2068     		ldr	r0, [r4]	@ unaligned
+ 320 006a 6168     		ldr	r1, [r4, #4]	@ unaligned
+ 321 006c A268     		ldr	r2, [r4, #8]	@ unaligned
+ 322 006e E368     		ldr	r3, [r4, #12]	@ unaligned
+ 323 0070 7546     		mov	r5, lr
+ 324 0072 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 325 0074 1034     		adds	r4, r4, #16
+ 326 0076 6445     		cmp	r4, ip
+ 327 0078 AE46     		mov	lr, r5
+ 328 007a F5D1     		bne	.L7
+  82:25519/edsign.c **** 		sha512_block(&s, init_block);
+ 329              		.loc 1 82 0
+ 330 007c 28A8     		add	r0, sp, #160
+ 331              	.LVL33:
+ 332 007e 48A9     		add	r1, sp, #288
+ 333              	.LVL34:
+ 334 0080 FFF7FEFF 		bl	sha512_block
+ 335              	.LVL35:
+  84:25519/edsign.c **** 		for (i = SHA512_BLOCK_SIZE - prefix_size;
+ 336              		.loc 1 84 0
+ 337 0084 B8F1BF0F 		cmp	r8, #191
+ 338 0088 70D9     		bls	.L10
+  85:25519/edsign.c **** 		     i + SHA512_BLOCK_SIZE <= len;
+ 339              		.loc 1 85 0
+ 340 008a C024     		movs	r4, #192
+  84:25519/edsign.c **** 		for (i = SHA512_BLOCK_SIZE - prefix_size;
+ 341              		.loc 1 84 0
+ 342 008c 4021     		movs	r1, #64
+ 343 008e 01E0     		b	.L9
+ 344              	.LVL36:
+ 345              	.L14:
+ 346 0090 2146     		mov	r1, r4
+  85:25519/edsign.c **** 		     i + SHA512_BLOCK_SIZE <= len;
+ 347              		.loc 1 85 0
+ 348 0092 2C46     		mov	r4, r5
+ 349              	.LVL37:
+ 350              	.L9:
+  87:25519/edsign.c **** 			sha512_block(&s, message + i);
+ 351              		.loc 1 87 0
+ 352 0094 4944     		add	r1, r1, r9
+ 353              	.LVL38:
+ 354 0096 28A8     		add	r0, sp, #160
+ 355              	.LVL39:
+  85:25519/edsign.c **** 		     i + SHA512_BLOCK_SIZE <= len;
+ 356              		.loc 1 85 0
+ 357 0098 04F18005 		add	r5, r4, #128
+  87:25519/edsign.c **** 			sha512_block(&s, message + i);
+ 358              		.loc 1 87 0
+ 359 009c FFF7FEFF 		bl	sha512_block
+ 360              	.LVL40:
+  84:25519/edsign.c **** 		for (i = SHA512_BLOCK_SIZE - prefix_size;
+ 361              		.loc 1 84 0
+ 362 00a0 A845     		cmp	r8, r5
+ 363 00a2 F5D2     		bcs	.L14
+ 364              	.LVL41:
+ 365              	.L8:
+  89:25519/edsign.c **** 		sha512_final(&s, message + i, len + prefix_size);
+ 366              		.loc 1 89 0
+ 367 00a4 09EB0401 		add	r1, r9, r4
+ 368 00a8 08F14002 		add	r2, r8, #64
+ 369 00ac 28A8     		add	r0, sp, #160
+ 370              	.LVL42:
+ 371 00ae FFF7FEFF 		bl	sha512_final
+ 372              	.LVL43:
+ 373 00b2 0AE0     		b	.L6
+ 374              	.L13:
+ 375              	.LBE81:
+  75:25519/edsign.c **** 		memcpy(init_block + prefix_size, message, len);
+ 376              		.loc 1 75 0
+ 377 00b4 4946     		mov	r1, r9
+ 378 00b6 4246     		mov	r2, r8
+ 379 00b8 58A8     		add	r0, sp, #352
+ 380 00ba FFF7FEFF 		bl	memcpy
+ 381              	.LVL44:
+  76:25519/edsign.c **** 		sha512_final(&s, init_block, len + prefix_size);
+ 382              		.loc 1 76 0
+ 383 00be 28A8     		add	r0, sp, #160
+ 384              	.LVL45:
+ 385 00c0 48A9     		add	r1, sp, #288
+ 386              	.LVL46:
+ 387 00c2 08F14002 		add	r2, r8, #64
+ 388 00c6 FFF7FEFF 		bl	sha512_final
+ 389              	.LVL47:
+ 390              	.L6:
+  92:25519/edsign.c **** 	sha512_get(&s, init_block, 0, SHA512_HASH_SIZE);
+ 391              		.loc 1 92 0
+ 392 00ca 28A8     		add	r0, sp, #160
+ 393              	.LVL48:
+ 394 00cc 48A9     		add	r1, sp, #288
+ 395              	.LVL49:
+ 396 00ce 0022     		movs	r2, #0
+ 397 00d0 4023     		movs	r3, #64
+ 398 00d2 FFF7FEFF 		bl	sha512_get
+ 399              	.LVL50:
+  93:25519/edsign.c **** 	fprime_from_bytes(out_fp, init_block, SHA512_HASH_SIZE, ed25519_order);
+ 400              		.loc 1 93 0
+ 401 00d6 274B     		ldr	r3, .L15+4
+ 402 00d8 10A8     		add	r0, sp, #64
+ 403              	.LVL51:
+ 404 00da 48A9     		add	r1, sp, #288
+ 405              	.LVL52:
+ 406 00dc 4022     		movs	r2, #64
+ 407 00de FFF7FEFF 		bl	fprime_from_bytes
+ 408              	.LVL53:
+ 409              	.LBE84:
+ 410              	.LBE87:
+ 411              	.LBE89:
+ 412              	.LBE91:
+ 413              	.LBB92:
+ 414              	.LBB93:
+  54:25519/edsign.c **** 	ed25519_smult(&p, &ed25519_base, k);
+ 415              		.loc 1 54 0
+ 416 00e2 48A8     		add	r0, sp, #288
+ 417              	.LVL54:
+ 418 00e4 06F12002 		add	r2, r6, #32
+ 419              	.LVL55:
+ 420 00e8 2349     		ldr	r1, .L15+8
+ 421 00ea FFF7FEFF 		bl	ed25519_smult
+ 422              	.LVL56:
+ 423              	.LBB94:
+ 424              	.LBB95:
+  46:25519/edsign.c **** 	ed25519_unproject(x, y, p);
+ 425              		.loc 1 46 0
+ 426 00ee 20A8     		add	r0, sp, #128
+ 427 00f0 28A9     		add	r1, sp, #160
+ 428              	.LVL57:
+ 429 00f2 48AA     		add	r2, sp, #288
+ 430              	.LVL58:
+ 431 00f4 FFF7FEFF 		bl	ed25519_unproject
+ 432              	.LVL59:
+  47:25519/edsign.c **** 	ed25519_pack(packed, x, y);
+ 433              		.loc 1 47 0
+ 434 00f8 20A9     		add	r1, sp, #128
+ 435 00fa 6846     		mov	r0, sp
+ 436 00fc 28AA     		add	r2, sp, #160
+ 437              	.LVL60:
+ 438 00fe FFF7FEFF 		bl	ed25519_pack
+ 439              	.LVL61:
+ 440              	.LBE95:
+ 441              	.LBE94:
+ 442              	.LBE93:
+ 443              	.LBE92:
+ 444              	.LBB96:
+ 445              	.LBB97:
+  35:25519/edsign.c **** 	uint8_t ok = ed25519_try_unpack(x, y, packed);
+ 446              		.loc 1 35 0
+ 447 0102 48A9     		add	r1, sp, #288
+ 448              	.LVL62:
+ 449 0104 3A46     		mov	r2, r7
+ 450 0106 20A8     		add	r0, sp, #128
+ 451 0108 FFF7FEFF 		bl	ed25519_try_unpack
+ 452              	.LVL63:
+  37:25519/edsign.c **** 	ed25519_project(p, x, y);
+ 453              		.loc 1 37 0
+ 454 010c 20A9     		add	r1, sp, #128
+  35:25519/edsign.c **** 	uint8_t ok = ed25519_try_unpack(x, y, packed);
+ 455              		.loc 1 35 0
+ 456 010e 0546     		mov	r5, r0
+ 457              	.LVL64:
+  37:25519/edsign.c **** 	ed25519_project(p, x, y);
+ 458              		.loc 1 37 0
+ 459 0110 48AA     		add	r2, sp, #288
+ 460              	.LVL65:
+ 461 0112 28A8     		add	r0, sp, #160
+ 462              	.LVL66:
+ 463 0114 FFF7FEFF 		bl	ed25519_project
+ 464              	.LVL67:
+ 465              	.LBE97:
+ 466              	.LBE96:
+ 143:25519/edsign.c **** 	struct ed25519_pt p;
+ 144:25519/edsign.c **** 	struct ed25519_pt q;
+ 145:25519/edsign.c **** 	uint8_t lhs[F25519_SIZE];
+ 146:25519/edsign.c **** 	uint8_t rhs[F25519_SIZE];
+ 147:25519/edsign.c **** 	uint8_t z[FPRIME_SIZE];
+ 148:25519/edsign.c **** 	uint8_t ok = 1;
+ 149:25519/edsign.c **** 
+ 150:25519/edsign.c **** 	/* Compute z = H(R, A, M) */
+ 151:25519/edsign.c **** 	hash_message(z, signature, pub, message, len);
+ 152:25519/edsign.c **** 
+ 153:25519/edsign.c **** 	/* sB = (ze + k)B = ... */
+ 154:25519/edsign.c **** 	sm_pack(lhs, signature + 32);
+ 155:25519/edsign.c **** 
+ 156:25519/edsign.c **** 	/* ... = zA + R */
+ 157:25519/edsign.c **** 	ok &= upp(&p, pub);
+ 158:25519/edsign.c **** 	ed25519_smult(&p, &p, z);
+ 467              		.loc 1 158 0
+ 468 0118 28A8     		add	r0, sp, #160
+ 469              	.LVL68:
+ 470 011a 0146     		mov	r1, r0
+ 471 011c 10AA     		add	r2, sp, #64
+ 472              	.LVL69:
+ 473 011e FFF7FEFF 		bl	ed25519_smult
+ 474              	.LVL70:
+ 475              	.LBB98:
+ 476              	.LBB99:
+  35:25519/edsign.c **** 	uint8_t ok = ed25519_try_unpack(x, y, packed);
+ 477              		.loc 1 35 0
+ 478 0122 3246     		mov	r2, r6
+ 479 0124 20A9     		add	r1, sp, #128
+ 480 0126 18A8     		add	r0, sp, #96
+ 481 0128 FFF7FEFF 		bl	ed25519_try_unpack
+ 482              	.LVL71:
+  37:25519/edsign.c **** 	ed25519_project(p, x, y);
+ 483              		.loc 1 37 0
+ 484 012c 18A9     		add	r1, sp, #96
+  35:25519/edsign.c **** 	uint8_t ok = ed25519_try_unpack(x, y, packed);
+ 485              		.loc 1 35 0
+ 486 012e 0446     		mov	r4, r0
+ 487              	.LVL72:
+  37:25519/edsign.c **** 	ed25519_project(p, x, y);
+ 488              		.loc 1 37 0
+ 489 0130 20AA     		add	r2, sp, #128
+ 490 0132 48A8     		add	r0, sp, #288
+ 491              	.LVL73:
+ 492 0134 FFF7FEFF 		bl	ed25519_project
+ 493              	.LVL74:
+ 494              	.LBE99:
+ 495              	.LBE98:
+ 159:25519/edsign.c **** 	ok &= upp(&q, signature);
+ 160:25519/edsign.c **** 	ed25519_add(&p, &p, &q);
+ 496              		.loc 1 160 0
+ 497 0138 28A8     		add	r0, sp, #160
+ 498              	.LVL75:
+ 499 013a 0146     		mov	r1, r0
+ 500 013c 48AA     		add	r2, sp, #288
+ 501              	.LVL76:
+ 502 013e FFF7FEFF 		bl	ed25519_add
+ 503              	.LVL77:
+ 504              	.LBB100:
+ 505              	.LBB101:
+  46:25519/edsign.c **** 	ed25519_unproject(x, y, p);
+ 506              		.loc 1 46 0
+ 507 0142 18A8     		add	r0, sp, #96
+ 508 0144 20A9     		add	r1, sp, #128
+ 509 0146 28AA     		add	r2, sp, #160
+ 510              	.LVL78:
+ 511 0148 FFF7FEFF 		bl	ed25519_unproject
+ 512              	.LVL79:
+  47:25519/edsign.c **** 	ed25519_pack(packed, x, y);
+ 513              		.loc 1 47 0
+ 514 014c 18A9     		add	r1, sp, #96
+ 515 014e 20AA     		add	r2, sp, #128
+ 516 0150 08A8     		add	r0, sp, #32
+ 517              	.LVL80:
+ 518 0152 FFF7FEFF 		bl	ed25519_pack
+ 519              	.LVL81:
+ 520              	.LBE101:
+ 521              	.LBE100:
+ 161:25519/edsign.c **** 	pp(rhs, &p);
+ 162:25519/edsign.c **** 
+ 163:25519/edsign.c **** 	/* Equal? */
+ 164:25519/edsign.c **** 	return ok & f25519_eq(lhs, rhs);
+ 522              		.loc 1 164 0
+ 523 0156 6846     		mov	r0, sp
+ 524 0158 08A9     		add	r1, sp, #32
+ 525              	.LVL82:
+ 526 015a FFF7FEFF 		bl	f25519_eq
+ 527              	.LVL83:
+ 157:25519/edsign.c **** 	ok &= upp(&p, pub);
+ 528              		.loc 1 157 0
+ 529 015e 2840     		ands	r0, r0, r5
+ 159:25519/edsign.c **** 	ok &= upp(&q, signature);
+ 530              		.loc 1 159 0
+ 531 0160 00F00100 		and	r0, r0, #1
+ 165:25519/edsign.c **** }
+ 532              		.loc 1 165 0
+ 533 0164 2040     		ands	r0, r0, r4
+ 534 0166 69B0     		add	sp, sp, #420
+ 535              	.LVL84:
+ 536              		@ sp needed
+ 537 0168 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 538              	.LVL85:
+ 539              	.L10:
+ 540              	.LBB102:
+ 541              	.LBB90:
+ 542              	.LBB88:
+ 543              	.LBB85:
+ 544              	.LBB82:
+  84:25519/edsign.c **** 		for (i = SHA512_BLOCK_SIZE - prefix_size;
+ 545              		.loc 1 84 0
+ 546 016c 4024     		movs	r4, #64
+ 547 016e 99E7     		b	.L8
+ 548              	.L16:
+ 549              		.align	2
+ 550              	.L15:
+ 551 0170 00000000 		.word	sha512_initial_state
+ 552 0174 00000000 		.word	.LANCHOR0
+ 553 0178 00000000 		.word	ed25519_base
+ 554              	.LBE82:
+ 555              	.LBE85:
+ 556              	.LBE88:
+ 557              	.LBE90:
+ 558              	.LBE102:
+ 559              		.cfi_endproc
+ 560              	.LFE13:
+ 562              		.section	.rodata.ed25519_order,"a",%progbits
+ 563              		.align	2
+ 564              		.set	.LANCHOR0,. + 0
+ 567              	ed25519_order:
+ 568 0000 ED       		.byte	-19
+ 569 0001 D3       		.byte	-45
+ 570 0002 F5       		.byte	-11
+ 571 0003 5C       		.byte	92
+ 572 0004 1A       		.byte	26
+ 573 0005 63       		.byte	99
+ 574 0006 12       		.byte	18
+ 575 0007 58       		.byte	88
+ 576 0008 D6       		.byte	-42
+ 577 0009 9C       		.byte	-100
+ 578 000a F7       		.byte	-9
+ 579 000b A2       		.byte	-94
+ 580 000c DE       		.byte	-34
+ 581 000d F9       		.byte	-7
+ 582 000e DE       		.byte	-34
+ 583 000f 14       		.byte	20
+ 584 0010 00       		.byte	0
+ 585 0011 00       		.byte	0
+ 586 0012 00       		.byte	0
+ 587 0013 00       		.byte	0
+ 588 0014 00       		.byte	0
+ 589 0015 00       		.byte	0
+ 590 0016 00       		.byte	0
+ 591 0017 00       		.byte	0
+ 592 0018 00       		.byte	0
+ 593 0019 00       		.byte	0
+ 594 001a 00       		.byte	0
+ 595 001b 00       		.byte	0
+ 596 001c 00       		.byte	0
+ 597 001d 00       		.byte	0
+ 598 001e 00       		.byte	0
+ 599 001f 10       		.byte	16
+ 600              		.text
+ 601              	.Letext0:
+ 602              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
+ 603              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
+ 604              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\lib\\gcc\\arm-none-eabi\\4.8
+ 605              		.file 7 "25519/fprime.h"
+ 606              		.file 8 "25519/f25519.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 edsign.c
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:19     .text.edsign_sec_to_pub:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:24     .text.edsign_sec_to_pub:00000000 edsign_sec_to_pub
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:189    .text.edsign_sec_to_pub:00000074 $d
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:195    .text.edsign_verify:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:200    .text.edsign_verify:00000000 edsign_verify
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:551    .text.edsign_verify:00000170 $d
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:563    .rodata.ed25519_order:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cczBjA8W.s:567    .rodata.ed25519_order:00000000 ed25519_order
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sha512_final
+sha512_get
+ed25519_smult
+ed25519_unproject
+ed25519_pack
+sha512_initial_state
+ed25519_base
+sha512_block
+memcpy
+fprime_from_bytes
+ed25519_try_unpack
+ed25519_project
+ed25519_add
+f25519_eq

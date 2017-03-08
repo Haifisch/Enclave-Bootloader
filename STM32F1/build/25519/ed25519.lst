@@ -1,0 +1,1544 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"ed25519.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.ed25519_project,"ax",%progbits
+  19              		.align	2
+  20              		.global	ed25519_project
+  21              		.thumb
+  22              		.thumb_func
+  24              	ed25519_project:
+  25              	.LFB3:
+  26              		.file 1 "25519/ed25519.c"
+   1:25519/ed25519.c **** /* Edwards curve operations
+   2:25519/ed25519.c ****  * Daniel Beer <dlbeer@gmail.com>, 9 Jan 2014
+   3:25519/ed25519.c ****  *
+   4:25519/ed25519.c ****  * This file is in the public domain.
+   5:25519/ed25519.c ****  */
+   6:25519/ed25519.c **** 
+   7:25519/ed25519.c **** #include "ed25519.h"
+   8:25519/ed25519.c **** 
+   9:25519/ed25519.c **** /* Base point is (numbers wrapped):
+  10:25519/ed25519.c ****  *
+  11:25519/ed25519.c ****  *     x = 151122213495354007725011514095885315114
+  12:25519/ed25519.c ****  *         54012693041857206046113283949847762202
+  13:25519/ed25519.c ****  *     y = 463168356949264781694283940034751631413
+  14:25519/ed25519.c ****  *         07993866256225615783033603165251855960
+  15:25519/ed25519.c ****  *
+  16:25519/ed25519.c ****  * y is derived by transforming the original Montgomery base (u=9). x
+  17:25519/ed25519.c ****  * is the corresponding positive coordinate for the new curve equation.
+  18:25519/ed25519.c ****  * t is x*y.
+  19:25519/ed25519.c ****  */
+  20:25519/ed25519.c **** const struct ed25519_pt ed25519_base = {
+  21:25519/ed25519.c **** 	.x = {
+  22:25519/ed25519.c **** 		0x1a, 0xd5, 0x25, 0x8f, 0x60, 0x2d, 0x56, 0xc9,
+  23:25519/ed25519.c **** 		0xb2, 0xa7, 0x25, 0x95, 0x60, 0xc7, 0x2c, 0x69,
+  24:25519/ed25519.c **** 		0x5c, 0xdc, 0xd6, 0xfd, 0x31, 0xe2, 0xa4, 0xc0,
+  25:25519/ed25519.c **** 		0xfe, 0x53, 0x6e, 0xcd, 0xd3, 0x36, 0x69, 0x21
+  26:25519/ed25519.c **** 	},
+  27:25519/ed25519.c **** 	.y = {
+  28:25519/ed25519.c **** 		0x58, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
+  29:25519/ed25519.c **** 		0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
+  30:25519/ed25519.c **** 		0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
+  31:25519/ed25519.c **** 		0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66
+  32:25519/ed25519.c **** 	},
+  33:25519/ed25519.c **** 	.t = {
+  34:25519/ed25519.c **** 		0xa3, 0xdd, 0xb7, 0xa5, 0xb3, 0x8a, 0xde, 0x6d,
+  35:25519/ed25519.c **** 		0xf5, 0x52, 0x51, 0x77, 0x80, 0x9f, 0xf0, 0x20,
+  36:25519/ed25519.c **** 		0x7d, 0xe3, 0xab, 0x64, 0x8e, 0x4e, 0xea, 0x66,
+  37:25519/ed25519.c **** 		0x65, 0x76, 0x8b, 0xd7, 0x0f, 0x5f, 0x87, 0x67
+  38:25519/ed25519.c **** 	},
+  39:25519/ed25519.c **** 	.z = {1, 0}
+  40:25519/ed25519.c **** };
+  41:25519/ed25519.c **** 
+  42:25519/ed25519.c **** const struct ed25519_pt ed25519_neutral = {
+  43:25519/ed25519.c **** 	.x = {0},
+  44:25519/ed25519.c **** 	.y = {1, 0},
+  45:25519/ed25519.c **** 	.t = {0},
+  46:25519/ed25519.c **** 	.z = {1, 0}
+  47:25519/ed25519.c **** };
+  48:25519/ed25519.c **** 
+  49:25519/ed25519.c **** /* Conversion to and from projective coordinates */
+  50:25519/ed25519.c **** void ed25519_project(struct ed25519_pt *p,
+  51:25519/ed25519.c **** 		     const uint8_t *x, const uint8_t *y)
+  52:25519/ed25519.c **** {
+  27              		.loc 1 52 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  33              		.cfi_def_cfa_offset 24
+  34              		.cfi_offset 3, -24
+  35              		.cfi_offset 4, -20
+  36              		.cfi_offset 5, -16
+  37              		.cfi_offset 6, -12
+  38              		.cfi_offset 7, -8
+  39              		.cfi_offset 14, -4
+  40              		.loc 1 52 0
+  41 0002 0D46     		mov	r5, r1
+  42              	.LBB17:
+  43              	.LBB18:
+  44              		.file 2 "25519/f25519.h"
+   1:25519/f25519.h **** /* Arithmetic mod p = 2^255-19
+   2:25519/f25519.h ****  * Daniel Beer <dlbeer@gmail.com>, 8 Jan 2014
+   3:25519/f25519.h ****  *
+   4:25519/f25519.h ****  * This file is in the public domain.
+   5:25519/f25519.h ****  */
+   6:25519/f25519.h **** 
+   7:25519/f25519.h **** #ifndef F25519_H_
+   8:25519/f25519.h **** #define F25519_H_
+   9:25519/f25519.h **** 
+  10:25519/f25519.h **** #include <stdint.h>
+  11:25519/f25519.h **** #include <string.h>
+  12:25519/f25519.h **** 
+  13:25519/f25519.h **** /* Field elements are represented as little-endian byte strings. All
+  14:25519/f25519.h ****  * operations have timings which are independent of input data, so they
+  15:25519/f25519.h ****  * can be safely used for cryptography.
+  16:25519/f25519.h ****  *
+  17:25519/f25519.h ****  * Computation is performed on un-normalized elements. These are byte
+  18:25519/f25519.h ****  * strings which fall into the range 0 <= x < 2p. Use f25519_normalize()
+  19:25519/f25519.h ****  * to convert to a value 0 <= x < p.
+  20:25519/f25519.h ****  *
+  21:25519/f25519.h ****  * Elements received from the outside may greater even than 2p.
+  22:25519/f25519.h ****  * f25519_normalize() will correctly deal with these numbers too.
+  23:25519/f25519.h ****  */
+  24:25519/f25519.h **** #define F25519_SIZE		32
+  25:25519/f25519.h **** 
+  26:25519/f25519.h **** /* Identity constants */
+  27:25519/f25519.h **** extern const uint8_t f25519_zero[F25519_SIZE];
+  28:25519/f25519.h **** extern const uint8_t f25519_one[F25519_SIZE];
+  29:25519/f25519.h **** 
+  30:25519/f25519.h **** /* Load a small constant */
+  31:25519/f25519.h **** void f25519_load(uint8_t *x, uint32_t c);
+  32:25519/f25519.h **** 
+  33:25519/f25519.h **** /* Copy two points */
+  34:25519/f25519.h **** static inline void f25519_copy(uint8_t *x, const uint8_t *a)
+  35:25519/f25519.h **** {
+  36:25519/f25519.h **** 	memcpy(x, a, F25519_SIZE);
+  45              		.loc 2 36 0
+  46 0004 D1F800E0 		ldr	lr, [r1]	@ unaligned
+  47 0008 4F68     		ldr	r7, [r1, #4]	@ unaligned
+  48 000a EB68     		ldr	r3, [r5, #12]	@ unaligned
+  49 000c 8968     		ldr	r1, [r1, #8]	@ unaligned
+  50              	.LVL1:
+  51 000e C0F800E0 		str	lr, [r0]	@ unaligned
+  52 0012 4760     		str	r7, [r0, #4]	@ unaligned
+  53 0014 8160     		str	r1, [r0, #8]	@ unaligned
+  54 0016 C360     		str	r3, [r0, #12]	@ unaligned
+  55 0018 D5F810E0 		ldr	lr, [r5, #16]	@ unaligned
+  56 001c 6F69     		ldr	r7, [r5, #20]	@ unaligned
+  57 001e A969     		ldr	r1, [r5, #24]	@ unaligned
+  58 0020 EB69     		ldr	r3, [r5, #28]	@ unaligned
+  59 0022 C0F810E0 		str	lr, [r0, #16]	@ unaligned
+  60 0026 C361     		str	r3, [r0, #28]	@ unaligned
+  61 0028 4761     		str	r7, [r0, #20]	@ unaligned
+  62 002a 8161     		str	r1, [r0, #24]	@ unaligned
+  63              	.LBE18:
+  64              	.LBE17:
+  65              	.LBB19:
+  66              	.LBB20:
+  67 002c D2F800E0 		ldr	lr, [r2]	@ unaligned
+  68 0030 5768     		ldr	r7, [r2, #4]	@ unaligned
+  69 0032 9168     		ldr	r1, [r2, #8]	@ unaligned
+  70              	.LBE20:
+  71              	.LBE19:
+  72              		.loc 1 52 0
+  73 0034 1646     		mov	r6, r2
+  74              	.LBB24:
+  75              	.LBB21:
+  76              		.loc 2 36 0
+  77 0036 D268     		ldr	r2, [r2, #12]	@ unaligned
+  78              	.LVL2:
+  79 0038 C0F820E0 		str	lr, [r0, #32]	@ unaligned
+  80 003c 4762     		str	r7, [r0, #36]	@ unaligned
+  81 003e 8162     		str	r1, [r0, #40]	@ unaligned
+  82 0040 C262     		str	r2, [r0, #44]	@ unaligned
+  83 0042 B169     		ldr	r1, [r6, #24]	@ unaligned
+  84 0044 F269     		ldr	r2, [r6, #28]	@ unaligned
+  85 0046 D6F810E0 		ldr	lr, [r6, #16]	@ unaligned
+  86 004a 7769     		ldr	r7, [r6, #20]	@ unaligned
+  87              	.LBE21:
+  88              	.LBE24:
+  89              		.loc 1 52 0
+  90 004c 0446     		mov	r4, r0
+  91              	.LVL3:
+  92              	.LBB25:
+  93              	.LBB22:
+  94              		.loc 2 36 0
+  95 004e A163     		str	r1, [r4, #56]	@ unaligned
+  96 0050 E263     		str	r2, [r4, #60]	@ unaligned
+  97              	.LBE22:
+  98              	.LBE25:
+  53:25519/ed25519.c **** 	f25519_copy(p->x, x);
+  54:25519/ed25519.c **** 	f25519_copy(p->y, y);
+  55:25519/ed25519.c **** 	f25519_load(p->z, 1);
+  99              		.loc 1 55 0
+ 100 0052 6030     		adds	r0, r0, #96
+ 101              	.LVL4:
+ 102              	.LBB26:
+ 103              	.LBB23:
+ 104              		.loc 2 36 0
+ 105 0054 C4F830E0 		str	lr, [r4, #48]	@ unaligned
+ 106 0058 6763     		str	r7, [r4, #52]	@ unaligned
+ 107              	.LBE23:
+ 108              	.LBE26:
+ 109              		.loc 1 55 0
+ 110 005a 0121     		movs	r1, #1
+ 111 005c FFF7FEFF 		bl	f25519_load
+ 112              	.LVL5:
+  56:25519/ed25519.c **** 	f25519_mul__distinct(p->t, x, y);
+ 113              		.loc 1 56 0
+ 114 0060 04F14000 		add	r0, r4, #64
+ 115 0064 2946     		mov	r1, r5
+ 116 0066 3246     		mov	r2, r6
+  57:25519/ed25519.c **** }
+ 117              		.loc 1 57 0
+ 118 0068 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 119              	.LVL6:
+  56:25519/ed25519.c **** 	f25519_mul__distinct(p->t, x, y);
+ 120              		.loc 1 56 0
+ 121 006c FFF7FEBF 		b	f25519_mul__distinct
+ 122              	.LVL7:
+ 123              		.cfi_endproc
+ 124              	.LFE3:
+ 126              		.section	.text.ed25519_unproject,"ax",%progbits
+ 127              		.align	2
+ 128              		.global	ed25519_unproject
+ 129              		.thumb
+ 130              		.thumb_func
+ 132              	ed25519_unproject:
+ 133              	.LFB4:
+  58:25519/ed25519.c **** 
+  59:25519/ed25519.c **** void ed25519_unproject(uint8_t *x, uint8_t *y,
+  60:25519/ed25519.c **** 		       const struct ed25519_pt *p)
+  61:25519/ed25519.c **** {
+ 134              		.loc 1 61 0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 32
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138              	.LVL8:
+ 139 0000 70B5     		push	{r4, r5, r6, lr}
+ 140              		.cfi_def_cfa_offset 16
+ 141              		.cfi_offset 4, -16
+ 142              		.cfi_offset 5, -12
+ 143              		.cfi_offset 6, -8
+ 144              		.cfi_offset 14, -4
+ 145 0002 88B0     		sub	sp, sp, #32
+ 146              		.cfi_def_cfa_offset 48
+ 147              		.loc 1 61 0
+ 148 0004 1446     		mov	r4, r2
+ 149 0006 0646     		mov	r6, r0
+ 150 0008 0D46     		mov	r5, r1
+  62:25519/ed25519.c **** 	uint8_t z1[F25519_SIZE];
+  63:25519/ed25519.c **** 
+  64:25519/ed25519.c **** 	f25519_inv__distinct(z1, p->z);
+ 151              		.loc 1 64 0
+ 152 000a 6846     		mov	r0, sp
+ 153              	.LVL9:
+ 154 000c 02F16001 		add	r1, r2, #96
+ 155              	.LVL10:
+ 156 0010 FFF7FEFF 		bl	f25519_inv__distinct
+ 157              	.LVL11:
+  65:25519/ed25519.c **** 	f25519_mul__distinct(x, p->x, z1);
+ 158              		.loc 1 65 0
+ 159 0014 3046     		mov	r0, r6
+ 160 0016 2146     		mov	r1, r4
+ 161 0018 6A46     		mov	r2, sp
+ 162 001a FFF7FEFF 		bl	f25519_mul__distinct
+ 163              	.LVL12:
+  66:25519/ed25519.c **** 	f25519_mul__distinct(y, p->y, z1);
+ 164              		.loc 1 66 0
+ 165 001e 04F12001 		add	r1, r4, #32
+ 166 0022 6A46     		mov	r2, sp
+ 167 0024 2846     		mov	r0, r5
+ 168 0026 FFF7FEFF 		bl	f25519_mul__distinct
+ 169              	.LVL13:
+  67:25519/ed25519.c **** 
+  68:25519/ed25519.c **** 	f25519_normalize(x);
+ 170              		.loc 1 68 0
+ 171 002a 3046     		mov	r0, r6
+ 172 002c FFF7FEFF 		bl	f25519_normalize
+ 173              	.LVL14:
+  69:25519/ed25519.c **** 	f25519_normalize(y);
+ 174              		.loc 1 69 0
+ 175 0030 2846     		mov	r0, r5
+ 176 0032 FFF7FEFF 		bl	f25519_normalize
+ 177              	.LVL15:
+  70:25519/ed25519.c **** }
+ 178              		.loc 1 70 0
+ 179 0036 08B0     		add	sp, sp, #32
+ 180              		@ sp needed
+ 181 0038 70BD     		pop	{r4, r5, r6, pc}
+ 182              		.cfi_endproc
+ 183              	.LFE4:
+ 185 003a 00BF     		.section	.text.ed25519_pack,"ax",%progbits
+ 186              		.align	2
+ 187              		.global	ed25519_pack
+ 188              		.thumb
+ 189              		.thumb_func
+ 191              	ed25519_pack:
+ 192              	.LFB5:
+  71:25519/ed25519.c **** 
+  72:25519/ed25519.c **** /* Compress/uncompress points. We compress points by storing the x
+  73:25519/ed25519.c ****  * coordinate and the parity of the y coordinate.
+  74:25519/ed25519.c ****  *
+  75:25519/ed25519.c ****  * Rearranging the curve equation, we obtain explicit formulae for the
+  76:25519/ed25519.c ****  * coordinates:
+  77:25519/ed25519.c ****  *
+  78:25519/ed25519.c ****  *     x = sqrt((y^2-1) / (1+dy^2))
+  79:25519/ed25519.c ****  *     y = sqrt((x^2+1) / (1-dx^2))
+  80:25519/ed25519.c ****  *
+  81:25519/ed25519.c ****  * Where d = (-121665/121666), or:
+  82:25519/ed25519.c ****  *
+  83:25519/ed25519.c ****  *     d = 370957059346694393431380835087545651895
+  84:25519/ed25519.c ****  *         42113879843219016388785533085940283555
+  85:25519/ed25519.c ****  */
+  86:25519/ed25519.c **** 
+  87:25519/ed25519.c **** static const uint8_t ed25519_d[F25519_SIZE] = {
+  88:25519/ed25519.c **** 	0xa3, 0x78, 0x59, 0x13, 0xca, 0x4d, 0xeb, 0x75,
+  89:25519/ed25519.c **** 	0xab, 0xd8, 0x41, 0x41, 0x4d, 0x0a, 0x70, 0x00,
+  90:25519/ed25519.c **** 	0x98, 0xe8, 0x79, 0x77, 0x79, 0x40, 0xc7, 0x8c,
+  91:25519/ed25519.c **** 	0x73, 0xfe, 0x6f, 0x2b, 0xee, 0x6c, 0x03, 0x52
+  92:25519/ed25519.c **** };
+  93:25519/ed25519.c **** 
+  94:25519/ed25519.c **** void ed25519_pack(uint8_t *c, const uint8_t *x, const uint8_t *y)
+  95:25519/ed25519.c **** {
+ 193              		.loc 1 95 0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 32
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197              	.LVL16:
+ 198 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 199              		.cfi_def_cfa_offset 20
+ 200              		.cfi_offset 4, -20
+ 201              		.cfi_offset 5, -16
+ 202              		.cfi_offset 6, -12
+ 203              		.cfi_offset 7, -8
+ 204              		.cfi_offset 14, -4
+ 205 0002 0F46     		mov	r7, r1
+ 206 0004 0546     		mov	r5, r0
+ 207 0006 1646     		mov	r6, r2
+ 208 0008 89B0     		sub	sp, sp, #36
+ 209              		.cfi_def_cfa_offset 56
+ 210              	.LVL17:
+ 211              	.LBB27:
+ 212              	.LBB28:
+ 213              		.loc 2 36 0
+ 214 000a 0868     		ldr	r0, [r1]	@ unaligned
+ 215              	.LVL18:
+ 216 000c BA68     		ldr	r2, [r7, #8]	@ unaligned
+ 217              	.LVL19:
+ 218 000e FB68     		ldr	r3, [r7, #12]	@ unaligned
+ 219 0010 4968     		ldr	r1, [r1, #4]	@ unaligned
+ 220              	.LVL20:
+ 221 0012 6C46     		mov	r4, sp
+ 222 0014 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 223 0016 3869     		ldr	r0, [r7, #16]	@ unaligned
+ 224 0018 7969     		ldr	r1, [r7, #20]	@ unaligned
+ 225 001a BA69     		ldr	r2, [r7, #24]	@ unaligned
+ 226 001c FB69     		ldr	r3, [r7, #28]	@ unaligned
+ 227 001e 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 228              	.LBE28:
+ 229              	.LBE27:
+  96:25519/ed25519.c **** 	uint8_t tmp[F25519_SIZE];
+  97:25519/ed25519.c **** 	uint8_t parity;
+  98:25519/ed25519.c **** 
+  99:25519/ed25519.c **** 	f25519_copy(tmp, x);
+ 100:25519/ed25519.c **** 	f25519_normalize(tmp);
+ 230              		.loc 1 100 0
+ 231 0020 6846     		mov	r0, sp
+ 232 0022 FFF7FEFF 		bl	f25519_normalize
+ 233              	.LVL21:
+ 234              	.LBB29:
+ 235              	.LBB30:
+ 236              		.loc 2 36 0
+ 237 0026 3068     		ldr	r0, [r6]	@ unaligned
+ 238 0028 7168     		ldr	r1, [r6, #4]	@ unaligned
+ 239 002a B268     		ldr	r2, [r6, #8]	@ unaligned
+ 240 002c F368     		ldr	r3, [r6, #12]	@ unaligned
+ 241 002e 2860     		str	r0, [r5]	@ unaligned
+ 242 0030 6960     		str	r1, [r5, #4]	@ unaligned
+ 243 0032 AA60     		str	r2, [r5, #8]	@ unaligned
+ 244 0034 EB60     		str	r3, [r5, #12]	@ unaligned
+ 245 0036 3069     		ldr	r0, [r6, #16]	@ unaligned
+ 246 0038 F369     		ldr	r3, [r6, #28]	@ unaligned
+ 247 003a 7169     		ldr	r1, [r6, #20]	@ unaligned
+ 248 003c B269     		ldr	r2, [r6, #24]	@ unaligned
+ 249 003e 2861     		str	r0, [r5, #16]	@ unaligned
+ 250 0040 EB61     		str	r3, [r5, #28]	@ unaligned
+ 251 0042 6961     		str	r1, [r5, #20]	@ unaligned
+ 252 0044 AA61     		str	r2, [r5, #24]	@ unaligned
+ 253              	.LBE30:
+ 254              	.LBE29:
+ 101:25519/ed25519.c **** 	parity = (tmp[0] & 1) << 7;
+ 102:25519/ed25519.c **** 
+ 103:25519/ed25519.c **** 	f25519_copy(c, y);
+ 104:25519/ed25519.c **** 	f25519_normalize(c);
+ 255              		.loc 1 104 0
+ 256 0046 2846     		mov	r0, r5
+ 101:25519/ed25519.c **** 	parity = (tmp[0] & 1) << 7;
+ 257              		.loc 1 101 0
+ 258 0048 9DF80040 		ldrb	r4, [sp]	@ zero_extendqisi2
+ 259              		.loc 1 104 0
+ 260 004c FFF7FEFF 		bl	f25519_normalize
+ 261              	.LVL22:
+ 101:25519/ed25519.c **** 	parity = (tmp[0] & 1) << 7;
+ 262              		.loc 1 101 0
+ 263 0050 E401     		lsls	r4, r4, #7
+ 105:25519/ed25519.c **** 	c[31] |= parity;
+ 264              		.loc 1 105 0
+ 265 0052 EB7F     		ldrb	r3, [r5, #31]	@ zero_extendqisi2
+ 101:25519/ed25519.c **** 	parity = (tmp[0] & 1) << 7;
+ 266              		.loc 1 101 0
+ 267 0054 E4B2     		uxtb	r4, r4
+ 268              	.LVL23:
+ 269              		.loc 1 105 0
+ 270 0056 1C43     		orrs	r4, r4, r3
+ 271              	.LVL24:
+ 272 0058 EC77     		strb	r4, [r5, #31]
+ 106:25519/ed25519.c **** }
+ 273              		.loc 1 106 0
+ 274 005a 09B0     		add	sp, sp, #36
+ 275              	.LVL25:
+ 276              		@ sp needed
+ 277 005c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 278              		.cfi_endproc
+ 279              	.LFE5:
+ 281 005e 00BF     		.section	.text.ed25519_try_unpack,"ax",%progbits
+ 282              		.align	2
+ 283              		.global	ed25519_try_unpack
+ 284              		.thumb
+ 285              		.thumb_func
+ 287              	ed25519_try_unpack:
+ 288              	.LFB6:
+ 107:25519/ed25519.c **** 
+ 108:25519/ed25519.c **** uint8_t ed25519_try_unpack(uint8_t *x, uint8_t *y, const uint8_t *comp)
+ 109:25519/ed25519.c **** {
+ 289              		.loc 1 109 0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 96
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              	.LVL26:
+ 294 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 295              		.cfi_def_cfa_offset 24
+ 296              		.cfi_offset 4, -24
+ 297              		.cfi_offset 5, -20
+ 298              		.cfi_offset 6, -16
+ 299              		.cfi_offset 7, -12
+ 300              		.cfi_offset 8, -8
+ 301              		.cfi_offset 14, -4
+ 302              	.LBB31:
+ 303              	.LBB32:
+ 304              		.loc 2 36 0
+ 305 0004 1768     		ldr	r7, [r2]	@ unaligned
+ 306 0006 5668     		ldr	r6, [r2, #4]	@ unaligned
+ 307 0008 9568     		ldr	r5, [r2, #8]	@ unaligned
+ 308 000a D2F80CE0 		ldr	lr, [r2, #12]	@ unaligned
+ 309              	.LBE32:
+ 310              	.LBE31:
+ 311              		.loc 1 109 0
+ 312 000e 1446     		mov	r4, r2
+ 110:25519/ed25519.c **** 	const int parity = comp[31] >> 7;
+ 313              		.loc 1 110 0
+ 314 0010 94F81F80 		ldrb	r8, [r4, #31]	@ zero_extendqisi2
+ 315              	.LVL27:
+ 316              	.LBB36:
+ 317              	.LBB33:
+ 318              		.loc 2 36 0
+ 319 0014 0F60     		str	r7, [r1]	@ unaligned
+ 320 0016 4E60     		str	r6, [r1, #4]	@ unaligned
+ 321 0018 8D60     		str	r5, [r1, #8]	@ unaligned
+ 322 001a C1F80CE0 		str	lr, [r1, #12]	@ unaligned
+ 323 001e D4F81CE0 		ldr	lr, [r4, #28]	@ unaligned
+ 324 0022 2769     		ldr	r7, [r4, #16]	@ unaligned
+ 325 0024 6669     		ldr	r6, [r4, #20]	@ unaligned
+ 326 0026 A569     		ldr	r5, [r4, #24]	@ unaligned
+ 327              	.LBE33:
+ 328              	.LBE36:
+ 109:25519/ed25519.c **** {
+ 329              		.loc 1 109 0
+ 330 0028 98B0     		sub	sp, sp, #96
+ 331              		.cfi_def_cfa_offset 120
+ 111:25519/ed25519.c **** 	uint8_t a[F25519_SIZE];
+ 112:25519/ed25519.c **** 	uint8_t b[F25519_SIZE];
+ 113:25519/ed25519.c **** 	uint8_t c[F25519_SIZE];
+ 114:25519/ed25519.c **** 
+ 115:25519/ed25519.c **** 	/* Unpack y */
+ 116:25519/ed25519.c **** 	f25519_copy(y, comp);
+ 117:25519/ed25519.c **** 	y[31] &= 127;
+ 332              		.loc 1 117 0
+ 333 002a 08F07F03 		and	r3, r8, #127
+ 334              	.LBB37:
+ 335              	.LBB34:
+ 336              		.loc 2 36 0
+ 337 002e C1F81CE0 		str	lr, [r1, #28]	@ unaligned
+ 338              	.LBE34:
+ 339              	.LBE37:
+ 109:25519/ed25519.c **** {
+ 340              		.loc 1 109 0
+ 341 0032 0446     		mov	r4, r0
+ 342              		.loc 1 117 0
+ 343 0034 CB77     		strb	r3, [r1, #31]
+ 109:25519/ed25519.c **** {
+ 344              		.loc 1 109 0
+ 345 0036 0A46     		mov	r2, r1
+ 346              	.LVL28:
+ 347              	.LBB38:
+ 348              	.LBB35:
+ 349              		.loc 2 36 0
+ 350 0038 0F61     		str	r7, [r1, #16]	@ unaligned
+ 351 003a 4E61     		str	r6, [r1, #20]	@ unaligned
+ 352 003c 8D61     		str	r5, [r1, #24]	@ unaligned
+ 353              	.LBE35:
+ 354              	.LBE38:
+ 118:25519/ed25519.c **** 
+ 119:25519/ed25519.c **** 	/* Compute c = y^2 */
+ 120:25519/ed25519.c **** 	f25519_mul__distinct(c, y, y);
+ 355              		.loc 1 120 0
+ 356 003e 10A8     		add	r0, sp, #64
+ 357              	.LVL29:
+ 121:25519/ed25519.c **** 
+ 122:25519/ed25519.c **** 	/* Compute b = (1+dy^2)^-1 */
+ 123:25519/ed25519.c **** 	f25519_mul__distinct(b, c, ed25519_d);
+ 124:25519/ed25519.c **** 	f25519_add(a, b, f25519_one);
+ 358              		.loc 1 124 0
+ 359 0040 1F4D     		ldr	r5, .L5
+ 120:25519/ed25519.c **** 	f25519_mul__distinct(c, y, y);
+ 360              		.loc 1 120 0
+ 361 0042 FFF7FEFF 		bl	f25519_mul__distinct
+ 362              	.LVL30:
+ 123:25519/ed25519.c **** 	f25519_mul__distinct(b, c, ed25519_d);
+ 363              		.loc 1 123 0
+ 364 0046 10A9     		add	r1, sp, #64
+ 365 0048 08A8     		add	r0, sp, #32
+ 366 004a 1E4A     		ldr	r2, .L5+4
+ 367 004c FFF7FEFF 		bl	f25519_mul__distinct
+ 368              	.LVL31:
+ 369              		.loc 1 124 0
+ 370 0050 2A46     		mov	r2, r5
+ 371 0052 08A9     		add	r1, sp, #32
+ 372 0054 6846     		mov	r0, sp
+ 373 0056 FFF7FEFF 		bl	f25519_add
+ 374              	.LVL32:
+ 125:25519/ed25519.c **** 	f25519_inv__distinct(b, a);
+ 375              		.loc 1 125 0
+ 376 005a 08A8     		add	r0, sp, #32
+ 377 005c 6946     		mov	r1, sp
+ 378 005e FFF7FEFF 		bl	f25519_inv__distinct
+ 379              	.LVL33:
+ 126:25519/ed25519.c **** 
+ 127:25519/ed25519.c **** 	/* Compute a = y^2-1 */
+ 128:25519/ed25519.c **** 	f25519_sub(a, c, f25519_one);
+ 380              		.loc 1 128 0
+ 381 0062 6846     		mov	r0, sp
+ 382 0064 10A9     		add	r1, sp, #64
+ 383 0066 2A46     		mov	r2, r5
+ 384 0068 FFF7FEFF 		bl	f25519_sub
+ 385              	.LVL34:
+ 129:25519/ed25519.c **** 
+ 130:25519/ed25519.c **** 	/* Compute c = a*b = (y^2-1)/(1-dy^2) */
+ 131:25519/ed25519.c **** 	f25519_mul__distinct(c, a, b);
+ 386              		.loc 1 131 0
+ 387 006c 08AA     		add	r2, sp, #32
+ 388 006e 10A8     		add	r0, sp, #64
+ 389 0070 6946     		mov	r1, sp
+ 390 0072 FFF7FEFF 		bl	f25519_mul__distinct
+ 391              	.LVL35:
+ 132:25519/ed25519.c **** 
+ 133:25519/ed25519.c **** 	/* Compute a, b = +/-sqrt(c), if c is square */
+ 134:25519/ed25519.c **** 	f25519_sqrt(a, c);
+ 392              		.loc 1 134 0
+ 393 0076 6846     		mov	r0, sp
+ 394 0078 10A9     		add	r1, sp, #64
+ 395 007a FFF7FEFF 		bl	f25519_sqrt
+ 396              	.LVL36:
+ 135:25519/ed25519.c **** 	f25519_neg(b, a);
+ 397              		.loc 1 135 0
+ 398 007e 08A8     		add	r0, sp, #32
+ 399 0080 6946     		mov	r1, sp
+ 400 0082 FFF7FEFF 		bl	f25519_neg
+ 401              	.LVL37:
+ 136:25519/ed25519.c **** 
+ 137:25519/ed25519.c **** 	/* Select one of them, based on the compressed parity bit */
+ 138:25519/ed25519.c **** 	f25519_select(x, a, b, (a[0] ^ parity) & 1);
+ 402              		.loc 1 138 0
+ 403 0086 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 404 008a 08AA     		add	r2, sp, #32
+ 405 008c 83EAD813 		eor	r3, r3, r8, lsr #7
+ 406 0090 03F00103 		and	r3, r3, #1
+ 407 0094 2046     		mov	r0, r4
+ 408 0096 6946     		mov	r1, sp
+ 409 0098 FFF7FEFF 		bl	f25519_select
+ 410              	.LVL38:
+ 139:25519/ed25519.c **** 
+ 140:25519/ed25519.c **** 	/* Verify that x^2 = c */
+ 141:25519/ed25519.c **** 	f25519_mul__distinct(a, x, x);
+ 411              		.loc 1 141 0
+ 412 009c 2146     		mov	r1, r4
+ 413 009e 2246     		mov	r2, r4
+ 414 00a0 6846     		mov	r0, sp
+ 415 00a2 FFF7FEFF 		bl	f25519_mul__distinct
+ 416              	.LVL39:
+ 142:25519/ed25519.c **** 	f25519_normalize(a);
+ 417              		.loc 1 142 0
+ 418 00a6 6846     		mov	r0, sp
+ 419 00a8 FFF7FEFF 		bl	f25519_normalize
+ 420              	.LVL40:
+ 143:25519/ed25519.c **** 	f25519_normalize(c);
+ 421              		.loc 1 143 0
+ 422 00ac 10A8     		add	r0, sp, #64
+ 423 00ae FFF7FEFF 		bl	f25519_normalize
+ 424              	.LVL41:
+ 144:25519/ed25519.c **** 
+ 145:25519/ed25519.c **** 	return f25519_eq(a, c);
+ 425              		.loc 1 145 0
+ 426 00b2 6846     		mov	r0, sp
+ 427 00b4 10A9     		add	r1, sp, #64
+ 428 00b6 FFF7FEFF 		bl	f25519_eq
+ 429              	.LVL42:
+ 146:25519/ed25519.c **** }
+ 430              		.loc 1 146 0
+ 431 00ba 18B0     		add	sp, sp, #96
+ 432              		@ sp needed
+ 433 00bc BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 434              	.LVL43:
+ 435              	.L6:
+ 436              		.align	2
+ 437              	.L5:
+ 438 00c0 00000000 		.word	f25519_one
+ 439 00c4 00000000 		.word	.LANCHOR0
+ 440              		.cfi_endproc
+ 441              	.LFE6:
+ 443              		.section	.text.ed25519_add,"ax",%progbits
+ 444              		.align	2
+ 445              		.global	ed25519_add
+ 446              		.thumb
+ 447              		.thumb_func
+ 449              	ed25519_add:
+ 450              	.LFB7:
+ 147:25519/ed25519.c **** 
+ 148:25519/ed25519.c **** /* k = 2d */
+ 149:25519/ed25519.c **** static const uint8_t ed25519_k[F25519_SIZE] = {
+ 150:25519/ed25519.c **** 	0x59, 0xf1, 0xb2, 0x26, 0x94, 0x9b, 0xd6, 0xeb,
+ 151:25519/ed25519.c **** 	0x56, 0xb1, 0x83, 0x82, 0x9a, 0x14, 0xe0, 0x00,
+ 152:25519/ed25519.c **** 	0x30, 0xd1, 0xf3, 0xee, 0xf2, 0x80, 0x8e, 0x19,
+ 153:25519/ed25519.c **** 	0xe7, 0xfc, 0xdf, 0x56, 0xdc, 0xd9, 0x06, 0x24
+ 154:25519/ed25519.c **** };
+ 155:25519/ed25519.c **** 
+ 156:25519/ed25519.c **** void ed25519_add(struct ed25519_pt *r,
+ 157:25519/ed25519.c **** 		 const struct ed25519_pt *p1, const struct ed25519_pt *p2)
+ 158:25519/ed25519.c **** {
+ 451              		.loc 1 158 0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 256
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455              	.LVL44:
+ 456 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 457              		.cfi_def_cfa_offset 24
+ 458              		.cfi_offset 4, -24
+ 459              		.cfi_offset 5, -20
+ 460              		.cfi_offset 6, -16
+ 461              		.cfi_offset 7, -12
+ 462              		.cfi_offset 8, -8
+ 463              		.cfi_offset 14, -4
+ 464 0004 1446     		mov	r4, r2
+ 465 0006 C0B0     		sub	sp, sp, #256
+ 466              		.cfi_def_cfa_offset 280
+ 467              		.loc 1 158 0
+ 468 0008 0D46     		mov	r5, r1
+ 159:25519/ed25519.c **** 	/* Explicit formulas database: add-2008-hwcd-3
+ 160:25519/ed25519.c **** 	 *
+ 161:25519/ed25519.c **** 	 * source 2008 Hisil--Wong--Carter--Dawson,
+ 162:25519/ed25519.c **** 	 *     http://eprint.iacr.org/2008/522, Section 3.1
+ 163:25519/ed25519.c **** 	 * appliesto extended-1
+ 164:25519/ed25519.c **** 	 * parameter k
+ 165:25519/ed25519.c **** 	 * assume k = 2 d
+ 166:25519/ed25519.c **** 	 * compute A = (Y1-X1)(Y2-X2)
+ 167:25519/ed25519.c **** 	 * compute B = (Y1+X1)(Y2+X2)
+ 168:25519/ed25519.c **** 	 * compute C = T1 k T2
+ 169:25519/ed25519.c **** 	 * compute D = Z1 2 Z2
+ 170:25519/ed25519.c **** 	 * compute E = B - A
+ 171:25519/ed25519.c **** 	 * compute F = D - C
+ 172:25519/ed25519.c **** 	 * compute G = D + C
+ 173:25519/ed25519.c **** 	 * compute H = B + A
+ 174:25519/ed25519.c **** 	 * compute X3 = E F
+ 175:25519/ed25519.c **** 	 * compute Y3 = G H
+ 176:25519/ed25519.c **** 	 * compute T3 = E H
+ 177:25519/ed25519.c **** 	 * compute Z3 = F G
+ 178:25519/ed25519.c **** 	 */
+ 179:25519/ed25519.c **** 	uint8_t a[F25519_SIZE];
+ 180:25519/ed25519.c **** 	uint8_t b[F25519_SIZE];
+ 181:25519/ed25519.c **** 	uint8_t c[F25519_SIZE];
+ 182:25519/ed25519.c **** 	uint8_t d[F25519_SIZE];
+ 183:25519/ed25519.c **** 	uint8_t e[F25519_SIZE];
+ 184:25519/ed25519.c **** 	uint8_t f[F25519_SIZE];
+ 185:25519/ed25519.c **** 	uint8_t g[F25519_SIZE];
+ 186:25519/ed25519.c **** 	uint8_t h[F25519_SIZE];
+ 187:25519/ed25519.c **** 
+ 188:25519/ed25519.c **** 	/* A = (Y1-X1)(Y2-X2) */
+ 189:25519/ed25519.c **** 	f25519_sub(c, p1->y, p1->x);
+ 469              		.loc 1 189 0
+ 470 000a 01F12008 		add	r8, r1, #32
+ 158:25519/ed25519.c **** {
+ 471              		.loc 1 158 0
+ 472 000e 0646     		mov	r6, r0
+ 473              		.loc 1 189 0
+ 474 0010 4146     		mov	r1, r8
+ 475              	.LVL45:
+ 476 0012 2A46     		mov	r2, r5
+ 477              	.LVL46:
+ 478 0014 10A8     		add	r0, sp, #64
+ 479              	.LVL47:
+ 190:25519/ed25519.c **** 	f25519_sub(d, p2->y, p2->x);
+ 480              		.loc 1 190 0
+ 481 0016 04F12007 		add	r7, r4, #32
+ 189:25519/ed25519.c **** 	f25519_sub(c, p1->y, p1->x);
+ 482              		.loc 1 189 0
+ 483 001a FFF7FEFF 		bl	f25519_sub
+ 484              	.LVL48:
+ 485              		.loc 1 190 0
+ 486 001e 3946     		mov	r1, r7
+ 487 0020 2246     		mov	r2, r4
+ 488 0022 18A8     		add	r0, sp, #96
+ 489 0024 FFF7FEFF 		bl	f25519_sub
+ 490              	.LVL49:
+ 191:25519/ed25519.c **** 	f25519_mul__distinct(a, c, d);
+ 491              		.loc 1 191 0
+ 492 0028 10A9     		add	r1, sp, #64
+ 493 002a 18AA     		add	r2, sp, #96
+ 494 002c 6846     		mov	r0, sp
+ 495 002e FFF7FEFF 		bl	f25519_mul__distinct
+ 496              	.LVL50:
+ 192:25519/ed25519.c **** 
+ 193:25519/ed25519.c **** 	/* B = (Y1+X1)(Y2+X2) */
+ 194:25519/ed25519.c **** 	f25519_add(c, p1->y, p1->x);
+ 497              		.loc 1 194 0
+ 498 0032 10A8     		add	r0, sp, #64
+ 499 0034 4146     		mov	r1, r8
+ 500 0036 2A46     		mov	r2, r5
+ 501 0038 FFF7FEFF 		bl	f25519_add
+ 502              	.LVL51:
+ 195:25519/ed25519.c **** 	f25519_add(d, p2->y, p2->x);
+ 503              		.loc 1 195 0
+ 504 003c 18A8     		add	r0, sp, #96
+ 505 003e 3946     		mov	r1, r7
+ 506 0040 2246     		mov	r2, r4
+ 507 0042 FFF7FEFF 		bl	f25519_add
+ 508              	.LVL52:
+ 196:25519/ed25519.c **** 	f25519_mul__distinct(b, c, d);
+ 509              		.loc 1 196 0
+ 510 0046 10A9     		add	r1, sp, #64
+ 511 0048 18AA     		add	r2, sp, #96
+ 512 004a 08A8     		add	r0, sp, #32
+ 513 004c FFF7FEFF 		bl	f25519_mul__distinct
+ 514              	.LVL53:
+ 197:25519/ed25519.c **** 
+ 198:25519/ed25519.c **** 	/* C = T1 k T2 */
+ 199:25519/ed25519.c **** 	f25519_mul__distinct(d, p1->t, p2->t);
+ 515              		.loc 1 199 0
+ 516 0050 18A8     		add	r0, sp, #96
+ 517 0052 05F14001 		add	r1, r5, #64
+ 518 0056 04F14002 		add	r2, r4, #64
+ 519 005a FFF7FEFF 		bl	f25519_mul__distinct
+ 520              	.LVL54:
+ 200:25519/ed25519.c **** 	f25519_mul__distinct(c, d, ed25519_k);
+ 521              		.loc 1 200 0
+ 522 005e 10A8     		add	r0, sp, #64
+ 523 0060 18A9     		add	r1, sp, #96
+ 524 0062 1E4A     		ldr	r2, .L8
+ 525 0064 FFF7FEFF 		bl	f25519_mul__distinct
+ 526              	.LVL55:
+ 201:25519/ed25519.c **** 
+ 202:25519/ed25519.c **** 	/* D = Z1 2 Z2 */
+ 203:25519/ed25519.c **** 	f25519_mul__distinct(d, p1->z, p2->z);
+ 527              		.loc 1 203 0
+ 528 0068 18A8     		add	r0, sp, #96
+ 529 006a 05F16001 		add	r1, r5, #96
+ 530 006e 04F16002 		add	r2, r4, #96
+ 531 0072 FFF7FEFF 		bl	f25519_mul__distinct
+ 532              	.LVL56:
+ 204:25519/ed25519.c **** 	f25519_add(d, d, d);
+ 533              		.loc 1 204 0
+ 534 0076 18A8     		add	r0, sp, #96
+ 535 0078 0146     		mov	r1, r0
+ 536 007a 0246     		mov	r2, r0
+ 537 007c FFF7FEFF 		bl	f25519_add
+ 538              	.LVL57:
+ 205:25519/ed25519.c **** 
+ 206:25519/ed25519.c **** 	/* E = B - A */
+ 207:25519/ed25519.c **** 	f25519_sub(e, b, a);
+ 539              		.loc 1 207 0
+ 540 0080 08A9     		add	r1, sp, #32
+ 541 0082 6A46     		mov	r2, sp
+ 542 0084 20A8     		add	r0, sp, #128
+ 543 0086 FFF7FEFF 		bl	f25519_sub
+ 544              	.LVL58:
+ 208:25519/ed25519.c **** 
+ 209:25519/ed25519.c **** 	/* F = D - C */
+ 210:25519/ed25519.c **** 	f25519_sub(f, d, c);
+ 545              		.loc 1 210 0
+ 546 008a 18A9     		add	r1, sp, #96
+ 547 008c 10AA     		add	r2, sp, #64
+ 548 008e 28A8     		add	r0, sp, #160
+ 549 0090 FFF7FEFF 		bl	f25519_sub
+ 550              	.LVL59:
+ 211:25519/ed25519.c **** 
+ 212:25519/ed25519.c **** 	/* G = D + C */
+ 213:25519/ed25519.c **** 	f25519_add(g, d, c);
+ 551              		.loc 1 213 0
+ 552 0094 18A9     		add	r1, sp, #96
+ 553 0096 10AA     		add	r2, sp, #64
+ 554 0098 30A8     		add	r0, sp, #192
+ 555 009a FFF7FEFF 		bl	f25519_add
+ 556              	.LVL60:
+ 214:25519/ed25519.c **** 
+ 215:25519/ed25519.c **** 	/* H = B + A */
+ 216:25519/ed25519.c **** 	f25519_add(h, b, a);
+ 557              		.loc 1 216 0
+ 558 009e 08A9     		add	r1, sp, #32
+ 559 00a0 6A46     		mov	r2, sp
+ 560 00a2 38A8     		add	r0, sp, #224
+ 561 00a4 FFF7FEFF 		bl	f25519_add
+ 562              	.LVL61:
+ 217:25519/ed25519.c **** 
+ 218:25519/ed25519.c **** 	/* X3 = E F */
+ 219:25519/ed25519.c **** 	f25519_mul__distinct(r->x, e, f);
+ 563              		.loc 1 219 0
+ 564 00a8 3046     		mov	r0, r6
+ 565 00aa 20A9     		add	r1, sp, #128
+ 566 00ac 28AA     		add	r2, sp, #160
+ 567 00ae FFF7FEFF 		bl	f25519_mul__distinct
+ 568              	.LVL62:
+ 220:25519/ed25519.c **** 
+ 221:25519/ed25519.c **** 	/* Y3 = G H */
+ 222:25519/ed25519.c **** 	f25519_mul__distinct(r->y, g, h);
+ 569              		.loc 1 222 0
+ 570 00b2 06F12000 		add	r0, r6, #32
+ 571 00b6 30A9     		add	r1, sp, #192
+ 572 00b8 38AA     		add	r2, sp, #224
+ 573 00ba FFF7FEFF 		bl	f25519_mul__distinct
+ 574              	.LVL63:
+ 223:25519/ed25519.c **** 
+ 224:25519/ed25519.c **** 	/* T3 = E H */
+ 225:25519/ed25519.c **** 	f25519_mul__distinct(r->t, e, h);
+ 575              		.loc 1 225 0
+ 576 00be 20A9     		add	r1, sp, #128
+ 577 00c0 38AA     		add	r2, sp, #224
+ 578 00c2 06F14000 		add	r0, r6, #64
+ 579 00c6 FFF7FEFF 		bl	f25519_mul__distinct
+ 580              	.LVL64:
+ 226:25519/ed25519.c **** 
+ 227:25519/ed25519.c **** 	/* Z3 = F G */
+ 228:25519/ed25519.c **** 	f25519_mul__distinct(r->z, f, g);
+ 581              		.loc 1 228 0
+ 582 00ca 06F16000 		add	r0, r6, #96
+ 583 00ce 28A9     		add	r1, sp, #160
+ 584 00d0 30AA     		add	r2, sp, #192
+ 585 00d2 FFF7FEFF 		bl	f25519_mul__distinct
+ 586              	.LVL65:
+ 229:25519/ed25519.c **** }
+ 587              		.loc 1 229 0
+ 588 00d6 40B0     		add	sp, sp, #256
+ 589              		@ sp needed
+ 590 00d8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 591              	.LVL66:
+ 592              	.L9:
+ 593              		.align	2
+ 594              	.L8:
+ 595 00dc 00000000 		.word	.LANCHOR1
+ 596              		.cfi_endproc
+ 597              	.LFE7:
+ 599              		.section	.text.ed25519_double,"ax",%progbits
+ 600              		.align	2
+ 601              		.global	ed25519_double
+ 602              		.thumb
+ 603              		.thumb_func
+ 605              	ed25519_double:
+ 606              	.LFB8:
+ 230:25519/ed25519.c **** 
+ 231:25519/ed25519.c **** void ed25519_double(struct ed25519_pt *r, const struct ed25519_pt *p)
+ 232:25519/ed25519.c **** {
+ 607              		.loc 1 232 0
+ 608              		.cfi_startproc
+ 609              		@ args = 0, pretend = 0, frame = 224
+ 610              		@ frame_needed = 0, uses_anonymous_args = 0
+ 611              	.LVL67:
+ 612 0000 70B5     		push	{r4, r5, r6, lr}
+ 613              		.cfi_def_cfa_offset 16
+ 614              		.cfi_offset 4, -16
+ 615              		.cfi_offset 5, -12
+ 616              		.cfi_offset 6, -8
+ 617              		.cfi_offset 14, -4
+ 618 0002 B8B0     		sub	sp, sp, #224
+ 619              		.cfi_def_cfa_offset 240
+ 620              		.loc 1 232 0
+ 621 0004 0446     		mov	r4, r0
+ 233:25519/ed25519.c **** 	/* Explicit formulas database: dbl-2008-hwcd
+ 234:25519/ed25519.c **** 	 *
+ 235:25519/ed25519.c **** 	 * source 2008 Hisil--Wong--Carter--Dawson,
+ 236:25519/ed25519.c **** 	 *     http://eprint.iacr.org/2008/522, Section 3.3
+ 237:25519/ed25519.c **** 	 * compute A = X1^2
+ 238:25519/ed25519.c **** 	 * compute B = Y1^2
+ 239:25519/ed25519.c **** 	 * compute C = 2 Z1^2
+ 240:25519/ed25519.c **** 	 * compute D = a A
+ 241:25519/ed25519.c **** 	 * compute E = (X1+Y1)^2-A-B
+ 242:25519/ed25519.c **** 	 * compute G = D + B
+ 243:25519/ed25519.c **** 	 * compute F = G - C
+ 244:25519/ed25519.c **** 	 * compute H = D - B
+ 245:25519/ed25519.c **** 	 * compute X3 = E F
+ 246:25519/ed25519.c **** 	 * compute Y3 = G H
+ 247:25519/ed25519.c **** 	 * compute T3 = E H
+ 248:25519/ed25519.c **** 	 * compute Z3 = F G
+ 249:25519/ed25519.c **** 	 */
+ 250:25519/ed25519.c **** 	uint8_t a[F25519_SIZE];
+ 251:25519/ed25519.c **** 	uint8_t b[F25519_SIZE];
+ 252:25519/ed25519.c **** 	uint8_t c[F25519_SIZE];
+ 253:25519/ed25519.c **** 	uint8_t e[F25519_SIZE];
+ 254:25519/ed25519.c **** 	uint8_t f[F25519_SIZE];
+ 255:25519/ed25519.c **** 	uint8_t g[F25519_SIZE];
+ 256:25519/ed25519.c **** 	uint8_t h[F25519_SIZE];
+ 257:25519/ed25519.c **** 
+ 258:25519/ed25519.c **** 	/* A = X1^2 */
+ 259:25519/ed25519.c **** 	f25519_mul__distinct(a, p->x, p->x);
+ 260:25519/ed25519.c **** 
+ 261:25519/ed25519.c **** 	/* B = Y1^2 */
+ 262:25519/ed25519.c **** 	f25519_mul__distinct(b, p->y, p->y);
+ 622              		.loc 1 262 0
+ 623 0006 01F12006 		add	r6, r1, #32
+ 259:25519/ed25519.c **** 	f25519_mul__distinct(a, p->x, p->x);
+ 624              		.loc 1 259 0
+ 625 000a 0A46     		mov	r2, r1
+ 626 000c 6846     		mov	r0, sp
+ 627              	.LVL68:
+ 232:25519/ed25519.c **** {
+ 628              		.loc 1 232 0
+ 629 000e 0D46     		mov	r5, r1
+ 259:25519/ed25519.c **** 	f25519_mul__distinct(a, p->x, p->x);
+ 630              		.loc 1 259 0
+ 631 0010 FFF7FEFF 		bl	f25519_mul__distinct
+ 632              	.LVL69:
+ 633              		.loc 1 262 0
+ 634 0014 3146     		mov	r1, r6
+ 635 0016 3246     		mov	r2, r6
+ 636 0018 08A8     		add	r0, sp, #32
+ 637 001a FFF7FEFF 		bl	f25519_mul__distinct
+ 638              	.LVL70:
+ 263:25519/ed25519.c **** 
+ 264:25519/ed25519.c **** 	/* C = 2 Z1^2 */
+ 265:25519/ed25519.c **** 	f25519_mul__distinct(c, p->z, p->z);
+ 639              		.loc 1 265 0
+ 640 001e 05F16001 		add	r1, r5, #96
+ 641 0022 0A46     		mov	r2, r1
+ 642 0024 10A8     		add	r0, sp, #64
+ 643 0026 FFF7FEFF 		bl	f25519_mul__distinct
+ 644              	.LVL71:
+ 266:25519/ed25519.c **** 	f25519_add(c, c, c);
+ 645              		.loc 1 266 0
+ 646 002a 10A8     		add	r0, sp, #64
+ 647 002c 0146     		mov	r1, r0
+ 648 002e 0246     		mov	r2, r0
+ 649 0030 FFF7FEFF 		bl	f25519_add
+ 650              	.LVL72:
+ 267:25519/ed25519.c **** 
+ 268:25519/ed25519.c **** 	/* D = a A (alter sign) */
+ 269:25519/ed25519.c **** 	/* E = (X1+Y1)^2-A-B */
+ 270:25519/ed25519.c **** 	f25519_add(f, p->x, p->y);
+ 651              		.loc 1 270 0
+ 652 0034 3246     		mov	r2, r6
+ 653 0036 2946     		mov	r1, r5
+ 654 0038 20A8     		add	r0, sp, #128
+ 655 003a FFF7FEFF 		bl	f25519_add
+ 656              	.LVL73:
+ 271:25519/ed25519.c **** 	f25519_mul__distinct(e, f, f);
+ 657              		.loc 1 271 0
+ 658 003e 20A9     		add	r1, sp, #128
+ 659 0040 0A46     		mov	r2, r1
+ 660 0042 18A8     		add	r0, sp, #96
+ 661 0044 FFF7FEFF 		bl	f25519_mul__distinct
+ 662              	.LVL74:
+ 272:25519/ed25519.c **** 	f25519_sub(e, e, a);
+ 663              		.loc 1 272 0
+ 664 0048 18A8     		add	r0, sp, #96
+ 665 004a 0146     		mov	r1, r0
+ 666 004c 6A46     		mov	r2, sp
+ 667 004e FFF7FEFF 		bl	f25519_sub
+ 668              	.LVL75:
+ 273:25519/ed25519.c **** 	f25519_sub(e, e, b);
+ 669              		.loc 1 273 0
+ 670 0052 18A8     		add	r0, sp, #96
+ 671 0054 0146     		mov	r1, r0
+ 672 0056 08AA     		add	r2, sp, #32
+ 673 0058 FFF7FEFF 		bl	f25519_sub
+ 674              	.LVL76:
+ 274:25519/ed25519.c **** 
+ 275:25519/ed25519.c **** 	/* G = D + B */
+ 276:25519/ed25519.c **** 	f25519_sub(g, b, a);
+ 675              		.loc 1 276 0
+ 676 005c 08A9     		add	r1, sp, #32
+ 677 005e 6A46     		mov	r2, sp
+ 678 0060 28A8     		add	r0, sp, #160
+ 679 0062 FFF7FEFF 		bl	f25519_sub
+ 680              	.LVL77:
+ 277:25519/ed25519.c **** 
+ 278:25519/ed25519.c **** 	/* F = G - C */
+ 279:25519/ed25519.c **** 	f25519_sub(f, g, c);
+ 681              		.loc 1 279 0
+ 682 0066 10AA     		add	r2, sp, #64
+ 683 0068 20A8     		add	r0, sp, #128
+ 684 006a 28A9     		add	r1, sp, #160
+ 685 006c FFF7FEFF 		bl	f25519_sub
+ 686              	.LVL78:
+ 280:25519/ed25519.c **** 
+ 281:25519/ed25519.c **** 	/* H = D - B */
+ 282:25519/ed25519.c **** 	f25519_neg(h, b);
+ 687              		.loc 1 282 0
+ 688 0070 08A9     		add	r1, sp, #32
+ 689 0072 30A8     		add	r0, sp, #192
+ 690 0074 FFF7FEFF 		bl	f25519_neg
+ 691              	.LVL79:
+ 283:25519/ed25519.c **** 	f25519_sub(h, h, a);
+ 692              		.loc 1 283 0
+ 693 0078 30A8     		add	r0, sp, #192
+ 694 007a 0146     		mov	r1, r0
+ 695 007c 6A46     		mov	r2, sp
+ 696 007e FFF7FEFF 		bl	f25519_sub
+ 697              	.LVL80:
+ 284:25519/ed25519.c **** 
+ 285:25519/ed25519.c **** 	/* X3 = E F */
+ 286:25519/ed25519.c **** 	f25519_mul__distinct(r->x, e, f);
+ 698              		.loc 1 286 0
+ 699 0082 2046     		mov	r0, r4
+ 700 0084 18A9     		add	r1, sp, #96
+ 701 0086 20AA     		add	r2, sp, #128
+ 702 0088 FFF7FEFF 		bl	f25519_mul__distinct
+ 703              	.LVL81:
+ 287:25519/ed25519.c **** 
+ 288:25519/ed25519.c **** 	/* Y3 = G H */
+ 289:25519/ed25519.c **** 	f25519_mul__distinct(r->y, g, h);
+ 704              		.loc 1 289 0
+ 705 008c 04F12000 		add	r0, r4, #32
+ 706 0090 28A9     		add	r1, sp, #160
+ 707 0092 30AA     		add	r2, sp, #192
+ 708 0094 FFF7FEFF 		bl	f25519_mul__distinct
+ 709              	.LVL82:
+ 290:25519/ed25519.c **** 
+ 291:25519/ed25519.c **** 	/* T3 = E H */
+ 292:25519/ed25519.c **** 	f25519_mul__distinct(r->t, e, h);
+ 710              		.loc 1 292 0
+ 711 0098 18A9     		add	r1, sp, #96
+ 712 009a 30AA     		add	r2, sp, #192
+ 713 009c 04F14000 		add	r0, r4, #64
+ 714 00a0 FFF7FEFF 		bl	f25519_mul__distinct
+ 715              	.LVL83:
+ 293:25519/ed25519.c **** 
+ 294:25519/ed25519.c **** 	/* Z3 = F G */
+ 295:25519/ed25519.c **** 	f25519_mul__distinct(r->z, f, g);
+ 716              		.loc 1 295 0
+ 717 00a4 04F16000 		add	r0, r4, #96
+ 718 00a8 20A9     		add	r1, sp, #128
+ 719 00aa 28AA     		add	r2, sp, #160
+ 720 00ac FFF7FEFF 		bl	f25519_mul__distinct
+ 721              	.LVL84:
+ 296:25519/ed25519.c **** }
+ 722              		.loc 1 296 0
+ 723 00b0 38B0     		add	sp, sp, #224
+ 724              		@ sp needed
+ 725 00b2 70BD     		pop	{r4, r5, r6, pc}
+ 726              		.cfi_endproc
+ 727              	.LFE8:
+ 729              		.section	.text.ed25519_smult,"ax",%progbits
+ 730              		.align	2
+ 731              		.global	ed25519_smult
+ 732              		.thumb
+ 733              		.thumb_func
+ 735              	ed25519_smult:
+ 736              	.LFB9:
+ 297:25519/ed25519.c **** 
+ 298:25519/ed25519.c **** void ed25519_smult(struct ed25519_pt *r_out, const struct ed25519_pt *p,
+ 299:25519/ed25519.c **** 		   const uint8_t *e)
+ 300:25519/ed25519.c **** {
+ 737              		.loc 1 300 0
+ 738              		.cfi_startproc
+ 739              		@ args = 0, pretend = 0, frame = 256
+ 740              		@ frame_needed = 0, uses_anonymous_args = 0
+ 741              	.LVL85:
+ 742 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 743              		.cfi_def_cfa_offset 24
+ 744              		.cfi_offset 4, -24
+ 745              		.cfi_offset 5, -20
+ 746              		.cfi_offset 6, -16
+ 747              		.cfi_offset 7, -12
+ 748              		.cfi_offset 8, -8
+ 749              		.cfi_offset 14, -4
+ 750 0004 C0B0     		sub	sp, sp, #256
+ 751              		.cfi_def_cfa_offset 280
+ 752              	.LVL86:
+ 753              		.loc 1 300 0
+ 754 0006 8046     		mov	r8, r0
+ 755 0008 0F46     		mov	r7, r1
+ 756 000a 1646     		mov	r6, r2
+ 757              	.LBB39:
+ 758              	.LBB40:
+ 759              		.file 3 "25519/ed25519.h"
+   1:25519/ed25519.h **** /* Edwards curve operations
+   2:25519/ed25519.h ****  * Daniel Beer <dlbeer@gmail.com>, 9 Jan 2014
+   3:25519/ed25519.h ****  *
+   4:25519/ed25519.h ****  * This file is in the public domain.
+   5:25519/ed25519.h ****  */
+   6:25519/ed25519.h **** 
+   7:25519/ed25519.h **** #ifndef ED25519_H_
+   8:25519/ed25519.h **** #define ED25519_H_
+   9:25519/ed25519.h **** 
+  10:25519/ed25519.h **** #include "f25519.h"
+  11:25519/ed25519.h **** 
+  12:25519/ed25519.h **** /* This is not the Ed25519 signature system. Rather, we're implementing
+  13:25519/ed25519.h ****  * basic operations on the twisted Edwards curve over (Z mod 2^255-19):
+  14:25519/ed25519.h ****  *
+  15:25519/ed25519.h ****  *     -x^2 + y^2 = 1 - (121665/121666)x^2y^2
+  16:25519/ed25519.h ****  *
+  17:25519/ed25519.h ****  * With the positive-x base point y = 4/5.
+  18:25519/ed25519.h ****  *
+  19:25519/ed25519.h ****  * These functions will not leak secret data through timing.
+  20:25519/ed25519.h ****  *
+  21:25519/ed25519.h ****  * For more information, see:
+  22:25519/ed25519.h ****  *
+  23:25519/ed25519.h ****  *     Bernstein, D.J. & Lange, T. (2007) "Faster addition and doubling on
+  24:25519/ed25519.h ****  *     elliptic curves". Document ID: 95616567a6ba20f575c5f25e7cebaf83.
+  25:25519/ed25519.h ****  *
+  26:25519/ed25519.h ****  *     Hisil, H. & Wong, K K. & Carter, G. & Dawson, E. (2008) "Twisted
+  27:25519/ed25519.h ****  *     Edwards curves revisited". Advances in Cryptology, ASIACRYPT 2008,
+  28:25519/ed25519.h ****  *     Vol. 5350, pp. 326-343.
+  29:25519/ed25519.h ****  */
+  30:25519/ed25519.h **** 
+  31:25519/ed25519.h **** /* Projective coordinates */
+  32:25519/ed25519.h **** struct ed25519_pt {
+  33:25519/ed25519.h **** 	uint8_t		x[F25519_SIZE];
+  34:25519/ed25519.h **** 	uint8_t		y[F25519_SIZE];
+  35:25519/ed25519.h **** 	uint8_t		t[F25519_SIZE];
+  36:25519/ed25519.h **** 	uint8_t		z[F25519_SIZE];
+  37:25519/ed25519.h **** };
+  38:25519/ed25519.h **** 
+  39:25519/ed25519.h **** extern const struct ed25519_pt ed25519_base;
+  40:25519/ed25519.h **** extern const struct ed25519_pt ed25519_neutral;
+  41:25519/ed25519.h **** 
+  42:25519/ed25519.h **** /* Convert between projective and affine coordinates (x/y in F25519) */
+  43:25519/ed25519.h **** void ed25519_project(struct ed25519_pt *p,
+  44:25519/ed25519.h **** 		     const uint8_t *x, const uint8_t *y);
+  45:25519/ed25519.h **** 
+  46:25519/ed25519.h **** void ed25519_unproject(uint8_t *x, uint8_t *y,
+  47:25519/ed25519.h **** 		       const struct ed25519_pt *p);
+  48:25519/ed25519.h **** 
+  49:25519/ed25519.h **** /* Compress/uncompress points. try_unpack() will check that the
+  50:25519/ed25519.h ****  * compressed point is on the curve, returning 1 if the unpacked point
+  51:25519/ed25519.h ****  * is valid, and 0 otherwise.
+  52:25519/ed25519.h ****  */
+  53:25519/ed25519.h **** #define ED25519_PACK_SIZE	F25519_SIZE
+  54:25519/ed25519.h **** 
+  55:25519/ed25519.h **** void ed25519_pack(uint8_t *c, const uint8_t *x, const uint8_t *y);
+  56:25519/ed25519.h **** uint8_t ed25519_try_unpack(uint8_t *x, uint8_t *y, const uint8_t *c);
+  57:25519/ed25519.h **** 
+  58:25519/ed25519.h **** /* Add, double and scalar multiply */
+  59:25519/ed25519.h **** #define ED25519_EXPONENT_SIZE	32
+  60:25519/ed25519.h **** 
+  61:25519/ed25519.h **** /* Prepare an exponent by clamping appropriate bits */
+  62:25519/ed25519.h **** static inline void ed25519_prepare(uint8_t *e)
+  63:25519/ed25519.h **** {
+  64:25519/ed25519.h **** 	e[0] &= 0xf8;
+  65:25519/ed25519.h **** 	e[31] &= 0x7f;
+  66:25519/ed25519.h **** 	e[31] |= 0x40;
+  67:25519/ed25519.h **** }
+  68:25519/ed25519.h **** 
+  69:25519/ed25519.h **** /* Order of the group generated by the base point */
+  70:25519/ed25519.h **** static inline void ed25519_copy(struct ed25519_pt *dst,
+  71:25519/ed25519.h **** 				const struct ed25519_pt *src)
+  72:25519/ed25519.h **** {
+  73:25519/ed25519.h **** 	memcpy(dst, src, sizeof(*dst));
+ 760              		.loc 3 73 0
+ 761 000c 6846     		mov	r0, sp
+ 762              	.LVL87:
+ 763 000e 1C49     		ldr	r1, .L15
+ 764              	.LVL88:
+ 765 0010 8022     		movs	r2, #128
+ 766              	.LVL89:
+ 767 0012 FFF7FEFF 		bl	memcpy
+ 768              	.LVL90:
+ 769              	.LBE40:
+ 770              	.LBE39:
+ 301:25519/ed25519.c **** 	struct ed25519_pt r;
+ 302:25519/ed25519.c **** 	int i;
+ 303:25519/ed25519.c **** 
+ 304:25519/ed25519.c **** 	ed25519_copy(&r, &ed25519_neutral);
+ 305:25519/ed25519.c **** 
+ 306:25519/ed25519.c **** 	for (i = 255; i >= 0; i--) {
+ 771              		.loc 1 306 0
+ 772 0016 FF24     		movs	r4, #255
+ 773              	.LVL91:
+ 774              	.L13:
+ 775              	.LBB41:
+ 307:25519/ed25519.c **** 		const uint8_t bit = (e[i >> 3] >> (i & 7)) & 1;
+ 776              		.loc 1 307 0 discriminator 2
+ 777 0018 E310     		asrs	r3, r4, #3
+ 778 001a F55C     		ldrb	r5, [r6, r3]	@ zero_extendqisi2
+ 779 001c 04F00703 		and	r3, r4, #7
+ 780 0020 1D41     		asrs	r5, r5, r3
+ 308:25519/ed25519.c **** 		struct ed25519_pt s;
+ 309:25519/ed25519.c **** 
+ 310:25519/ed25519.c **** 		ed25519_double(&r, &r);
+ 781              		.loc 1 310 0 discriminator 2
+ 782 0022 6846     		mov	r0, sp
+ 783 0024 6946     		mov	r1, sp
+ 784 0026 FFF7FEFF 		bl	ed25519_double
+ 785              	.LVL92:
+ 307:25519/ed25519.c **** 		const uint8_t bit = (e[i >> 3] >> (i & 7)) & 1;
+ 786              		.loc 1 307 0 discriminator 2
+ 787 002a 05F00105 		and	r5, r5, #1
+ 788              	.LVL93:
+ 311:25519/ed25519.c **** 		ed25519_add(&s, &r, p);
+ 789              		.loc 1 311 0 discriminator 2
+ 790 002e 20A8     		add	r0, sp, #128
+ 791 0030 6946     		mov	r1, sp
+ 792 0032 3A46     		mov	r2, r7
+ 793 0034 FFF7FEFF 		bl	ed25519_add
+ 794              	.LVL94:
+ 312:25519/ed25519.c **** 
+ 313:25519/ed25519.c **** 		f25519_select(r.x, r.x, s.x, bit);
+ 795              		.loc 1 313 0 discriminator 2
+ 796 0038 6846     		mov	r0, sp
+ 797 003a 6946     		mov	r1, sp
+ 798 003c 20AA     		add	r2, sp, #128
+ 799 003e 2B46     		mov	r3, r5
+ 800 0040 FFF7FEFF 		bl	f25519_select
+ 801              	.LVL95:
+ 314:25519/ed25519.c **** 		f25519_select(r.y, r.y, s.y, bit);
+ 802              		.loc 1 314 0 discriminator 2
+ 803 0044 08A8     		add	r0, sp, #32
+ 804 0046 0146     		mov	r1, r0
+ 805 0048 28AA     		add	r2, sp, #160
+ 806 004a 2B46     		mov	r3, r5
+ 807 004c FFF7FEFF 		bl	f25519_select
+ 808              	.LVL96:
+ 315:25519/ed25519.c **** 		f25519_select(r.z, r.z, s.z, bit);
+ 809              		.loc 1 315 0 discriminator 2
+ 810 0050 18A8     		add	r0, sp, #96
+ 811 0052 0146     		mov	r1, r0
+ 812 0054 38AA     		add	r2, sp, #224
+ 813 0056 2B46     		mov	r3, r5
+ 814 0058 FFF7FEFF 		bl	f25519_select
+ 815              	.LVL97:
+ 316:25519/ed25519.c **** 		f25519_select(r.t, r.t, s.t, bit);
+ 816              		.loc 1 316 0 discriminator 2
+ 817 005c 10A8     		add	r0, sp, #64
+ 818 005e 2B46     		mov	r3, r5
+ 819              	.LBE41:
+ 306:25519/ed25519.c **** 	for (i = 255; i >= 0; i--) {
+ 820              		.loc 1 306 0 discriminator 2
+ 821 0060 013C     		subs	r4, r4, #1
+ 822              	.LVL98:
+ 823              	.LBB42:
+ 824              		.loc 1 316 0 discriminator 2
+ 825 0062 0146     		mov	r1, r0
+ 826 0064 30AA     		add	r2, sp, #192
+ 827 0066 FFF7FEFF 		bl	f25519_select
+ 828              	.LVL99:
+ 829              	.LBE42:
+ 306:25519/ed25519.c **** 	for (i = 255; i >= 0; i--) {
+ 830              		.loc 1 306 0 discriminator 2
+ 831 006a 631C     		adds	r3, r4, #1
+ 832 006c D4D1     		bne	.L13
+ 833              	.LVL100:
+ 834              	.LBB43:
+ 835              	.LBB44:
+ 836              		.loc 3 73 0
+ 837 006e 4046     		mov	r0, r8
+ 838 0070 6946     		mov	r1, sp
+ 839 0072 8022     		movs	r2, #128
+ 840 0074 FFF7FEFF 		bl	memcpy
+ 841              	.LVL101:
+ 842              	.LBE44:
+ 843              	.LBE43:
+ 317:25519/ed25519.c **** 	}
+ 318:25519/ed25519.c **** 
+ 319:25519/ed25519.c **** 	ed25519_copy(r_out, &r);
+ 320:25519/ed25519.c **** }
+ 844              		.loc 1 320 0
+ 845 0078 40B0     		add	sp, sp, #256
+ 846              	.LVL102:
+ 847              		@ sp needed
+ 848 007a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 849              	.LVL103:
+ 850              	.L16:
+ 851 007e 00BF     		.align	2
+ 852              	.L15:
+ 853 0080 00000000 		.word	.LANCHOR2
+ 854              		.cfi_endproc
+ 855              	.LFE9:
+ 857              		.global	ed25519_neutral
+ 858              		.global	ed25519_base
+ 859              		.section	.rodata.ed25519_k,"a",%progbits
+ 860              		.align	2
+ 861              		.set	.LANCHOR1,. + 0
+ 864              	ed25519_k:
+ 865 0000 59       		.byte	89
+ 866 0001 F1       		.byte	-15
+ 867 0002 B2       		.byte	-78
+ 868 0003 26       		.byte	38
+ 869 0004 94       		.byte	-108
+ 870 0005 9B       		.byte	-101
+ 871 0006 D6       		.byte	-42
+ 872 0007 EB       		.byte	-21
+ 873 0008 56       		.byte	86
+ 874 0009 B1       		.byte	-79
+ 875 000a 83       		.byte	-125
+ 876 000b 82       		.byte	-126
+ 877 000c 9A       		.byte	-102
+ 878 000d 14       		.byte	20
+ 879 000e E0       		.byte	-32
+ 880 000f 00       		.byte	0
+ 881 0010 30       		.byte	48
+ 882 0011 D1       		.byte	-47
+ 883 0012 F3       		.byte	-13
+ 884 0013 EE       		.byte	-18
+ 885 0014 F2       		.byte	-14
+ 886 0015 80       		.byte	-128
+ 887 0016 8E       		.byte	-114
+ 888 0017 19       		.byte	25
+ 889 0018 E7       		.byte	-25
+ 890 0019 FC       		.byte	-4
+ 891 001a DF       		.byte	-33
+ 892 001b 56       		.byte	86
+ 893 001c DC       		.byte	-36
+ 894 001d D9       		.byte	-39
+ 895 001e 06       		.byte	6
+ 896 001f 24       		.byte	36
+ 897              		.section	.rodata.ed25519_neutral,"a",%progbits
+ 898              		.align	2
+ 899              		.set	.LANCHOR2,. + 0
+ 902              	ed25519_neutral:
+ 903 0000 00       		.byte	0
+ 904 0001 00000000 		.space	31
+ 904      00000000 
+ 904      00000000 
+ 904      00000000 
+ 904      00000000 
+ 905 0020 01       		.byte	1
+ 906 0021 00       		.byte	0
+ 907 0022 00000000 		.space	30
+ 907      00000000 
+ 907      00000000 
+ 907      00000000 
+ 907      00000000 
+ 908 0040 00       		.byte	0
+ 909 0041 00000000 		.space	31
+ 909      00000000 
+ 909      00000000 
+ 909      00000000 
+ 909      00000000 
+ 910 0060 01       		.byte	1
+ 911 0061 00       		.byte	0
+ 912 0062 00000000 		.space	30
+ 912      00000000 
+ 912      00000000 
+ 912      00000000 
+ 912      00000000 
+ 913              		.section	.rodata.ed25519_base,"a",%progbits
+ 914              		.align	2
+ 917              	ed25519_base:
+ 918 0000 1A       		.byte	26
+ 919 0001 D5       		.byte	-43
+ 920 0002 25       		.byte	37
+ 921 0003 8F       		.byte	-113
+ 922 0004 60       		.byte	96
+ 923 0005 2D       		.byte	45
+ 924 0006 56       		.byte	86
+ 925 0007 C9       		.byte	-55
+ 926 0008 B2       		.byte	-78
+ 927 0009 A7       		.byte	-89
+ 928 000a 25       		.byte	37
+ 929 000b 95       		.byte	-107
+ 930 000c 60       		.byte	96
+ 931 000d C7       		.byte	-57
+ 932 000e 2C       		.byte	44
+ 933 000f 69       		.byte	105
+ 934 0010 5C       		.byte	92
+ 935 0011 DC       		.byte	-36
+ 936 0012 D6       		.byte	-42
+ 937 0013 FD       		.byte	-3
+ 938 0014 31       		.byte	49
+ 939 0015 E2       		.byte	-30
+ 940 0016 A4       		.byte	-92
+ 941 0017 C0       		.byte	-64
+ 942 0018 FE       		.byte	-2
+ 943 0019 53       		.byte	83
+ 944 001a 6E       		.byte	110
+ 945 001b CD       		.byte	-51
+ 946 001c D3       		.byte	-45
+ 947 001d 36       		.byte	54
+ 948 001e 69       		.byte	105
+ 949 001f 21       		.byte	33
+ 950 0020 58       		.byte	88
+ 951 0021 66       		.byte	102
+ 952 0022 66       		.byte	102
+ 953 0023 66       		.byte	102
+ 954 0024 66       		.byte	102
+ 955 0025 66       		.byte	102
+ 956 0026 66       		.byte	102
+ 957 0027 66       		.byte	102
+ 958 0028 66       		.byte	102
+ 959 0029 66       		.byte	102
+ 960 002a 66       		.byte	102
+ 961 002b 66       		.byte	102
+ 962 002c 66       		.byte	102
+ 963 002d 66       		.byte	102
+ 964 002e 66       		.byte	102
+ 965 002f 66       		.byte	102
+ 966 0030 66       		.byte	102
+ 967 0031 66       		.byte	102
+ 968 0032 66       		.byte	102
+ 969 0033 66       		.byte	102
+ 970 0034 66       		.byte	102
+ 971 0035 66       		.byte	102
+ 972 0036 66       		.byte	102
+ 973 0037 66       		.byte	102
+ 974 0038 66       		.byte	102
+ 975 0039 66       		.byte	102
+ 976 003a 66       		.byte	102
+ 977 003b 66       		.byte	102
+ 978 003c 66       		.byte	102
+ 979 003d 66       		.byte	102
+ 980 003e 66       		.byte	102
+ 981 003f 66       		.byte	102
+ 982 0040 A3       		.byte	-93
+ 983 0041 DD       		.byte	-35
+ 984 0042 B7       		.byte	-73
+ 985 0043 A5       		.byte	-91
+ 986 0044 B3       		.byte	-77
+ 987 0045 8A       		.byte	-118
+ 988 0046 DE       		.byte	-34
+ 989 0047 6D       		.byte	109
+ 990 0048 F5       		.byte	-11
+ 991 0049 52       		.byte	82
+ 992 004a 51       		.byte	81
+ 993 004b 77       		.byte	119
+ 994 004c 80       		.byte	-128
+ 995 004d 9F       		.byte	-97
+ 996 004e F0       		.byte	-16
+ 997 004f 20       		.byte	32
+ 998 0050 7D       		.byte	125
+ 999 0051 E3       		.byte	-29
+ 1000 0052 AB       		.byte	-85
+ 1001 0053 64       		.byte	100
+ 1002 0054 8E       		.byte	-114
+ 1003 0055 4E       		.byte	78
+ 1004 0056 EA       		.byte	-22
+ 1005 0057 66       		.byte	102
+ 1006 0058 65       		.byte	101
+ 1007 0059 76       		.byte	118
+ 1008 005a 8B       		.byte	-117
+ 1009 005b D7       		.byte	-41
+ 1010 005c 0F       		.byte	15
+ 1011 005d 5F       		.byte	95
+ 1012 005e 87       		.byte	-121
+ 1013 005f 67       		.byte	103
+ 1014 0060 01       		.byte	1
+ 1015 0061 00       		.byte	0
+ 1016 0062 00000000 		.space	30
+ 1016      00000000 
+ 1016      00000000 
+ 1016      00000000 
+ 1016      00000000 
+ 1017              		.section	.rodata.ed25519_d,"a",%progbits
+ 1018              		.align	2
+ 1019              		.set	.LANCHOR0,. + 0
+ 1022              	ed25519_d:
+ 1023 0000 A3       		.byte	-93
+ 1024 0001 78       		.byte	120
+ 1025 0002 59       		.byte	89
+ 1026 0003 13       		.byte	19
+ 1027 0004 CA       		.byte	-54
+ 1028 0005 4D       		.byte	77
+ 1029 0006 EB       		.byte	-21
+ 1030 0007 75       		.byte	117
+ 1031 0008 AB       		.byte	-85
+ 1032 0009 D8       		.byte	-40
+ 1033 000a 41       		.byte	65
+ 1034 000b 41       		.byte	65
+ 1035 000c 4D       		.byte	77
+ 1036 000d 0A       		.byte	10
+ 1037 000e 70       		.byte	112
+ 1038 000f 00       		.byte	0
+ 1039 0010 98       		.byte	-104
+ 1040 0011 E8       		.byte	-24
+ 1041 0012 79       		.byte	121
+ 1042 0013 77       		.byte	119
+ 1043 0014 79       		.byte	121
+ 1044 0015 40       		.byte	64
+ 1045 0016 C7       		.byte	-57
+ 1046 0017 8C       		.byte	-116
+ 1047 0018 73       		.byte	115
+ 1048 0019 FE       		.byte	-2
+ 1049 001a 6F       		.byte	111
+ 1050 001b 2B       		.byte	43
+ 1051 001c EE       		.byte	-18
+ 1052 001d 6C       		.byte	108
+ 1053 001e 03       		.byte	3
+ 1054 001f 52       		.byte	82
+ 1055              		.text
+ 1056              	.Letext0:
+ 1057              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
+ 1058              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
+DEFINED SYMBOLS
+                            *ABS*:00000000 ed25519.c
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:19     .text.ed25519_project:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:24     .text.ed25519_project:00000000 ed25519_project
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:127    .text.ed25519_unproject:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:132    .text.ed25519_unproject:00000000 ed25519_unproject
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:186    .text.ed25519_pack:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:191    .text.ed25519_pack:00000000 ed25519_pack
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:282    .text.ed25519_try_unpack:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:287    .text.ed25519_try_unpack:00000000 ed25519_try_unpack
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:438    .text.ed25519_try_unpack:000000c0 $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:444    .text.ed25519_add:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:449    .text.ed25519_add:00000000 ed25519_add
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:595    .text.ed25519_add:000000dc $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:600    .text.ed25519_double:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:605    .text.ed25519_double:00000000 ed25519_double
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:730    .text.ed25519_smult:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:735    .text.ed25519_smult:00000000 ed25519_smult
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:853    .text.ed25519_smult:00000080 $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:902    .rodata.ed25519_neutral:00000000 ed25519_neutral
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:917    .rodata.ed25519_base:00000000 ed25519_base
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:860    .rodata.ed25519_k:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:864    .rodata.ed25519_k:00000000 ed25519_k
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:898    .rodata.ed25519_neutral:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:914    .rodata.ed25519_base:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:1018   .rodata.ed25519_d:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc1jUJEJ.s:1022   .rodata.ed25519_d:00000000 ed25519_d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+f25519_load
+f25519_mul__distinct
+f25519_inv__distinct
+f25519_normalize
+f25519_add
+f25519_sub
+f25519_sqrt
+f25519_neg
+f25519_select
+f25519_eq
+f25519_one
+memcpy

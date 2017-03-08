@@ -1,0 +1,2279 @@
+Archive member included because of file (symbol)
+
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+                              build/hardware.o (memcmp)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+                              build/25519/ed25519.o (memcpy)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+                              build/hardware.o (memmem)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+                              build/hardware.o (memset)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+                              build/hardware.o (sprintf)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o) (_svfprintf_r)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o) (_printf_i)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+                              build/hardware.o (vsprintf)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o) (_impure_ptr)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o) (memchr)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o) (memmove)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o) (_free_r)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o) (_malloc_r)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o) (_realloc_r)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o) (_sbrk_r)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o) (strlen)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o) (_malloc_usable_size_r)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o) (errno)
+.\libstm32fw.a(stm32f10x_gpio.o)
+                              build/hardware.o (GPIO_Init)
+.\libstm32fw.a(stm32f10x_rcc.o)
+                              build/hardware.o (RCC_APB2PeriphClockCmd)
+.\libstm32fw.a(stm32f10x_usart.o)
+                              build/hardware.o (USART_Init)
+c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+                              c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o) (_sbrk)
+
+Allocating common symbols
+Common symbol       size              file
+
+SaveRState          0x2               build/usb_lib/usb_int.o
+SaveState           0x2               build/usb_lib/usb_init.o
+errno               0x4               c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+wTransferSize       0x4               build/usb.o
+input               0x5c              build/dfu.o
+wIstr               0x2               build/usb.o
+pProperty           0x4               build/usb_lib/usb_init.o
+EPindex             0x1               build/usb_lib/usb_init.o
+sha256sum           0x20              build/dfu.o
+ctx                 0x68              build/dfu.o
+SaveTState          0x2               build/usb_lib/usb_int.o
+Device_Info         0x1c              build/usb_lib/usb_init.o
+pUser_Standard_Requests
+                    0x4               build/usb_lib/usb_init.o
+StatusInfo          0x2               build/usb_lib/usb_core.o
+pInformation        0x4               build/usb_lib/usb_init.o
+ResumeS             0x2               build/usb.o
+code_copy_lock      0x1               build/dfu.o
+wInterrupt_Mask     0x2               build/usb_lib/usb_init.o
+
+Discarded input sections
+
+ .text          0x00000000       0x14 build/stm32_lib/c_only_startup.o
+ .bss           0x00000000        0x0 build/stm32_lib/c_only_startup.o
+ .text          0x00000000       0x7a build/stm32_lib/cortexm3_macro.o
+ .bss           0x00000000        0x0 build/stm32_lib/cortexm3_macro.o
+ .text          0x00000000        0x0 build/usb.o
+ .bss           0x00000000        0x0 build/usb.o
+ .text.usbAppInit
+                0x00000000        0x4 build/usb.o
+ .text.usbSuspend
+                0x00000000       0x1c build/usb.o
+ .text.usbResumeInit
+                0x00000000       0x18 build/usb.o
+ .text.usbPowerOn
+                0x00000000       0x48 build/usb.o
+ .text.usbPowerOff
+                0x00000000       0x3c build/usb.o
+ .text.usbGetState
+                0x00000000        0xc build/usb.o
+ .text          0x00000000        0x0 build/usb_callbacks.o
+ .bss           0x00000000        0x0 build/usb_callbacks.o
+ .text          0x00000000        0x0 build/usb_descriptor.o
+ .bss           0x00000000        0x0 build/usb_descriptor.o
+ .bss.u8_usbStringInterface
+                0x00000000        0x1 build/usb_descriptor.o
+ .text          0x00000000        0x0 build/main.o
+ .bss           0x00000000        0x0 build/main.o
+ .text          0x00000000        0x0 build/hardware.o
+ .bss           0x00000000        0x0 build/hardware.o
+ .text.UU_PutChar
+                0x00000000        0xc build/hardware.o
+ .text.UU_PutString
+                0x00000000       0x18 build/hardware.o
+ .text.vprint   0x00000000       0x38 build/hardware.o
+ .text.setMspAndJump
+                0x00000000       0x18 build/hardware.o
+ .text.bkp10Write
+                0x00000000       0x34 build/hardware.o
+ .text.checkAndClearBootloaderFlag
+                0x00000000       0x68 build/hardware.o
+ .text.flashErasePages
+                0x00000000       0x60 build/hardware.o
+ .text          0x00000000        0x0 build/dfu.o
+ .bss           0x00000000        0x0 build/dfu.o
+ .text.dfuUpdateByTimeout
+                0x00000000        0x4 build/dfu.o
+ .text.dfuCopyBufferToExec
+                0x00000000       0x9c build/dfu.o
+ .text.dfuGetState
+                0x00000000        0xc build/dfu.o
+ .text.dfuSetState
+                0x00000000        0xc build/dfu.o
+ .text.dfuUploadDone
+                0x00000000       0x1c build/dfu.o
+ .text          0x00000000        0x0 build/25519/c25519.o
+ .bss           0x00000000        0x0 build/25519/c25519.o
+ .text.c25519_smult
+                0x00000000      0x228 build/25519/c25519.o
+ .rodata.c25519_base_x
+                0x00000000       0x20 build/25519/c25519.o
+ .text          0x00000000        0x0 build/25519/ed25519.o
+ .bss           0x00000000        0x0 build/25519/ed25519.o
+ .text          0x00000000        0x0 build/25519/edsign.o
+ .bss           0x00000000        0x0 build/25519/edsign.o
+ .text.edsign_sec_to_pub
+                0x00000000       0x7c build/25519/edsign.o
+ .text          0x00000000        0x0 build/25519/f25519.o
+ .bss           0x00000000        0x0 build/25519/f25519.o
+ .text.f25519_mul
+                0x00000000       0xb8 build/25519/f25519.o
+ .text.f25519_mul_c
+                0x00000000       0x40 build/25519/f25519.o
+ .text.f25519_inv
+                0x00000000       0x28 build/25519/f25519.o
+ .rodata.f25519_zero
+                0x00000000       0x20 build/25519/f25519.o
+ .text          0x00000000        0x0 build/25519/fprime.o
+ .bss           0x00000000        0x0 build/25519/fprime.o
+ .text.fprime_load
+                0x00000000       0x20 build/25519/fprime.o
+ .text.fprime_normalize
+                0x00000000       0x2c build/25519/fprime.o
+ .text.fprime_eq
+                0x00000000       0x9c build/25519/fprime.o
+ .text.fprime_select
+                0x00000000       0xc4 build/25519/fprime.o
+ .text.fprime_add
+                0x00000000       0x58 build/25519/fprime.o
+ .text.fprime_sub
+                0x00000000       0x90 build/25519/fprime.o
+ .text.fprime_mul
+                0x00000000      0x140 build/25519/fprime.o
+ .text.fprime_inv
+                0x00000000       0xd4 build/25519/fprime.o
+ .rodata.fprime_one
+                0x00000000       0x20 build/25519/fprime.o
+ .rodata.fprime_zero
+                0x00000000       0x20 build/25519/fprime.o
+ .text          0x00000000        0x0 build/25519/morph25519.o
+ .bss           0x00000000        0x0 build/25519/morph25519.o
+ .text.morph25519_e2m
+                0x00000000       0x40 build/25519/morph25519.o
+ .text.morph25519_m2e
+                0x00000000       0xd4 build/25519/morph25519.o
+ .rodata.d.4520
+                0x00000000       0x20 build/25519/morph25519.o
+ .text          0x00000000        0x0 build/25519/sha256.o
+ .bss           0x00000000        0x0 build/25519/sha256.o
+ .text          0x00000000        0x0 build/25519/sha512.o
+ .bss           0x00000000        0x0 build/25519/sha512.o
+ .text          0x00000000        0x0 build/usb_lib/usb_regs.o
+ .bss           0x00000000        0x0 build/usb_lib/usb_regs.o
+ .text.SetCNTR  0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.GetCNTR  0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.SetISTR  0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.GetISTR  0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.GetFNR   0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.SetDADDR
+                0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.GetDADDR
+                0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.SetBTABLE
+                0x00000000       0x10 build/usb_lib/usb_regs.o
+ .text.GetBTABLE
+                0x00000000        0xc build/usb_lib/usb_regs.o
+ .text.SetENDPOINT
+                0x00000000        0xe build/usb_lib/usb_regs.o
+ .text.GetENDPOINT
+                0x00000000       0x10 build/usb_lib/usb_regs.o
+ .text.SetEPType
+                0x00000000       0x1c build/usb_lib/usb_regs.o
+ .text.GetEPType
+                0x00000000       0x12 build/usb_lib/usb_regs.o
+ .text.SetEPRxStatus
+                0x00000000       0x2a build/usb_lib/usb_regs.o
+ .text.SetDouBleBuffEPStall
+                0x00000000       0x24 build/usb_lib/usb_regs.o
+ .text.GetEPTxStatus
+                0x00000000       0x12 build/usb_lib/usb_regs.o
+ .text.GetEPRxStatus
+                0x00000000       0x12 build/usb_lib/usb_regs.o
+ .text.SetEPTxValid
+                0x00000000       0x1e build/usb_lib/usb_regs.o
+ .text.SetEP_KIND
+                0x00000000       0x1e build/usb_lib/usb_regs.o
+ .text.ClearEP_KIND
+                0x00000000       0x1c build/usb_lib/usb_regs.o
+ .text.Set_Status_Out
+                0x00000000       0x1e build/usb_lib/usb_regs.o
+ .text.SetEPDoubleBuff
+                0x00000000       0x1e build/usb_lib/usb_regs.o
+ .text.ClearEPDoubleBuff
+                0x00000000       0x1c build/usb_lib/usb_regs.o
+ .text.GetTxStallStatus
+                0x00000000       0x1a build/usb_lib/usb_regs.o
+ .text.GetRxStallStatus
+                0x00000000       0x1a build/usb_lib/usb_regs.o
+ .text.ClearEP_CTR_RX
+                0x00000000       0x18 build/usb_lib/usb_regs.o
+ .text.ClearEP_CTR_TX
+                0x00000000       0x1c build/usb_lib/usb_regs.o
+ .text.ToggleDTOG_RX
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.ToggleDTOG_TX
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.SetEPAddress
+                0x00000000       0x1e build/usb_lib/usb_regs.o
+ .text.GetEPAddress
+                0x00000000       0x12 build/usb_lib/usb_regs.o
+ .text.SetEPTxAddr
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.SetEPRxAddr
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.SetEPCountRxReg
+                0x00000000       0x26 build/usb_lib/usb_regs.o
+ .text.GetEPTxCount
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.GetEPRxCount
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.SetEPDblBuffAddr
+                0x00000000       0x38 build/usb_lib/usb_regs.o
+ .text.SetEPDblBuf0Addr
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.SetEPDblBuf1Addr
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.GetEPDblBuf0Addr
+                0x00000000       0x1c build/usb_lib/usb_regs.o
+ .text.GetEPDblBuf1Addr
+                0x00000000       0x1c build/usb_lib/usb_regs.o
+ .text.SetEPDblBuffCount
+                0x00000000       0xa8 build/usb_lib/usb_regs.o
+ .text.SetEPDblBuf0Count
+                0x00000000       0x5c build/usb_lib/usb_regs.o
+ .text.SetEPDblBuf1Count
+                0x00000000       0x5c build/usb_lib/usb_regs.o
+ .text.GetEPDblBuf0Count
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.GetEPDblBuf1Count
+                0x00000000       0x20 build/usb_lib/usb_regs.o
+ .text.GetEPDblBufDir
+                0x00000000       0x44 build/usb_lib/usb_regs.o
+ .text.FreeUserBuffer
+                0x00000000       0x3a build/usb_lib/usb_regs.o
+ .text.ToWord   0x00000000        0x6 build/usb_lib/usb_regs.o
+ .text.ByteSwap
+                0x00000000        0xa build/usb_lib/usb_regs.o
+ .text          0x00000000        0x0 build/usb_lib/usb_int.o
+ .bss           0x00000000        0x0 build/usb_lib/usb_int.o
+ .text.CTR_HP   0x00000000       0x70 build/usb_lib/usb_int.o
+ .text          0x00000000        0x0 build/usb_lib/usb_init.o
+ .bss           0x00000000        0x0 build/usb_lib/usb_init.o
+ .text          0x00000000        0x0 build/usb_lib/usb_core.o
+ .bss           0x00000000        0x0 build/usb_lib/usb_core.o
+ .text.NOP_Process
+                0x00000000        0x2 build/usb_lib/usb_core.o
+ .text          0x00000000        0x0 build/usb_lib/usb_mem.o
+ .bss           0x00000000        0x0 build/usb_lib/usb_mem.o
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+ .text._sprintf_r
+                0x00000000       0x40 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .text.__ssprint_r
+                0x00000000       0xf2 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ .rodata._global_impure_ptr
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .text.cleanup_glue
+                0x00000000       0x1a c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .text._reclaim_reent
+                0x00000000       0xbc c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .bss           0x00000000        0x0 .\libstm32fw.a(stm32f10x_gpio.o)
+ .bss           0x00000000        0x0 .\libstm32fw.a(stm32f10x_rcc.o)
+ .bss           0x00000000        0x0 .\libstm32fw.a(stm32f10x_usart.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x20000000         0x00005000         xrw
+FLASH            0x08000000         0x00020000         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD build/stm32_lib/c_only_startup.o
+LOAD build/stm32_lib/cortexm3_macro.o
+LOAD build/usb.o
+LOAD build/usb_callbacks.o
+LOAD build/usb_descriptor.o
+LOAD build/main.o
+LOAD build/hardware.o
+LOAD build/dfu.o
+LOAD build/25519/c25519.o
+LOAD build/25519/ed25519.o
+LOAD build/25519/edsign.o
+LOAD build/25519/f25519.o
+LOAD build/25519/fprime.o
+LOAD build/25519/morph25519.o
+LOAD build/25519/sha256.o
+LOAD build/25519/sha512.o
+LOAD build/usb_lib/usb_regs.o
+LOAD build/usb_lib/usb_int.o
+LOAD build/usb_lib/usb_init.o
+LOAD build/usb_lib/usb_core.o
+LOAD build/usb_lib/usb_mem.o
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a
+LOAD .\libstm32fw.a
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a
+END GROUP
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a
+END GROUP
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a
+LOAD c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a
+END GROUP
+                0x00000800                __Stack_Size = 0x800
+                0x00000800                PROVIDE (_Stack_Size, __Stack_Size)
+                0x20004800                __Stack_Init = (_estack - __Stack_Size)
+                0x20004800                PROVIDE (_Stack_Init, __Stack_Init)
+                0x00000100                _Minimum_Stack_Size = 0x100
+                0x20005000                _estack = 0x20005000
+
+.isr_vector     0x08000000       0xf0
+                0x08000000                . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x08000000       0xf0 build/stm32_lib/c_only_startup.o
+                0x08000000                g_pfnVectors
+                0x080000f0                . = ALIGN (0x4)
+
+.flashtext      0x080000f0        0x0
+                0x080000f0                . = ALIGN (0x4)
+ *(.flashtext)
+                0x080000f0                . = ALIGN (0x4)
+
+.text           0x080000f0     0x76f8
+                0x080000f0                . = ALIGN (0x4)
+ *(.text)
+ .text          0x080000f0      0x2e8 .\libstm32fw.a(stm32f10x_gpio.o)
+                0x080000f0                GPIO_DeInit
+                0x080001cc                GPIO_AFIODeInit
+                0x080001e4                GPIO_Init
+                0x080002a8                GPIO_StructInit
+                0x080002b8                GPIO_ReadInputDataBit
+                0x080002c4                GPIO_ReadInputData
+                0x080002cc                GPIO_ReadOutputDataBit
+                0x080002d8                GPIO_ReadOutputData
+                0x080002e0                GPIO_SetBits
+                0x080002e4                GPIO_ResetBits
+                0x080002e8                GPIO_WriteBit
+                0x080002f4                GPIO_Write
+                0x080002f8                GPIO_PinLockConfig
+                0x08000308                GPIO_EventOutputConfig
+                0x08000328                GPIO_EventOutputCmd
+                0x08000334                GPIO_PinRemapConfig
+                0x080003a0                GPIO_EXTILineConfig
+                0x080003cc                GPIO_ETH_MediaInterfaceConfig
+ .text          0x080003d8      0x360 .\libstm32fw.a(stm32f10x_rcc.o)
+                0x080003d8                RCC_DeInit
+                0x08000418                RCC_HSEConfig
+                0x08000450                RCC_WaitForHSEStartUp
+                0x08000488                RCC_AdjustHSICalibrationValue
+                0x0800049c                RCC_HSICmd
+                0x080004a8                RCC_PLLConfig
+                0x080004bc                RCC_PLLCmd
+                0x080004c8                RCC_SYSCLKConfig
+                0x080004dc                RCC_GetSYSCLKSource
+                0x080004ec                RCC_HCLKConfig
+                0x08000500                RCC_PCLK1Config
+                0x08000514                RCC_PCLK2Config
+                0x08000528                RCC_ITConfig
+                0x08000540                RCC_USBCLKConfig
+                0x0800054c                RCC_ADCCLKConfig
+                0x08000560                RCC_LSEConfig
+                0x08000580                RCC_LSICmd
+                0x0800058c                RCC_RTCCLKConfig
+                0x0800059c                RCC_RTCCLKCmd
+                0x080005a8                RCC_GetClocksFreq
+                0x08000638                RCC_AHBPeriphClockCmd
+                0x08000650                RCC_APB2PeriphClockCmd
+                0x08000668                RCC_APB1PeriphClockCmd
+                0x08000680                RCC_APB2PeriphResetCmd
+                0x08000698                RCC_APB1PeriphResetCmd
+                0x080006b0                RCC_BackupResetCmd
+                0x080006bc                RCC_ClockSecuritySystemCmd
+                0x080006c8                RCC_MCOConfig
+                0x080006d4                RCC_GetFlagStatus
+                0x08000708                RCC_ClearFlag
+                0x08000718                RCC_GetITStatus
+                0x0800072c                RCC_ClearITPendingBit
+ .text          0x08000738      0x414 .\libstm32fw.a(stm32f10x_usart.o)
+                0x08000738                USART_DeInit
+                0x080007e8                USART_Init
+                0x080008a4                USART_StructInit
+                0x080008bc                USART_ClockInit
+                0x080008e0                USART_ClockStructInit
+                0x080008ec                USART_Cmd
+                0x08000908                USART_ITConfig
+                0x08000944                USART_DMACmd
+                0x08000958                USART_SetAddress
+                0x08000970                USART_WakeUpConfig
+                0x08000988                USART_ReceiverWakeUpCmd
+                0x080009a4                USART_LINBreakDetectLengthConfig
+                0x080009bc                USART_LINCmd
+                0x080009d8                USART_SendData
+                0x080009e0                USART_ReceiveData
+                0x080009e8                USART_SendBreak
+                0x080009f4                USART_SetGuardTime
+                0x08000a08                USART_SetPrescaler
+                0x08000a1c                USART_SmartCardCmd
+                0x08000a38                USART_SmartCardNACKCmd
+                0x08000a54                USART_HalfDuplexCmd
+                0x08000a70                USART_OverSampling8Cmd
+                0x08000a8c                USART_OneBitMethodCmd
+                0x08000aa8                USART_IrDAConfig
+                0x08000ac0                USART_IrDACmd
+                0x08000adc                USART_GetFlagStatus
+                0x08000ae8                USART_ClearFlag
+                0x08000af0                USART_GetITStatus
+                0x08000b3c                USART_ClearITPendingBit
+ *(.text.*)
+ .text.Reset_Handler
+                0x08000b4c       0x48 build/stm32_lib/c_only_startup.o
+                0x08000b4c                Reset_Handler
+ .text.Default_Handler
+                0x08000b94        0x4 build/stm32_lib/c_only_startup.o
+                0x08000b94                EXTI2_IRQHandler
+                0x08000b94                DebugMon_Handler
+                0x08000b94                TIM1_CC_IRQHandler
+                0x08000b94                HardFault_Handler
+                0x08000b94                SysTick_Handler
+                0x08000b94                PVD_IRQHandler
+                0x08000b94                PendSV_Handler
+                0x08000b94                NMI_Handler
+                0x08000b94                EXTI3_IRQHandler
+                0x08000b94                EXTI0_IRQHandler
+                0x08000b94                I2C2_EV_IRQHandler
+                0x08000b94                UsageFault_Handler
+                0x08000b94                ADC1_2_IRQHandler
+                0x08000b94                SPI1_IRQHandler
+                0x08000b94                TAMPER_IRQHandler
+                0x08000b94                DMA1_Channel4_IRQHandler
+                0x08000b94                USART3_IRQHandler
+                0x08000b94                RTC_IRQHandler
+                0x08000b94                DMA1_Channel7_IRQHandler
+                0x08000b94                CAN1_RX1_IRQHandler
+                0x08000b94                TIM4_IRQHandler
+                0x08000b94                I2C1_EV_IRQHandler
+                0x08000b94                DMA1_Channel6_IRQHandler
+                0x08000b94                TIM3_IRQHandler
+                0x08000b94                RCC_IRQHandler
+                0x08000b94                TIM1_TRG_COM_IRQHandler
+                0x08000b94                DMA1_Channel1_IRQHandler
+                0x08000b94                Default_Handler
+                0x08000b94                EXTI15_10_IRQHandler
+                0x08000b94                EXTI9_5_IRQHandler
+                0x08000b94                SPI2_IRQHandler
+                0x08000b94                MemManage_Handler
+                0x08000b94                SVC_Handler
+                0x08000b94                DMA1_Channel5_IRQHandler
+                0x08000b94                EXTI4_IRQHandler
+                0x08000b94                USB_HP_CAN1_TX_IRQHandler
+                0x08000b94                DMA1_Channel3_IRQHandler
+                0x08000b94                TIM1_UP_IRQHandler
+                0x08000b94                WWDG_IRQHandler
+                0x08000b94                TIM2_IRQHandler
+                0x08000b94                TIM1_BRK_IRQHandler
+                0x08000b94                EXTI1_IRQHandler
+                0x08000b94                RTCAlarm_IRQHandler
+                0x08000b94                USART2_IRQHandler
+                0x08000b94                I2C2_ER_IRQHandler
+                0x08000b94                DMA1_Channel2_IRQHandler
+                0x08000b94                CAN1_SCE_IRQHandler
+                0x08000b94                FLASH_IRQHandler
+                0x08000b94                BusFault_Handler
+                0x08000b94                USART1_IRQHandler
+                0x08000b94                I2C1_ER_IRQHandler
+                0x08000b94                USBWakeUp_IRQHandler
+ .text.nothingProc
+                0x08000b98        0x4 build/usb.o
+                0x08000b98                nothingProc
+ .text.usbStatusIn
+                0x08000b9c        0x4 build/usb.o
+                0x08000b9c                usbStatusIn
+ .text.usbStatusOut
+                0x08000ba0        0x4 build/usb.o
+                0x08000ba0                usbStatusOut
+ .text.usbGetInterfaceSetting
+                0x08000ba4        0xc build/usb.o
+                0x08000ba4                usbGetInterfaceSetting
+ .text.usbGetConfiguration
+                0x08000bb0        0x4 build/usb.o
+                0x08000bb0                usbGetConfiguration
+ .text.usbSetConfiguration
+                0x08000bb4       0x18 build/usb.o
+                0x08000bb4                usbSetConfiguration
+ .text.usbGetInterface
+                0x08000bcc        0x4 build/usb.o
+                0x08000bcc                usbGetInterface
+ .text.usbSetInterface
+                0x08000bd0        0x4 build/usb.o
+                0x08000bd0                usbSetInterface
+ .text.usbGetStatus
+                0x08000bd4        0x4 build/usb.o
+                0x08000bd4                usbGetStatus
+ .text.usbClearFeature
+                0x08000bd8        0x4 build/usb.o
+                0x08000bd8                usbClearFeature
+ .text.usbSetEndpointFeature
+                0x08000bdc        0x4 build/usb.o
+                0x08000bdc                usbSetEndpointFeature
+ .text.usbSetDeviceFeature
+                0x08000be0        0x4 build/usb.o
+                0x08000be0                usbSetDeviceFeature
+ .text.usbSetDeviceAddress
+                0x08000be4        0xc build/usb.o
+                0x08000be4                usbSetDeviceAddress
+ .text.usbReset
+                0x08000bf0       0xa8 build/usb.o
+                0x08000bf0                usbReset
+ .text.usbDataSetup
+                0x08000c98       0x74 build/usb.o
+                0x08000c98                usbDataSetup
+ .text.usbGetDeviceDescriptor
+                0x08000d0c        0xc build/usb.o
+                0x08000d0c                usbGetDeviceDescriptor
+ .text.usbGetConfigDescriptor
+                0x08000d18        0xc build/usb.o
+                0x08000d18                usbGetConfigDescriptor
+ .text.usbGetStringDescriptor
+                0x08000d24       0x20 build/usb.o
+                0x08000d24                usbGetStringDescriptor
+ .text.usbGetFunctionalDescriptor
+                0x08000d44        0xc build/usb.o
+                0x08000d44                usbGetFunctionalDescriptor
+ .text.usbNoDataSetup
+                0x08000d50       0x28 build/usb.o
+                0x08000d50                usbNoDataSetup
+ .text.usbInit  0x08000d78       0x8c build/usb.o
+                0x08000d78                usbInit
+ .text.setupUSB
+                0x08000e04       0x70 build/usb.o
+                0x08000e04                setupUSB
+ .text.usbDsbBus
+                0x08000e74       0x38 build/usb.o
+                0x08000e74                usbDsbBus
+ .text.usbResume
+                0x08000eac       0xc8 build/usb.o
+                0x08000eac                usbResume
+ .text.usbEnbISR
+                0x08000f74       0x1c build/usb.o
+                0x08000f74                usbEnbISR
+ .text.usbDsbISR
+                0x08000f90       0x18 build/usb.o
+                0x08000f90                usbDsbISR
+ .text.USB_LP_CAN1_RX0_IRQHandler
+                0x08000fa8       0xe4 build/usb.o
+                0x08000fa8                USB_LP_CAN1_RX0_IRQHandler
+ .text.print_hash
+                0x0800108c       0x28 build/main.o
+                0x0800108c                print_hash
+ .text.startup.main
+                0x080010b4      0x138 build/main.o
+                0x080010b4                main
+ .text.gpio_write_bit
+                0x080011ec       0x18 build/hardware.o
+                0x080011ec                gpio_write_bit
+ .text.readPin  0x08001204       0x14 build/hardware.o
+                0x08001204                readPin
+ .text.strobePin
+                0x08001218       0x60 build/hardware.o
+                0x08001218                strobePin
+ .text.uart_printf
+                0x08001278       0x44 build/hardware.o
+                0x08001278                uart_printf
+ .text.uartInit
+                0x080012bc       0x88 build/hardware.o
+                0x080012bc                uartInit
+ .text.systemReset
+                0x08001344       0x50 build/hardware.o
+                0x08001344                systemReset
+ .text.setupCLK
+                0x08001394       0x6c build/hardware.o
+                0x08001394                setupCLK
+ .text.setupLEDAndButton
+                0x08001400       0x14 build/hardware.o
+                0x08001400                setupLEDAndButton
+ .text.setupFLASH
+                0x08001414       0x20 build/hardware.o
+                0x08001414                setupFLASH
+ .text.uid_read
+                0x08001434       0x28 build/hardware.o
+                0x08001434                uid_read
+ .text.checkUserCode
+                0x0800145c      0x178 build/hardware.o
+                0x0800145c                checkUserCode
+ .text.jumpToUser
+                0x080015d4       0xa8 build/hardware.o
+                0x080015d4                jumpToUser
+ .text.nvicInit
+                0x0800167c       0x70 build/hardware.o
+                0x0800167c                nvicInit
+ .text.nvicDisableInterrupts
+                0x080016ec       0x28 build/hardware.o
+                0x080016ec                nvicDisableInterrupts
+ .text.systemHardReset
+                0x08001714       0x14 build/hardware.o
+                0x08001714                systemHardReset
+ .text.flashErasePage
+                0x08001728       0x40 build/hardware.o
+                0x08001728                flashErasePage
+ .text.flashWriteWord
+                0x08001768       0x58 build/hardware.o
+                0x08001768                flashWriteWord
+ .text.flashLock
+                0x080017c0        0xc build/hardware.o
+                0x080017c0                flashLock
+ .text.flashUnlock
+                0x080017cc       0x18 build/hardware.o
+                0x080017cc                flashUnlock
+ .text.crMask   0x080017e4       0x14 build/hardware.o
+                0x080017e4                crMask
+ .text.getFlashEnd
+                0x080017f8       0x10 build/hardware.o
+                0x080017f8                getFlashEnd
+ .text.getFlashPageSize
+                0x08001808       0x18 build/hardware.o
+                0x08001808                getFlashPageSize
+ .text.dfuInit  0x08001820       0xa0 build/dfu.o
+                0x08001820                dfuInit
+ .text.dfuUpdateByRequest
+                0x080018c0      0x3a0 build/dfu.o
+                0x080018c0                dfuUpdateByRequest
+ .text.dfuUpdateByReset
+                0x08001c60       0x44 build/dfu.o
+                0x08001c60                dfuUpdateByReset
+ .text.dfuCopyState
+                0x08001ca4       0x18 build/dfu.o
+                0x08001ca4                dfuCopyState
+ .text.dfuCopyStatus
+                0x08001cbc       0x18 build/dfu.o
+                0x08001cbc                dfuCopyStatus
+ .text.dfuCopyDNLOAD
+                0x08001cd4       0x34 build/dfu.o
+                0x08001cd4                dfuCopyDNLOAD
+ .text.dfuCopyUPLOAD
+                0x08001d08       0x34 build/dfu.o
+                0x08001d08                dfuCopyUPLOAD
+ .text.dfuUploadStarted
+                0x08001d3c        0xc build/dfu.o
+                0x08001d3c                dfuUploadStarted
+ .text.dfuFinishUpload
+                0x08001d48        0x4 build/dfu.o
+                0x08001d48                dfuFinishUpload
+ .text.ed25519_project
+                0x08001d4c       0x70 build/25519/ed25519.o
+                0x08001d4c                ed25519_project
+ .text.ed25519_unproject
+                0x08001dbc       0x3c build/25519/ed25519.o
+                0x08001dbc                ed25519_unproject
+ .text.ed25519_pack
+                0x08001df8       0x60 build/25519/ed25519.o
+                0x08001df8                ed25519_pack
+ .text.ed25519_try_unpack
+                0x08001e58       0xc8 build/25519/ed25519.o
+                0x08001e58                ed25519_try_unpack
+ .text.ed25519_add
+                0x08001f20       0xe0 build/25519/ed25519.o
+                0x08001f20                ed25519_add
+ .text.ed25519_double
+                0x08002000       0xb4 build/25519/ed25519.o
+                0x08002000                ed25519_double
+ .text.ed25519_smult
+                0x080020b4       0x84 build/25519/ed25519.o
+                0x080020b4                ed25519_smult
+ .text.edsign_verify
+                0x08002138      0x17c build/25519/edsign.o
+                0x08002138                edsign_verify
+ .text.f25519_load
+                0x080022b4       0x20 build/25519/f25519.o
+                0x080022b4                f25519_load
+ .text.f25519_normalize
+                0x080022d4       0x70 build/25519/f25519.o
+                0x080022d4                f25519_normalize
+ .text.f25519_eq
+                0x08002344       0x9c build/25519/f25519.o
+                0x08002344                f25519_eq
+ .text.f25519_select
+                0x080023e0       0xc4 build/25519/f25519.o
+                0x080023e0                f25519_select
+ .text.f25519_add
+                0x080024a4       0x48 build/25519/f25519.o
+                0x080024a4                f25519_add
+ .text.f25519_sub
+                0x080024ec       0x4c build/25519/f25519.o
+                0x080024ec                f25519_sub
+ .text.f25519_neg
+                0x08002538       0x48 build/25519/f25519.o
+                0x08002538                f25519_neg
+ .text.f25519_mul__distinct
+                0x08002580       0x88 build/25519/f25519.o
+                0x08002580                f25519_mul__distinct
+ .text.f25519_inv__distinct
+                0x08002608      0x5ec build/25519/f25519.o
+                0x08002608                f25519_inv__distinct
+ .text.f25519_sqrt
+                0x08002bf4      0x634 build/25519/f25519.o
+                0x08002bf4                f25519_sqrt
+ .text.fprime_from_bytes
+                0x08003228      0x1a0 build/25519/fprime.o
+                0x08003228                fprime_from_bytes
+ .text.sha256_starts
+                0x080033c8       0x58 build/25519/sha256.o
+                0x080033c8                sha256_starts
+ .text.sha256_process
+                0x08003420     0x1f64 build/25519/sha256.o
+                0x08003420                sha256_process
+ .text.sha256_update
+                0x08005384       0x90 build/25519/sha256.o
+                0x08005384                sha256_update
+ .text.sha256_finish
+                0x08005414      0x218 build/25519/sha256.o
+                0x08005414                sha256_finish
+ .text.sha512_block
+                0x0800562c      0x494 build/25519/sha512.o
+                0x0800562c                sha512_block
+ .text.sha512_final
+                0x08005ac0       0x88 build/25519/sha512.o
+                0x08005ac0                sha512_final
+ .text.sha512_get
+                0x08005b48      0x298 build/25519/sha512.o
+                0x08005b48                sha512_get
+ .text.SetEPTxStatus
+                0x08005de0       0x2a build/usb_lib/usb_regs.o
+                0x08005de0                SetEPTxStatus
+ .text.SetEPRxValid
+                0x08005e0a       0x1e build/usb_lib/usb_regs.o
+                0x08005e0a                SetEPRxValid
+ .text.Clear_Status_Out
+                0x08005e28       0x1c build/usb_lib/usb_regs.o
+                0x08005e28                Clear_Status_Out
+ .text.ClearDTOG_RX
+                0x08005e44       0x20 build/usb_lib/usb_regs.o
+                0x08005e44                ClearDTOG_RX
+ .text.ClearDTOG_TX
+                0x08005e64       0x20 build/usb_lib/usb_regs.o
+                0x08005e64                ClearDTOG_TX
+ .text.GetEPTxAddr
+                0x08005e84       0x1c build/usb_lib/usb_regs.o
+                0x08005e84                GetEPTxAddr
+ .text.GetEPRxAddr
+                0x08005ea0       0x1c build/usb_lib/usb_regs.o
+                0x08005ea0                GetEPRxAddr
+ .text.SetEPTxCount
+                0x08005ebc       0x1c build/usb_lib/usb_regs.o
+                0x08005ebc                SetEPTxCount
+ .text.SetEPRxCount
+                0x08005ed8       0x40 build/usb_lib/usb_regs.o
+                0x08005ed8                SetEPRxCount
+ .text.CTR_LP   0x08005f18      0x154 build/usb_lib/usb_int.o
+                0x08005f18                CTR_LP
+ .text.USB_Init
+                0x0800606c       0x38 build/usb_lib/usb_init.o
+                0x0800606c                USB_Init
+ .text.Standard_GetConfiguration
+                0x080060a4       0x24 build/usb_lib/usb_core.o
+                0x080060a4                Standard_GetConfiguration
+ .text.Standard_GetInterface
+                0x080060c8       0x24 build/usb_lib/usb_core.o
+                0x080060c8                Standard_GetInterface
+ .text.Standard_GetStatus
+                0x080060ec       0x90 build/usb_lib/usb_core.o
+                0x080060ec                Standard_GetStatus
+ .text.DataStageIn
+                0x0800617c       0xa8 build/usb_lib/usb_core.o
+ .text.Standard_SetConfiguration
+                0x08006224       0x38 build/usb_lib/usb_core.o
+                0x08006224                Standard_SetConfiguration
+ .text.Standard_SetInterface
+                0x0800625c       0x48 build/usb_lib/usb_core.o
+                0x0800625c                Standard_SetInterface
+ .text.Standard_ClearFeature
+                0x080062a4       0xd0 build/usb_lib/usb_core.o
+                0x080062a4                Standard_ClearFeature
+ .text.Standard_SetEndPointFeature
+                0x08006374       0x84 build/usb_lib/usb_core.o
+                0x08006374                Standard_SetEndPointFeature
+ .text.Standard_SetDeviceFeature
+                0x080063f8       0x24 build/usb_lib/usb_core.o
+                0x080063f8                Standard_SetDeviceFeature
+ .text.Standard_GetDescriptorData
+                0x0800641c       0x1c build/usb_lib/usb_core.o
+                0x0800641c                Standard_GetDescriptorData
+ .text.Post0_Process
+                0x08006438       0x40 build/usb_lib/usb_core.o
+                0x08006438                Post0_Process
+ .text.Setup0_Process
+                0x08006478      0x2dc build/usb_lib/usb_core.o
+                0x08006478                Setup0_Process
+ .text.Out0_Process
+                0x08006754       0xc8 build/usb_lib/usb_core.o
+                0x08006754                Out0_Process
+ .text.SetDeviceAddress
+                0x0800681c       0x38 build/usb_lib/usb_core.o
+                0x0800681c                SetDeviceAddress
+ .text.In0_Process
+                0x08006854       0x5c build/usb_lib/usb_core.o
+                0x08006854                In0_Process
+ .text.UserToPMABufferCopy
+                0x080068b0       0x30 build/usb_lib/usb_mem.o
+                0x080068b0                UserToPMABufferCopy
+ .text.PMAToUserBufferCopy
+                0x080068e0       0x24 build/usb_lib/usb_mem.o
+                0x080068e0                PMAToUserBufferCopy
+ .text.memcmp   0x08006904       0x1e c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+                0x08006904                memcmp
+ .text.memcpy   0x08006922       0x12 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+                0x08006922                memcpy
+ .text.memmem   0x08006934       0x3c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+                0x08006934                memmem
+ .text.memset   0x08006970       0x10 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+                0x08006970                memset
+ .text.sprintf  0x08006980       0x48 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+                0x08006980                siprintf
+                0x08006980                sprintf
+ .text.__ssputs_r
+                0x080069c8       0xb8 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+                0x080069c8                __ssputs_r
+ .text._svfprintf_r
+                0x08006a80      0x1d8 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+                0x08006a80                _svfiprintf_r
+                0x08006a80                _svfprintf_r
+ .text._printf_common
+                0x08006c58       0xe4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+                0x08006c58                _printf_common
+ .text._printf_i
+                0x08006d3c      0x228 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+                0x08006d3c                _printf_i
+ .text._vsprintf_r
+                0x08006f64       0x30 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+                0x08006f64                _vsprintf_r
+                0x08006f64                _vsiprintf_r
+ .text.vsprintf
+                0x08006f94       0x1c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+                0x08006f94                vsiprintf
+                0x08006f94                vsprintf
+ .text.memchr   0x08006fb0       0x1c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+                0x08006fb0                memchr
+ .text.memmove  0x08006fcc       0x36 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+                0x08006fcc                memmove
+ *fill*         0x08007002        0x2 
+ .text._free_r  0x08007004       0x88 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+                0x08007004                _free_r
+ .text._malloc_r
+                0x0800708c       0xa8 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+                0x0800708c                _malloc_r
+ .text._realloc_r
+                0x08007134       0x4c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+                0x08007134                _realloc_r
+ .text._sbrk_r  0x08007180       0x20 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+                0x08007180                _sbrk_r
+ .text.strlen   0x080071a0       0x10 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+                0x080071a0                strlen
+ .text._malloc_usable_size_r
+                0x080071b0       0x12 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+                0x080071b0                _malloc_usable_size_r
+ *fill*         0x080071c2        0x2 
+ .text._sbrk    0x080071c4       0x34 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+                0x080071c4                _sbrk
+ *(.rodata)
+ .rodata        0x080071f8       0x24 build/hardware.o
+ .rodata        0x0800721c       0x20 build/dfu.o
+ *(.rodata*)
+ .rodata.str1.4
+                0x0800723c       0xe4 build/main.o
+                                 0xe8 (size before relaxing)
+ .rodata.str1.4
+                0x08007320       0x16 build/hardware.o
+                                 0x18 (size before relaxing)
+ *fill*         0x08007336        0x2 
+ .rodata.str1.4
+                0x08007338       0x38 build/dfu.o
+                                 0x44 (size before relaxing)
+ .rodata.ed25519_k
+                0x08007370       0x20 build/25519/ed25519.o
+ .rodata.ed25519_neutral
+                0x08007390       0x80 build/25519/ed25519.o
+                0x08007390                ed25519_neutral
+ .rodata.ed25519_base
+                0x08007410       0x80 build/25519/ed25519.o
+                0x08007410                ed25519_base
+ .rodata.ed25519_d
+                0x08007490       0x20 build/25519/ed25519.o
+ .rodata.ed25519_order
+                0x080074b0       0x20 build/25519/edsign.o
+ .rodata.f25519_one
+                0x080074d0       0x20 build/25519/f25519.o
+                0x080074d0                f25519_one
+ .rodata.sha512_initial_state
+                0x080074f0       0x40 build/25519/sha512.o
+                0x080074f0                sha512_initial_state
+ .rodata.round_k
+                0x08007530      0x280 build/25519/sha512.o
+ .rodata.str1.1
+                0x080077b0       0x11 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .rodata.str1.1
+                0x080077c1       0x22 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+ .rodata.str1.1
+                0x080077e3        0x2 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+                0x080077e8                . = ALIGN (0x4)
+ *fill*         0x080077e5        0x3 
+                0x080077e8                _etext = .
+                0x080077e8                _sidata = _etext
+
+.vfp11_veneer   0x080077e8        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x080077e8        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x080077e8        0x0
+ .iplt          0x00000000        0x0 build/stm32_lib/c_only_startup.o
+
+.rel.dyn        0x080077e8        0x0
+ .rel.iplt      0x00000000        0x0 build/stm32_lib/c_only_startup.o
+
+.data           0x20000000      0x470 load address 0x080077e8
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _sdata = .
+ *(.data)
+ .data          0x20000000        0x0 build/stm32_lib/c_only_startup.o
+ .data          0x20000000        0x0 build/stm32_lib/cortexm3_macro.o
+ .data          0x20000000        0x0 build/usb.o
+ .data          0x20000000        0x0 build/usb_callbacks.o
+ .data          0x20000000        0x0 build/usb_descriptor.o
+ .data          0x20000000        0x0 build/main.o
+ .data          0x20000000        0x0 build/hardware.o
+ .data          0x20000000        0x0 build/dfu.o
+ .data          0x20000000        0x0 build/25519/c25519.o
+ .data          0x20000000        0x0 build/25519/ed25519.o
+ .data          0x20000000        0x0 build/25519/edsign.o
+ .data          0x20000000        0x0 build/25519/f25519.o
+ .data          0x20000000        0x0 build/25519/fprime.o
+ .data          0x20000000        0x0 build/25519/morph25519.o
+ .data          0x20000000        0x0 build/25519/sha256.o
+ .data          0x20000000        0x0 build/25519/sha512.o
+ .data          0x20000000        0x0 build/usb_lib/usb_regs.o
+ .data          0x20000000        0x0 build/usb_lib/usb_int.o
+ .data          0x20000000        0x0 build/usb_lib/usb_init.o
+ .data          0x20000000        0x0 build/usb_lib/usb_core.o
+ .data          0x20000000        0x0 build/usb_lib/usb_mem.o
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+ .data          0x20000000        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .data          0x20000000        0x0 .\libstm32fw.a(stm32f10x_gpio.o)
+ .data          0x20000000       0x14 .\libstm32fw.a(stm32f10x_rcc.o)
+ .data          0x20000014        0x0 .\libstm32fw.a(stm32f10x_usart.o)
+ .data          0x20000014        0x0 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+ *(.data.*)
+ .data.Device_Property
+                0x20000014       0x34 build/usb.o
+                0x20000014                Device_Property
+ .data.pEpInt_IN
+                0x20000048       0x1c build/usb.o
+                0x20000048                pEpInt_IN
+ .data.pEpInt_OUT
+                0x20000064       0x1c build/usb.o
+                0x20000064                pEpInt_OUT
+ .data.User_Standard_Requests
+                0x20000080       0x24 build/usb.o
+                0x20000080                User_Standard_Requests
+ .data.Device_Table
+                0x200000a4        0x4 build/usb.o
+                0x200000a4                Device_Table
+ .data.usbStringDescriptor
+                0x200000a8       0x38 build/usb_descriptor.o
+                0x200000a8                usbStringDescriptor
+ .data.u8_usbDeviceDescriptorDFU
+                0x200000e0       0x14 build/usb_descriptor.o
+                0x200000e0                u8_usbDeviceDescriptorDFU
+ .data.usbFunctionalDescriptor
+                0x200000f4        0x8 build/usb_descriptor.o
+                0x200000f4                usbFunctionalDescriptor
+ .data.u8_usbStringLangId
+                0x200000fc        0x4 build/usb_descriptor.o
+                0x200000fc                u8_usbStringLangId
+ .data.u8_usbConfigDescriptorDFU
+                0x20000100       0x30 build/usb_descriptor.o
+                0x20000100                u8_usbConfigDescriptorDFU
+ .data.u8_usbStringSerial
+                0x20000130       0x10 build/usb_descriptor.o
+                0x20000130                u8_usbStringSerial
+ .data.u8_usbFunctionalDescriptor
+                0x20000140        0xc build/usb_descriptor.o
+                0x20000140                u8_usbFunctionalDescriptor
+ .data.u8_usbStringVendor
+                0x2000014c       0x14 build/usb_descriptor.o
+                0x2000014c                u8_usbStringVendor
+ .data.usbDeviceDescriptorDFU
+                0x20000160        0x8 build/usb_descriptor.o
+                0x20000160                usbDeviceDescriptorDFU
+ .data.u8_usbStringProduct
+                0x20000168       0x14 build/usb_descriptor.o
+                0x20000168                u8_usbStringProduct
+ .data.u8_usbStringAlt0
+                0x2000017c       0x78 build/usb_descriptor.o
+                0x2000017c                u8_usbStringAlt0
+ .data.u8_usbStringAlt1
+                0x200001f4       0x64 build/usb_descriptor.o
+                0x200001f4                u8_usbStringAlt1
+ .data.u8_usbStringAlt2
+                0x20000258       0x64 build/usb_descriptor.o
+                0x20000258                u8_usbStringAlt2
+ .data.usbConfigDescriptorDFU
+                0x200002bc        0x8 build/usb_descriptor.o
+                0x200002bc                usbConfigDescriptorDFU
+ .data.userAppEnd
+                0x200002c4        0x4 build/dfu.o
+ .data.userAppAddr
+                0x200002c8        0x4 build/dfu.o
+ .data.sha256_padding
+                0x200002cc       0x40 build/25519/sha256.o
+ .data.k        0x2000030c      0x100 build/25519/sha256.o
+                0x2000030c                k
+ .data.impure_data
+                0x2000040c       0x60 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ .data._impure_ptr
+                0x2000046c        0x4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+                0x2000046c                _impure_ptr
+                0x20000470                . = ALIGN (0x4)
+                0x20000470                _edata = .
+
+.igot.plt       0x20000470        0x0 load address 0x08007c58
+ .igot.plt      0x00000000        0x0 build/stm32_lib/c_only_startup.o
+
+.bss            0x20000470      0x130 load address 0x08007c58
+                0x20000470                . = ALIGN (0x4)
+                0x20000470                _sbss = .
+ *(.bss)
+ *(COMMON)
+ COMMON         0x20000470        0xa build/usb.o
+                0x20000470                wTransferSize
+                0x20000474                wIstr
+                0x20000478                ResumeS
+ *fill*         0x2000047a        0x2 
+ COMMON         0x2000047c       0xe5 build/dfu.o
+                0x2000047c                input
+                0x200004d8                sha256sum
+                0x200004f8                ctx
+                0x20000560                code_copy_lock
+ *fill*         0x20000561        0x1 
+ COMMON         0x20000562        0x4 build/usb_lib/usb_int.o
+                0x20000562                SaveRState
+                0x20000564                SaveTState
+ *fill*         0x20000566        0x2 
+ COMMON         0x20000568       0x32 build/usb_lib/usb_init.o
+                0x20000568                SaveState
+                0x2000056c                pProperty
+                0x20000570                EPindex
+                0x20000574                Device_Info
+                0x20000590                pUser_Standard_Requests
+                0x20000594                pInformation
+                0x20000598                wInterrupt_Mask
+ COMMON         0x2000059a        0x2 build/usb_lib/usb_core.o
+                0x2000059a                StatusInfo
+ COMMON         0x2000059c        0x4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+                0x2000059c                errno
+                0x200005a0                . = ALIGN (0x4)
+                0x200005a0                _ebss = .
+                0x200005a0                PROVIDE (end, _ebss)
+                0x200005a0                PROVIDE (_end, _ebss)
+
+.bss.bIntPackSOF
+                0x200005a0        0x1 load address 0x08007d88
+ .bss.bIntPackSOF
+                0x200005a0        0x1 build/usb.o
+                0x200005a0                bIntPackSOF
+
+.bss.bDeviceState
+                0x200005a4        0x4 load address 0x08007d8c
+ .bss.bDeviceState
+                0x200005a4        0x4 build/usb.o
+                0x200005a4                bDeviceState
+
+.bss.uploadBlockLen
+                0x200005a8        0x2 load address 0x08007d90
+ .bss.uploadBlockLen
+                0x200005a8        0x2 build/dfu.o
+
+.bss.recvBuffer
+                0x200005ac      0x800 load address 0x08007d94
+ .bss.recvBuffer
+                0x200005ac      0x800 build/dfu.o
+
+.bss.thisBlockLen
+                0x20000dac        0x2 load address 0x08008594
+ .bss.thisBlockLen
+                0x20000dac        0x2 build/dfu.o
+
+.bss.userFirmwareLen
+                0x20000db0        0x4 load address 0x08008598
+ .bss.userFirmwareLen
+                0x20000db0        0x4 build/dfu.o
+
+.bss.userUploadType
+                0x20000db4        0x1 load address 0x0800859c
+ .bss.userUploadType
+                0x20000db4        0x1 build/dfu.o
+                0x20000db4                userUploadType
+
+.bss.dfuAppStatus
+                0x20000db8        0x8 load address 0x080085a0
+ .bss.dfuAppStatus
+                0x20000db8        0x8 build/dfu.o
+
+.bss.dfuBusy    0x20000dc0        0x1 load address 0x080085a8
+ .bss.dfuBusy   0x20000dc0        0x1 build/dfu.o
+                0x20000dc0                dfuBusy
+
+.bss.Data_Mul_MaxPacketSize
+                0x20000dc1        0x1 load address 0x080085a9
+ .bss.Data_Mul_MaxPacketSize
+                0x20000dc1        0x1 build/usb_lib/usb_core.o
+                0x20000dc1                Data_Mul_MaxPacketSize
+
+.bss.__malloc_sbrk_start
+                0x20000dc4        0x4 load address 0x080085ac
+ .bss.__malloc_sbrk_start
+                0x20000dc4        0x4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+                0x20000dc4                __malloc_sbrk_start
+
+.bss.__malloc_free_list
+                0x20000dc8        0x4 load address 0x080085b0
+ .bss.__malloc_free_list
+                0x20000dc8        0x4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+                0x20000dc8                __malloc_free_list
+
+.bss.heap_end.4246
+                0x20000dcc        0x4 load address 0x080085b4
+ .bss.heap_end.4246
+                0x20000dcc        0x4 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+
+._usrstack      0x20000dd0      0x100 load address 0x080085b8
+                0x20000dd0                . = ALIGN (0x4)
+                0x20000dd0                _susrstack = .
+                0x20000ed0                . = (. + _Minimum_Stack_Size)
+ *fill*         0x20000dd0      0x100 
+                0x20000ed0                . = ALIGN (0x4)
+                0x20000ed0                _eusrstack = .
+
+DISCARD
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+ *(.ARM.exidx*)
+ *(.gnu.linkonce.armexidx.*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x70
+ *(.comment)
+ .comment       0x00000000       0x70 build/usb.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 build/usb_callbacks.o
+ .comment       0x00000000       0x71 build/usb_descriptor.o
+ .comment       0x00000000       0x71 build/main.o
+ .comment       0x00000000       0x71 build/hardware.o
+ .comment       0x00000000       0x71 build/dfu.o
+ .comment       0x00000000       0x71 build/25519/c25519.o
+ .comment       0x00000000       0x71 build/25519/ed25519.o
+ .comment       0x00000000       0x71 build/25519/edsign.o
+ .comment       0x00000000       0x71 build/25519/f25519.o
+ .comment       0x00000000       0x71 build/25519/fprime.o
+ .comment       0x00000000       0x71 build/25519/morph25519.o
+ .comment       0x00000000       0x71 build/25519/sha256.o
+ .comment       0x00000000       0x71 build/25519/sha512.o
+ .comment       0x00000000       0x71 build/usb_lib/usb_regs.o
+ .comment       0x00000000       0x71 build/usb_lib/usb_int.o
+ .comment       0x00000000       0x71 build/usb_lib/usb_init.o
+ .comment       0x00000000       0x71 build/usb_lib/usb_core.o
+ .comment       0x00000000       0x71 build/usb_lib/usb_mem.o
+ .comment       0x00000000       0x71 .\libstm32fw.a(stm32f10x_gpio.o)
+ .comment       0x00000000       0x71 .\libstm32fw.a(stm32f10x_rcc.o)
+ .comment       0x00000000       0x71 .\libstm32fw.a(stm32f10x_usart.o)
+
+.ARM.attributes
+                0x00000000       0x2f
+ .ARM.attributes
+                0x00000000       0x21 build/stm32_lib/c_only_startup.o
+ .ARM.attributes
+                0x00000021       0x21 build/stm32_lib/cortexm3_macro.o
+ .ARM.attributes
+                0x00000042       0x33 build/usb.o
+ .ARM.attributes
+                0x00000075       0x33 build/usb_callbacks.o
+ .ARM.attributes
+                0x000000a8       0x33 build/usb_descriptor.o
+ .ARM.attributes
+                0x000000db       0x33 build/main.o
+ .ARM.attributes
+                0x0000010e       0x33 build/hardware.o
+ .ARM.attributes
+                0x00000141       0x33 build/dfu.o
+ .ARM.attributes
+                0x00000174       0x33 build/25519/c25519.o
+ .ARM.attributes
+                0x000001a7       0x33 build/25519/ed25519.o
+ .ARM.attributes
+                0x000001da       0x33 build/25519/edsign.o
+ .ARM.attributes
+                0x0000020d       0x33 build/25519/f25519.o
+ .ARM.attributes
+                0x00000240       0x33 build/25519/fprime.o
+ .ARM.attributes
+                0x00000273       0x33 build/25519/morph25519.o
+ .ARM.attributes
+                0x000002a6       0x33 build/25519/sha256.o
+ .ARM.attributes
+                0x000002d9       0x33 build/25519/sha512.o
+ .ARM.attributes
+                0x0000030c       0x33 build/usb_lib/usb_regs.o
+ .ARM.attributes
+                0x0000033f       0x33 build/usb_lib/usb_int.o
+ .ARM.attributes
+                0x00000372       0x33 build/usb_lib/usb_init.o
+ .ARM.attributes
+                0x000003a5       0x33 build/usb_lib/usb_core.o
+ .ARM.attributes
+                0x000003d8       0x33 build/usb_lib/usb_mem.o
+ .ARM.attributes
+                0x0000040b       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+ .ARM.attributes
+                0x00000438       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+ .ARM.attributes
+                0x00000465       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+ .ARM.attributes
+                0x00000492       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+ .ARM.attributes
+                0x000004bf       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+ .ARM.attributes
+                0x000004ec       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .ARM.attributes
+                0x00000519       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+ .ARM.attributes
+                0x00000546       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+ .ARM.attributes
+                0x00000573       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+ .ARM.attributes
+                0x000005a0       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+ .ARM.attributes
+                0x000005cd       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+ .ARM.attributes
+                0x000005fa       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+ .ARM.attributes
+                0x00000627       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+ .ARM.attributes
+                0x00000654       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+ .ARM.attributes
+                0x00000681       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+ .ARM.attributes
+                0x000006ae       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+ .ARM.attributes
+                0x000006db       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+ .ARM.attributes
+                0x00000708       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .ARM.attributes
+                0x00000735       0x33 .\libstm32fw.a(stm32f10x_gpio.o)
+ .ARM.attributes
+                0x00000768       0x33 .\libstm32fw.a(stm32f10x_rcc.o)
+ .ARM.attributes
+                0x0000079b       0x33 .\libstm32fw.a(stm32f10x_usart.o)
+ .ARM.attributes
+                0x000007ce       0x2d c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x830
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x28 build/stm32_lib/c_only_startup.o
+ .debug_aranges
+                0x00000028       0x20 build/stm32_lib/cortexm3_macro.o
+ .debug_aranges
+                0x00000048      0x120 build/usb.o
+ .debug_aranges
+                0x00000168       0x18 build/usb_descriptor.o
+ .debug_aranges
+                0x00000180       0x28 build/main.o
+ .debug_aranges
+                0x000001a8      0x100 build/hardware.o
+ .debug_aranges
+                0x000002a8       0x88 build/dfu.o
+ .debug_aranges
+                0x00000330       0x20 build/25519/c25519.o
+ .debug_aranges
+                0x00000350       0x50 build/25519/ed25519.o
+ .debug_aranges
+                0x000003a0       0x28 build/25519/edsign.o
+ .debug_aranges
+                0x000003c8       0x80 build/25519/f25519.o
+ .debug_aranges
+                0x00000448       0x60 build/25519/fprime.o
+ .debug_aranges
+                0x000004a8       0x28 build/25519/morph25519.o
+ .debug_aranges
+                0x000004d0       0x38 build/25519/sha256.o
+ .debug_aranges
+                0x00000508       0x30 build/25519/sha512.o
+ .debug_aranges
+                0x00000538      0x1f0 build/usb_lib/usb_regs.o
+ .debug_aranges
+                0x00000728       0x28 build/usb_lib/usb_int.o
+ .debug_aranges
+                0x00000750       0x20 build/usb_lib/usb_init.o
+ .debug_aranges
+                0x00000770       0x98 build/usb_lib/usb_core.o
+ .debug_aranges
+                0x00000808       0x28 build/usb_lib/usb_mem.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000     0xb08d
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000       0x7c build/stm32_lib/c_only_startup.o
+ .debug_info    0x0000007c       0x82 build/stm32_lib/cortexm3_macro.o
+ .debug_info    0x000000fe      0xf0c build/usb.o
+ .debug_info    0x0000100a      0x25d build/usb_descriptor.o
+ .debug_info    0x00001267      0x4ae build/main.o
+ .debug_info    0x00001715     0x17c4 build/hardware.o
+ .debug_info    0x00002ed9      0xb36 build/dfu.o
+ .debug_info    0x00003a0f      0xa37 build/25519/c25519.o
+ .debug_info    0x00004446      0xeb6 build/25519/ed25519.o
+ .debug_info    0x000052fc      0xb5c build/25519/edsign.o
+ .debug_info    0x00005e58      0xfa7 build/25519/f25519.o
+ .debug_info    0x00006dff      0xd74 build/25519/fprime.o
+ .debug_info    0x00007b73      0x62a build/25519/morph25519.o
+ .debug_info    0x0000819d      0x5b0 build/25519/sha256.o
+ .debug_info    0x0000874d      0x783 build/25519/sha512.o
+ .debug_info    0x00008ed0      0xc8c build/usb_lib/usb_regs.o
+ .debug_info    0x00009b5c      0x1dc build/usb_lib/usb_int.o
+ .debug_info    0x00009d38      0x3fd build/usb_lib/usb_init.o
+ .debug_info    0x0000a135      0xde4 build/usb_lib/usb_core.o
+ .debug_info    0x0000af19      0x174 build/usb_lib/usb_mem.o
+
+.debug_abbrev   0x00000000     0x28f7
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0x12 build/stm32_lib/c_only_startup.o
+ .debug_abbrev  0x00000012       0x14 build/stm32_lib/cortexm3_macro.o
+ .debug_abbrev  0x00000026      0x483 build/usb.o
+ .debug_abbrev  0x000004a9       0x8a build/usb_descriptor.o
+ .debug_abbrev  0x00000533      0x1b3 build/main.o
+ .debug_abbrev  0x000006e6      0x4fa build/hardware.o
+ .debug_abbrev  0x00000be0      0x3e4 build/dfu.o
+ .debug_abbrev  0x00000fc4      0x1ac build/25519/c25519.o
+ .debug_abbrev  0x00001170      0x272 build/25519/ed25519.o
+ .debug_abbrev  0x000013e2      0x273 build/25519/edsign.o
+ .debug_abbrev  0x00001655      0x2bd build/25519/f25519.o
+ .debug_abbrev  0x00001912      0x266 build/25519/fprime.o
+ .debug_abbrev  0x00001b78      0x1bc build/25519/morph25519.o
+ .debug_abbrev  0x00001d34      0x1e0 build/25519/sha256.o
+ .debug_abbrev  0x00001f14      0x1e5 build/25519/sha512.o
+ .debug_abbrev  0x000020f9      0x1f5 build/usb_lib/usb_regs.o
+ .debug_abbrev  0x000022ee       0xda build/usb_lib/usb_int.o
+ .debug_abbrev  0x000023c8      0x103 build/usb_lib/usb_init.o
+ .debug_abbrev  0x000024cb      0x3a1 build/usb_lib/usb_core.o
+ .debug_abbrev  0x0000286c       0x8b build/usb_lib/usb_mem.o
+
+.debug_line     0x00000000     0x3c36
+ *(.debug_line)
+ .debug_line    0x00000000       0x75 build/stm32_lib/c_only_startup.o
+ .debug_line    0x00000075       0xa6 build/stm32_lib/cortexm3_macro.o
+ .debug_line    0x0000011b      0x498 build/usb.o
+ .debug_line    0x000005b3        0x0 build/usb_callbacks.o
+ .debug_line    0x000005b3       0x72 build/usb_descriptor.o
+ .debug_line    0x00000625       0xd7 build/main.o
+ .debug_line    0x000006fc      0x5fc build/hardware.o
+ .debug_line    0x00000cf8      0x473 build/dfu.o
+ .debug_line    0x0000116b      0x253 build/25519/c25519.o
+ .debug_line    0x000013be      0x2a2 build/25519/ed25519.o
+ .debug_line    0x00001660      0x26e build/25519/edsign.o
+ .debug_line    0x000018ce      0x706 build/25519/f25519.o
+ .debug_line    0x00001fd4      0x3fe build/25519/fprime.o
+ .debug_line    0x000023d2      0x156 build/25519/morph25519.o
+ .debug_line    0x00002528      0x809 build/25519/sha256.o
+ .debug_line    0x00002d31      0x534 build/25519/sha512.o
+ .debug_line    0x00003265      0x4cb build/usb_lib/usb_regs.o
+ .debug_line    0x00003730       0xb8 build/usb_lib/usb_int.o
+ .debug_line    0x000037e8       0x67 build/usb_lib/usb_init.o
+ .debug_line    0x0000384f      0x354 build/usb_lib/usb_core.o
+ .debug_line    0x00003ba3       0x93 build/usb_lib/usb_mem.o
+
+.debug_frame    0x00000000     0x184c
+ *(.debug_frame)
+ .debug_frame   0x00000000      0x2dc build/usb.o
+ .debug_frame   0x000002dc       0x50 build/main.o
+ .debug_frame   0x0000032c      0x2b4 build/hardware.o
+ .debug_frame   0x000005e0      0x168 build/dfu.o
+ .debug_frame   0x00000748       0x3c build/25519/c25519.o
+ .debug_frame   0x00000784      0x128 build/25519/ed25519.o
+ .debug_frame   0x000008ac       0x64 build/25519/edsign.o
+ .debug_frame   0x00000910      0x1c0 build/25519/f25519.o
+ .debug_frame   0x00000ad0      0x158 build/25519/fprime.o
+ .debug_frame   0x00000c28       0x5c build/25519/morph25519.o
+ .debug_frame   0x00000c84       0xc0 build/25519/sha256.o
+ .debug_frame   0x00000d44       0xa4 build/25519/sha512.o
+ .debug_frame   0x00000de8      0x3d8 build/usb_lib/usb_regs.o
+ .debug_frame   0x000011c0       0x4c build/usb_lib/usb_int.o
+ .debug_frame   0x0000120c       0x2c build/usb_lib/usb_init.o
+ .debug_frame   0x00001238      0x1ec build/usb_lib/usb_core.o
+ .debug_frame   0x00001424       0x48 build/usb_lib/usb_mem.o
+ .debug_frame   0x0000146c       0x2c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+ .debug_frame   0x00001498       0x28 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x000014c0       0x34 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+ .debug_frame   0x000014f4       0x20 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+ .debug_frame   0x00001514       0x58 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+ .debug_frame   0x0000156c       0x88 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+ .debug_frame   0x000015f4       0x60 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+ .debug_frame   0x00001654       0x48 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+ .debug_frame   0x0000169c       0x28 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+ .debug_frame   0x000016c4       0x2c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+ .debug_frame   0x000016f0       0x2c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+ .debug_frame   0x0000171c       0x2c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00001748       0x30 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x00001778       0x2c c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+ .debug_frame   0x000017a4       0x20 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+ .debug_frame   0x000017c4       0x20 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+ .debug_frame   0x000017e4       0x48 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+ .debug_frame   0x0000182c       0x20 c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+
+.debug_str      0x00000000     0x221d
+ *(.debug_str)
+ .debug_str     0x00000000      0x9ea build/usb.o
+                                0xb8f (size before relaxing)
+ .debug_str     0x000009ea        0x0 build/usb_callbacks.o
+ .debug_str     0x000009ea       0xc1 build/usb_descriptor.o
+                                0x303 (size before relaxing)
+ .debug_str     0x00000aab       0xd8 build/main.o
+                                0x27a (size before relaxing)
+ .debug_str     0x00000b83      0x621 build/hardware.o
+                                0x95a (size before relaxing)
+ .debug_str     0x000011a4      0x24d build/dfu.o
+                                0x6d3 (size before relaxing)
+ .debug_str     0x000013f1       0xd8 build/25519/c25519.o
+                                0x26b (size before relaxing)
+ .debug_str     0x000014c9      0x10a build/25519/ed25519.o
+                                0x313 (size before relaxing)
+ .debug_str     0x000015d3      0x115 build/25519/edsign.o
+                                0x34f (size before relaxing)
+ .debug_str     0x000016e8       0x4a build/25519/f25519.o
+                                0x2b2 (size before relaxing)
+ .debug_str     0x00001732      0x103 build/25519/fprime.o
+                                0x2e5 (size before relaxing)
+ .debug_str     0x00001835       0x55 build/25519/morph25519.o
+                                0x266 (size before relaxing)
+ .debug_str     0x0000188a       0x65 build/25519/sha256.o
+                                0x232 (size before relaxing)
+ .debug_str     0x000018ef       0x4b build/25519/sha512.o
+                                0x257 (size before relaxing)
+ .debug_str     0x0000193a      0x449 build/usb_lib/usb_regs.o
+                                0x51f (size before relaxing)
+ .debug_str     0x00001d83       0x66 build/usb_lib/usb_int.o
+                                0x1c7 (size before relaxing)
+ .debug_str     0x00001de9       0x41 build/usb_lib/usb_init.o
+                                0x4f9 (size before relaxing)
+ .debug_str     0x00001e2a      0x3bd build/usb_lib/usb_core.o
+                                0xa91 (size before relaxing)
+ .debug_str     0x000021e7       0x36 build/usb_lib/usb_mem.o
+                                0x197 (size before relaxing)
+
+.debug_loc      0x00000000     0x9f58
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x2a8 build/usb.o
+ .debug_loc     0x000002a8      0x178 build/main.o
+ .debug_loc     0x00000420      0x892 build/hardware.o
+ .debug_loc     0x00000cb2      0x1fd build/dfu.o
+ .debug_loc     0x00000eaf      0x329 build/25519/c25519.o
+ .debug_loc     0x000011d8      0x528 build/25519/ed25519.o
+ .debug_loc     0x00001700      0x996 build/25519/edsign.o
+ .debug_loc     0x00002096     0x2008 build/25519/f25519.o
+ .debug_loc     0x0000409e     0x12d1 build/25519/fprime.o
+ .debug_loc     0x0000536f      0x1ce build/25519/morph25519.o
+ .debug_loc     0x0000553d     0x229b build/25519/sha256.o
+ .debug_loc     0x000077d8      0xfe6 build/25519/sha512.o
+ .debug_loc     0x000087be      0xbab build/usb_lib/usb_regs.o
+ .debug_loc     0x00009369      0x1a4 build/usb_lib/usb_int.o
+ .debug_loc     0x0000950d      0x7b8 build/usb_lib/usb_core.o
+ .debug_loc     0x00009cc5      0x293 build/usb_lib/usb_mem.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(build/enclave_stage1.elf elf32-littlearm)
+
+.debug_ranges   0x00000000     0x1128
+ .debug_ranges  0x00000000       0x20 build/stm32_lib/c_only_startup.o
+ .debug_ranges  0x00000020      0x1c8 build/usb.o
+ .debug_ranges  0x000001e8       0x18 build/main.o
+ .debug_ranges  0x00000200      0x1d8 build/hardware.o
+ .debug_ranges  0x000003d8       0xb0 build/dfu.o
+ .debug_ranges  0x00000488       0x90 build/25519/c25519.o
+ .debug_ranges  0x00000518       0xa8 build/25519/ed25519.o
+ .debug_ranges  0x000005c0      0x130 build/25519/edsign.o
+ .debug_ranges  0x000006f0      0x1b0 build/25519/f25519.o
+ .debug_ranges  0x000008a0      0x1b8 build/25519/fprime.o
+ .debug_ranges  0x00000a58       0x38 build/25519/morph25519.o
+ .debug_ranges  0x00000a90       0x98 build/25519/sha256.o
+ .debug_ranges  0x00000b28      0x270 build/25519/sha512.o
+ .debug_ranges  0x00000d98      0x290 build/usb_lib/usb_regs.o
+ .debug_ranges  0x00001028       0x18 build/usb_lib/usb_int.o
+ .debug_ranges  0x00001040       0x10 build/usb_lib/usb_init.o
+ .debug_ranges  0x00001050       0xc0 build/usb_lib/usb_core.o
+ .debug_ranges  0x00001110       0x18 build/usb_lib/usb_mem.o
+
+Cross Reference Table
+
+Symbol                                            File
+ADC1_2_IRQHandler                                 build/stm32_lib/c_only_startup.o
+BusFault_Handler                                  build/stm32_lib/c_only_startup.o
+ByteSwap                                          build/usb_lib/usb_regs.o
+CAN1_RX1_IRQHandler                               build/stm32_lib/c_only_startup.o
+CAN1_SCE_IRQHandler                               build/stm32_lib/c_only_startup.o
+CTR_HP                                            build/usb_lib/usb_int.o
+CTR_LP                                            build/usb_lib/usb_int.o
+                                                  build/usb.o
+ClearDTOG_RX                                      build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+ClearDTOG_TX                                      build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+ClearEPDoubleBuff                                 build/usb_lib/usb_regs.o
+ClearEP_CTR_RX                                    build/usb_lib/usb_regs.o
+ClearEP_CTR_TX                                    build/usb_lib/usb_regs.o
+ClearEP_KIND                                      build/usb_lib/usb_regs.o
+Clear_Status_Out                                  build/usb_lib/usb_regs.o
+                                                  build/usb.o
+DMA1_Channel1_IRQHandler                          build/stm32_lib/c_only_startup.o
+DMA1_Channel2_IRQHandler                          build/stm32_lib/c_only_startup.o
+DMA1_Channel3_IRQHandler                          build/stm32_lib/c_only_startup.o
+DMA1_Channel4_IRQHandler                          build/stm32_lib/c_only_startup.o
+DMA1_Channel5_IRQHandler                          build/stm32_lib/c_only_startup.o
+DMA1_Channel6_IRQHandler                          build/stm32_lib/c_only_startup.o
+DMA1_Channel7_IRQHandler                          build/stm32_lib/c_only_startup.o
+Data_Mul_MaxPacketSize                            build/usb_lib/usb_core.o
+DebugMon_Handler                                  build/stm32_lib/c_only_startup.o
+Default_Handler                                   build/stm32_lib/c_only_startup.o
+Device_Info                                       build/usb_lib/usb_init.o
+Device_Property                                   build/usb.o
+                                                  build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_init.o
+Device_Table                                      build/usb.o
+                                                  build/usb_lib/usb_core.o
+EPindex                                           build/usb_lib/usb_init.o
+                                                  build/usb_lib/usb_int.o
+EXTI0_IRQHandler                                  build/stm32_lib/c_only_startup.o
+EXTI15_10_IRQHandler                              build/stm32_lib/c_only_startup.o
+EXTI1_IRQHandler                                  build/stm32_lib/c_only_startup.o
+EXTI2_IRQHandler                                  build/stm32_lib/c_only_startup.o
+EXTI3_IRQHandler                                  build/stm32_lib/c_only_startup.o
+EXTI4_IRQHandler                                  build/stm32_lib/c_only_startup.o
+EXTI9_5_IRQHandler                                build/stm32_lib/c_only_startup.o
+FLASH_IRQHandler                                  build/stm32_lib/c_only_startup.o
+FreeUserBuffer                                    build/usb_lib/usb_regs.o
+GPIO_AFIODeInit                                   .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_DeInit                                       .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_ETH_MediaInterfaceConfig                     .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_EXTILineConfig                               .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_EventOutputCmd                               .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_EventOutputConfig                            .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_Init                                         .\libstm32fw.a(stm32f10x_gpio.o)
+                                                  build/hardware.o
+GPIO_PinLockConfig                                .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_PinRemapConfig                               .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_ReadInputData                                .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_ReadInputDataBit                             .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_ReadOutputData                               .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_ReadOutputDataBit                            .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_ResetBits                                    .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_SetBits                                      .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_StructInit                                   .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_Write                                        .\libstm32fw.a(stm32f10x_gpio.o)
+GPIO_WriteBit                                     .\libstm32fw.a(stm32f10x_gpio.o)
+GetBTABLE                                         build/usb_lib/usb_regs.o
+GetCNTR                                           build/usb_lib/usb_regs.o
+GetDADDR                                          build/usb_lib/usb_regs.o
+GetENDPOINT                                       build/usb_lib/usb_regs.o
+GetEPAddress                                      build/usb_lib/usb_regs.o
+GetEPDblBuf0Addr                                  build/usb_lib/usb_regs.o
+GetEPDblBuf0Count                                 build/usb_lib/usb_regs.o
+GetEPDblBuf1Addr                                  build/usb_lib/usb_regs.o
+GetEPDblBuf1Count                                 build/usb_lib/usb_regs.o
+GetEPDblBufDir                                    build/usb_lib/usb_regs.o
+GetEPRxAddr                                       build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+GetEPRxCount                                      build/usb_lib/usb_regs.o
+GetEPRxStatus                                     build/usb_lib/usb_regs.o
+GetEPTxAddr                                       build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+GetEPTxCount                                      build/usb_lib/usb_regs.o
+GetEPTxStatus                                     build/usb_lib/usb_regs.o
+GetEPType                                         build/usb_lib/usb_regs.o
+GetFNR                                            build/usb_lib/usb_regs.o
+GetISTR                                           build/usb_lib/usb_regs.o
+GetRxStallStatus                                  build/usb_lib/usb_regs.o
+GetTxStallStatus                                  build/usb_lib/usb_regs.o
+HardFault_Handler                                 build/stm32_lib/c_only_startup.o
+I2C1_ER_IRQHandler                                build/stm32_lib/c_only_startup.o
+I2C1_EV_IRQHandler                                build/stm32_lib/c_only_startup.o
+I2C2_ER_IRQHandler                                build/stm32_lib/c_only_startup.o
+I2C2_EV_IRQHandler                                build/stm32_lib/c_only_startup.o
+In0_Process                                       build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_int.o
+MemManage_Handler                                 build/stm32_lib/c_only_startup.o
+NMI_Handler                                       build/stm32_lib/c_only_startup.o
+NOP_Process                                       build/usb_lib/usb_core.o
+Out0_Process                                      build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_int.o
+PMAToUserBufferCopy                               build/usb_lib/usb_mem.o
+                                                  build/usb_lib/usb_core.o
+PVD_IRQHandler                                    build/stm32_lib/c_only_startup.o
+PendSV_Handler                                    build/stm32_lib/c_only_startup.o
+Post0_Process                                     build/usb_lib/usb_core.o
+RCC_ADCCLKConfig                                  .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_AHBPeriphClockCmd                             .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_APB1PeriphClockCmd                            .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_APB1PeriphResetCmd                            .\libstm32fw.a(stm32f10x_rcc.o)
+                                                  .\libstm32fw.a(stm32f10x_usart.o)
+RCC_APB2PeriphClockCmd                            .\libstm32fw.a(stm32f10x_rcc.o)
+                                                  build/hardware.o
+RCC_APB2PeriphResetCmd                            .\libstm32fw.a(stm32f10x_rcc.o)
+                                                  .\libstm32fw.a(stm32f10x_usart.o)
+                                                  .\libstm32fw.a(stm32f10x_gpio.o)
+RCC_AdjustHSICalibrationValue                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_BackupResetCmd                                .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_ClearFlag                                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_ClearITPendingBit                             .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_ClockSecuritySystemCmd                        .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_DeInit                                        .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_GetClocksFreq                                 .\libstm32fw.a(stm32f10x_rcc.o)
+                                                  .\libstm32fw.a(stm32f10x_usart.o)
+RCC_GetFlagStatus                                 .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_GetITStatus                                   .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_GetSYSCLKSource                               .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_HCLKConfig                                    .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_HSEConfig                                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_HSICmd                                        .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_IRQHandler                                    build/stm32_lib/c_only_startup.o
+RCC_ITConfig                                      .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_LSEConfig                                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_LSICmd                                        .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_MCOConfig                                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_PCLK1Config                                   .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_PCLK2Config                                   .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_PLLCmd                                        .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_PLLConfig                                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_RTCCLKCmd                                     .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_RTCCLKConfig                                  .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_SYSCLKConfig                                  .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_USBCLKConfig                                  .\libstm32fw.a(stm32f10x_rcc.o)
+RCC_WaitForHSEStartUp                             .\libstm32fw.a(stm32f10x_rcc.o)
+RTCAlarm_IRQHandler                               build/stm32_lib/c_only_startup.o
+RTC_IRQHandler                                    build/stm32_lib/c_only_startup.o
+Reset_Handler                                     build/stm32_lib/c_only_startup.o
+ResumeS                                           build/usb.o
+SPI1_IRQHandler                                   build/stm32_lib/c_only_startup.o
+SPI2_IRQHandler                                   build/stm32_lib/c_only_startup.o
+SVC_Handler                                       build/stm32_lib/c_only_startup.o
+SaveRState                                        build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_int.o
+SaveState                                         build/usb_lib/usb_init.o
+SaveTState                                        build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_int.o
+SetBTABLE                                         build/usb_lib/usb_regs.o
+SetCNTR                                           build/usb_lib/usb_regs.o
+SetDADDR                                          build/usb_lib/usb_regs.o
+SetDeviceAddress                                  build/usb_lib/usb_core.o
+                                                  build/usb.o
+SetDouBleBuffEPStall                              build/usb_lib/usb_regs.o
+SetENDPOINT                                       build/usb_lib/usb_regs.o
+SetEPAddress                                      build/usb_lib/usb_regs.o
+SetEPCountRxReg                                   build/usb_lib/usb_regs.o
+SetEPDblBuf0Addr                                  build/usb_lib/usb_regs.o
+SetEPDblBuf0Count                                 build/usb_lib/usb_regs.o
+SetEPDblBuf1Addr                                  build/usb_lib/usb_regs.o
+SetEPDblBuf1Count                                 build/usb_lib/usb_regs.o
+SetEPDblBuffAddr                                  build/usb_lib/usb_regs.o
+SetEPDblBuffCount                                 build/usb_lib/usb_regs.o
+SetEPDoubleBuff                                   build/usb_lib/usb_regs.o
+SetEPRxAddr                                       build/usb_lib/usb_regs.o
+SetEPRxCount                                      build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+                                                  build/usb.o
+SetEPRxStatus                                     build/usb_lib/usb_regs.o
+SetEPRxValid                                      build/usb_lib/usb_regs.o
+                                                  build/usb.o
+SetEPTxAddr                                       build/usb_lib/usb_regs.o
+SetEPTxCount                                      build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+SetEPTxStatus                                     build/usb_lib/usb_regs.o
+                                                  build/usb_lib/usb_core.o
+SetEPTxValid                                      build/usb_lib/usb_regs.o
+SetEPType                                         build/usb_lib/usb_regs.o
+SetEP_KIND                                        build/usb_lib/usb_regs.o
+SetISTR                                           build/usb_lib/usb_regs.o
+Set_Status_Out                                    build/usb_lib/usb_regs.o
+Setup0_Process                                    build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_int.o
+Standard_ClearFeature                             build/usb_lib/usb_core.o
+Standard_GetConfiguration                         build/usb_lib/usb_core.o
+Standard_GetDescriptorData                        build/usb_lib/usb_core.o
+                                                  build/usb.o
+Standard_GetInterface                             build/usb_lib/usb_core.o
+Standard_GetStatus                                build/usb_lib/usb_core.o
+Standard_SetConfiguration                         build/usb_lib/usb_core.o
+Standard_SetDeviceFeature                         build/usb_lib/usb_core.o
+Standard_SetEndPointFeature                       build/usb_lib/usb_core.o
+Standard_SetInterface                             build/usb_lib/usb_core.o
+StatusInfo                                        build/usb_lib/usb_core.o
+SysTick_Handler                                   build/stm32_lib/c_only_startup.o
+SystemInit_ExtMemCtl_Dummy                        build/stm32_lib/c_only_startup.o
+TAMPER_IRQHandler                                 build/stm32_lib/c_only_startup.o
+TIM1_BRK_IRQHandler                               build/stm32_lib/c_only_startup.o
+TIM1_CC_IRQHandler                                build/stm32_lib/c_only_startup.o
+TIM1_TRG_COM_IRQHandler                           build/stm32_lib/c_only_startup.o
+TIM1_UP_IRQHandler                                build/stm32_lib/c_only_startup.o
+TIM2_IRQHandler                                   build/stm32_lib/c_only_startup.o
+TIM3_IRQHandler                                   build/stm32_lib/c_only_startup.o
+TIM4_IRQHandler                                   build/stm32_lib/c_only_startup.o
+ToWord                                            build/usb_lib/usb_regs.o
+ToggleDTOG_RX                                     build/usb_lib/usb_regs.o
+ToggleDTOG_TX                                     build/usb_lib/usb_regs.o
+USART1_IRQHandler                                 build/stm32_lib/c_only_startup.o
+USART2_IRQHandler                                 build/stm32_lib/c_only_startup.o
+USART3_IRQHandler                                 build/stm32_lib/c_only_startup.o
+USART_ClearFlag                                   .\libstm32fw.a(stm32f10x_usart.o)
+USART_ClearITPendingBit                           .\libstm32fw.a(stm32f10x_usart.o)
+USART_ClockInit                                   .\libstm32fw.a(stm32f10x_usart.o)
+USART_ClockStructInit                             .\libstm32fw.a(stm32f10x_usart.o)
+USART_Cmd                                         .\libstm32fw.a(stm32f10x_usart.o)
+                                                  build/hardware.o
+USART_DMACmd                                      .\libstm32fw.a(stm32f10x_usart.o)
+USART_DeInit                                      .\libstm32fw.a(stm32f10x_usart.o)
+USART_GetFlagStatus                               .\libstm32fw.a(stm32f10x_usart.o)
+USART_GetITStatus                                 .\libstm32fw.a(stm32f10x_usart.o)
+USART_HalfDuplexCmd                               .\libstm32fw.a(stm32f10x_usart.o)
+USART_ITConfig                                    .\libstm32fw.a(stm32f10x_usart.o)
+USART_Init                                        .\libstm32fw.a(stm32f10x_usart.o)
+                                                  build/hardware.o
+USART_IrDACmd                                     .\libstm32fw.a(stm32f10x_usart.o)
+USART_IrDAConfig                                  .\libstm32fw.a(stm32f10x_usart.o)
+USART_LINBreakDetectLengthConfig                  .\libstm32fw.a(stm32f10x_usart.o)
+USART_LINCmd                                      .\libstm32fw.a(stm32f10x_usart.o)
+USART_OneBitMethodCmd                             .\libstm32fw.a(stm32f10x_usart.o)
+USART_OverSampling8Cmd                            .\libstm32fw.a(stm32f10x_usart.o)
+USART_ReceiveData                                 .\libstm32fw.a(stm32f10x_usart.o)
+USART_ReceiverWakeUpCmd                           .\libstm32fw.a(stm32f10x_usart.o)
+USART_SendBreak                                   .\libstm32fw.a(stm32f10x_usart.o)
+USART_SendData                                    .\libstm32fw.a(stm32f10x_usart.o)
+USART_SetAddress                                  .\libstm32fw.a(stm32f10x_usart.o)
+USART_SetGuardTime                                .\libstm32fw.a(stm32f10x_usart.o)
+USART_SetPrescaler                                .\libstm32fw.a(stm32f10x_usart.o)
+USART_SmartCardCmd                                .\libstm32fw.a(stm32f10x_usart.o)
+USART_SmartCardNACKCmd                            .\libstm32fw.a(stm32f10x_usart.o)
+USART_StructInit                                  .\libstm32fw.a(stm32f10x_usart.o)
+USART_WakeUpConfig                                .\libstm32fw.a(stm32f10x_usart.o)
+USBWakeUp_IRQHandler                              build/stm32_lib/c_only_startup.o
+USB_HP_CAN1_TX_IRQHandler                         build/stm32_lib/c_only_startup.o
+USB_Init                                          build/usb_lib/usb_init.o
+                                                  build/usb.o
+USB_LP_CAN1_RX0_IRQHandler                        build/usb.o
+                                                  build/stm32_lib/c_only_startup.o
+UU_PutChar                                        build/hardware.o
+UU_PutString                                      build/hardware.o
+UsageFault_Handler                                build/stm32_lib/c_only_startup.o
+UserToPMABufferCopy                               build/usb_lib/usb_mem.o
+                                                  build/usb_lib/usb_core.o
+User_Standard_Requests                            build/usb.o
+                                                  build/usb_lib/usb_init.o
+WWDG_IRQHandler                                   build/stm32_lib/c_only_startup.o
+__BASEPRICONFIG                                   build/stm32_lib/cortexm3_macro.o
+__DMB                                             build/stm32_lib/cortexm3_macro.o
+__DSB                                             build/stm32_lib/cortexm3_macro.o
+__GetBASEPRI                                      build/stm32_lib/cortexm3_macro.o
+__ISB                                             build/stm32_lib/cortexm3_macro.o
+__MRS_CONTROL                                     build/stm32_lib/cortexm3_macro.o
+__MRS_MSP                                         build/stm32_lib/cortexm3_macro.o
+__MRS_PSP                                         build/stm32_lib/cortexm3_macro.o
+__MSR_CONTROL                                     build/stm32_lib/cortexm3_macro.o
+__MSR_MSP                                         build/stm32_lib/cortexm3_macro.o
+__MSR_PSP                                         build/stm32_lib/cortexm3_macro.o
+__READ_FAULTMASK                                  build/stm32_lib/cortexm3_macro.o
+__READ_PRIMASK                                    build/stm32_lib/cortexm3_macro.o
+__RESETFAULTMASK                                  build/stm32_lib/cortexm3_macro.o
+__RESETPRIMASK                                    build/stm32_lib/cortexm3_macro.o
+__REV_HalfWord                                    build/stm32_lib/cortexm3_macro.o
+__REV_Word                                        build/stm32_lib/cortexm3_macro.o
+__SETFAULTMASK                                    build/stm32_lib/cortexm3_macro.o
+__SETPRIMASK                                      build/stm32_lib/cortexm3_macro.o
+__SEV                                             build/stm32_lib/cortexm3_macro.o
+__SVC                                             build/stm32_lib/cortexm3_macro.o
+__WFE                                             build/stm32_lib/cortexm3_macro.o
+__WFI                                             build/stm32_lib/cortexm3_macro.o
+__malloc_free_list                                c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+__malloc_sbrk_start                               c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+__sf_fake_stderr                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+__sf_fake_stdin                                   c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+__sf_fake_stdout                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+__ssprint_r                                       c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+__ssputs_r                                        c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_ebss                                             build/stm32_lib/c_only_startup.o
+_edata                                            build/stm32_lib/c_only_startup.o
+_estack                                           build/stm32_lib/c_only_startup.o
+_free_r                                           c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-freer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_global_impure_ptr                                c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+_impure_ptr                                       c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-impure.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+_malloc_r                                         c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_malloc_usable_size_r                             c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-msizer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+_printf_common                                    c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+_printf_float                                     c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_printf_i                                         c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_realloc_r                                        c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_reclaim_reent                                    c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+_sbrk                                             c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+_sbrk_r                                           c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-mallocr.o)
+_sbss                                             build/stm32_lib/c_only_startup.o
+_sdata                                            build/stm32_lib/c_only_startup.o
+_sidata                                           build/stm32_lib/c_only_startup.o
+_siprintf_r                                       c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+_sprintf_r                                        c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+_svfiprintf_r                                     c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+_svfprintf_r                                      c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+_vsiprintf_r                                      c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+_vsprintf_r                                       c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+bDeviceState                                      build/usb.o
+bIntPackSOF                                       build/usb.o
+bkp10Write                                        build/hardware.o
+c25519_base_x                                     build/25519/c25519.o
+c25519_smult                                      build/25519/c25519.o
+checkAndClearBootloaderFlag                       build/hardware.o
+checkUserCode                                     build/hardware.o
+                                                  build/main.o
+cleanup_glue                                      c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+code_copy_lock                                    build/dfu.o
+crMask                                            build/hardware.o
+                                                  build/usb.o
+ctx                                               build/dfu.o
+dfuBusy                                           build/dfu.o
+dfuCopyBufferToExec                               build/dfu.o
+dfuCopyDNLOAD                                     build/dfu.o
+                                                  build/usb.o
+dfuCopyState                                      build/dfu.o
+                                                  build/usb.o
+dfuCopyStatus                                     build/dfu.o
+                                                  build/usb.o
+dfuCopyUPLOAD                                     build/dfu.o
+                                                  build/usb.o
+dfuFinishUpload                                   build/dfu.o
+                                                  build/main.o
+dfuGetState                                       build/dfu.o
+dfuInit                                           build/dfu.o
+                                                  build/usb.o
+dfuSetState                                       build/dfu.o
+dfuUpdateByRequest                                build/dfu.o
+                                                  build/usb.o
+dfuUpdateByReset                                  build/dfu.o
+                                                  build/usb.o
+dfuUpdateByTimeout                                build/dfu.o
+dfuUploadDone                                     build/dfu.o
+dfuUploadStarted                                  build/dfu.o
+                                                  build/main.o
+ed25519_add                                       build/25519/ed25519.o
+                                                  build/25519/edsign.o
+ed25519_base                                      build/25519/ed25519.o
+                                                  build/25519/edsign.o
+ed25519_double                                    build/25519/ed25519.o
+ed25519_neutral                                   build/25519/ed25519.o
+ed25519_pack                                      build/25519/ed25519.o
+                                                  build/25519/edsign.o
+ed25519_project                                   build/25519/ed25519.o
+                                                  build/25519/edsign.o
+ed25519_smult                                     build/25519/ed25519.o
+                                                  build/25519/edsign.o
+ed25519_try_unpack                                build/25519/ed25519.o
+                                                  build/25519/edsign.o
+ed25519_unproject                                 build/25519/ed25519.o
+                                                  build/25519/edsign.o
+edsign_sec_to_pub                                 build/25519/edsign.o
+edsign_verify                                     build/25519/edsign.o
+                                                  build/dfu.o
+                                                  build/hardware.o
+end                                               c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+errno                                             c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libnosys.a(sbrk.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sbrkr.o)
+f25519_add                                        build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_eq                                         build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/edsign.o
+                                                  build/25519/ed25519.o
+f25519_inv                                        build/25519/f25519.o
+f25519_inv__distinct                              build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_load                                       build/25519/f25519.o
+                                                  build/25519/ed25519.o
+f25519_mul                                        build/25519/f25519.o
+f25519_mul__distinct                              build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_mul_c                                      build/25519/f25519.o
+                                                  build/25519/c25519.o
+f25519_neg                                        build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+f25519_normalize                                  build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_one                                        build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_select                                     build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_sqrt                                       build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+f25519_sub                                        build/25519/f25519.o
+                                                  build/25519/morph25519.o
+                                                  build/25519/ed25519.o
+                                                  build/25519/c25519.o
+f25519_zero                                       build/25519/f25519.o
+flashErasePage                                    build/hardware.o
+                                                  build/dfu.o
+flashErasePages                                   build/hardware.o
+flashLock                                         build/hardware.o
+                                                  build/dfu.o
+flashUnlock                                       build/hardware.o
+                                                  build/dfu.o
+flashWriteWord                                    build/hardware.o
+                                                  build/dfu.o
+fprime_add                                        build/25519/fprime.o
+fprime_eq                                         build/25519/fprime.o
+fprime_from_bytes                                 build/25519/fprime.o
+                                                  build/25519/edsign.o
+fprime_inv                                        build/25519/fprime.o
+fprime_load                                       build/25519/fprime.o
+fprime_mul                                        build/25519/fprime.o
+fprime_normalize                                  build/25519/fprime.o
+fprime_one                                        build/25519/fprime.o
+fprime_select                                     build/25519/fprime.o
+fprime_sub                                        build/25519/fprime.o
+fprime_zero                                       build/25519/fprime.o
+g_pfnVectors                                      build/stm32_lib/c_only_startup.o
+getFlashEnd                                       build/hardware.o
+                                                  build/dfu.o
+getFlashPageSize                                  build/hardware.o
+                                                  build/usb.o
+gpio_write_bit                                    build/hardware.o
+                                                  build/usb.o
+input                                             build/dfu.o
+jumpToUser                                        build/hardware.o
+                                                  build/main.o
+k                                                 build/25519/sha256.o
+main                                              build/main.o
+                                                  build/stm32_lib/c_only_startup.o
+memchr                                            c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memchr-stub.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+memcmp                                            c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcmp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+                                                  build/hardware.o
+memcpy                                            c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memcpy-stub.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-nano-reallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+                                                  build/25519/sha512.o
+                                                  build/25519/sha256.o
+                                                  build/25519/edsign.o
+                                                  build/25519/ed25519.o
+memmem                                            c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmem.o)
+                                                  build/hardware.o
+memmove                                           c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memmove.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-svfprintf.o)
+memset                                            c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-memset.o)
+                                                  build/25519/sha512.o
+                                                  build/25519/fprime.o
+                                                  build/25519/f25519.o
+                                                  build/dfu.o
+                                                  build/hardware.o
+morph25519_e2m                                    build/25519/morph25519.o
+morph25519_m2e                                    build/25519/morph25519.o
+nothingProc                                       build/usb.o
+nvicDisableInterrupts                             build/hardware.o
+                                                  build/dfu.o
+nvicInit                                          build/hardware.o
+                                                  build/usb.o
+pEpInt_IN                                         build/usb.o
+                                                  build/usb_lib/usb_int.o
+pEpInt_OUT                                        build/usb.o
+                                                  build/usb_lib/usb_int.o
+pInformation                                      build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_init.o
+                                                  build/dfu.o
+                                                  build/usb.o
+pProperty                                         build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_init.o
+                                                  build/usb.o
+pUser_Standard_Requests                           build/usb_lib/usb_core.o
+                                                  build/usb_lib/usb_init.o
+print_hash                                        build/main.o
+                                                  build/hardware.o
+readPin                                           build/hardware.o
+                                                  build/main.o
+setMspAndJump                                     build/hardware.o
+setupCLK                                          build/hardware.o
+                                                  build/main.o
+setupFLASH                                        build/hardware.o
+                                                  build/dfu.o
+                                                  build/main.o
+setupLEDAndButton                                 build/hardware.o
+                                                  build/main.o
+setupUSB                                          build/usb.o
+                                                  build/main.o
+sha256_finish                                     build/25519/sha256.o
+                                                  build/dfu.o
+                                                  build/hardware.o
+sha256_process                                    build/25519/sha256.o
+sha256_starts                                     build/25519/sha256.o
+                                                  build/dfu.o
+                                                  build/hardware.o
+sha256_update                                     build/25519/sha256.o
+                                                  build/dfu.o
+                                                  build/hardware.o
+sha256sum                                         build/dfu.o
+sha512_block                                      build/25519/sha512.o
+                                                  build/25519/edsign.o
+sha512_final                                      build/25519/sha512.o
+                                                  build/25519/edsign.o
+sha512_get                                        build/25519/sha512.o
+                                                  build/25519/edsign.o
+sha512_initial_state                              build/25519/sha512.o
+                                                  build/25519/edsign.o
+siprintf                                          c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+sprintf                                           c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-sprintf.o)
+                                                  build/dfu.o
+                                                  build/hardware.o
+strlen                                            c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-strlen.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vfprintf_i.o)
+strobePin                                         build/hardware.o
+                                                  build/main.o
+systemHardReset                                   build/hardware.o
+                                                  build/dfu.o
+systemReset                                       build/hardware.o
+                                                  build/main.o
+u8_usbConfigDescriptorDFU                         build/usb_descriptor.o
+                                                  build/usb.o
+u8_usbDeviceDescriptorDFU                         build/usb_descriptor.o
+u8_usbFunctionalDescriptor                        build/usb_descriptor.o
+                                                  build/usb.o
+u8_usbStringAlt0                                  build/usb_descriptor.o
+u8_usbStringAlt1                                  build/usb_descriptor.o
+u8_usbStringAlt2                                  build/usb_descriptor.o
+u8_usbStringInterface                             build/usb_descriptor.o
+u8_usbStringLangId                                build/usb_descriptor.o
+u8_usbStringProduct                               build/usb_descriptor.o
+u8_usbStringSerial                                build/usb_descriptor.o
+u8_usbStringVendor                                build/usb_descriptor.o
+uartInit                                          build/hardware.o
+                                                  build/main.o
+uart_printf                                       build/hardware.o
+                                                  build/dfu.o
+                                                  build/main.o
+uid_read                                          build/hardware.o
+                                                  build/dfu.o
+usbAppInit                                        build/usb.o
+usbClearFeature                                   build/usb.o
+usbConfigDescriptorDFU                            build/usb_descriptor.o
+                                                  build/usb.o
+usbDataSetup                                      build/usb.o
+usbDeviceDescriptorDFU                            build/usb_descriptor.o
+                                                  build/usb.o
+usbDsbBus                                         build/usb.o
+                                                  build/hardware.o
+usbDsbISR                                         build/usb.o
+                                                  build/hardware.o
+usbEnbISR                                         build/usb.o
+                                                  build/dfu.o
+usbFunctionalDescriptor                           build/usb_descriptor.o
+                                                  build/usb.o
+usbGetConfigDescriptor                            build/usb.o
+usbGetConfiguration                               build/usb.o
+usbGetDeviceDescriptor                            build/usb.o
+usbGetFunctionalDescriptor                        build/usb.o
+usbGetInterface                                   build/usb.o
+usbGetInterfaceSetting                            build/usb.o
+usbGetState                                       build/usb.o
+usbGetStatus                                      build/usb.o
+usbGetStringDescriptor                            build/usb.o
+usbInit                                           build/usb.o
+usbNoDataSetup                                    build/usb.o
+usbPowerOff                                       build/usb.o
+usbPowerOn                                        build/usb.o
+usbReset                                          build/usb.o
+                                                  build/main.o
+usbResume                                         build/usb.o
+usbResumeInit                                     build/usb.o
+usbSetConfiguration                               build/usb.o
+usbSetDeviceAddress                               build/usb.o
+usbSetDeviceFeature                               build/usb.o
+usbSetEndpointFeature                             build/usb.o
+usbSetInterface                                   build/usb.o
+usbStatusIn                                       build/usb.o
+usbStatusOut                                      build/usb.o
+usbStringDescriptor                               build/usb_descriptor.o
+                                                  build/usb.o
+usbSuspend                                        build/usb.o
+userUploadType                                    build/dfu.o
+vprint                                            build/hardware.o
+vsiprintf                                         c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+vsprintf                                          c:/program files (x86)/gnu tools arm embedded/4.8 2014q3/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc_s.a(lib_a-vsprintf.o)
+                                                  build/hardware.o
+wInterrupt_Mask                                   build/usb_lib/usb_init.o
+                                                  build/usb.o
+wIstr                                             build/usb_lib/usb_int.o
+                                                  build/usb.o
+wTransferSize                                     build/dfu.o
+                                                  build/hardware.o
+                                                  build/main.o
+                                                  build/usb_descriptor.o
+                                                  build/usb.o
