@@ -18,13 +18,13 @@ def hexdump(src, length=16):
 
 def sha256_checksum(filename, block_size=8):
     sha256 = hashlib.sha256()
-    f = open(filename, 'a')
-    f.write(Dump(0xfeedface))
-    f.close()
+    #f = open(filename, 'a')
+    #f.write(Dump(0xfeedface))
+    #f.close()
     f = open(filename, 'rb+')
     for block in iter(lambda: f.read(block_size), b''):
         sha256.update(block)
-    sha256.update(b"FF566725748887167142607")
+    sha256.update("FF566725748887167142607")
     #sha256.update(b"41414141414141414141414")
     f.close()
     return sha256.hexdigest()
@@ -58,9 +58,13 @@ def main():
 
     keydata = open("dev_signing_key","rb").read()
     signing_key = ed25519.SigningKey(keydata)
+    arry = array.array('B', signing_key.to_bytes())
+    print "Private key: "
+    print ''.join('0x{:02x},'.format(x) for x in arry)
+
     vkey_hex = signing_key.get_verifying_key().to_bytes()
     print len(vkey_hex)
-    print "the public key is"
+    print "Public key: "
     arry = array.array('B', vkey_hex)
     print ''.join('0x{:02x},'.format(x) for x in arry)
 

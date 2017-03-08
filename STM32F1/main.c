@@ -40,6 +40,7 @@
 
 #include "common.h"
 #include "dfu.h"
+#include "image.h"
 #include "sha256.h"
 
 #define PERIPH_BASE           ((uint32_t)0x40000000) /*!< Peripheral base address in the alias region */
@@ -85,26 +86,25 @@ int main()
 	} 
 
 	uart_printf("checking chain...\n");
-	int initVerify = checkUserCode(USER_CODE_FLASH0X8008000);
-	switch (initVerify)
+	ImageObjectHandle imageHandle;
+
+    int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
+    
+    uart_printf("image check ret: %X\n", ret);
+	switch (ret)
 	{
-		case 0x3:
+		case kImageImageIsTrusted:
 			uart_printf("Boot OK\n");
 			no_user_jump = FALSE;
 			break;
 
-		case 0x0:
+		case kImageImageMissingMagic:
 			uart_printf("Firmware missing... waiting in DFU\n");
 			no_user_jump = TRUE;
 			break;
 
-		case 0x1:
+		case kImageImageRejectSignature:
 			uart_printf("Signature unverified... waiting in DFU\n");
-			no_user_jump = TRUE;
-			break;
-
-		case 0x2:
-			uart_printf("Hash comparison unverified... waiting in DFU\n");
 			no_user_jump = TRUE;
 			break;
 
@@ -126,8 +126,11 @@ int main()
 		}
 	}
 
-	uart_printf("Jumping to OS.\n");
-	jumpToUser(USER_CODE_FLASH0X8008000+0x74);
-
+	if (no_user_jump == FALSE)
+	{
+		uart_printf("Jumping to OS.\n");
+		jumpToUser((USER_CODE_FLASH0X8008000+0x84));	
+	}
+	
 	return 0;// Added to please the compiler
 }

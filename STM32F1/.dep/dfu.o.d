@@ -33,7 +33,7 @@ build/dfu.o: dfu.c hardware.h \
  config.h usb.h usb_lib/usb_lib.h usb_lib/usb_type.h usb_lib/usb_regs.h \
  usb_lib/usb_def.h usb_lib/usb_core.h usb_lib/usb_init.h \
  usb_lib/usb_mem.h usb_lib/usb_int.h usb_descriptor.h 25519/edsign.h \
- dfu.h 25519/sha256.h
+ dfu.h 25519/sha256.h image.h
 
 hardware.h:
 
@@ -130,3 +130,5 @@ usb_descriptor.h:
 dfu.h:
 
 25519/sha256.h:
+
+image.h:

@@ -34,6 +34,7 @@
 #include "dfu.h"
 #include "usb.h"
 #include "sha256.h"
+#include "image.h"
 
 /* DFU globals */
 static volatile u32 userAppAddr = USER_CODE_RAM; /* default RAM user code location */
@@ -247,7 +248,7 @@ bool dfuUpdateByRequest(void) {
                 /* todo, support "disagreement" if device expects more data than this */
                 dfuAppStatus.bState  = dfuMANIFEST_SYNC;
                 /* relock the flash */
-                struct u_id id;
+                /*struct u_id id;
                 uid_read(&id);
                 
                 unsigned char uniqueID[23];
@@ -267,10 +268,25 @@ bool dfuUpdateByRequest(void) {
                 };
 
                 if (edsign_verify(signature, rootCA, sha256sum, 0x20) > 0) {
-                    uart_printf("Uploaded signature verified!\n");
                 } else {
                     uart_printf("Signature unverified!\n");
                     dfuAppStatus.bState = dfuERROR;
+                }*/
+                ImageObjectHandle imageHandle;
+                int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 1);
+                switch (ret)
+                {
+                    case kImageImageIsTrusted:
+                        uart_printf("Uploaded signature verified!\n");
+                        break;
+
+                    case kImageImageMissingMagic:
+                    case kImageImageRejectSignature:
+                        uart_printf("Image unverified... wiped memory for clean reset.\n");
+                        break;
+
+                    default:
+                        break;
                 }
                 flashLock();
             }
@@ -460,10 +476,10 @@ void dfuCopyBufferToExec() {
     flashErasePage((u32)(userSpace));
 
     for (i = 0; i < thisBlockLen; i = i + 4) {
-        if ((u32)(userSpace) >= 0x8008074)
+        /*if ((u32)(userSpace) >= 0x8008074)
         {
             sha256_update(&ctx, recvBuffer +i, sizeof(u32));
-        }
+        }*/
         flashWriteWord((u32)(userSpace++), *(u32 *)(recvBuffer +i));
     }
     

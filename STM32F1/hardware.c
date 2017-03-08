@@ -42,7 +42,7 @@
 #include "hardware.h"
 #include "sha256.h"
 #include "edsign.h"
-
+#include "image.h"
 
 /*
 void setPin(u32 bank, u8 pin) {
@@ -317,7 +317,7 @@ void uart_printf(const char *fmt, ...) // custom printf() function
     va_end(argp);
 }
 
-static void hexdump(unsigned char *data, size_t size)
+void hexdump(unsigned char *data, size_t size)
 {
     int i;
     char cs[17];
@@ -468,8 +468,12 @@ void uid_read(struct u_id *id)
 }
 
 int checkUserCode(u32 usrAddr) {
+    /* deprecated 
+    int imageCheckFromAddress(
+        ImageObjectHandle *newHandle,
+        uint32_t flashAddress);*/
     // get hash written to top of stage 2
-    unsigned char writtenHash[32];
+    /*unsigned char writtenHash[32];
     memset(writtenHash, 0xFF, sizeof(writtenHash));
     memcpy(writtenHash, (vu32 *)usrAddr, 0x20);
 
@@ -518,7 +522,7 @@ int checkUserCode(u32 usrAddr) {
     struct u_id id;
     uid_read(&id);
     unsigned char uniqueID[23];
-    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+    sprintf(uniqueID,"%X", id.off0, id.off2, id.off4, id.off8);
     uart_printf("%X%X%X%X\n", id.off0, id.off2, id.off4, id.off8);
     sha256_update(&ctx, uniqueID, 23);
     sha256_finish(&ctx, sha256sum);
@@ -538,7 +542,8 @@ int checkUserCode(u32 usrAddr) {
     // verify written hash against recalc hash
     if (memcmp(sha256sum, writtenHash, 32)){
         return 0x2;
-    }
+    }*/
+
     return 0x3;
 }
 
@@ -620,8 +625,6 @@ int checkAndClearBootloaderFlag()
 	}
     return flagSet;
 }
-
-
 
 void nvicInit(NVIC_InitTypeDef *NVIC_InitStruct) {
     u32 tmppriority = 0x00;

@@ -1,4 +1,4 @@
-build/hardware.o: hardware.c \
+build/image.o: image.c \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\stdio.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\_ansi.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\newlib.h \
@@ -28,12 +28,11 @@ build/hardware.o: hardware.c \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\sys\unistd.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\errno.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\sys\errno.h \
- common.h config.h hardware.h stm32_lib/stm32f10x_type.h \
- stm32_lib/cortexm3_macro.h stm32_lib/stm32f10x_type.h usb.h \
- usb_lib/usb_lib.h usb_lib/usb_type.h usb_lib/usb_regs.h \
- usb_lib/usb_def.h usb_lib/usb_core.h usb_lib/usb_init.h \
- usb_lib/usb_mem.h usb_lib/usb_int.h usb_descriptor.h 25519/edsign.h \
- 25519/sha256.h image.h
+ hardware.h stm32_lib/stm32f10x_type.h stm32_lib/cortexm3_macro.h \
+ stm32_lib/stm32f10x_type.h common.h config.h usb.h usb_lib/usb_lib.h \
+ usb_lib/usb_type.h usb_lib/usb_regs.h usb_lib/usb_def.h \
+ usb_lib/usb_core.h usb_lib/usb_init.h usb_lib/usb_mem.h \
+ usb_lib/usb_int.h usb_descriptor.h 25519/edsign.h 25519/sha256.h image.h
 
 c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\stdio.h:
 
@@ -93,10 +92,6 @@ c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\inc
 
 c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\sys\errno.h:
 
-common.h:
-
-config.h:
-
 hardware.h:
 
 stm32_lib/stm32f10x_type.h:
@@ -104,6 +99,10 @@ stm32_lib/stm32f10x_type.h:
 stm32_lib/cortexm3_macro.h:
 
 stm32_lib/stm32f10x_type.h:
+
+common.h:
+
+config.h:
 
 usb.h:
 

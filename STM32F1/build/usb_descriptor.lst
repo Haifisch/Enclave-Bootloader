@@ -564,36 +564,36 @@
  594              		.file 4 "usb_descriptor.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 usb_descriptor.c
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:38     .data.usbStringDescriptor:00000000 usbStringDescriptor
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:174    .bss.u8_usbStringInterface:00000000 u8_usbStringInterface
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:480    .data.u8_usbStringAlt2:00000000 u8_usbStringAlt2
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:375    .data.u8_usbStringAlt1:00000000 u8_usbStringAlt1
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:250    .data.u8_usbStringAlt0:00000000 u8_usbStringAlt0
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:154    .data.u8_usbStringSerial:00000000 u8_usbStringSerial
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:225    .data.u8_usbStringProduct:00000000 u8_usbStringProduct
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:194    .data.u8_usbStringVendor:00000000 u8_usbStringVendor
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:95     .data.u8_usbStringLangId:00000000 u8_usbStringLangId
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:585    .data.usbConfigDescriptorDFU:00000000 usbConfigDescriptorDFU
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:104    .data.u8_usbConfigDescriptorDFU:00000000 u8_usbConfigDescriptorDFU
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:87     .data.usbFunctionalDescriptor:00000000 usbFunctionalDescriptor
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:180    .data.u8_usbFunctionalDescriptor:00000000 u8_usbFunctionalDescriptor
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:217    .data.usbDeviceDescriptorDFU:00000000 usbDeviceDescriptorDFU
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:64     .data.u8_usbDeviceDescriptorDFU:00000000 u8_usbDeviceDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:38     .data.usbStringDescriptor:00000000 usbStringDescriptor
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:174    .bss.u8_usbStringInterface:00000000 u8_usbStringInterface
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:480    .data.u8_usbStringAlt2:00000000 u8_usbStringAlt2
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:375    .data.u8_usbStringAlt1:00000000 u8_usbStringAlt1
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:250    .data.u8_usbStringAlt0:00000000 u8_usbStringAlt0
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:154    .data.u8_usbStringSerial:00000000 u8_usbStringSerial
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:225    .data.u8_usbStringProduct:00000000 u8_usbStringProduct
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:194    .data.u8_usbStringVendor:00000000 u8_usbStringVendor
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:95     .data.u8_usbStringLangId:00000000 u8_usbStringLangId
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:585    .data.usbConfigDescriptorDFU:00000000 usbConfigDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:104    .data.u8_usbConfigDescriptorDFU:00000000 u8_usbConfigDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:87     .data.usbFunctionalDescriptor:00000000 usbFunctionalDescriptor
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:180    .data.u8_usbFunctionalDescriptor:00000000 u8_usbFunctionalDescriptor
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:217    .data.usbDeviceDescriptorDFU:00000000 usbDeviceDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:64     .data.u8_usbDeviceDescriptorDFU:00000000 u8_usbDeviceDescriptorDFU
                             *COM*:00000004 wTransferSize
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:35     .data.usbStringDescriptor:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:61     .data.u8_usbDeviceDescriptorDFU:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:84     .data.usbFunctionalDescriptor:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:92     .data.u8_usbStringLangId:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:101    .data.u8_usbConfigDescriptorDFU:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:151    .data.u8_usbStringSerial:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:175    .bss.u8_usbStringInterface:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:177    .data.u8_usbFunctionalDescriptor:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:191    .data.u8_usbStringVendor:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:214    .data.usbDeviceDescriptorDFU:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:222    .data.u8_usbStringProduct:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:247    .data.u8_usbStringAlt0:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:372    .data.u8_usbStringAlt1:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:477    .data.u8_usbStringAlt2:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccjE9qLi.s:582    .data.usbConfigDescriptorDFU:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:35     .data.usbStringDescriptor:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:61     .data.u8_usbDeviceDescriptorDFU:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:84     .data.usbFunctionalDescriptor:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:92     .data.u8_usbStringLangId:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:101    .data.u8_usbConfigDescriptorDFU:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:151    .data.u8_usbStringSerial:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:175    .bss.u8_usbStringInterface:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:177    .data.u8_usbFunctionalDescriptor:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:191    .data.u8_usbStringVendor:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:214    .data.usbDeviceDescriptorDFU:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:222    .data.u8_usbStringProduct:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:247    .data.u8_usbStringAlt0:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:372    .data.u8_usbStringAlt1:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:477    .data.u8_usbStringAlt2:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5C30ij.s:582    .data.usbConfigDescriptorDFU:00000000 $d
 
 NO UNDEFINED SYMBOLS

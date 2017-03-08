@@ -313,6 +313,7 @@ int getFlashPageSize(void);
 	
 
 void uart_printf(const char *fmt, ...);
+void hexdump(unsigned char *data, size_t size);
 
 void uid_read(struct u_id *id);
 

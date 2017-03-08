@@ -90,7 +90,7 @@ usb_mem.c
 
 STM32USBSRCS = $(patsubst %, $(ST_USB)/%,$(_STM32USBSRCS))
 
-SRCS = usb.c usb_callbacks.c usb_descriptor.c main.c hardware.c dfu.c $(wildcard 25519/*.c) 
+SRCS = usb.c usb_callbacks.c usb_descriptor.c main.c hardware.c dfu.c $(wildcard 25519/*.c) image.c
 
 
 SRC = $(SRCS) $(STM32SRCS) $(STM32USBSRCS)
