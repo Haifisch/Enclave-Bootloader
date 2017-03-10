@@ -45,7 +45,7 @@ On DFU upload and on boot the secondary main OS image data is hashed completely 
 
 Basic boot validation scheme flow
 
-![imageCheckFromAddress](imageCheckFromAddress.svg)
+![imageCheckFromAddress](imageCheckFromAddress.svg?raw=true)
 
 
 > If the validation fails on DFU upload the device wipes the main OS flash pages (however this is currently broken) and returns to the DFU mode spin.
