@@ -51,4 +51,17 @@ Basic boot validation scheme flow
 > If the validation fails on DFU upload the device wipes the main OS flash pages (however this is currently broken) and returns to the DFU mode spin.
 > If the validation fails on boot then we spin in DFU mode assuming the main OS has been tampered with, expects a reupload and revalidation. 
 
-```dfuimagemaker``` does this and then Ed25519 signs it with our "rootCA", the signature is then copied to the image container header so we can read it back during boot and validate our calculated hash against the signature.  
+```dfuimagemaker``` does all the hashing and then Ed25519 signs it with our "rootCA" then puts the data in its image container with the signature with its tag in the header
+
+
+### TODO
+Lots and lots to do
+
+##### Enclave OS
+* Replace EnclaveOS c standard std with a smaller (safer?) implementation
+	- Axle's implementaiton is mad decent, hopefully we can lib-ize that for our needs	
+
+##### STMF32F1 bootloader
+* Move the rootCA public key to read only storage
+	- We probably just lock write on the flash pages for the bootloader second after flashing
+* Pass boot arguements to the Enclave OS 
