@@ -62,8 +62,8 @@ void print_hash(unsigned char hash[])
 {
    int idx;
    for (idx=0; idx < 32; idx++)
-      uart_printf("%02x",hash[idx]);
-   uart_printf("\n");
+      debug_print("%02x",hash[idx]);
+   debug_print("\n", 0);
 }
 
 int main() 
@@ -90,7 +90,7 @@ int main()
 
     int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
     
-    uart_printf("image check ret: %X\n", ret);
+    debug_print("image check ret: %X\n", ret);
 	switch (ret)
 	{
 		case kImageImageIsTrusted:

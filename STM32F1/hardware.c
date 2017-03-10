@@ -327,14 +327,14 @@ void hexdump(unsigned char *data, size_t size)
     {
         if(i != 0 && i % 0x10 == 0)
         {
-            uart_printf(" |%s|\n", cs);
+            debug_print(" |%s|\n", cs);
             memset(cs, 0, 17);
         }
         else if(i != 0 && i % 0x8 == 0)
         {
-            uart_printf(" ");
+            debug_print(" ",0);
         }
-        uart_printf("%02X ", data[i]);
+        debug_print("%02X ", data[i]);
         cs[(i % 0x10)] = (data[i] >= 0x20 && data[i] <= 0x7e) ? data[i] : '.';
     }
 
@@ -343,14 +343,14 @@ void hexdump(unsigned char *data, size_t size)
     {
         if(i <= 0x8)
         {
-            uart_printf(" ");
+            debug_print(" ",0);
         }
         while(i++ < 0x10)
         {
-            uart_printf("   ");
+            debug_print("   ",0);
         }
     }
-    uart_printf(" |%s|\n", cs);
+    debug_print(" |%s|\n", cs);
 }
 
 
@@ -461,10 +461,15 @@ void setupFLASH() {
 /* Read U_ID register */
 void uid_read(struct u_id *id)
 {
+  if (QEMU_BUILD) // put an arbitrary ECID in qemu
+  {
+    memcpy(&id, (unsigned char*)0xFF, 23);
+  } else {
     id->off0 = MMIO16(U_ID + 0x0);
     id->off2 = MMIO16(U_ID + 0x2);
     id->off4 = MMIO32(U_ID + 0x4);
     id->off8 = MMIO32(U_ID + 0x8);
+  }
 }
 
 int checkUserCode(u32 usrAddr) {
@@ -502,6 +507,7 @@ int checkUserCode(u32 usrAddr) {
     int offset = Swap2Bytes(*(int*)((vu32 *)(usrAddr+0x60))) + 0x140;
     int i = 0x74;
     //feedface is our eof, hi mach ily
+    {0x50, 0xF5, 0x00, 0x68, 0x01}
     char cmpEnd[4] = {0xFE, 0xED, 0xFA, 0xCE};
     char buff[0x4];
     // read through memory, hash buff, and stop on feedface
@@ -571,7 +577,7 @@ void jumpToUser(u32 usrAddr) {
     // disable usb interrupts, clear them, turn off usb, set the disc pin
     // todo pick exactly what we want to do here, now its just a conservative
 
-    flashLock();
+    //flashLock();
     usbDsbISR();
     nvicDisableInterrupts();
 	
@@ -581,7 +587,7 @@ void jumpToUser(u32 usrAddr) {
 	
 // Does nothing, as PC12 is not connected on teh Maple mini according to the schemmatic     setPin(GPIOC, 12); // disconnect usb from host. todo, macroize pin
     systemReset(); // resets clocks and periphs, not core regs
-    SET_REG(AFIO_MAPR,(GET_REG(AFIO_MAPR) & ~AFIO_MAPR_SWJ_CFG) | AFIO_MAPR_SWJ_CFG_NO_JTAG_NO_SW);// Try to disable SWD AND JTAG so we can use those pins (not sure if this works).
+    //SET_REG(AFIO_MAPR,(GET_REG(AFIO_MAPR) & ~AFIO_MAPR_SWJ_CFG) | AFIO_MAPR_SWJ_CFG_NO_JTAG_NO_SW);// Try to disable SWD AND JTAG so we can use those pins (not sure if this works).
     setMspAndJump(usrAddr);
 }
 

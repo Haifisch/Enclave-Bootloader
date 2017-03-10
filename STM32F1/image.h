@@ -92,7 +92,6 @@ typedef struct __ImageStruct {
     uint8_t*                imageAESIV;*/ // soon
 } ImageStruct;
 
-
 typedef struct {
 	uint32_t	itTag;
 	uint32_t	itSkipDistance;
@@ -102,4 +101,4 @@ typedef struct {
 
 int imageCheckFromAddress(
         ImageObjectHandle *newHandle,
-        uint32_t flashAddress, bool shouldEraseFlashOnFail);
+        vu32 flashAddress, bool shouldEraseFlashOnFail);

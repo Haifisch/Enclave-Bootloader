@@ -17,13 +17,13 @@ ST_LIB = stm32_lib
 ST_USB = usb_lib
 
 # Optimization level [0,1,2,3,s]
-OPT ?= 3
-#DEBUG = 1
+OPT ?= s
+DEBUG = 0
 #DEBUG = dwarf-2
 
 INCDIRS = ./$(ST_LIB) ./$(ST_USB) ./$(ST_LIB)/includes ./25519
 
-CFLAGS = -DDEBUG=1 $(DEBUG)
+CFLAGS = -DDEBUG=$(DEBUG)
 CFLAGS += -O$(OPT)
 CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += -Wall -Wimplicit 
@@ -171,7 +171,7 @@ copy_maple-rev5:
 	
 build_generic-pc13: TARGETFLAGS= -DTARGET_GENERIC_F103_PC13
 # Set the linker script
-build_generic-pc13: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld
+build_generic-pc13: LDFLAGS +=-T$(ST_LIB)/qemu.ld
 build_generic-pc13: elf bin lss sym
 copy_generic-pc13: 
 	@echo

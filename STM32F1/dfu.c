@@ -273,7 +273,13 @@ bool dfuUpdateByRequest(void) {
                     dfuAppStatus.bState = dfuERROR;
                 }*/
                 ImageObjectHandle imageHandle;
-                int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 1);
+                int ret;
+                if (DEBUG)
+                {
+                    ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
+                } else {
+                    ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 1);
+                }
                 switch (ret)
                 {
                     case kImageImageIsTrusted:

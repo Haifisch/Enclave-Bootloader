@@ -28,6 +28,8 @@
 #include "interrupts.h"
 #include "sha256.h"
 #include "div.h"
+#include "mailbox.h"
+
 void GPIO_Config();
 
 void UU_PutChar(USART_TypeDef* USARTx, uint8_t ch)
@@ -130,19 +132,16 @@ void printVersionHeader() {
 }
 
 void MemManage_Handler(void) {
-        uart_printf("got fault!\n");
     /* Go to infinite loop when Memory Manage exception occurs */
     while (1);
 }
 
 void BusFault_Handler(void) {
-        uart_printf("got fault!\n");
     /* Go to infinite loop when Bus Fault exception occurs */
     while (1);
 }
 
 void UsageFault_Handler(void) {
-        uart_printf("got fault!\n");
     /* Go to infinite loop when Usage Fault exception occurs */
     while (1);
 }
@@ -179,49 +178,6 @@ void jumpDFU(u32 usrAddr) {
     usrMain();                                /* go! */
 }
 
-void hard_fault_handler_c (unsigned int * hardfault_args)
-{
-  unsigned int stacked_r0;
-  unsigned int stacked_r1;
-  unsigned int stacked_r2;
-  unsigned int stacked_r3;
-  unsigned int stacked_r4;
-  unsigned int stacked_r5;
-  unsigned int stacked_r10;
-  unsigned int stacked_r11;  
-  unsigned int stacked_r12;
-  unsigned int stacked_lr;
-  unsigned int stacked_pc;
-  unsigned int stacked_psr;
-
-  stacked_r0 = ((unsigned long) hardfault_args[0]);
-  stacked_r1 = ((unsigned long) hardfault_args[1]);
-  stacked_r2 = ((unsigned long) hardfault_args[2]);
-  stacked_r3 = ((unsigned long) hardfault_args[3]);
-  stacked_r4 = ((unsigned long) hardfault_args[4]);
-  stacked_r5 = ((unsigned long) hardfault_args[5]);
-  stacked_r10 = ((unsigned long) hardfault_args[10]);
-  stacked_r11 = ((unsigned long) hardfault_args[11]);
-  stacked_r12 = ((unsigned long) hardfault_args[4]);
-  stacked_lr = ((unsigned long) hardfault_args[5]);
-  stacked_pc = ((unsigned long) hardfault_args[6]);
-  stacked_psr = ((unsigned long) hardfault_args[7]);
-
-
-  uart_printf("R0 = 0x%x\t\tR1 = 0x%x\n", stacked_r0, stacked_r1);
-  uart_printf("R2 = 0x%x\t\tR3 = 0x%x\n", stacked_r2, stacked_r3);
-  uart_printf("R4 = 0x%x\t\tR5 = 0x%x\n", stacked_r4, stacked_r5);
-  uart_printf("R10 = 0x%x\tR11 = 0x%x\n", stacked_r10, stacked_r11);
-  uart_printf("R12 =0x%x\t\tPSR = 0x%x\n", stacked_r12, stacked_psr);
-  uart_printf("LR [R14] = 0x%x  subroutine call return address\n", stacked_lr);
-  uart_printf("PC [R15] = 0x%x  program counter\n", stacked_pc);
-  uart_printf ("BFAR = 0x%x\tCFSR = 0x%x\n", (*((volatile unsigned long *)(0xE000ED38))), (*((volatile unsigned long *)(0xE000ED28))));
-  uart_printf ("HFSR = 0x%x\t\tDFSR = 0x%x\n", (*((volatile unsigned long *)(0xE000ED2C))), (*((volatile unsigned long *)(0xE000ED30))));
-  uart_printf ("AFSR = 0x%x\t\tSCB_SHCSR = 0x%x\n", (*((volatile unsigned long *)(0xE000ED3C))), SCB->SHCSR);
-
-  jumpDFU(0x08000000); // 
-  while (1);
-}
 
 void panic() {
   DEBUG_PRINTLN("Panicking!!!\n");
@@ -254,9 +210,6 @@ void uid_read(struct u_id *id)
 }
 
 int main(void) {
-    uint8_t signing_test_key[32] = {0x6F, 0x3C, 0x89, 0x7F, 0xEA, 0xE1, 0x3A, 0x8A, 0x53, 0x4B, 0x83, 0xE2, 0x9B, 0xCE, 0x81, 0x79, 0x4A, 0x50, 0x98, 0x08, 0x4F, 0x4F, 0xF9, 0xF8, 0xB1, 0xB2, 0x8B, 0x0B, 0x82, 0x86, 0xEF, 0x97};
-    uint8_t signing_test_pub[32] = {0xe5, 0x1e, 0x4e, 0x71, 0x5e, 0x37, 0xad, 0xea, 0x47, 0x81, 0x75, 0x6b, 0xb9, 0xc8, 0xae, 0xdc, 0x94, 0xc9, 0xa0, 0xf3, 0x6a, 0x79, 0x0b, 0x8b, 0x40, 0xa2, 0x7e, 0xd1, 0x9d, 0xdd, 0x46, 0x74};
-
     // Setup STM32 system (clock, PLL and Flash configuration)
     SystemInit();
     // Setup the GPIOs
@@ -265,8 +218,10 @@ int main(void) {
     usart_init();
 
     // Continue boot process
-    uart_printf("\r\nOS INIT\r\n");
+    uart_printf("\n\n\nOS INIT\n");
     printVersionHeader();
+
+    mailboxTestSend();
 
     GPIOC->ODR ^= GPIO_Pin_13; // Turn boot status LED on
 
@@ -281,7 +236,7 @@ int main(void) {
     struct u_id id;
     uid_read(&id);
 
-    DEBUG_PRINTLN("Unique ID: %X%X%X%X\n", id.off0, id.off2, id.off4, id.off8);
+    DEBUG_PRINTLN("ECID: %X%X%X%X\n", id.off0, id.off2, id.off4, id.off8);
 
     // Get public key from unique id and then hash it
     uint8_t public[32];

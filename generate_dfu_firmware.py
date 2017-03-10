@@ -24,7 +24,7 @@ def sha256_checksum(filename, block_size=8):
     f = open(filename, 'rb+')
     for block in iter(lambda: f.read(block_size), b''):
         sha256.update(block)
-    sha256.update("FF566725748887167142607")
+    #sha256.update("FF566725748887167142607")
     #sha256.update(b"41414141414141414141414")
     f.close()
     return sha256.hexdigest()
@@ -45,17 +45,40 @@ def Dump(n):
   return s.decode('hex')
 
 def main():
-    for f in sys.argv[1:]:
-        checksum = sha256_checksum(f)
-        print(f + '\t' + checksum)
-        size = os.stat(f).st_size 
-        print("file size: "+ hex(size))
+    #for f in sys.argv[1:]:
+    #    checksum = sha256_checksum(f)
+    #    print(f + '\t' + checksum)
+    #    size = os.stat(f).st_size 
+    #    print("file size: "+ hex(size))
 
     original = open(sys.argv[1], "r")
-    firmware_buffer = original.read()
-    dfuFile = open(sys.argv[1]+".dfu.bin", "wb")
-    dfuFile.write(unhexlify(checksum))
+    stage1Buffer = original.read()
 
+    qemuFile = open(sys.argv[3], "wb+")
+    qemuFile.write(stage1Buffer);
+
+    original.close();
+
+    currentOffset = qemuFile.tell()
+    diff = 0x8000 - currentOffset
+    if currentOffset > 0x8000:
+        print "Stage 1 image too large for our scheme!"
+        return 0
+
+    i = 0
+    while i < diff:
+        qemuFile.write(Dump(0xFF));
+        i += 1
+
+    mainOS = open(sys.argv[2], "r")
+    mainOSBuffer = mainOS.read()
+
+    qemuFile.write(mainOSBuffer);
+    qemuFile.close();
+
+
+
+def dead():
     keydata = open("dev_signing_key","rb").read()
     signing_key = ed25519.SigningKey(keydata)
     arry = array.array('B', signing_key.to_bytes())

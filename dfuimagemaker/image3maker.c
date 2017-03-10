@@ -41,6 +41,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <getopt.h>
 #include <stdint.h>
@@ -126,7 +127,7 @@ static char *imageVersion = NULL, *imageDomain = NULL, *imageProduction = NULL;
 static char *hardwareEpoch = NULL, *chipType = NULL, *boardType = NULL;
 static char *uniqueIdentifier = NULL, *aesKey = NULL, *aesIv = NULL;
 static char *certificateBlob = NULL, *imageSecurityEpoch = NULL;
-
+static bool dontHashInECIDPlease = 0;
 static inline void hex_to_bytes(const char* hex, uint8_t** buffer, size_t* bytes) {
 	*bytes = strlen(hex) / 2;
 	*buffer = (uint8_t*) malloc(*bytes);
@@ -171,7 +172,8 @@ int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
     while((bytesRead = fread(buffer, 1, bufSize, file)))
     {
         sha256_update(&sha256, buffer, bytesRead);
-    }
+    }   
+    
     sha256_update(&sha256, uniqueIdentifier, 23);
     sha256_finish(&sha256, output);
 
@@ -511,6 +513,7 @@ static int process_options(int argc, char* argv[])
             {"imageVersion",    required_argument, 0, 'v'},
             {"imageProduction", required_argument, 0, 'p'},
             {"uniqueIdentifier", required_argument, 0, 'e'},
+            {"dontHashInECID", required_argument, 0, 'q'},
             {"aesKey",          required_argument, 0, 'a'},
             {"aesIv",           required_argument, 0, 'i'},
             {"outputFile",      required_argument, 0, 'o'},
@@ -518,7 +521,7 @@ static int process_options(int argc, char* argv[])
         };
         int option_index = 0;
         
-        c = getopt_long(argc, argv, "c:f:t:v:d:p:h:y:b:s:e:a:i:o:",
+        c = getopt_long(argc, argv, "c:f:t:v:d:p:h:y:b:s:e:q:a:i:o:",
                         user_options, &option_index);
         
         if(c == -1)
@@ -542,6 +545,9 @@ static int process_options(int argc, char* argv[])
                 break;
             case 'v':
                 imageVersion = optarg;
+                break;
+            case 'q':
+                dontHashInECIDPlease = 1;
                 break;
             case 'd':
                 imageDomain = optarg;

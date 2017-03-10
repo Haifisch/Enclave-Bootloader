@@ -30,6 +30,9 @@
 #include "cortexm3_macro.h"
 #include "common.h"
 
+// qemu build disables ECID hash step check 
+#define QEMU_BUILD 1
+
 /* macro'd register and peripheral definitions */
 #define RCC   ((u32)0x40021000)
 #define FLASH ((u32)0x40022000)
@@ -107,7 +110,6 @@
 #define USB_LP_IRQ  ((u8)0x14)
 #define TIM2_IRQ    ((u8)0x1C)
 
-
 /* AIRCR  */
 #define AIRCR_RESET         0x05FA0000
 #define AIRCR_RESET_REQ     (AIRCR_RESET | (u32)0x04);
@@ -124,9 +126,12 @@
 #define AFIO_MAPR_SWJ_CFG_NO_JTAG_SW           (0x2 << 24)
 #define AFIO_MAPR_SWJ_CFG_NO_JTAG_NO_SW        (0x4 << 24)
 
-        
-
-
+#ifdef DEBUG
+    #define debug_print(fmt, ...) \
+            do { if (DEBUG) uart_printf(fmt , ## __VA_ARGS__); } while (0)
+#else
+    #define debug_print(fmt, ...)
+#endif
 // more bit twiddling to set Control register bits
 #define CR_SHITF(pin) ((pin - 8*(pin>7))<<2)
 
