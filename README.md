@@ -44,19 +44,9 @@ Using the Enclave DFU Flasher, upload the signed main OS image to the board over
 On DFU upload and on boot the secondary main OS image data is hashed completely -- before calling sha256_finish we hash in the ECID as well. 
 
 Basic boot validation scheme flow
-> Bootloader Init -> imageCheckFromAddress(mainOS_image_container_address)
->						-> check header for magic 
->							-> return invalid
->						-> check image type
->							-> return invalid
->						-> move our cursor to the beginning of the image data 
->						-> start hashing the image data
->						-> stop at the end of the image
->						-> read back ECID -> hash value in 
->						-> finalize hash
->						-> copy our signature 
->						-> edsign_verify our calculated hash against our copied signature
->						-> return image OK
+
+![imageCheckFromAddress](imageCheckFromAddress.svg)
+
 
 > If the validation fails on DFU upload the device wipes the main OS flash pages (however this is currently broken) and returns to the DFU mode spin.
 > If the validation fails on boot then we spin in DFU mode assuming the main OS has been tampered with, expects a reupload and revalidation. 
