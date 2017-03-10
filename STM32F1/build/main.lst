@@ -401,11 +401,11 @@
  242              		.file 9 "dfu.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\haifisch\AppData\Local\Temp\ccrv34PA.s:19     .text.print_hash:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccrv34PA.s:24     .text.print_hash:00000000 print_hash
-C:\Users\haifisch\AppData\Local\Temp\ccrv34PA.s:38     .text.startup.main:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccrv34PA.s:43     .text.startup.main:00000000 main
-C:\Users\haifisch\AppData\Local\Temp\ccrv34PA.s:203    .text.startup.main:000000c0 $d
+C:\Users\haifisch\AppData\Local\Temp\ccEJ8LfH.s:19     .text.print_hash:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccEJ8LfH.s:24     .text.print_hash:00000000 print_hash
+C:\Users\haifisch\AppData\Local\Temp\ccEJ8LfH.s:38     .text.startup.main:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccEJ8LfH.s:43     .text.startup.main:00000000 main
+C:\Users\haifisch\AppData\Local\Temp\ccEJ8LfH.s:203    .text.startup.main:000000c0 $d
                             *COM*:00000004 wTransferSize
                      .debug_frame:00000010 $d
 

@@ -10,6 +10,7 @@
  */
 
 typedef struct enclave_message {
+	uint8_t		status;
 	uint8_t		endpoint;
 	uint8_t		tag;
 	uint8_t		opcode;

@@ -591,13 +591,13 @@
  415              		.file 11 "./25519/edsign.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 image.c
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:19     .text.failErase:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:24     .text.failErase:00000000 failErase
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:64     .text.failErase:0000002c $d
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:74     .text.imageCheckFromAddress:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:79     .text.imageCheckFromAddress:00000000 imageCheckFromAddress
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:355    .text.imageCheckFromAddress:00000174 $d
-C:\Users\haifisch\AppData\Local\Temp\cceyZwRl.s:368    .data.rootCA:00000000 rootCA
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:19     .text.failErase:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:24     .text.failErase:00000000 failErase
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:64     .text.failErase:0000002c $d
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:74     .text.imageCheckFromAddress:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:79     .text.imageCheckFromAddress:00000000 imageCheckFromAddress
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:355    .text.imageCheckFromAddress:00000174 $d
+C:\Users\haifisch\AppData\Local\Temp\ccpHIg1r.s:368    .data.rootCA:00000000 rootCA
                             *COM*:00000004 wTransferSize
                      .debug_frame:00000010 $d
 
