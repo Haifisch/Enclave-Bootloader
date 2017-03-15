@@ -53,7 +53,6 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 	unsigned char imageBuffer[bufferSize];
     memset(imageBuffer, 0xFF, sizeof(imageBuffer));
     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
-    flashUnlock();
     memset(&state, 0, sizeof(state));
 
 	hdr = (ImageRootHeader *)imageBuffer;
@@ -89,9 +88,9 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 	}
 	state.flags = kImageImageWasInstantiated;
 
-	debug_print("dataSize: 0x0%X\n", (0x08008000+(hdr->header.dataSize)));
+	debug_print("dataSize: 0x%X\n", (hdr->header.dataSize));
 
-	state.cursor = (hdr->header.dataSize)+0x200;
+	state.cursor = hdr->header.dataSize;
 	state.lastTag = -1;
 
 	unsigned char sha256sum[32];
@@ -101,28 +100,42 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     sha256_context ctx;
     sha256_starts(&ctx);
 
-    int buffSize = 0x4;
+    int buffSize = 0x1;
     char buff[buffSize];
 
     int i = 0x84;
-    char cmpEnd[4] = {0x01, 0x00, 0x00, 0x00,}; 
-    hexdump((flashAddress+i), 0x20);
-    debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), ((hdr->header.dataSize) - 0x40));
-    while ((flashAddress+i) <= (flashAddress+state.cursor))
-    {
-      memset(buff, 0xFF, buffSize);
-      memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
-      if ((memmem(&buff, buffSize, &cmpEnd, buffSize) > 0) && ((flashAddress + hdr->header.dataSize) - 0x40) < (vu32 *)(flashAddress+i)) // our end of image should be somewhere around here
-      {
-      	sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
-      	debug_print("Hash Finish: %X\n", (flashAddress+i));
-      	hexdump((flashAddress+i), 0xC);
-      	break;
-      }
-      sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
-      i += 0x4;
-    }
+    char cmpEnd[5] = {0x01, 0x00, 0x00, 0x00, 0x00}; 
+    hexdump((flashAddress+i), 0x10);
 
+    int finish = hdr->header.dataSize + 0x84;
+    debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
+    while (i < finish)
+    {
+    	memset(buff, 0xFF, buffSize);
+    	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
+		/*
+		if ((flashAddress+i) >= (flashAddress + (hdr->header.dataSize))) // our end of image should be somewhere around here
+		{
+			if ((memmem(&buff, buffSize, &cmpEnd, buffSize) > 0)) {
+				sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize-1);
+		  	hexdump((vu32 *)(flashAddress+i), buffSize-1);
+		  	debug_print("Last block: %X\n", (flashAddress+i));
+		  	break;
+			}
+		hexdump((vu32 *)(flashAddress+i), buffSize);
+		}*/
+		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
+		i += 0x1;
+    }
+    debug_print("Ended at: %X\n", (flashAddress+i));
+    hexdump((vu32 *)(flashAddress+i), 0x10);
+    if ((flashAddress+i) != (flashAddress+finish))
+    {
+    	debug_print("Calculated hash is probably wrong...\n");
+    	state.flags = kImageImageHashCalcFailed;
+    	*newHandle = &state;
+		return(kImageImageHashCalcFailed);
+    }
     unsigned char uniqueID[0x17];
     if (!QEMU_BUILD)
     {
@@ -130,13 +143,9 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 	    uid_read(&id);
 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
 	    sha256_update(&ctx, uniqueID, 0x17);
-    } else {
-    	// QEMU builds get FF ECIDs
-    	memcpy(&uniqueID, (unsigned char*)"FFFFFFFFFFFFFFFFFFFFFFF", 0x17);
-	    sha256_update(&ctx, uniqueID, 0x17);
     }
 
-    debug_print("%s\n", uniqueID);
+    //debug_print("%s\n", uniqueID);
     
     sha256_finish(&ctx, sha256sum);
     print_hash(sha256sum);

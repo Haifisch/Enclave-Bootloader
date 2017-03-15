@@ -20,8 +20,10 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdarg.h>
+
 // Load CMSIS and peripheral library and configuration
 #include "stm32f10x.h"
+#include "printf_uart.h"
 #include "aes.h"
 #include "tests.h"
 #include "curve25519.h"
@@ -31,42 +33,6 @@
 #include "mailbox.h"
 
 void GPIO_Config();
-
-void UU_PutChar(USART_TypeDef* USARTx, uint8_t ch)
-{
-  while(!(USARTx->SR & USART_SR_TXE));
-  USARTx->DR = ch;  
-}
-
-void UU_PutString(USART_TypeDef* USARTx, uint8_t * str)
-{
-  while(*str != 0)
-  {
-    UU_PutChar(USARTx, *str);
-    str++;
-  }
-}
-
-void vprint(const char *fmt, va_list argp)
-{
-    char string[200];
-    if(0 < vsprintf(string,fmt,argp)) // build string
-    {
-        UU_PutString(USART1, (uint8_t*)string); // send message via UART
-
-    }
-}
-
-void uart_printf(const char *fmt, ...) // custom printf() function
-{
-    va_list argp;
-    va_start(argp, fmt);
-    vprint(fmt, argp);
-    va_end(argp);
-}
-
-#define DEBUG_PRINTLN(x, ...) \
-        if (DEBUG) { uart_printf(x, ## __VA_ARGS__); } 
 
 // A simple busy wait loop
 void Delay(volatile unsigned long delay);
@@ -131,21 +97,6 @@ void printVersionHeader() {
   uart_printf("=====================================\n");
 }
 
-void MemManage_Handler(void) {
-    /* Go to infinite loop when Memory Manage exception occurs */
-    while (1);
-}
-
-void BusFault_Handler(void) {
-    /* Go to infinite loop when Bus Fault exception occurs */
-    while (1);
-}
-
-void UsageFault_Handler(void) {
-    /* Go to infinite loop when Usage Fault exception occurs */
-    while (1);
-}
-
 #define SCB_VTOR (SCB+0x08)
 #define RCC_CR      RCC
 #define RCC_CFGR    (RCC + 0x04)
@@ -178,17 +129,6 @@ void jumpDFU(u32 usrAddr) {
     usrMain();                                /* go! */
 }
 
-
-void panic() {
-  DEBUG_PRINTLN("Panicking!!!\n");
-  __asm("MOV r0, sp");
-  __asm("BL hard_fault_handler_c");
-  //DEBUG_PRINTLN("Panic reason; %s\n", reason);
-  //DEBUG_PRINTLN("Panic caller; %s\n", caller);
-  //DEBUG_PRINTLN("Line number; %i", lineNumber);
-  while (1); // hang for panic, PROD devices should reset
-}
-
 struct u_id {
     uint16_t off0;
     uint16_t off2;
@@ -218,7 +158,7 @@ int main(void) {
     usart_init();
 
     // Continue boot process
-    uart_printf("\n\n\nOS INIT\n");
+    uart_printf("\n\nOS INIT\n");
     printVersionHeader();
 
     mailboxTestSend();
@@ -230,13 +170,13 @@ int main(void) {
     {
         panic("AES CBC Enc/Dec test failed, hanging...", __FILE__, __LINE__);
     }
-    DEBUG_PRINTLN("AES CBC Enc/Dec test passed.\n");
+    debug_print("AES CBC Enc/Dec test passed.\n");
 
     // Get unique ID
     struct u_id id;
     uid_read(&id);
 
-    DEBUG_PRINTLN("ECID: %X%X%X%X\n", id.off0, id.off2, id.off4, id.off8);
+    debug_print("ECID: %X%X%X%X\n", id.off0, id.off2, id.off4, id.off8);
 
     // Get public key from unique id and then hash it
     uint8_t public[32];
@@ -254,7 +194,7 @@ int main(void) {
     sha256_update(&ctx, secret, 32);
     sha256_finish(&ctx, sha256sum);
 
-    DEBUG_PRINTLN("Secret key hash: ");
+    debug_print("Secret key hash: ");
     print_hash(sha256sum);
 
     memset(sha256sum, 0xFF, sizeof(sha256sum));
@@ -262,15 +202,23 @@ int main(void) {
     sha256_update(&ctx, public, 32);
     sha256_finish(&ctx, sha256sum);
 
-    DEBUG_PRINTLN("Public key hash: ");
+    debug_print("Public key hash: ");
     print_hash(sha256sum);
 
     uart_printf("Waiting for host request...\n");
+
+    int a = 10;
+    int b = 0;
+    int c;
+    c = div(a, b);
+
+    uart_printf("we shouldn't be here\n");
     //panic("DEBUG PANIC", __FILE__, __LINE__);
-   // init_printf(NULL,putc_UART1);
-   // printf("waddup tho\n");
-    for(;;) {
-        
+    // init_printf(NULL,putc_UART1);
+    // printf("waddup tho\n");
+    for( ;; )
+    {
+
     }
 }
 
@@ -289,3 +237,4 @@ void GPIO_Config() {
 
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
+

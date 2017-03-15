@@ -301,7 +301,6 @@ void systemReset(void);
 void setupCLK(void);
 void setupLEDAndButton(void);
 void setupFLASH(void);
-int checkUserCode(u32 usrAddr);
 void jumpToUser(u32 usrAddr);
 int checkAndClearBootloaderFlag();
 

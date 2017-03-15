@@ -554,26 +554,26 @@
  584              		.file 4 "usb_descriptor.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 usb_descriptor.c
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:38     .data.usbStringDescriptor:00000000 usbStringDescriptor
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:170    .bss.u8_usbStringInterface:00000000 u8_usbStringInterface
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:470    .data.u8_usbStringAlt2:00000000 u8_usbStringAlt2
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:366    .data.u8_usbStringAlt1:00000000 u8_usbStringAlt1
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:242    .data.u8_usbStringAlt0:00000000 u8_usbStringAlt0
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:150    .data.u8_usbStringSerial:00000000 u8_usbStringSerial
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:218    .data.u8_usbStringProduct:00000000 u8_usbStringProduct
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:188    .data.u8_usbStringVendor:00000000 u8_usbStringVendor
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:93     .data.u8_usbStringLangId:00000000 u8_usbStringLangId
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:575    .data.usbConfigDescriptorDFU:00000000 usbConfigDescriptorDFU
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:101    .data.u8_usbConfigDescriptorDFU:00000000 u8_usbConfigDescriptorDFU
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:86     .data.usbFunctionalDescriptor:00000000 usbFunctionalDescriptor
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:175    .data.u8_usbFunctionalDescriptor:00000000 u8_usbFunctionalDescriptor
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:211    .data.usbDeviceDescriptorDFU:00000000 usbDeviceDescriptorDFU
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:63     .data.u8_usbDeviceDescriptorDFU:00000000 u8_usbDeviceDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:38     .data.usbStringDescriptor:00000000 usbStringDescriptor
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:170    .bss.u8_usbStringInterface:00000000 u8_usbStringInterface
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:470    .data.u8_usbStringAlt2:00000000 u8_usbStringAlt2
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:366    .data.u8_usbStringAlt1:00000000 u8_usbStringAlt1
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:242    .data.u8_usbStringAlt0:00000000 u8_usbStringAlt0
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:150    .data.u8_usbStringSerial:00000000 u8_usbStringSerial
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:218    .data.u8_usbStringProduct:00000000 u8_usbStringProduct
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:188    .data.u8_usbStringVendor:00000000 u8_usbStringVendor
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:93     .data.u8_usbStringLangId:00000000 u8_usbStringLangId
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:575    .data.usbConfigDescriptorDFU:00000000 usbConfigDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:101    .data.u8_usbConfigDescriptorDFU:00000000 u8_usbConfigDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:86     .data.usbFunctionalDescriptor:00000000 usbFunctionalDescriptor
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:175    .data.u8_usbFunctionalDescriptor:00000000 u8_usbFunctionalDescriptor
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:211    .data.usbDeviceDescriptorDFU:00000000 usbDeviceDescriptorDFU
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:63     .data.u8_usbDeviceDescriptorDFU:00000000 u8_usbDeviceDescriptorDFU
                             *COM*:00000004 wTransferSize
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:35     .data.usbStringDescriptor:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:83     .data.usbFunctionalDescriptor:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:171    .bss.u8_usbStringInterface:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:208    .data.usbDeviceDescriptorDFU:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccArOmXB.s:572    .data.usbConfigDescriptorDFU:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:35     .data.usbStringDescriptor:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:83     .data.usbFunctionalDescriptor:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:171    .bss.u8_usbStringInterface:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:208    .data.usbDeviceDescriptorDFU:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cc5JuI3d.s:572    .data.usbConfigDescriptorDFU:00000000 $d
 
 NO UNDEFINED SYMBOLS

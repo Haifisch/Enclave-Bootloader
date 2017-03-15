@@ -353,6 +353,13 @@ void hexdump(unsigned char *data, size_t size)
     debug_print(" |%s|\n", cs);
 }
 
+void print_hash(unsigned char hash[])
+{
+   int idx;
+   for (idx=0; idx < 32; idx++)
+      debug_print("%02x",hash[idx]);
+   debug_print("\n", 0);
+}
 
 #endif
 void uartInit(void) {
@@ -470,87 +477,6 @@ void uid_read(struct u_id *id)
     id->off4 = MMIO32(U_ID + 0x4);
     id->off8 = MMIO32(U_ID + 0x8);
   }
-}
-
-int checkUserCode(u32 usrAddr) {
-    /* deprecated 
-    int imageCheckFromAddress(
-        ImageObjectHandle *newHandle,
-        uint32_t flashAddress);*/
-    // get hash written to top of stage 2
-    /*unsigned char writtenHash[32];
-    memset(writtenHash, 0xFF, sizeof(writtenHash));
-    memcpy(writtenHash, (vu32 *)usrAddr, 0x20);
-
-    // hax to see if our firmware is where it should be
-    if (!memcmp(writtenHash, 0xFF, 32))
-    {
-      return 0x0;
-    }
-
-    // get signature from stage 2 image
-    uint8_t signature[EDSIGN_SIGNATURE_SIZE];
-    memset(signature, 0xFF, sizeof(signature));
-    memcpy(signature,  (vu32 *)(usrAddr+0x20), 0x40);
-
-    // prepare hash
-    unsigned char sha256sum[32];
-    uint8_t input[0x5C];
-
-    memset(sha256sum, 0xFF, sizeof(sha256sum));
-    memset(input, 0xFF, sizeof(input));
-
-    sha256_context ctx;
-    sha256_starts(&ctx);
-
-    // get expected size
-    int offset = Swap2Bytes(*(int*)((vu32 *)(usrAddr+0x60))) + 0x140;
-    int i = 0x74;
-    //feedface is our eof, hi mach ily
-    {0x50, 0xF5, 0x00, 0x68, 0x01}
-    char cmpEnd[4] = {0xFE, 0xED, 0xFA, 0xCE};
-    char buff[0x4];
-    // read through memory, hash buff, and stop on feedface
-    while ((usrAddr+i) <= (usrAddr+offset))
-    {
-      memset(buff, 0xFF, 0x4);
-      memcpy(buff, (char *)(usrAddr+i), 0x4);
-      if (memmem(&buff, 0x4, &cmpEnd, 4) != 0)
-      {
-        sha256_update(&ctx, (vu32 *)(usrAddr+i), 0x4);
-        break;
-      }
-      sha256_update(&ctx, (vu32 *)(usrAddr+i), 0x4);
-      i += 0x4;
-    }
-
-    // hash in our unique ID
-    struct u_id id;
-    uid_read(&id);
-    unsigned char uniqueID[23];
-    sprintf(uniqueID,"%X", id.off0, id.off2, id.off4, id.off8);
-    uart_printf("%X%X%X%X\n", id.off0, id.off2, id.off4, id.off8);
-    sha256_update(&ctx, uniqueID, 23);
-    sha256_finish(&ctx, sha256sum);
-
-    print_hash(sha256sum);
-
-  uint8_t rootCA[32] = {
-       0xf3,0x47,0xb9,0x5e,0x5f,0x03,0x62,0x13,
-       0xf3,0x88,0x72,0x73,0xea,0xcf,0x91,0x73,
-       0x35,0xda,0x72,0x68,0xae,0xf6,0x98,0x90,
-       0x51,0x87,0xff,0xea,0xd6,0xb5,0x5b,0x32
-    };
-    // verify signature against recalc hash
-    if (!edsign_verify(signature, rootCA, sha256sum, 0x20) > 0) {
-        return 0x1;
-    }
-    // verify written hash against recalc hash
-    if (memcmp(sha256sum, writtenHash, 32)){
-        return 0x2;
-    }*/
-
-    return 0x3;
 }
 
 void setMspAndJump(u32 usrAddr) {

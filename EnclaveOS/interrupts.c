@@ -56,29 +56,50 @@ void hard_fault_handler_c (unsigned int * hardfault_args)
   while (1);
 }
 
-void HardFault_Handler(void) {
+void panic() {
+  uart_printf("Panicking!!!\n");
+  __asm("MOV r0, sp");
   __asm("BL hard_fault_handler_c");
+  //DEBUG_PRINTLN("Panic reason; %s\n", reason);
+  //DEBUG_PRINTLN("Panic caller; %s\n", caller);
+  //DEBUG_PRINTLN("Line number; %i", lineNumber);
+  while (1); // hang for panic, PROD devices should reset
+}
+
+void HardFault_Handler(void) {
+  panic();
 }
 
 void NMI_Handler(void) {
-	__asm("BL hard_fault_handler_c");
+  panic();
 }
 
-
 void SVC_Handler(void) {
-	__asm("BL hard_fault_handler_c");
+  panic();
 }
 
 void DebugMon_Handler(void) {
-	__asm("BL hard_fault_handler_c");
+  panic();
 }
 
 void PendSV_Handler(void) {
-	__asm("BL hard_fault_handler_c");
+  panic();
+}
+
+void MemManage_Handler(void) {
+  panic();
+}
+
+void BusFault_Handler(void) {
+  panic();
+}
+
+void UsageFault_Handler(void) {
+  panic();
 }
 
 uint32_t msTicks = 0;                                       /* Variable to store millisecond ticks */
-                                            
+                                        
 void SysTick_Handler(void)  {                               
   msTicks++;                                                   
 }

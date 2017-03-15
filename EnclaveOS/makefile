@@ -48,7 +48,7 @@ TARGET_ARCH = -mcpu=cortex-m3 -mthumb
 
 INCLUDE_DIRS = -I . -I lib/STM32F10x_StdPeriph_Driver/inc\
  -I lib/STM32F10x_StdPeriph_Driver -I lib/CMSIS_CM3\
- -I lib/STM32_USB-FS-Device_Driver/inc
+ -I lib/STM32_USB-FS-Device_Driver/inc\
 
 LIBRARY_DIRS = -L lib/STM32F10x_StdPeriph_Driver/\
  -L lib/STM32_USB-FS-Device_Driver
@@ -79,7 +79,7 @@ ASFLAGS = $(COMPILE_OPTS)
 LD = arm-none-eabi-gcc
 #stm32.ld
 #qemu
-LDFLAGS = -Wl,--gc-sections,-Map=$(MAIN_MAP),-cref -T stm32.ld $(INCLUDE_DIRS)\
+LDFLAGS = -Wl,--gc-sections,-Map=$(MAIN_MAP),-cref -T qemu.ld $(INCLUDE_DIRS)\
  $(LIBRARY_DIRS) $(LIBM) --specs=rdimon.specs -lgcc -lc -lm -lrdimon 
 
 AR = arm-none-eabi-ar
@@ -116,7 +116,7 @@ $(MAIN_OUT): $(MAIN_OBJS) $(FWLIB) $(USBLIB)
 $(MAIN_OBJS): $(wildcard *.h) $(wildcard lib/STM32F10x_StdPeriph_Driver/*.h)\
  $(wildcard lib/STM32F10x_StdPeriph_Driver/inc/*.h)\
  $(wildcard lib/CMSIS_CM3/*.h)\
- $(wildcard lib/STM32_USB-FS-Device_Driver/inc/*.h)
+ $(wildcard lib/STM32_USB-FS-Device_Driver/inc/*.h)\
 
 $(MAIN_BIN): $(MAIN_OUT)
 	$(OBJCOPY) $(OBJCOPYFLAGS) $< $@

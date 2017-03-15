@@ -58,14 +58,6 @@
 
 extern volatile dfuUploadTypes_t userUploadType;
 
-void print_hash(unsigned char hash[])
-{
-   int idx;
-   for (idx=0; idx < 32; idx++)
-      debug_print("%02x",hash[idx]);
-   debug_print("\n", 0);
-}
-
 int main() 
 {
 	bool no_user_jump = FALSE;
@@ -108,6 +100,11 @@ int main()
 			no_user_jump = TRUE;
 			break;
 
+		case kImageImageHashCalcFailed:
+			uart_printf("Hash calculation failed... waiting in DFU\n");
+			no_user_jump = TRUE;
+			break;
+			
 		default:
 			break;
 	}

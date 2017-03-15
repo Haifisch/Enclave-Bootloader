@@ -165,7 +165,7 @@ int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
 
     sha256_context sha256;
     sha256_starts(&sha256);
-    const int bufSize = 4;
+    const int bufSize = 5;
     char* buffer = malloc(bufSize);
     int bytesRead = 0;
     if(!buffer) return -1;
@@ -173,8 +173,10 @@ int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
     {
         sha256_update(&sha256, buffer, bytesRead);
     }   
-    
-    sha256_update(&sha256, uniqueIdentifier, 23);
+    if (!dontHashInECIDPlease)
+    {
+        sha256_update(&sha256, uniqueIdentifier, 0x17);
+    }
     sha256_finish(&sha256, output);
 
     fclose(file);
@@ -263,9 +265,7 @@ static void *image3_reserve_version(uint32_t tag, uint32_t length)
     header->size = len;
     header->magic = tag;
     
-    image3core.rootHeader->header.size = size;
-    image3core.rootHeader->header.dataSize += len;
-    
+    image3core.rootHeader->header.size = size;    
     return (void*)(header + 1);
 }
 
@@ -292,7 +292,6 @@ static void *image3_reserve_data(uint32_t tag, uint32_t length)
     header->magic = tag;
     
     image3core.rootHeader->header.size = size;
-    image3core.rootHeader->header.dataSize += len;
     
     return (void*)(header + 1);
 }
@@ -315,9 +314,7 @@ static void *image3_reserve_tag(uint32_t tag, uint32_t length)
     header->size = len;
     header->magic = tag;
     
-    image3core.rootHeader->header.size = size;
-    image3core.rootHeader->header.dataSize += len;
-    
+    image3core.rootHeader->header.size = size;    
     
     return (void*)(header + 1);
 }
@@ -341,8 +338,6 @@ static void *image3_reserve_ecid(uint32_t tag, uint32_t length)
     header->magic = tag;
     
     image3core.rootHeader->header.size = size;
-    image3core.rootHeader->header.dataSize += len;
-    
     return (void*)(header + 1);
 }
 
@@ -363,8 +358,6 @@ static void *image3_reserve_type(uint32_t tag, uint32_t length)
     header->magic = tag;
     
     image3core.rootHeader->header.size = size;
-    image3core.rootHeader->header.dataSize += len;
-    
     return (void*)(header + 1);
 }
 
@@ -377,6 +370,11 @@ static void create_image(void)
     image3core.rootHeader->header.magic = kImageMagic;    
     image3core.rootHeader->header.size = sizeof(ImageRootHeader);
     image3core.rootHeader->signing.imageType = image3core.imageType;
+    
+    FILE *fp = fopen(inputFile, "rb");
+    fseek(fp, 0L, SEEK_END);
+    image3core.rootHeader->header.dataSize = ftell(fp);
+    fclose(fp);
 
     unsigned char calc_hash[32];
 
@@ -396,10 +394,10 @@ static void create_image(void)
     print_hex("Secret", secret, sizeof(secret));
     print_hex("Public", pub, sizeof(pub));
 
-    memcpy(msg, calc_hash, 32);
+    //memcpy(msg, calc_hash, 32);
 
     print_hex("Hash to sign", msg, sizeof(msg));
-    edsign_sign(signature, pub, secret, msg, 32);
+    edsign_sign(signature, pub, secret, calc_hash, 32);
 
     assert(edsign_verify(signature, pub, calc_hash, 32));
 
@@ -444,8 +442,9 @@ static void create_image(void)
     }
     */
     /* AES stuff... TODO */
-    printf("Total Size:       %d bytes\n", image3core.rootHeader->header.size);
-    printf("Data Size:        %d bytes\n", image3core.rootHeader->header.dataSize);
+
+    printf("Total Size:       0x%X bytes\n", image3core.rootHeader->header.size);
+    printf("Data Size:        0x%X bytes\n", image3core.rootHeader->header.dataSize);
     print_hex("Signature", image3core.rootHeader->signing.imageSignature, sizeof(image3core.rootHeader->signing.imageSignature));
 }
 

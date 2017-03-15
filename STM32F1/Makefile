@@ -18,7 +18,7 @@ ST_USB = usb_lib
 
 # Optimization level [0,1,2,3,s]
 OPT ?= s
-DEBUG = 0
+DEBUG = 1
 #DEBUG = dwarf-2
 
 INCDIRS = ./$(ST_LIB) ./$(ST_USB) ./$(ST_LIB)/includes ./25519

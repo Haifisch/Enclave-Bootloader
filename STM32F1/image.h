@@ -28,6 +28,7 @@ typedef struct _ImageInternalState {
 # define kImageImageRejectSignature 0x2
 # define kImageImageIsTrusted		0x3	
 # define kImageImageMissingMagic 	0x4
+# define kImageImageHashCalcFailed  0x5
 	size_t				allocSize;
 
 	int				cursor;
