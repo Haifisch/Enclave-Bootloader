@@ -1753,72 +1753,72 @@
  1156              		.file 13 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\str
 DEFINED SYMBOLS
                             *ABS*:00000000 dfu.c
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:19     .text.dfuInit:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:24     .text.dfuInit:00000000 dfuInit
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:106    .text.dfuInit:00000058 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:19     .text.dfuInit:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:24     .text.dfuInit:00000000 dfuInit
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:106    .text.dfuInit:00000058 $d
                             *COM*:00000020 sha256sum
                             *COM*:00000001 code_copy_lock
                             *COM*:0000005c input
                             *COM*:00000068 ctx
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:122    .text.dfuUpdateByReset:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:127    .text.dfuUpdateByReset:00000000 dfuUpdateByReset
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:188    .text.dfuUpdateByReset:0000003c $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:194    .text.dfuUpdateByTimeout:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:199    .text.dfuUpdateByTimeout:00000000 dfuUpdateByTimeout
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:211    .text.dfuCopyState:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:216    .text.dfuCopyState:00000000 dfuCopyState
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:242    .text.dfuCopyState:00000010 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:248    .text.dfuCopyStatus:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:253    .text.dfuCopyStatus:00000000 dfuCopyStatus
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:279    .text.dfuCopyStatus:00000010 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:285    .text.dfuCopyDNLOAD:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:290    .text.dfuCopyDNLOAD:00000000 dfuCopyDNLOAD
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:324    .text.dfuCopyDNLOAD:0000001c $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:331    .text.dfuCopyUPLOAD:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:336    .text.dfuCopyUPLOAD:00000000 dfuCopyUPLOAD
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:372    .text.dfuCopyUPLOAD:00000024 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:380    .text.dfuCopyBufferToExec:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:385    .text.dfuCopyBufferToExec:00000000 dfuCopyBufferToExec
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:449    .text.dfuCopyBufferToExec:00000048 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:457    .text.dfuUpdateByRequest:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:462    .text.dfuUpdateByRequest:00000000 dfuUpdateByRequest
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:714    .text.dfuUpdateByRequest:00000126 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:718    .text.dfuUpdateByRequest:0000012a $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:918    .text.dfuUpdateByRequest:00000224 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:937    .text.dfuGetState:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:942    .text.dfuGetState:00000000 dfuGetState
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:957    .text.dfuGetState:00000008 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:962    .text.dfuSetState:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:967    .text.dfuSetState:00000000 dfuSetState
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:982    .text.dfuSetState:00000008 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:987    .text.dfuUploadStarted:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:992    .text.dfuUploadStarted:00000000 dfuUploadStarted
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1007   .text.dfuUploadStarted:00000008 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1012   .text.dfuUploadDone:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1017   .text.dfuUploadDone:00000000 dfuUploadDone
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1044   .text.dfuUploadDone:00000018 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1049   .text.dfuFinishUpload:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1054   .text.dfuFinishUpload:00000000 dfuFinishUpload
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1134   .bss.dfuBusy:00000000 dfuBusy
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1122   .bss.userUploadType:00000000 userUploadType
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:122    .text.dfuUpdateByReset:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:127    .text.dfuUpdateByReset:00000000 dfuUpdateByReset
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:188    .text.dfuUpdateByReset:0000003c $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:194    .text.dfuUpdateByTimeout:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:199    .text.dfuUpdateByTimeout:00000000 dfuUpdateByTimeout
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:211    .text.dfuCopyState:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:216    .text.dfuCopyState:00000000 dfuCopyState
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:242    .text.dfuCopyState:00000010 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:248    .text.dfuCopyStatus:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:253    .text.dfuCopyStatus:00000000 dfuCopyStatus
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:279    .text.dfuCopyStatus:00000010 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:285    .text.dfuCopyDNLOAD:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:290    .text.dfuCopyDNLOAD:00000000 dfuCopyDNLOAD
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:324    .text.dfuCopyDNLOAD:0000001c $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:331    .text.dfuCopyUPLOAD:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:336    .text.dfuCopyUPLOAD:00000000 dfuCopyUPLOAD
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:372    .text.dfuCopyUPLOAD:00000024 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:380    .text.dfuCopyBufferToExec:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:385    .text.dfuCopyBufferToExec:00000000 dfuCopyBufferToExec
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:449    .text.dfuCopyBufferToExec:00000048 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:457    .text.dfuUpdateByRequest:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:462    .text.dfuUpdateByRequest:00000000 dfuUpdateByRequest
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:714    .text.dfuUpdateByRequest:00000126 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:718    .text.dfuUpdateByRequest:0000012a $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:918    .text.dfuUpdateByRequest:00000224 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:937    .text.dfuGetState:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:942    .text.dfuGetState:00000000 dfuGetState
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:957    .text.dfuGetState:00000008 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:962    .text.dfuSetState:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:967    .text.dfuSetState:00000000 dfuSetState
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:982    .text.dfuSetState:00000008 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:987    .text.dfuUploadStarted:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:992    .text.dfuUploadStarted:00000000 dfuUploadStarted
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1007   .text.dfuUploadStarted:00000008 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1012   .text.dfuUploadDone:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1017   .text.dfuUploadDone:00000000 dfuUploadDone
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1044   .text.dfuUploadDone:00000018 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1049   .text.dfuFinishUpload:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1054   .text.dfuFinishUpload:00000000 dfuFinishUpload
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1134   .bss.dfuBusy:00000000 dfuBusy
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1122   .bss.userUploadType:00000000 userUploadType
                             *COM*:00000020 rootCA
                             *COM*:00000004 wTransferSize
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1077   .bss.recvBuffer:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1081   .bss.recvBuffer:00000000 recvBuffer
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1084   .bss.uploadBlockLen:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1088   .bss.uploadBlockLen:00000000 uploadBlockLen
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1091   .bss.thisBlockLen:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1095   .bss.thisBlockLen:00000000 thisBlockLen
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1098   .bss.userFirmwareLen:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1102   .bss.userFirmwareLen:00000000 userFirmwareLen
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1105   .data.userAppEnd:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1109   .data.userAppEnd:00000000 userAppEnd
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1123   .bss.userUploadType:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1128   .bss.dfuAppStatus:00000000 dfuAppStatus
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1129   .bss.dfuAppStatus:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1135   .bss.dfuBusy:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1137   .data.userAppAddr:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccS0buNf.s:1141   .data.userAppAddr:00000000 userAppAddr
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1077   .bss.recvBuffer:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1081   .bss.recvBuffer:00000000 recvBuffer
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1084   .bss.uploadBlockLen:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1088   .bss.uploadBlockLen:00000000 uploadBlockLen
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1091   .bss.thisBlockLen:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1095   .bss.thisBlockLen:00000000 thisBlockLen
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1098   .bss.userFirmwareLen:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1102   .bss.userFirmwareLen:00000000 userFirmwareLen
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1105   .data.userAppEnd:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1109   .data.userAppEnd:00000000 userAppEnd
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1123   .bss.userUploadType:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1128   .bss.dfuAppStatus:00000000 dfuAppStatus
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1129   .bss.dfuAppStatus:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1135   .bss.dfuBusy:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1137   .data.userAppAddr:00000000 $d
+C:\Users\haifisch\AppData\Local\Temp\cck2k9fz.s:1141   .data.userAppAddr:00000000 userAppAddr
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

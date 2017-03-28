@@ -123,13 +123,34 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     	*newHandle = &state;
 		return(kImageImageHashCalcFailed);
     }
-    unsigned char uniqueID[0x17];
     if (!QEMU_BUILD)
     {
+		struct u_id id;
+		unsigned char uniqueID[0x17];
+		unsigned char sha256sum[32];  
+		char signature[EDSIGN_SIGNATURE_SIZE];
+		char publickey[EDSIGN_PUBLIC_KEY_SIZE];
+		char base64_pub[256];
+		char base64_signature[256];
+
+		// read our unique id
+		uid_read(&id);
+		sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+		// start sha256 context
+		sha256_context uniqueIDHash;
+		sha256_starts(&uniqueIDHash);
+		// hash in our unique id
+		sha256_update(&uniqueIDHash, uniqueID, 0x17);
+		sha256_finish(&uniqueIDHash, sha256sum);
+		// get our public key
+		edsign_sec_to_pub((uint8_t*)publickey, sha256sum);
+		hexdump(publickey, 32);
+    	/*
     	struct u_id id;
 	    uid_read(&id);
 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
-	    sha256_update(&ctx, uniqueID, 0x17);
+	    */
+	    sha256_update(&ctx, publickey, 32);
     }
 
     //debug_print("%s\n", uniqueID);

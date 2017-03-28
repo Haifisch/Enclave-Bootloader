@@ -697,19 +697,19 @@
  468              		.file 15 "dfu.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:19     .text.decode_b64:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:24     .text.decode_b64:00000000 decode_b64
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:71     .text.encode_b64:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:76     .text.encode_b64:00000000 encode_b64
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:136    .text.transmit_publickey_data:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:141    .text.transmit_publickey_data:00000000 transmit_publickey_data
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:229    .text.transmit_publickey_data:00000088 $d
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:19     .text.decode_b64:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:24     .text.decode_b64:00000000 decode_b64
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:71     .text.encode_b64:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:76     .text.encode_b64:00000000 encode_b64
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:136    .text.transmit_publickey_data:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:141    .text.transmit_publickey_data:00000000 transmit_publickey_data
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:229    .text.transmit_publickey_data:00000088 $d
                             *COM*:00000020 rootCA
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:237    .text.startup.main:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:242    .text.startup.main:00000000 main
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:312    .text.startup.main:00000050 $d
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:316    .text.startup.main:00000054 $t
-C:\Users\haifisch\AppData\Local\Temp\ccxkTJ9F.s:408    .text.startup.main:000000c8 $d
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:237    .text.startup.main:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:242    .text.startup.main:00000000 main
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:312    .text.startup.main:00000050 $d
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:316    .text.startup.main:00000054 $t
+C:\Users\haifisch\AppData\Local\Temp\ccn4xPB4.s:408    .text.startup.main:000000c8 $d
                             *COM*:00000004 wTransferSize
                      .debug_frame:00000010 $d
 

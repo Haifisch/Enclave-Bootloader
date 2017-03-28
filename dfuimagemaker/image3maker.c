@@ -53,6 +53,7 @@
 
 #include "edsign.h"
 #include "sha256.h"
+#include "cdecode.h"
 
 #define SHA256_DIGEST_LENGTH 32
 
@@ -191,6 +192,18 @@ void print_hash(unsigned char hash[])
    printf("\n");
 }
 
+size_t decode_b64(const char* input, char* output)
+{
+    base64_decodestate s;
+    size_t cnt;
+
+    base64_init_decodestate(&s);
+    cnt = base64_decode_block(input, strlen(input), output, &s);
+    output[cnt] = 0;
+
+    return cnt;
+}
+
 int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
 {
     FILE* file = fopen(path, "rb");
@@ -208,7 +221,10 @@ int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
     }   
     if (!dontHashInECIDPlease)
     {
-        sha256_update(&sha256, uniqueIdentifier, 0x17);
+        unsigned char decodedPublickey[32];
+        decode_b64(uniqueIdentifier, decodedPublickey);
+        print_hex("PUB", decodedPublickey, 32);
+        sha256_update(&sha256, decodedPublickey, 32);
     }
     sha256_finish(&sha256, output);
 
@@ -478,6 +494,8 @@ static void *image3_reserve_type(uint32_t tag, uint32_t length)
     return (void*)(header + 1);
 }
 
+
+
 static void create_image(void)
 {
     printf("Creating image of type \'%s\' (0x%08x)...\n", imageTag, image3core.imageType);
@@ -513,7 +531,7 @@ static void create_image(void)
 
     //memcpy(msg, calc_hash, 32);
 
-    print_hex("Hash to sign", msg, sizeof(msg));
+    print_hex("Hash to sign", calc_hash, sizeof(calc_hash));
     edsign_sign(signature, pub, secret, calc_hash, 32);
 
     assert(edsign_verify(signature, pub, calc_hash, 32));
