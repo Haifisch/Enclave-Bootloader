@@ -76,6 +76,38 @@ typedef enum {
 #define kImageTagVersion       'VERS'      /* string */
 #define kImageTagProduct           'PROD'
 
+typedef struct _ImageObjectHeader {
+    uint32_t    ihMagic;
+#define kImageHeaderMagic       'Ebc2'
+    uint32_t    ihSkipDistance;
+    uint32_t    ihBufferLength;
+
+    uint32_t    ihSignedLength;
+    uint32_t    ihType;
+    uint8_t ihBuffer[];
+} ImageObjectHeader;
+
+typedef struct _ImageInternalState {
+    ImageObjectHeader       *image;
+    uint32_t            flags;
+# define kImageImageWasInstantiated 0x1
+# define kImageImageRejectSignature 0x2
+# define kImageImageIsTrusted       0x3 
+# define kImageImageMissingMagic    0x4
+# define kImageImageHashCalcFailed  0x5
+    size_t              allocSize;
+
+    int             cursor;
+    int             lastTag;
+} ImageInternalState;
+
+struct _ImageInternalState;
+typedef struct _ImageInternalState  *ImageObjectHandle;
+
+uint8_t rootCA[32] = {
+       0xbd, 0x0c, 0x2d, 0x04, 0x2e, 0x5a, 0x95, 0xc6, 0xb6, 0x28, 0xfc, 0x3f, 0x85, 0x6c, 0xa1, 0xfb, 0xb5, 0x25, 0x07, 0x38, 0xc0, 0x05, 0x9d, 0x44, 0x04, 0xa7, 0xe3, 0xa6, 0xac, 0x3b, 0xb8, 0x41
+    };
+
 typedef struct ImageHeader {
     uint32_t magic;
     uint32_t size;
@@ -128,6 +160,7 @@ static char *hardwareEpoch = NULL, *chipType = NULL, *boardType = NULL;
 static char *uniqueIdentifier = NULL, *aesKey = NULL, *aesIv = NULL;
 static char *certificateBlob = NULL, *imageSecurityEpoch = NULL;
 static bool dontHashInECIDPlease = 0;
+static bool testVerifyImage = 0; 
 static inline void hex_to_bytes(const char* hex, uint8_t** buffer, size_t* bytes) {
 	*bytes = strlen(hex) / 2;
 	*buffer = (uint8_t*) malloc(*bytes);
@@ -239,6 +272,90 @@ static inline int round_up(int n, int m)
     return (n + m - 1) & ~(m - 1);
 }
 
+int verify_test (ImageObjectHandle *newHandle) {
+    FILE *fp = fopen(inputFile, "r");
+    printf("Verifying image\n");
+    ImageRootHeader     *hdr;
+    ImageInternalState      state;
+    int bufferSize = 0x28+0x40;
+    unsigned char imageBuffer[bufferSize];
+    memset(imageBuffer, 0xFF, sizeof(imageBuffer));
+    fread(imageBuffer, sizeof(char), bufferSize, fp);
+    memset(&state, 0, sizeof(state));
+
+    hdr = (ImageRootHeader *)imageBuffer;
+
+    if (bufferSize < sizeof(hdr)) {
+        printf("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
+        return(EINVAL);     /* buffer too small to really contain header */
+    }
+    if ((hdr->header.magic) != kImageHeaderMagic) {
+        printf("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
+        state.flags = kImageImageMissingMagic;
+        *newHandle = &state;
+        return(kImageImageMissingMagic);        /* magic must match */
+    }
+    if ((hdr->signing.imageType) != 0x45444f53)
+    {
+        printf("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
+        state.flags = kImageImageMissingMagic;
+        *newHandle = &state;
+        return(kImageImageMissingMagic);        /* magic must match */
+    }
+    state.flags = kImageImageWasInstantiated;
+
+    printf("dataSize: 0x%X\n", (hdr->header.dataSize));
+
+    state.cursor = hdr->header.dataSize;
+    state.lastTag = -1;
+
+    char sha256sum[32];
+
+    memset(sha256sum, 0xFF, sizeof(sha256sum));
+
+    sha256_context ctx;
+    sha256_starts(&ctx);
+
+    int buffSize = (hdr->header.dataSize);
+    char buff[buffSize];
+
+    //int i = 0x84;
+    //char cmpEnd[5] = {0x01, 0x00, 0x00, 0x00, 0x00}; 
+    fseek(fp, 0, SEEK_SET);
+    fseek(fp, 0x84, SEEK_CUR);
+    //int finish = hdr->header.dataSize + 0x84;
+    
+    fread(buff, (hdr->header.dataSize), 1, fp);
+    print_hex("DATA", buff, 0x20);
+    sha256_update(&ctx, buff, buffSize);
+
+    char uniqueID = uniqueIdentifier;
+    if (!dontHashInECIDPlease)
+    {
+        printf("Hashing in ECID\n");
+        sha256_update(&ctx, uniqueID, 0x17);
+    }
+    //debug_print("%s\n", uniqueID);
+    
+    sha256_finish(&ctx, sha256sum);
+    print_hash(sha256sum);
+    // verify signature against recalc hash
+    uint8_t sigbuff[0x40];
+    memcpy(sigbuff, (uint8_t*)(hdr->signing.imageSignature), 0x40);
+
+    if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
+        state.flags = kImageImageRejectSignature;
+        *newHandle = &state;
+        return kImageImageRejectSignature;
+    } else {
+        state.flags = kImageImageIsTrusted;
+        *newHandle = &state;
+        return kImageImageIsTrusted;
+    }
+    
+    *newHandle = &state;
+    return(0);
+}
 static void *image3_reserve_version(uint32_t tag, uint32_t length)
 {
     uint32_t size, len;
@@ -516,11 +633,12 @@ static int process_options(int argc, char* argv[])
             {"aesKey",          required_argument, 0, 'a'},
             {"aesIv",           required_argument, 0, 'i'},
             {"outputFile",      required_argument, 0, 'o'},
+            {"testVerifyImage",      required_argument, 0, 'g'},
             {"help", no_argument, 0, '?'},
         };
         int option_index = 0;
         
-        c = getopt_long(argc, argv, "c:f:t:v:d:p:h:y:b:s:e:q:a:i:o:",
+        c = getopt_long(argc, argv, "c:f:t:v:d:p:h:y:b:s:e:q:g:a:i:o:",
                         user_options, &option_index);
         
         if(c == -1)
@@ -572,6 +690,9 @@ static int process_options(int argc, char* argv[])
             case 'i':
                 aesIv = optarg;
                 break;
+            case 'g':
+                testVerifyImage = 1;
+                break;
             default:
                 print_usage();
                 break;
@@ -583,12 +704,12 @@ static int process_options(int argc, char* argv[])
         print_usage();
     }
     
-    if(!outputFile) {
+    if(!outputFile && !testVerifyImage) {
         printf("No output file\n");
         print_usage();
     }
     
-    if(!imageTag) {
+    if(!imageTag && !testVerifyImage) {
         printf("No image tag\n");
         print_usage();
     }
@@ -599,9 +720,37 @@ static int process_options(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
     process_options(argc, argv);
-    create_image_preprocess();
-    create_image();
-    output_image();
+    if (testVerifyImage)
+    {
+        ImageObjectHandle imageHandle;
+        int i = verify_test(&imageHandle);
+        printf("image check ret: 0x%X\n", i);
+        switch (i)
+        {
+            case kImageImageIsTrusted:
+                printf("Boot OK\n");
+                break;
+
+            case kImageImageMissingMagic:
+                printf("Firmware missing...\n");
+                break;
+
+            case kImageImageRejectSignature:
+                printf("Signature unverified...\n");
+                break;
+
+            case kImageImageHashCalcFailed:
+                printf("Hash calculation failed...\n");
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        create_image_preprocess();
+        create_image();
+        output_image();
+    }
     return 0;
 }
 

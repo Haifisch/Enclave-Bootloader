@@ -247,39 +247,9 @@ bool dfuUpdateByRequest(void) {
             } else {
                 /* todo, support "disagreement" if device expects more data than this */
                 dfuAppStatus.bState  = dfuMANIFEST_SYNC;
-                /* relock the flash */
-                /*struct u_id id;
-                uid_read(&id);
-                
-                unsigned char uniqueID[23];
-                sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
-                sha256_update(&ctx, uniqueID, 23);
-                sha256_finish(&ctx, sha256sum);
-
-                uint8_t signature[64];
-                memset(signature, 0xFF, sizeof(signature));
-                memcpy(signature,  (u32 *)(USER_CODE_FLASH0X8008000+0x20), 0x40);
-
-                uint8_t rootCA[32] = {
-                   0xf3,0x47,0xb9,0x5e,0x5f,0x03,0x62,0x13,
-                   0xf3,0x88,0x72,0x73,0xea,0xcf,0x91,0x73,
-                   0x35,0xda,0x72,0x68,0xae,0xf6,0x98,0x90,
-                   0x51,0x87,0xff,0xea,0xd6,0xb5,0x5b,0x32
-                };
-
-                if (edsign_verify(signature, rootCA, sha256sum, 0x20) > 0) {
-                } else {
-                    uart_printf("Signature unverified!\n");
-                    dfuAppStatus.bState = dfuERROR;
-                }*/
                 ImageObjectHandle imageHandle;
-                int ret;
-                if (DEBUG)
-                {
-                    ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
-                } else {
-                    ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 1);
-                }
+                int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
+                debug_print("image check ret: %X\n", ret);
                 switch (ret)
                 {
                     case kImageImageIsTrusted:
@@ -288,7 +258,8 @@ bool dfuUpdateByRequest(void) {
 
                     case kImageImageMissingMagic:
                     case kImageImageRejectSignature:
-                        uart_printf("Image unverified... wiped memory for clean reset.\n");
+                    case kImageImageHashCalcFailed:
+                        uart_printf("Image unverified...\n");
                         break;
 
                     default:
@@ -474,9 +445,6 @@ void dfuCopyBufferToExec() {
 	
 	if (userUploadType == DFU_UPLOAD_FLASH_0X8008000) {
 		userSpace = (u32 *)(USER_CODE_FLASH0X8008000 + userFirmwareLen);
-	}
-	else {
-		userSpace = (u32 *)(USER_CODE_FLASH0X8002000 + userFirmwareLen);		
 	}
 
     flashErasePage((u32)(userSpace));

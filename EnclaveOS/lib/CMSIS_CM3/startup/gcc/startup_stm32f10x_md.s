@@ -123,11 +123,11 @@ Infinite_Loop:
 g_pfnVectors:
 	.word	_estack
 	.word	Reset_Handler
-	.word	NMI_Handler
 	.word	HardFault_Handler
 	.word	MemManage_Handler
 	.word	BusFault_Handler
 	.word	UsageFault_Handler
+	.word	NMI_Handler
 	.word	0
 	.word	0
 	.word	0
@@ -197,12 +197,12 @@ g_pfnVectors:
 * this definition.
 *
 *******************************************************************************/
-    
-  .weak	NMI_Handler
-	.thumb_set NMI_Handler,Default_Handler
 	
   .weak	HardFault_Handler
 	.thumb_set HardFault_Handler,Default_Handler
+
+  .weak	NMI_Handler
+	.thumb_set NMI_Handler,Default_Handler
 	
   .weak	MemManage_Handler
 	.thumb_set MemManage_Handler,Default_Handler

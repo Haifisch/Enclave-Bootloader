@@ -103,3 +103,5 @@ typedef struct {
 int imageCheckFromAddress(
         ImageObjectHandle *newHandle,
         vu32 flashAddress, bool shouldEraseFlashOnFail);
+
+uint8_t rootCA[32];

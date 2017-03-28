@@ -112,7 +112,6 @@ static void hash_message(uint8_t *z, const uint8_t *r, const uint8_t *a,
 	hash_with_prefix(z, block, 64, m, len);
 }
 
-/* we dont sign anything here so save some space
 void edsign_sign(uint8_t *signature, const uint8_t *pub,
 		 const uint8_t *secret,
 		 const uint8_t *message, size_t len)
@@ -136,7 +135,6 @@ void edsign_sign(uint8_t *signature, const uint8_t *pub,
 	fprime_add(s, k, ed25519_order);
 	memcpy(signature + 32, s, 32);
 }
-*/
 uint8_t edsign_verify(const uint8_t *signature, const uint8_t *pub,
 		      const uint8_t *message, size_t len)
 {

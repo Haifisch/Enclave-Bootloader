@@ -33,7 +33,7 @@ build/hardware.o: hardware.c \
  usb_lib/usb_lib.h usb_lib/usb_type.h usb_lib/usb_regs.h \
  usb_lib/usb_def.h usb_lib/usb_core.h usb_lib/usb_init.h \
  usb_lib/usb_mem.h usb_lib/usb_int.h usb_descriptor.h 25519/edsign.h \
- 25519/sha256.h image.h
+ 25519/sha256.h 25519/c25519.h 25519/f25519.h image.h
 
 c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\stdio.h:
 
@@ -128,5 +128,9 @@ usb_descriptor.h:
 25519/edsign.h:
 
 25519/sha256.h:
+
+25519/c25519.h:
+
+25519/f25519.h:
 
 image.h:

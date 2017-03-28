@@ -42,6 +42,7 @@
 #include "hardware.h"
 #include "sha256.h"
 #include "edsign.h"
+#include "c25519.h"
 #include "image.h"
 
 /*
@@ -715,3 +716,4 @@ int getFlashPageSize(void)
 		return 0x400;
 	}
 }
+

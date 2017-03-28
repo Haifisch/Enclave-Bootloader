@@ -31,7 +31,7 @@
 #include "common.h"
 
 // qemu build disables ECID hash step check 
-#define QEMU_BUILD 1
+#define QEMU_BUILD 0
 
 /* macro'd register and peripheral definitions */
 #define RCC   ((u32)0x40021000)

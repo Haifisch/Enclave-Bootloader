@@ -127,7 +127,7 @@
   49:image.c       **** {
   81              		.loc 1 49 0
   82              		.cfi_startproc
-  83              		@ args = 0, pretend = 0, frame = 336
+  83              		@ args = 0, pretend = 0, frame = 360
   84              		@ frame_needed = 0, uses_anonymous_args = 0
   85              	.LVL6:
   86 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
@@ -138,11 +138,11 @@
   91              		.cfi_offset 7, -12
   92              		.cfi_offset 8, -8
   93              		.cfi_offset 14, -4
-  94 0004 D4B0     		sub	sp, sp, #336
-  95              		.cfi_def_cfa_offset 360
+  94 0004 DCB0     		sub	sp, sp, #368
+  95              		.cfi_def_cfa_offset 392
   96              	.LVL7:
   97              		.loc 1 49 0
-  98 0006 0191     		str	r1, [sp, #4]
+  98 0006 0391     		str	r1, [sp, #12]
   99 0008 0746     		mov	r7, r0
   50:image.c       **** 	ImageRootHeader		*hdr;
   51:image.c       **** 	ImageInternalState		state;
@@ -156,7 +156,7 @@
  103              		.loc 1 49 0
  104 000c 9046     		mov	r8, r2
  105              		.loc 1 54 0
- 106 000e 3AA8     		add	r0, sp, #232
+ 106 000e 42A8     		add	r0, sp, #264
  107              	.LVL9:
  108 0010 6822     		movs	r2, #104
  109              	.LVL10:
@@ -165,12 +165,12 @@
   55:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
   56:image.c       ****     memset(&state, 0, sizeof(state));
  112              		.loc 1 56 0
- 113 0016 03AE     		add	r6, sp, #12
+ 113 0016 05AE     		add	r6, sp, #20
   55:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
  114              		.loc 1 55 0
- 115 0018 0199     		ldr	r1, [sp, #4]
+ 115 0018 0399     		ldr	r1, [sp, #12]
  116 001a 6822     		movs	r2, #104
- 117 001c 3AA8     		add	r0, sp, #232
+ 117 001c 42A8     		add	r0, sp, #264
  118              	.LVL12:
  119 001e FFF7FEFF 		bl	memcpy
  120              	.LVL13:
@@ -182,425 +182,440 @@
  126              	.LVL14:
   57:image.c       **** 
   58:image.c       **** 	hdr = (ImageRootHeader *)imageBuffer;
-  59:image.c       **** 
-  60:image.c       **** 	if (bufferSize < sizeof(hdr)) {
-  61:image.c       **** 		debug_print("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
-  62:image.c       **** 		if (shouldEraseFlashOnFail)
-  63:image.c       **** 		{
-  64:image.c       **** 			failErase();
-  65:image.c       **** 		}
-  66:image.c       **** 		return(EINVAL);		/* buffer too small to really contain header */
-  67:image.c       **** 	}
-  68:image.c       **** 	if ((hdr->header.magic) != kImageHeaderMagic) {
- 127              		.loc 1 68 0
- 128 002c 3A99     		ldr	r1, [sp, #232]
- 129 002e 414A     		ldr	r2, .L29
+  59:image.c       **** 	if (bufferSize < sizeof(hdr)) {
+  60:image.c       **** 		debug_print("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
+  61:image.c       **** 		if (shouldEraseFlashOnFail)
+  62:image.c       **** 		{
+  63:image.c       **** 			failErase();
+  64:image.c       **** 		}
+  65:image.c       **** 		return(EINVAL);		/* buffer too small to really contain header */
+  66:image.c       **** 	}
+  67:image.c       **** 	if ((hdr->header.magic) != kImageHeaderMagic) {
+ 127              		.loc 1 67 0
+ 128 002c 4299     		ldr	r1, [sp, #264]
+ 129 002e 4B4A     		ldr	r2, .L29
  130 0030 9142     		cmp	r1, r2
  131 0032 01D0     		beq	.L5
-  69:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
- 132              		.loc 1 69 0 discriminator 1
- 133 0034 4048     		ldr	r0, .L29+4
+  68:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
+ 132              		.loc 1 68 0 discriminator 1
+ 133 0034 4A48     		ldr	r0, .L29+4
  134 0036 04E0     		b	.L26
  135              	.L5:
-  70:image.c       **** 		state.flags = kImageImageMissingMagic;
-  71:image.c       **** 		if (shouldEraseFlashOnFail)
-  72:image.c       **** 		{
-  73:image.c       **** 			failErase();
-  74:image.c       **** 		}
-  75:image.c       **** 		*newHandle = &state;
-  76:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
-  77:image.c       **** 	}
-  78:image.c       **** 	if ((hdr->signing.imageType) != 0x45444f53)
- 136              		.loc 1 78 0
- 137 0038 3E99     		ldr	r1, [sp, #248]
- 138 003a 404A     		ldr	r2, .L29+8
+  69:image.c       **** 		state.flags = kImageImageMissingMagic;
+  70:image.c       **** 		if (shouldEraseFlashOnFail)
+  71:image.c       **** 		{
+  72:image.c       **** 			failErase();
+  73:image.c       **** 		}
+  74:image.c       **** 		*newHandle = &state;
+  75:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
+  76:image.c       **** 	}
+  77:image.c       **** 	if ((hdr->signing.imageType) != 0x45444f53)
+ 136              		.loc 1 77 0
+ 137 0038 4699     		ldr	r1, [sp, #280]
+ 138 003a 4A4A     		ldr	r2, .L29+8
  139 003c 9142     		cmp	r1, r2
  140 003e 0CD0     		beq	.L8
-  79:image.c       **** 	{
-  80:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
- 141              		.loc 1 80 0 discriminator 1
- 142 0040 3F48     		ldr	r0, .L29+12
+  78:image.c       **** 	{
+  79:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
+ 141              		.loc 1 79 0 discriminator 1
+ 142 0040 4948     		ldr	r0, .L29+12
  143              	.L26:
  144 0042 FFF7FEFF 		bl	uart_printf
  145              	.LVL15:
-  81:image.c       **** 		state.flags = kImageImageMissingMagic;
- 146              		.loc 1 81 0 discriminator 1
+  80:image.c       **** 		state.flags = kImageImageMissingMagic;
+ 146              		.loc 1 80 0 discriminator 1
  147 0046 0423     		movs	r3, #4
  148 0048 7360     		str	r3, [r6, #4]
-  82:image.c       **** 		if (shouldEraseFlashOnFail)
- 149              		.loc 1 82 0 discriminator 1
+  81:image.c       **** 		if (shouldEraseFlashOnFail)
+ 149              		.loc 1 81 0 discriminator 1
  150 004a B8F1000F 		cmp	r8, #0
  151 004e 01D0     		beq	.L9
-  83:image.c       **** 		{
-  84:image.c       **** 			failErase();
- 152              		.loc 1 84 0
+  82:image.c       **** 		{
+  83:image.c       **** 			failErase();
+ 152              		.loc 1 83 0
  153 0050 FFF7FEFF 		bl	failErase
  154              	.LVL16:
  155              	.L9:
-  85:image.c       **** 		}
-  86:image.c       **** 		*newHandle = &state;
- 156              		.loc 1 86 0
+  84:image.c       **** 		}
+  85:image.c       **** 		*newHandle = &state;
+ 156              		.loc 1 85 0
  157 0054 3E60     		str	r6, [r7]
-  87:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
- 158              		.loc 1 87 0
+  86:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
+ 158              		.loc 1 86 0
  159 0056 0420     		movs	r0, #4
- 160 0058 68E0     		b	.L7
+ 160 0058 7CE0     		b	.L7
  161              	.L8:
-  88:image.c       **** 	}
-  89:image.c       **** 	state.flags = kImageImageWasInstantiated;
- 162              		.loc 1 89 0
+  87:image.c       **** 	}
+  88:image.c       **** 	state.flags = kImageImageWasInstantiated;
+ 162              		.loc 1 88 0
  163 005a 0123     		movs	r3, #1
  164 005c 7360     		str	r3, [r6, #4]
-  90:image.c       **** 
-  91:image.c       **** 	debug_print("dataSize: 0x%X\n", (hdr->header.dataSize));
- 165              		.loc 1 91 0
- 166 005e 3948     		ldr	r0, .L29+16
- 167 0060 3C99     		ldr	r1, [sp, #240]
+  89:image.c       **** 
+  90:image.c       **** 	debug_print("dataSize: 0x%X\n", (hdr->header.dataSize));
+ 165              		.loc 1 90 0
+ 166 005e 4348     		ldr	r0, .L29+16
+ 167 0060 4499     		ldr	r1, [sp, #272]
  168 0062 FFF7FEFF 		bl	uart_printf
  169              	.LVL17:
-  92:image.c       **** 
-  93:image.c       **** 	state.cursor = hdr->header.dataSize;
- 170              		.loc 1 93 0
- 171 0066 3C9B     		ldr	r3, [sp, #240]
-  94:image.c       **** 	state.lastTag = -1;
-  95:image.c       **** 
-  96:image.c       **** 	unsigned char sha256sum[32];
-  97:image.c       **** 
-  98:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
- 172              		.loc 1 98 0
+  91:image.c       **** 
+  92:image.c       **** 	state.cursor = hdr->header.dataSize;
+ 170              		.loc 1 92 0
+ 171 0066 449B     		ldr	r3, [sp, #272]
+  93:image.c       **** 	state.lastTag = -1;
+  94:image.c       **** 
+  95:image.c       **** 	unsigned char sha256sum[32];
+  96:image.c       **** 
+  97:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
+ 172              		.loc 1 97 0
  173 0068 2022     		movs	r2, #32
  174 006a FF21     		movs	r1, #255
-  93:image.c       **** 	state.cursor = hdr->header.dataSize;
- 175              		.loc 1 93 0
+  92:image.c       **** 	state.cursor = hdr->header.dataSize;
+ 175              		.loc 1 92 0
  176 006c F360     		str	r3, [r6, #12]
- 177              		.loc 1 98 0
- 178 006e 08A8     		add	r0, sp, #32
-  94:image.c       **** 	state.lastTag = -1;
- 179              		.loc 1 94 0
+ 177              		.loc 1 97 0
+ 178 006e 10A8     		add	r0, sp, #64
+  93:image.c       **** 	state.lastTag = -1;
+ 179              		.loc 1 93 0
  180 0070 4FF0FF33 		mov	r3, #-1
  181 0074 3361     		str	r3, [r6, #16]
- 182              		.loc 1 98 0
+ 182              		.loc 1 97 0
  183 0076 FFF7FEFF 		bl	memset
  184              	.LVL18:
-  99:image.c       **** 
- 100:image.c       ****     sha256_context ctx;
- 101:image.c       ****     sha256_starts(&ctx);
- 185              		.loc 1 101 0
- 186 007a 20A8     		add	r0, sp, #128
+  98:image.c       **** 
+  99:image.c       ****     sha256_context ctx;
+ 100:image.c       ****     sha256_starts(&ctx);
+ 185              		.loc 1 100 0
+ 186 007a 28A8     		add	r0, sp, #160
  187 007c FFF7FEFF 		bl	sha256_starts
  188              	.LVL19:
- 102:image.c       **** 
- 103:image.c       ****     int buffSize = 0x1;
- 104:image.c       ****     char buff[buffSize];
- 105:image.c       **** 
- 106:image.c       ****     int i = 0x84;
- 107:image.c       ****     char cmpEnd[5] = {0x01, 0x00, 0x00, 0x00, 0x00}; 
- 108:image.c       ****     hexdump((flashAddress+i), 0x10);
- 189              		.loc 1 108 0
- 190 0080 0198     		ldr	r0, [sp, #4]
+ 101:image.c       **** 
+ 102:image.c       ****     int buffSize = 0x1;
+ 103:image.c       ****     char buff[buffSize];
+ 104:image.c       **** 
+ 105:image.c       ****     int i = 0x84;
+ 106:image.c       ****     hexdump((flashAddress+i), 0x10);
+ 189              		.loc 1 106 0
+ 190 0080 0398     		ldr	r0, [sp, #12]
  191 0082 1021     		movs	r1, #16
  192 0084 8430     		adds	r0, r0, #132
  193 0086 FFF7FEFF 		bl	hexdump
  194              	.LVL20:
- 109:image.c       **** 
- 110:image.c       ****     int finish = hdr->header.dataSize + 0x84;
- 195              		.loc 1 110 0
- 196 008a 3C9D     		ldr	r5, [sp, #240]
- 111:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
- 197              		.loc 1 111 0
- 198 008c 0199     		ldr	r1, [sp, #4]
- 199 008e 019A     		ldr	r2, [sp, #4]
- 110:image.c       ****     int finish = hdr->header.dataSize + 0x84;
- 200              		.loc 1 110 0
+ 107:image.c       **** 
+ 108:image.c       ****     int finish = hdr->header.dataSize + 0x84;
+ 195              		.loc 1 108 0
+ 196 008a 449D     		ldr	r5, [sp, #272]
+ 109:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
+ 197              		.loc 1 109 0
+ 198 008c 0399     		ldr	r1, [sp, #12]
+ 199 008e 039A     		ldr	r2, [sp, #12]
+ 108:image.c       ****     int finish = hdr->header.dataSize + 0x84;
+ 200              		.loc 1 108 0
  201 0090 8435     		adds	r5, r5, #132
  202              	.LVL21:
- 203              		.loc 1 111 0
- 204 0092 2D48     		ldr	r0, .L29+20
+ 203              		.loc 1 109 0
+ 204 0092 3748     		ldr	r0, .L29+20
  205 0094 8431     		adds	r1, r1, #132
  206 0096 2A44     		add	r2, r2, r5
  207 0098 FFF7FEFF 		bl	uart_printf
  208              	.LVL22:
- 106:image.c       ****     int i = 0x84;
- 209              		.loc 1 106 0
+ 105:image.c       ****     int i = 0x84;
+ 209              		.loc 1 105 0
  210 009c 8424     		movs	r4, #132
  211              	.LVL23:
  212              	.L10:
- 112:image.c       ****     while (i < finish)
- 213              		.loc 1 112 0 discriminator 1
+ 110:image.c       ****     while (i < finish)
+ 213              		.loc 1 110 0 discriminator 1
  214 009e AC42     		cmp	r4, r5
  215 00a0 08DA     		bge	.L28
- 113:image.c       ****     {
- 114:image.c       ****     	memset(buff, 0xFF, buffSize);
- 115:image.c       ****     	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
- 216              		.loc 1 115 0
- 217 00a2 019B     		ldr	r3, [sp, #4]
- 116:image.c       **** 		/*
- 117:image.c       **** 		if ((flashAddress+i) >= (flashAddress + (hdr->header.dataSize))) // our end of image should be so
- 118:image.c       **** 		{
- 119:image.c       **** 			if ((memmem(&buff, buffSize, &cmpEnd, buffSize) > 0)) {
- 120:image.c       **** 				sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize-1);
- 121:image.c       **** 		  	hexdump((vu32 *)(flashAddress+i), buffSize-1);
- 122:image.c       **** 		  	debug_print("Last block: %X\n", (flashAddress+i));
- 123:image.c       **** 		  	break;
- 124:image.c       **** 			}
- 125:image.c       **** 		hexdump((vu32 *)(flashAddress+i), buffSize);
- 126:image.c       **** 		}*/
- 127:image.c       **** 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
- 218              		.loc 1 127 0
- 219 00a4 0199     		ldr	r1, [sp, #4]
- 220 00a6 20A8     		add	r0, sp, #128
+ 111:image.c       ****     {
+ 112:image.c       ****     	memset(buff, 0xFF, buffSize);
+ 113:image.c       ****     	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
+ 216              		.loc 1 113 0
+ 217 00a2 039B     		ldr	r3, [sp, #12]
+ 114:image.c       **** 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
+ 218              		.loc 1 114 0
+ 219 00a4 0399     		ldr	r1, [sp, #12]
+ 220 00a6 28A8     		add	r0, sp, #160
  221 00a8 2144     		add	r1, r1, r4
  222 00aa 0122     		movs	r2, #1
  223 00ac FFF7FEFF 		bl	sha256_update
  224              	.LVL24:
- 128:image.c       **** 		i += 0x1;
- 225              		.loc 1 128 0
+ 115:image.c       **** 		i += 0x1;
+ 225              		.loc 1 115 0
  226 00b0 0134     		adds	r4, r4, #1
  227              	.LVL25:
  228 00b2 F4E7     		b	.L10
  229              	.L28:
- 129:image.c       ****     }
- 130:image.c       ****     debug_print("Ended at: %X\n", (flashAddress+i));
- 230              		.loc 1 130 0 discriminator 1
- 231 00b4 0199     		ldr	r1, [sp, #4]
- 232 00b6 2548     		ldr	r0, .L29+24
+ 116:image.c       ****     }
+ 117:image.c       ****     debug_print("Ended at: %X\n", (flashAddress+i));
+ 230              		.loc 1 117 0 discriminator 1
+ 231 00b4 0399     		ldr	r1, [sp, #12]
+ 232 00b6 2F48     		ldr	r0, .L29+24
  233 00b8 2144     		add	r1, r1, r4
  234 00ba FFF7FEFF 		bl	uart_printf
  235              	.LVL26:
- 131:image.c       ****     hexdump((vu32 *)(flashAddress+i), 0x10);
- 236              		.loc 1 131 0 discriminator 1
- 237 00be 0198     		ldr	r0, [sp, #4]
+ 118:image.c       ****     hexdump((vu32 *)(flashAddress+i), 0x10);
+ 236              		.loc 1 118 0 discriminator 1
+ 237 00be 0398     		ldr	r0, [sp, #12]
  238 00c0 1021     		movs	r1, #16
  239 00c2 2044     		add	r0, r0, r4
  240 00c4 FFF7FEFF 		bl	hexdump
  241              	.LVL27:
- 132:image.c       ****     if ((flashAddress+i) != (flashAddress+finish))
- 242              		.loc 1 132 0 discriminator 1
- 243 00c8 019A     		ldr	r2, [sp, #4]
- 244 00ca 019B     		ldr	r3, [sp, #4]
+ 119:image.c       ****     if ((flashAddress+i) != (flashAddress+finish))
+ 242              		.loc 1 119 0 discriminator 1
+ 243 00c8 039A     		ldr	r2, [sp, #12]
+ 244 00ca 039B     		ldr	r3, [sp, #12]
  245 00cc 1444     		add	r4, r4, r2
  246              	.LVL28:
  247 00ce 1D44     		add	r5, r5, r3
  248              	.LVL29:
  249 00d0 AC42     		cmp	r4, r5
  250 00d2 05D0     		beq	.L12
- 133:image.c       ****     {
- 134:image.c       ****     	debug_print("Calculated hash is probably wrong...\n");
- 251              		.loc 1 134 0 discriminator 1
- 252 00d4 1E48     		ldr	r0, .L29+28
+ 120:image.c       ****     {
+ 121:image.c       ****     	debug_print("Calculated hash is probably wrong...\n");
+ 251              		.loc 1 121 0 discriminator 1
+ 252 00d4 2848     		ldr	r0, .L29+28
  253 00d6 FFF7FEFF 		bl	uart_printf
  254              	.LVL30:
- 135:image.c       ****     	state.flags = kImageImageHashCalcFailed;
- 136:image.c       ****     	*newHandle = &state;
- 255              		.loc 1 136 0 discriminator 1
+ 122:image.c       ****     	state.flags = kImageImageHashCalcFailed;
+ 123:image.c       ****     	*newHandle = &state;
+ 255              		.loc 1 123 0 discriminator 1
  256 00da 3E60     		str	r6, [r7]
- 137:image.c       **** 		return(kImageImageHashCalcFailed);
- 257              		.loc 1 137 0 discriminator 1
+ 124:image.c       **** 		return(kImageImageHashCalcFailed);
+ 257              		.loc 1 124 0 discriminator 1
  258 00dc 0520     		movs	r0, #5
- 259 00de 25E0     		b	.L7
+ 259 00de 39E0     		b	.L7
  260              	.L12:
- 138:image.c       ****     }
- 139:image.c       ****     unsigned char uniqueID[0x17];
- 140:image.c       ****     if (!QEMU_BUILD)
- 141:image.c       ****     {
- 142:image.c       ****     	struct u_id id;
- 143:image.c       **** 	    uid_read(&id);
- 144:image.c       **** 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
- 145:image.c       **** 	    sha256_update(&ctx, uniqueID, 0x17);
- 146:image.c       ****     }
- 147:image.c       **** 
- 148:image.c       ****     //debug_print("%s\n", uniqueID);
- 149:image.c       ****     
- 150:image.c       ****     sha256_finish(&ctx, sha256sum);
- 261              		.loc 1 150 0
- 262 00e0 08A9     		add	r1, sp, #32
- 263 00e2 20A8     		add	r0, sp, #128
- 264 00e4 FFF7FEFF 		bl	sha256_finish
+ 261              	.LBB2:
+ 125:image.c       ****     }
+ 126:image.c       ****     unsigned char uniqueID[0x17];
+ 127:image.c       ****     if (!QEMU_BUILD)
+ 128:image.c       ****     {
+ 129:image.c       ****     	struct u_id id;
+ 130:image.c       **** 	    uid_read(&id);
+ 262              		.loc 1 130 0
+ 263 00e0 18A8     		add	r0, sp, #96
+ 264 00e2 FFF7FEFF 		bl	uid_read
  265              	.LVL31:
- 151:image.c       ****     print_hash(sha256sum);
- 152:image.c       ****     // verify signature against recalc hash
- 153:image.c       ****     uint8_t sigbuff[0x40];
- 154:image.c       ****     memcpy(sigbuff, (uint8_t*)(hdr->signing.imageSignature), 0x40);
- 266              		.loc 1 154 0
- 267 00e8 10AC     		add	r4, sp, #64
- 151:image.c       ****     print_hash(sha256sum);
- 268              		.loc 1 151 0
- 269 00ea 08A8     		add	r0, sp, #32
- 270              		.loc 1 154 0
- 271 00ec 3FAD     		add	r5, sp, #252
- 151:image.c       ****     print_hash(sha256sum);
- 272              		.loc 1 151 0
- 273 00ee FFF7FEFF 		bl	print_hash
- 274              	.LVL32:
- 275              		.loc 1 154 0
- 276 00f2 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
- 277 00f4 0FC4     		stmia	r4!, {r0, r1, r2, r3}
- 278 00f6 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
- 279 00f8 0FC4     		stmia	r4!, {r0, r1, r2, r3}
- 280 00fa 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
- 281 00fc 0FC4     		stmia	r4!, {r0, r1, r2, r3}
- 282 00fe 95E80F00 		ldmia	r5, {r0, r1, r2, r3}
- 283 0102 84E80F00 		stmia	r4, {r0, r1, r2, r3}
- 155:image.c       **** 
- 156:image.c       ****     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
- 284              		.loc 1 156 0
- 285 0106 10A8     		add	r0, sp, #64
- 286 0108 1249     		ldr	r1, .L29+32
- 287 010a 08AA     		add	r2, sp, #32
- 288 010c 2023     		movs	r3, #32
- 289 010e FFF7FEFF 		bl	edsign_verify
- 290              	.LVL33:
- 291 0112 48B9     		cbnz	r0, .L13
- 157:image.c       ****     	state.flags = kImageImageRejectSignature;
- 292              		.loc 1 157 0
- 293 0114 0223     		movs	r3, #2
- 294 0116 7360     		str	r3, [r6, #4]
- 158:image.c       ****     	if (shouldEraseFlashOnFail)
- 295              		.loc 1 158 0
- 296 0118 B8F1000F 		cmp	r8, #0
- 297 011c 01D0     		beq	.L14
- 159:image.c       **** 		{
- 160:image.c       **** 			failErase();
- 298              		.loc 1 160 0
- 299 011e FFF7FEFF 		bl	failErase
- 300              	.LVL34:
- 301              	.L14:
- 161:image.c       **** 		}
- 162:image.c       ****     	*newHandle = &state;
- 302              		.loc 1 162 0
- 303 0122 3E60     		str	r6, [r7]
- 163:image.c       ****     	return kImageImageRejectSignature;
- 304              		.loc 1 163 0
- 305 0124 0220     		movs	r0, #2
- 306 0126 01E0     		b	.L7
- 307              	.L13:
- 164:image.c       ****     } else {
- 165:image.c       ****     	state.flags = kImageImageIsTrusted;
- 166:image.c       ****     	*newHandle = &state;
- 308              		.loc 1 166 0
- 309 0128 3E60     		str	r6, [r7]
- 167:image.c       ****     	return kImageImageIsTrusted;
- 310              		.loc 1 167 0
- 311 012a 0320     		movs	r0, #3
- 312              	.LVL35:
- 313              	.L7:
- 168:image.c       ****     }
- 169:image.c       **** 	
- 170:image.c       **** 	*newHandle = &state;
- 171:image.c       **** 	return(0);
- 172:image.c       **** }
- 314              		.loc 1 172 0
- 315 012c 54B0     		add	sp, sp, #336
- 316              		@ sp needed
- 317 012e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 318              	.LVL36:
- 319              	.L30:
- 320 0132 00BF     		.align	2
- 321              	.L29:
- 322 0134 32636245 		.word	1164075826
- 323 0138 00000000 		.word	.LC0
- 324 013c 534F4445 		.word	1162104659
- 325 0140 23000000 		.word	.LC1
- 326 0144 44000000 		.word	.LC2
- 327 0148 54000000 		.word	.LC3
- 328 014c 6A000000 		.word	.LC4
- 329 0150 78000000 		.word	.LC5
- 330 0154 00000000 		.word	.LANCHOR0
- 331              		.cfi_endproc
- 332              	.LFE2:
- 334              		.global	rootCA
- 335              		.comm	wTransferSize,4,4
- 336              		.section	.data.rootCA,"aw",%progbits
- 337              		.set	.LANCHOR0,. + 0
- 340              	rootCA:
- 341 0000 BD       		.byte	-67
- 342 0001 0C       		.byte	12
- 343 0002 2D       		.byte	45
- 344 0003 04       		.byte	4
- 345 0004 2E       		.byte	46
- 346 0005 5A       		.byte	90
- 347 0006 95       		.byte	-107
- 348 0007 C6       		.byte	-58
- 349 0008 B6       		.byte	-74
- 350 0009 28       		.byte	40
- 351 000a FC       		.byte	-4
- 352 000b 3F       		.byte	63
- 353 000c 85       		.byte	-123
- 354 000d 6C       		.byte	108
- 355 000e A1       		.byte	-95
- 356 000f FB       		.byte	-5
- 357 0010 B5       		.byte	-75
- 358 0011 25       		.byte	37
- 359 0012 07       		.byte	7
- 360 0013 38       		.byte	56
- 361 0014 C0       		.byte	-64
- 362 0015 05       		.byte	5
- 363 0016 9D       		.byte	-99
- 364 0017 44       		.byte	68
- 365 0018 04       		.byte	4
- 366 0019 A7       		.byte	-89
- 367 001a E3       		.byte	-29
- 368 001b A6       		.byte	-90
- 369 001c AC       		.byte	-84
- 370 001d 3B       		.byte	59
- 371 001e B8       		.byte	-72
- 372 001f 41       		.byte	65
- 373              		.section	.rodata.str1.1,"aMS",%progbits,1
- 374              	.LC0:
- 375 0000 62616420 		.ascii	"bad magic 0x%08x expecting 0x%08x\012\000"
- 375      6D616769 
- 375      63203078 
- 375      25303878 
- 375      20657870 
- 376              	.LC1:
- 377 0023 62616420 		.ascii	"bad magic 0x%08x expecting 0x%X\012\000"
- 377      6D616769 
- 377      63203078 
- 377      25303878 
- 377      20657870 
- 378              	.LC2:
- 379 0044 64617461 		.ascii	"dataSize: 0x%X\012\000"
- 379      53697A65 
- 379      3A203078 
- 379      25580A00 
- 380              	.LC3:
- 381 0054 53746172 		.ascii	"Start: %X\012Finish: %X\012\000"
- 381      743A2025 
- 381      580A4669 
- 381      6E697368 
- 381      3A202558 
- 382              	.LC4:
- 383 006a 456E6465 		.ascii	"Ended at: %X\012\000"
- 383      64206174 
- 383      3A202558 
- 383      0A00
- 384              	.LC5:
- 385 0078 43616C63 		.ascii	"Calculated hash is probably wrong...\012\000"
- 385      756C6174 
- 385      65642068 
- 385      61736820 
- 385      69732070 
- 386              		.text
- 387              	.Letext0:
- 388              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\lib\\gcc\\arm-none-eabi\\4.8
- 389              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
- 390              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
- 391              		.file 5 "./stm32_lib/stm32f10x_type.h"
- 392              		.file 6 "./25519/sha256.h"
- 393              		.file 7 "image.h"
- 394              		.file 8 "usb.h"
- 395              		.file 9 "hardware.h"
- 396              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\str
- 397              		.file 11 "./25519/edsign.h"
+ 131:image.c       **** 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+ 266              		.loc 1 131 0
+ 267 00e6 1999     		ldr	r1, [sp, #100]
+ 268 00e8 BDF86230 		ldrh	r3, [sp, #98]
+ 269 00ec 0091     		str	r1, [sp]
+ 270 00ee 1A99     		ldr	r1, [sp, #104]
+ 271 00f0 BDF86020 		ldrh	r2, [sp, #96]
+ 272 00f4 0191     		str	r1, [sp, #4]
+ 273 00f6 0AA8     		add	r0, sp, #40
+ 274 00f8 2049     		ldr	r1, .L29+32
+ 275 00fa FFF7FEFF 		bl	sprintf
+ 276              	.LVL32:
+ 132:image.c       **** 	    sha256_update(&ctx, uniqueID, 0x17);
+ 277              		.loc 1 132 0
+ 278 00fe 1722     		movs	r2, #23
+ 279 0100 28A8     		add	r0, sp, #160
+ 280 0102 0AA9     		add	r1, sp, #40
+ 281 0104 FFF7FEFF 		bl	sha256_update
+ 282              	.LVL33:
+ 283              	.LBE2:
+ 133:image.c       ****     }
+ 134:image.c       **** 
+ 135:image.c       ****     //debug_print("%s\n", uniqueID);
+ 136:image.c       ****     
+ 137:image.c       ****     sha256_finish(&ctx, sha256sum);
+ 284              		.loc 1 137 0
+ 285 0108 10A9     		add	r1, sp, #64
+ 286 010a 28A8     		add	r0, sp, #160
+ 287 010c FFF7FEFF 		bl	sha256_finish
+ 288              	.LVL34:
+ 138:image.c       ****     print_hash(sha256sum);
+ 139:image.c       ****     // verify signature against recalc hash
+ 140:image.c       ****     uint8_t sigbuff[0x40];
+ 141:image.c       ****     memcpy(sigbuff, (uint8_t*)(hdr->signing.imageSignature), 0x40);
+ 289              		.loc 1 141 0
+ 290 0110 18AC     		add	r4, sp, #96
+ 138:image.c       ****     print_hash(sha256sum);
+ 291              		.loc 1 138 0
+ 292 0112 10A8     		add	r0, sp, #64
+ 293              		.loc 1 141 0
+ 294 0114 47AD     		add	r5, sp, #284
+ 138:image.c       ****     print_hash(sha256sum);
+ 295              		.loc 1 138 0
+ 296 0116 FFF7FEFF 		bl	print_hash
+ 297              	.LVL35:
+ 298              		.loc 1 141 0
+ 299 011a 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 300 011c 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 301 011e 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 302 0120 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 303 0122 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 304 0124 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 305 0126 95E80F00 		ldmia	r5, {r0, r1, r2, r3}
+ 306 012a 84E80F00 		stmia	r4, {r0, r1, r2, r3}
+ 142:image.c       **** 
+ 143:image.c       ****     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
+ 307              		.loc 1 143 0
+ 308 012e 18A8     		add	r0, sp, #96
+ 309 0130 1349     		ldr	r1, .L29+36
+ 310 0132 10AA     		add	r2, sp, #64
+ 311 0134 2023     		movs	r3, #32
+ 312 0136 FFF7FEFF 		bl	edsign_verify
+ 313              	.LVL36:
+ 314 013a 48B9     		cbnz	r0, .L13
+ 144:image.c       ****     	state.flags = kImageImageRejectSignature;
+ 315              		.loc 1 144 0
+ 316 013c 0223     		movs	r3, #2
+ 317 013e 7360     		str	r3, [r6, #4]
+ 145:image.c       ****     	if (shouldEraseFlashOnFail)
+ 318              		.loc 1 145 0
+ 319 0140 B8F1000F 		cmp	r8, #0
+ 320 0144 01D0     		beq	.L14
+ 146:image.c       **** 		{
+ 147:image.c       **** 			failErase();
+ 321              		.loc 1 147 0
+ 322 0146 FFF7FEFF 		bl	failErase
+ 323              	.LVL37:
+ 324              	.L14:
+ 148:image.c       **** 		}
+ 149:image.c       ****     	*newHandle = &state;
+ 325              		.loc 1 149 0
+ 326 014a 3E60     		str	r6, [r7]
+ 150:image.c       ****     	return kImageImageRejectSignature;
+ 327              		.loc 1 150 0
+ 328 014c 0220     		movs	r0, #2
+ 329 014e 01E0     		b	.L7
+ 330              	.L13:
+ 151:image.c       ****     } else {
+ 152:image.c       ****     	state.flags = kImageImageIsTrusted;
+ 153:image.c       ****     	*newHandle = &state;
+ 331              		.loc 1 153 0
+ 332 0150 3E60     		str	r6, [r7]
+ 154:image.c       ****     	return kImageImageIsTrusted;
+ 333              		.loc 1 154 0
+ 334 0152 0320     		movs	r0, #3
+ 335              	.LVL38:
+ 336              	.L7:
+ 155:image.c       ****     }
+ 156:image.c       **** 	*newHandle = &state;
+ 157:image.c       **** 	return(0);
+ 158:image.c       **** }
+ 337              		.loc 1 158 0
+ 338 0154 5CB0     		add	sp, sp, #368
+ 339              		@ sp needed
+ 340 0156 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 341              	.LVL39:
+ 342              	.L30:
+ 343 015a 00BF     		.align	2
+ 344              	.L29:
+ 345 015c 32636245 		.word	1164075826
+ 346 0160 00000000 		.word	.LC0
+ 347 0164 534F4445 		.word	1162104659
+ 348 0168 23000000 		.word	.LC1
+ 349 016c 44000000 		.word	.LC2
+ 350 0170 54000000 		.word	.LC3
+ 351 0174 6A000000 		.word	.LC4
+ 352 0178 78000000 		.word	.LC5
+ 353 017c 9E000000 		.word	.LC6
+ 354 0180 00000000 		.word	.LANCHOR0
+ 355              		.cfi_endproc
+ 356              	.LFE2:
+ 358              		.global	rootCA
+ 359              		.comm	wTransferSize,4,4
+ 360              		.section	.data.rootCA,"aw",%progbits
+ 361              		.set	.LANCHOR0,. + 0
+ 364              	rootCA:
+ 365 0000 BD       		.byte	-67
+ 366 0001 0C       		.byte	12
+ 367 0002 2D       		.byte	45
+ 368 0003 04       		.byte	4
+ 369 0004 2E       		.byte	46
+ 370 0005 5A       		.byte	90
+ 371 0006 95       		.byte	-107
+ 372 0007 C6       		.byte	-58
+ 373 0008 B6       		.byte	-74
+ 374 0009 28       		.byte	40
+ 375 000a FC       		.byte	-4
+ 376 000b 3F       		.byte	63
+ 377 000c 85       		.byte	-123
+ 378 000d 6C       		.byte	108
+ 379 000e A1       		.byte	-95
+ 380 000f FB       		.byte	-5
+ 381 0010 B5       		.byte	-75
+ 382 0011 25       		.byte	37
+ 383 0012 07       		.byte	7
+ 384 0013 38       		.byte	56
+ 385 0014 C0       		.byte	-64
+ 386 0015 05       		.byte	5
+ 387 0016 9D       		.byte	-99
+ 388 0017 44       		.byte	68
+ 389 0018 04       		.byte	4
+ 390 0019 A7       		.byte	-89
+ 391 001a E3       		.byte	-29
+ 392 001b A6       		.byte	-90
+ 393 001c AC       		.byte	-84
+ 394 001d 3B       		.byte	59
+ 395 001e B8       		.byte	-72
+ 396 001f 41       		.byte	65
+ 397              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 398              	.LC0:
+ 399 0000 62616420 		.ascii	"bad magic 0x%08x expecting 0x%08x\012\000"
+ 399      6D616769 
+ 399      63203078 
+ 399      25303878 
+ 399      20657870 
+ 400              	.LC1:
+ 401 0023 62616420 		.ascii	"bad magic 0x%08x expecting 0x%X\012\000"
+ 401      6D616769 
+ 401      63203078 
+ 401      25303878 
+ 401      20657870 
+ 402              	.LC2:
+ 403 0044 64617461 		.ascii	"dataSize: 0x%X\012\000"
+ 403      53697A65 
+ 403      3A203078 
+ 403      25580A00 
+ 404              	.LC3:
+ 405 0054 53746172 		.ascii	"Start: %X\012Finish: %X\012\000"
+ 405      743A2025 
+ 405      580A4669 
+ 405      6E697368 
+ 405      3A202558 
+ 406              	.LC4:
+ 407 006a 456E6465 		.ascii	"Ended at: %X\012\000"
+ 407      64206174 
+ 407      3A202558 
+ 407      0A00
+ 408              	.LC5:
+ 409 0078 43616C63 		.ascii	"Calculated hash is probably wrong...\012\000"
+ 409      756C6174 
+ 409      65642068 
+ 409      61736820 
+ 409      69732070 
+ 410              	.LC6:
+ 411 009e 25582558 		.ascii	"%X%X%X%X\000"
+ 411      25582558 
+ 411      00
+ 412              		.text
+ 413              	.Letext0:
+ 414              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\lib\\gcc\\arm-none-eabi\\4.8
+ 415              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
+ 416              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
+ 417              		.file 5 "./stm32_lib/stm32f10x_type.h"
+ 418              		.file 6 "hardware.h"
+ 419              		.file 7 "./25519/sha256.h"
+ 420              		.file 8 "image.h"
+ 421              		.file 9 "usb.h"
+ 422              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\std
+ 423              		.file 11 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\str
+ 424              		.file 12 "./25519/edsign.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 image.c
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:19     .text.failErase:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:24     .text.failErase:00000000 failErase
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:64     .text.failErase:0000002c $d
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:74     .text.imageCheckFromAddress:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:79     .text.imageCheckFromAddress:00000000 imageCheckFromAddress
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:322    .text.imageCheckFromAddress:00000134 $d
-C:\Users\haifisch\AppData\Local\Temp\ccUv3MQ6.s:340    .data.rootCA:00000000 rootCA
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:19     .text.failErase:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:24     .text.failErase:00000000 failErase
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:64     .text.failErase:0000002c $d
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:74     .text.imageCheckFromAddress:00000000 $t
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:79     .text.imageCheckFromAddress:00000000 imageCheckFromAddress
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:345    .text.imageCheckFromAddress:0000015c $d
+C:\Users\haifisch\AppData\Local\Temp\ccAf1MfE.s:364    .data.rootCA:00000000 rootCA
                             *COM*:00000004 wTransferSize
                      .debug_frame:00000010 $d
 
@@ -612,6 +627,8 @@ uart_printf
 sha256_starts
 hexdump
 sha256_update
+uid_read
+sprintf
 sha256_finish
 print_hash
 edsign_verify

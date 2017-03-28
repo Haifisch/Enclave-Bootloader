@@ -21,7 +21,7 @@ OPT ?= s
 DEBUG = 1
 #DEBUG = dwarf-2
 
-INCDIRS = ./$(ST_LIB) ./$(ST_USB) ./$(ST_LIB)/includes ./25519
+INCDIRS = ./$(ST_LIB) ./$(ST_USB) ./$(ST_LIB)/includes ./25519 ./base64
 
 CFLAGS = -DDEBUG=$(DEBUG)
 CFLAGS += -O$(OPT)
@@ -90,7 +90,7 @@ usb_mem.c
 
 STM32USBSRCS = $(patsubst %, $(ST_USB)/%,$(_STM32USBSRCS))
 
-SRCS = usb.c usb_callbacks.c usb_descriptor.c main.c hardware.c dfu.c $(wildcard 25519/*.c) image.c
+SRCS = usb.c usb_callbacks.c usb_descriptor.c main.c hardware.c dfu.c $(wildcard 25519/*.c) $(wildcard base64/*.c) image.c
 
 
 SRC = $(SRCS) $(STM32SRCS) $(STM32USBSRCS)
@@ -171,7 +171,7 @@ copy_maple-rev5:
 	
 build_generic-pc13: TARGETFLAGS= -DTARGET_GENERIC_F103_PC13
 # Set the linker script
-build_generic-pc13: LDFLAGS +=-T$(ST_LIB)/qemu.ld
+build_generic-pc13: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld
 build_generic-pc13: elf bin lss sym
 copy_generic-pc13: 
 	@echo

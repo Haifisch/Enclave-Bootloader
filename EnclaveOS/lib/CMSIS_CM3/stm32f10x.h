@@ -155,7 +155,7 @@
 #ifdef STM32F10X_XL
  #define __MPU_PRESENT             1 /*!< STM32 XL-density devices provide an MPU */
 #else
- #define __MPU_PRESENT             0 /*!< Other STM32 devices does not provide an MPU */
+ #define __MPU_PRESENT             1 /*!< Other STM32 devices does not provide an MPU */
 #endif /* STM32F10X_XL */
 #define __NVIC_PRIO_BITS          4 /*!< STM32 uses 4 Bits for the Priority Levels    */
 #define __Vendor_SysTickConfig    0 /*!< Set to 1 if different SysTick Config is used */
@@ -1275,7 +1275,7 @@ typedef struct
   */
 
 
-#define FLASH_BASE            ((uint32_t)0x08000000) /*!< FLASH base address in the alias region */
+#define FLASH_BASE            ((uint32_t)0x08008084) /*!< FLASH base address in the alias region */
 #define SRAM_BASE             ((uint32_t)0x20000000) /*!< SRAM base address in the alias region */
 #define PERIPH_BASE           ((uint32_t)0x40000000) /*!< Peripheral base address in the alias region */
 

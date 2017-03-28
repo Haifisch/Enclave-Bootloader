@@ -42,90 +42,141 @@
 #include "dfu.h"
 #include "image.h"
 #include "sha256.h"
+#include "cencode.h"
+#include "cdecode.h"
+/*
+	Base64 functions
+*/
+size_t decode_b64(const char* input, char* output)
+{
+    base64_decodestate s;
+    size_t cnt;
 
-#define PERIPH_BASE           ((uint32_t)0x40000000) /*!< Peripheral base address in the alias region */
+    base64_init_decodestate(&s);
+    cnt = base64_decode_block(input, strlen(input), output, &s);
+    output[cnt] = 0;
 
-#define PERIPH_BB_BASE        ((uint32_t)0x42000000) /*!< Peripheral base address in the bit-band region */
+    return cnt;
+}
 
-#define FSMC_R_BASE           ((uint32_t)0xA0000000) /*!< FSMC registers base address */
+size_t encode_b64(const char* input, char* output)
+{
+    base64_encodestate s;
+    size_t cnt;
 
-/*!< Peripheral memory map */
-#define APB1PERIPH_BASE       PERIPH_BASE
-#define APB2PERIPH_BASE       (PERIPH_BASE + 0x10000)
+    base64_init_encodestate(&s);
+    cnt = base64_encode_block(input, strlen(input), output, &s);
+    cnt += base64_encode_blockend(output + cnt, &s);
+    output[cnt] = 0;
 
-#define USART1_BASE           (APB2PERIPH_BASE + 0x3800)
-#define USART1              ((USART_TypeDef *) USART1_BASE)
+    return cnt;
+}
 
-extern volatile dfuUploadTypes_t userUploadType;
+/*
+  Print the device's public key + signature (ed25519 between the device and the root ca)
+  the device is probably in DFU when this is needed -- the restore tool should use this to request a signed firmware from the signing server.
+*/
+void transmit_publickey_data() {
+  struct u_id id;
+  unsigned char uniqueID[0x17];
+  unsigned char sha256sum[32];  
+  char signature[EDSIGN_SIGNATURE_SIZE];
+  char publickey[EDSIGN_PUBLIC_KEY_SIZE];
+  char base64_pub[256];
+  char base64_signature[256];
 
+  // read our unique id
+  uid_read(&id);
+  sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+  // start sha256 context
+  sha256_context ctx;
+  sha256_starts(&ctx);
+  // hash in our unique id
+  sha256_update(&ctx, uniqueID, 0x17);
+  sha256_finish(&ctx, sha256sum);
+  // get our public key
+  edsign_sec_to_pub((uint8_t*)publickey, sha256sum);
+  encode_b64(publickey, base64_pub);
+
+  memset(signature, 0, EDSIGN_SIGNATURE_SIZE);
+  // sign the pub
+  edsign_sign((uint8_t*)signature, rootCA, sha256sum, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE);
+  
+  encode_b64(signature, base64_signature);
+
+  debug_print("[BEGIN_PUB_DATA][BEGIN_PUB]%s[END_PUB][END_PUB_DATA]", base64_pub);
+  debug_print("[BEGIN_SIGNATURE_DATA][BEGIN_SIGNATURE]%s[END_SIGNATURE][END_SIGNATURE_DATA]", base64_signature);
+}
+
+/*
+	Bootloader main
+*/
 int main() 
 {
 	bool no_user_jump = FALSE;
-	bool dont_wait=FALSE;
-	
+
+	// low level hardware init	
     systemReset(); // peripherals but not PC
     setupCLK();
     setupLEDAndButton();
-    setupUSB();
     setupFLASH();
     uartInit();
-    usbReset();
-	uart_printf("\nBootloader init...\n");
+	setupUSB();
 
-    if (readPin(GPIOB, 15) == 0x0)
+	uart_printf("\nBootloader init...\n");
+    if (readPin(GPIOB, 15) == 0x0) // force dfu
 	{
 		no_user_jump = TRUE;
 	} 
 
-	uart_printf("checking chain...\n");
+	// verify chain
+	debug_print("checking chain...\n");
 	ImageObjectHandle imageHandle;
-
     int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
-    
     debug_print("image check ret: %X\n", ret);
-	switch (ret)
+	switch (ret) // if anything fails to verify we need to kick ourselves into the DFU loop
 	{
 		case kImageImageIsTrusted:
-			uart_printf("Boot OK\n");
+			debug_print("Boot OK\n");
 			no_user_jump = FALSE;
 			break;
 
 		case kImageImageMissingMagic:
-			uart_printf("Firmware missing... waiting in DFU\n");
+			transmit_publickey_data();
+			debug_print("\nFirmware missing... waiting in DFU\n");
 			no_user_jump = TRUE;
 			break;
 
 		case kImageImageRejectSignature:
-			uart_printf("Signature unverified... waiting in DFU\n");
+			debug_print("\nSignature unverified... waiting in DFU\n");
 			no_user_jump = TRUE;
 			break;
 
 		case kImageImageHashCalcFailed:
-			uart_printf("Hash calculation failed... waiting in DFU\n");
+			debug_print("\nHash calculation failed... waiting in DFU\n");
 			no_user_jump = TRUE;
 			break;
 			
 		default:
 			break;
 	}
+
 	strobePin(LED_BANK, LED_PIN, 5, BLINK_FAST,LED_ON_STATE);
-
-	int delay_count = 0;
-	while ((delay_count++ < BOOTLOADER_WAIT) || no_user_jump)
+	while (no_user_jump)
 	{
-
+		// we're spinning in DFU waiting for an upload...
 		strobePin(LED_BANK, LED_PIN, 1, BLINK_SLOW,LED_ON_STATE);
-
 		if (dfuUploadStarted()) 
 		{
-			uart_printf("DFU finished upload\n");
+			debug_print("DFU finished upload\n");
 			dfuFinishUpload(); // systemHardReset from DFU once done
 		}
 	}
 
+	// we have the OS verified so lets jump to it. 
 	if (no_user_jump == FALSE)
 	{
-		uart_printf("Jumping to OS.\n");
+		debug_print("Jumping to OS.\n");
 		jumpToUser((USER_CODE_FLASH0X8008000+0x84));	
 	}
 	

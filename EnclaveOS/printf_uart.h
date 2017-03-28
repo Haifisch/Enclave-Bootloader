@@ -19,3 +19,7 @@
 #endif
 
 void uart_printf(const char *fmt, ...); 
+void print_hash(unsigned char hash[]);
+
+void usart_init(void);
+

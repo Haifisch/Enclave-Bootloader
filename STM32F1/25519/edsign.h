@@ -38,11 +38,11 @@ void edsign_sec_to_pub(uint8_t *pub, const uint8_t *secret);
 
 /* Produce a signature for a message. */
 #define EDSIGN_SIGNATURE_SIZE		64
-/*
+
 void edsign_sign(uint8_t *signature, const uint8_t *pub,
 		 const uint8_t *secret,
 		 const uint8_t *message, size_t len);
-*/
+
 /* Verify a message signature. Returns non-zero if ok. */
 uint8_t edsign_verify(const uint8_t *signature, const uint8_t *pub,
 		      const uint8_t *message, size_t len);

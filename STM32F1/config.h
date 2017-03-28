@@ -60,7 +60,7 @@
 #define ALT2_STR_LEN 0x64
 #define ALT2_MSG_STR 'E',0,'n',0,'c',0,'l',0,'a',0,'v',0,'e',0,' ',0,'D',0,'F',0,'U',0,' ',0,'B',0,'o',0,'o',0,'t',0,'l',0,'o',0,'a',0,'d',0,'e',0,'r',0,' ',0,' ',0,'U',0,'p',0,'l',0,'o',0,'a',0,'d',0,' ',0,'t',0,'o',0,' ',0,'F',0,'l',0,'a',0,'s',0,'h',0,' ',0,'0',0,'x',0,'8',0,'0',0,'0',0,'2',0,'0',0,'0',0,'0',0
 // Jump locations for legacy bootloader (0x8005000) and new / smaller bootloder (0x8002000)
-#define USER_CODE_FLASH0X8008000   	((u32)0x08008000)
+#define USER_CODE_FLASH0X8008000   	((u32)0x08009000)
 #define USER_CODE_FLASH0X8007000   	((u32)0x08007000)
 #define USER_CODE_FLASH0X8006000   	((u32)0x08006000)
 #define USER_CODE_FLASH0X8005000   	((u32)0x08005000)

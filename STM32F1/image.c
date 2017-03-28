@@ -56,7 +56,6 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     memset(&state, 0, sizeof(state));
 
 	hdr = (ImageRootHeader *)imageBuffer;
-
 	if (bufferSize < sizeof(hdr)) {
 		debug_print("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
 		if (shouldEraseFlashOnFail)
@@ -104,7 +103,6 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     char buff[buffSize];
 
     int i = 0x84;
-    char cmpEnd[5] = {0x01, 0x00, 0x00, 0x00, 0x00}; 
     hexdump((flashAddress+i), 0x10);
 
     int finish = hdr->header.dataSize + 0x84;
@@ -113,17 +111,6 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     {
     	memset(buff, 0xFF, buffSize);
     	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
-		/*
-		if ((flashAddress+i) >= (flashAddress + (hdr->header.dataSize))) // our end of image should be somewhere around here
-		{
-			if ((memmem(&buff, buffSize, &cmpEnd, buffSize) > 0)) {
-				sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize-1);
-		  	hexdump((vu32 *)(flashAddress+i), buffSize-1);
-		  	debug_print("Last block: %X\n", (flashAddress+i));
-		  	break;
-			}
-		hexdump((vu32 *)(flashAddress+i), buffSize);
-		}*/
 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
 		i += 0x1;
     }
@@ -166,7 +153,6 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     	*newHandle = &state;
     	return kImageImageIsTrusted;
     }
-	
 	*newHandle = &state;
 	return(0);
 }

@@ -33,7 +33,7 @@ build/main.o: main.c \
  usb_lib/usb_lib.h usb_lib/usb_type.h usb_lib/usb_regs.h \
  usb_lib/usb_def.h usb_lib/usb_core.h usb_lib/usb_init.h \
  usb_lib/usb_mem.h usb_lib/usb_int.h usb_descriptor.h 25519/edsign.h \
- dfu.h image.h 25519/sha256.h
+ dfu.h image.h 25519/sha256.h base64/cencode.h base64/cdecode.h
 
 c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\4.8\ 2014q3\arm-none-eabi\include\stdio.h:
 
@@ -132,3 +132,7 @@ dfu.h:
 image.h:
 
 25519/sha256.h:
+
+base64/cencode.h:
+
+base64/cdecode.h:
