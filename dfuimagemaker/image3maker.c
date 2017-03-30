@@ -40,16 +40,16 @@
  */
 #include <stdio.h>
 #include <string.h>
+       #include <strings.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <getopt.h>
 #include <stdint.h>
 #include <assert.h>
-#include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <sys/errno.h>
+#include <errno.h>
 
 #include "edsign.h"
 #include "sha256.h"
@@ -105,9 +105,12 @@ typedef struct _ImageInternalState {
 struct _ImageInternalState;
 typedef struct _ImageInternalState  *ImageObjectHandle;
 
+
 uint8_t rootCA[32] = {
-       0xbd, 0x0c, 0x2d, 0x04, 0x2e, 0x5a, 0x95, 0xc6, 0xb6, 0x28, 0xfc, 0x3f, 0x85, 0x6c, 0xa1, 0xfb, 0xb5, 0x25, 0x07, 0x38, 0xc0, 0x05, 0x9d, 0x44, 0x04, 0xa7, 0xe3, 0xa6, 0xac, 0x3b, 0xb8, 0x41
+       0x0F, 0x72, 0xEB, 0xD1 , 0x64 , 0x3E , 0xAB , 0x54 , 0xC8 , 0xCF , 0x60 , 0xE6 , 0x6F , 0xC3 , 0x9D , 0x64 , 
+       0xA4 , 0xCF , 0x43 , 0x77 , 0x46 , 0x7B , 0x09 , 0x52 , 0x19 , 0xC7 , 0x06 , 0x6C , 0x72 , 0x1D , 0x3C , 0x86
     };
+
 
 typedef struct ImageHeader {
     uint32_t magic;
@@ -221,10 +224,8 @@ int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
     }   
     if (!dontHashInECIDPlease)
     {
-        unsigned char decodedPublickey[32];
-        decode_b64(uniqueIdentifier, decodedPublickey);
-        print_hex("PUB", decodedPublickey, 32);
-        sha256_update(&sha256, decodedPublickey, 32);
+        print_hex("PUB", uniqueIdentifier, 32);
+        sha256_update(&sha256, uniqueIdentifier, 32);
     }
     sha256_finish(&sha256, output);
 
@@ -359,7 +360,7 @@ int verify_test (ImageObjectHandle *newHandle) {
     uint8_t sigbuff[0x40];
     memcpy(sigbuff, (uint8_t*)(hdr->signing.imageSignature), 0x40);
 
-    if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
+    if (edsign_verify(sigbuff, rootCA, uniqueIdentifier, 32) <= 0) {
         state.flags = kImageImageRejectSignature;
         *newHandle = &state;
         return kImageImageRejectSignature;
@@ -392,7 +393,7 @@ static void *image3_reserve_version(uint32_t tag, uint32_t length)
     assert((image3core.rootHeader = realloc(image3core.rootHeader, size)));
     
     header = (ImageHeader*)add_ptr2(image3core.rootHeader, image3core.rootHeader->header.size);
-    bzero((void*)(header), len);
+    memset((void*)(header), 0, len);
 
     header->dataSize = length;
     header->size = len;
@@ -418,7 +419,7 @@ static void *image3_reserve_data(uint32_t tag, uint32_t length)
     assert((image3core.rootHeader = realloc(image3core.rootHeader, size)));
     
     header = (ImageHeader*)add_ptr2(image3core.rootHeader, image3core.rootHeader->header.size);
-    bzero((void*)(header), len);
+    memset((void*)(header), 0,len);
 
     header->dataSize = length;
     header->size = len;
@@ -441,7 +442,7 @@ static void *image3_reserve_tag(uint32_t tag, uint32_t length)
     assert((image3core.rootHeader = realloc(image3core.rootHeader, size)));
     
     header = (ImageHeader*)add_ptr2(image3core.rootHeader, image3core.rootHeader->header.size);
-    bzero((void*)(header), len);
+    memset((void*)(header), 0, len);
 
     header->dataSize = length;
     header->size = len;
@@ -464,7 +465,7 @@ static void *image3_reserve_ecid(uint32_t tag, uint32_t length)
     assert((image3core.rootHeader = realloc(image3core.rootHeader, size)));
     
     header = (ImageHeader*)add_ptr2(image3core.rootHeader, image3core.rootHeader->header.size);
-    bzero((void*)(header), len);
+    memset((void*)(header), 0, len);
 
     header->dataSize = length;
     header->size = len;
@@ -511,18 +512,29 @@ static void create_image(void)
     image3core.rootHeader->header.dataSize = ftell(fp);
     fclose(fp);
 
+
+    uint8_t pub[EDSIGN_PUBLIC_KEY_SIZE];
+    uint8_t signature[EDSIGN_SIGNATURE_SIZE];
+
+    char ticketBuff[92];
+    FILE *fp1 = fopen(uniqueIdentifier, "rb");
+    fread(pub, 32, 1, fp1);
+    fread(signature, 64, 1, fp1);
+    fclose(fp1);
+
+
+    memcpy(image3core.rootHeader->signing.imageSignature, (uint8_t*)signature, EDSIGN_SIGNATURE_SIZE);
+/*
     unsigned char calc_hash[32];
 
     calc_sha256(inputFile, calc_hash);
     printf("Calculated file hash: ");
     print_hash(calc_hash);
 
-    uint8_t secret[32] = {0xc1, 0xb4, 0xaf, 0x1f, 0xfc, 0x27, 0x24, 0x8b, 0x42, 0x0b, 0x0c, 0x3f, 0x3f, 0x38, 0xd4, 0x4a, 
-                          0x2d, 0xb2, 0x4e, 0x03, 0xa0, 0x8c, 0x20, 0x91, 0x9e, 0xfa, 0x68, 0x17, 0x8b, 0xa0, 0x5a, 0x67};
+    uint8_t secret[32] = {0xC4, 0x6C , 0x22 , 0xA1 , 0xF5 , 0x02 , 0x98 , 0x83 , 0xF4 , 0xA9 , 0x38 , 0x0E , 0x60 , 0x35 , 0xDF , 0x97 , 0x12,
+                             0x64 , 0xD9 , 0x8B , 0x97 , 0x76 , 0xA2 , 0x05 , 0xA4 , 0x4E , 0xDB , 0x45 , 0x90 , 0x75 , 0xBC , 0xFB};
 
-    uint8_t pub[EDSIGN_PUBLIC_KEY_SIZE];
     uint8_t msg[32];
-    uint8_t signature[EDSIGN_SIGNATURE_SIZE];
 
     edsign_sec_to_pub(pub, secret);
 
@@ -533,12 +545,9 @@ static void create_image(void)
 
     print_hex("Hash to sign", calc_hash, sizeof(calc_hash));
     edsign_sign(signature, pub, secret, calc_hash, 32);
-
-    assert(edsign_verify(signature, pub, calc_hash, 32));
-
-    memcpy(image3core.rootHeader->signing.imageSignature, signature, EDSIGN_SIGNATURE_SIZE);
-
-
+    print_hex("GenSig", signature, EDSIGN_SIGNATURE_SIZE);
+    assert(edsign_verify(image3core.rootHeader->signing.imageSignature, pub, calc_hash, 32));
+*/
     /* DATA/TYPE tags */
     uint32_t* type;
     void* data;
@@ -595,7 +604,7 @@ static void create_image_preprocess(void)
 {
     assert(inputFile && imageTag && outputFile);
     
-    bzero((void*)&image3core, sizeof(ImageStruct));
+    memset((void*)&image3core, 0, sizeof(ImageStruct));
     
     /* Read input file */
     image3core.backingData = map_file(inputFile, &image3core.backingDataSize);
@@ -700,6 +709,7 @@ static int process_options(int argc, char* argv[])
                 boardType = optarg;
                 break;
             case 'e':
+                //decode_b64((char)optarg, &uniqueIdentifier);
                 uniqueIdentifier = optarg;
                 break;
             case 'a':

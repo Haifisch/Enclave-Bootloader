@@ -59,13 +59,13 @@ size_t decode_b64(const char* input, char* output)
     return cnt;
 }
 
-size_t encode_b64(const char* input, char* output)
+size_t encode_b64(const char* input, char* output, int blocksize)
 {
     base64_encodestate s;
     size_t cnt;
 
     base64_init_encodestate(&s);
-    cnt = base64_encode_block(input, strlen(input), output, &s);
+    cnt = base64_encode_block(input, blocksize, output, &s);
     cnt += base64_encode_blockend(output + cnt, &s);
     output[cnt] = 0;
 
@@ -79,7 +79,7 @@ size_t encode_b64(const char* input, char* output)
 void transmit_publickey_data() {
   struct u_id id;
   unsigned char uniqueID[0x17];
-  unsigned char sha256sum[32];  
+  unsigned char sha256sum[0x20];  
   char signature[EDSIGN_SIGNATURE_SIZE];
   char publickey[EDSIGN_PUBLIC_KEY_SIZE];
   char base64_pub[256];
@@ -95,17 +95,20 @@ void transmit_publickey_data() {
   sha256_update(&ctx, uniqueID, 0x17);
   sha256_finish(&ctx, sha256sum);
   // get our public key
-  edsign_sec_to_pub((uint8_t*)publickey, sha256sum);
-  encode_b64(publickey, base64_pub);
+  memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
+  edsign_sec_to_pub((unsigned char*)publickey, sha256sum);
+  encode_b64(publickey, base64_pub, 0x20);
 
   memset(signature, 0, EDSIGN_SIGNATURE_SIZE);
   // sign the pub
   edsign_sign((uint8_t*)signature, rootCA, sha256sum, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE);
   
-  encode_b64(signature, base64_signature);
+  encode_b64(signature, base64_signature, 0x64);
 
   debug_print("[BEGIN_PUB_DATA][BEGIN_PUB]%s[END_PUB][END_PUB_DATA]", base64_pub);
-  debug_print("[BEGIN_SIGNATURE_DATA][BEGIN_SIGNATURE]%s[END_SIGNATURE][END_SIGNATURE_DATA]", base64_signature);
+  debug_print("[BEGIN_SIGNATURE_DATA][BEGIN_SIGNATURE]");
+  debug_print("%s", base64_signature);
+  debug_print("[END_SIGNATURE][END_SIGNATURE_DATA]");
 }
 
 /*
@@ -148,7 +151,7 @@ int main()
 			break;
 
 		case kImageImageRejectSignature:
-			debug_print("\nSignature unverified... waiting in DFU\n");
+			debug_print("\nSignature validation failed... waiting in DFU\n");
 			no_user_jump = TRUE;
 			break;
 

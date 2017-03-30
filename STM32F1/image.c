@@ -22,7 +22,7 @@
 #include "image.h"
 
 uint8_t rootCA[32] = {
-       0xbd, 0x0c, 0x2d, 0x04, 0x2e, 0x5a, 0x95, 0xc6, 0xb6, 0x28, 0xfc, 0x3f, 0x85, 0x6c, 0xa1, 0xfb, 0xb5, 0x25, 0x07, 0x38, 0xc0, 0x05, 0x9d, 0x44, 0x04, 0xa7, 0xe3, 0xa6, 0xac, 0x3b, 0xb8, 0x41
+      0x0f, 0x72, 0xeb, 0xd1, 0x64, 0x3e, 0xab, 0x54, 0xc8, 0xcf, 0x60, 0xe6, 0x6f, 0xc3, 0x9d, 0x64, 0xa4, 0xcf, 0x43, 0x77, 0x46, 0x7b, 0x09, 0x52, 0x19, 0xc7, 0x06, 0x6c, 0x72, 0x1d, 0x3c, 0x86
     };
 
 static void print_hex(const char *label, const uint8_t *data, int len)
@@ -123,43 +123,46 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     	*newHandle = &state;
 		return(kImageImageHashCalcFailed);
     }
+
     if (!QEMU_BUILD)
     {
-		struct u_id id;
+    	struct u_id id;
 		unsigned char uniqueID[0x17];
-		unsigned char sha256sum[32];  
-		char signature[EDSIGN_SIGNATURE_SIZE];
-		char publickey[EDSIGN_PUBLIC_KEY_SIZE];
-		char base64_pub[256];
-		char base64_signature[256];
-
+		unsigned char temp_sha256sum[32];  
+		uint8_t publickey[EDSIGN_PUBLIC_KEY_SIZE];
 		// read our unique id
 		uid_read(&id);
 		sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
 		// start sha256 context
-		sha256_context uniqueIDHash;
-		sha256_starts(&uniqueIDHash);
+		sha256_context ctx2;
+		sha256_starts(&ctx2);
 		// hash in our unique id
-		sha256_update(&uniqueIDHash, uniqueID, 0x17);
-		sha256_finish(&uniqueIDHash, sha256sum);
+		sha256_update(&ctx2, uniqueID, 0x17);
+		sha256_finish(&ctx2, temp_sha256sum);
 		// get our public key
-		edsign_sec_to_pub((uint8_t*)publickey, sha256sum);
+		memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
+		edsign_sec_to_pub(publickey, temp_sha256sum);
+		debug_print("publickey:\n");
 		hexdump(publickey, 32);
     	/*
     	struct u_id id;
 	    uid_read(&id);
 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
 	    */
-	    sha256_update(&ctx, publickey, 32);
+	    sha256_update(&ctx, (unsigned char*)publickey, 32);
     }
 
     //debug_print("%s\n", uniqueID);
     
     sha256_finish(&ctx, sha256sum);
-    print_hash(sha256sum);
     // verify signature against recalc hash
-    uint8_t sigbuff[0x40];
-    memcpy(sigbuff, (uint8_t*)(hdr->signing.imageSignature), 0x40);
+    debug_print("Signature:\n");
+    hexdump(hdr->signing.imageSignature, 0x40);
+	debug_print("sha256sum:\n");
+	print_hash(sha256sum);
+
+	char sigbuff[64];
+	memcpy(sigbuff, hdr->signing.imageSignature, 64);
 
     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
     	state.flags = kImageImageRejectSignature;
