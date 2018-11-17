@@ -3219,58 +3219,58 @@
  1927              		.file 7 "usb_lib/usb_mem.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_core.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:16     .text.Standard_GetConfiguration:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:23     .text.Standard_GetConfiguration:0000000000000000 Standard_GetConfiguration
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:61     .text.Standard_GetConfiguration:000000000000001c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:67     .text.Standard_GetInterface:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:74     .text.Standard_GetInterface:0000000000000000 Standard_GetInterface
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:111    .text.Standard_GetInterface:000000000000001c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:117    .text.Standard_GetStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:124    .text.Standard_GetStatus:0000000000000000 Standard_GetStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:237    .text.Standard_GetStatus:000000000000007c $d
+     /tmp/ccJaPNVe.s:16     .text.Standard_GetConfiguration:0000000000000000 $t
+     /tmp/ccJaPNVe.s:23     .text.Standard_GetConfiguration:0000000000000000 Standard_GetConfiguration
+     /tmp/ccJaPNVe.s:61     .text.Standard_GetConfiguration:000000000000001c $d
+     /tmp/ccJaPNVe.s:67     .text.Standard_GetInterface:0000000000000000 $t
+     /tmp/ccJaPNVe.s:74     .text.Standard_GetInterface:0000000000000000 Standard_GetInterface
+     /tmp/ccJaPNVe.s:111    .text.Standard_GetInterface:000000000000001c $d
+     /tmp/ccJaPNVe.s:117    .text.Standard_GetStatus:0000000000000000 $t
+     /tmp/ccJaPNVe.s:124    .text.Standard_GetStatus:0000000000000000 Standard_GetStatus
+     /tmp/ccJaPNVe.s:237    .text.Standard_GetStatus:000000000000007c $d
                             *COM*:0000000000000002 StatusInfo
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:244    .text.DataStageIn:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:250    .text.DataStageIn:0000000000000000 DataStageIn
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:376    .text.DataStageIn:0000000000000094 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:386    .text.Standard_SetConfiguration:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:393    .text.Standard_SetConfiguration:0000000000000000 Standard_SetConfiguration
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:439    .text.Standard_SetConfiguration:000000000000002c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:446    .text.Standard_SetInterface:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:453    .text.Standard_SetInterface:0000000000000000 Standard_SetInterface
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:520    .text.Standard_SetInterface:0000000000000040 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:527    .text.Standard_ClearFeature:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:534    .text.Standard_ClearFeature:0000000000000000 Standard_ClearFeature
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:686    .text.Standard_ClearFeature:00000000000000b0 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:695    .text.Standard_SetEndPointFeature:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:702    .text.Standard_SetEndPointFeature:0000000000000000 Standard_SetEndPointFeature
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:819    .text.Standard_SetEndPointFeature:0000000000000070 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:826    .text.Standard_SetDeviceFeature:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:833    .text.Standard_SetDeviceFeature:0000000000000000 Standard_SetDeviceFeature
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:861    .text.Standard_SetDeviceFeature:000000000000001c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:867    .text.Standard_GetDescriptorData:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:874    .text.Standard_GetDescriptorData:0000000000000000 Standard_GetDescriptorData
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:912    .text.Standard_GetDescriptorData:0000000000000018 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:917    .text.Post0_Process:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:924    .text.Post0_Process:0000000000000000 Post0_Process
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:963    .text.Post0_Process:0000000000000030 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:971    .text.Setup0_Process:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:978    .text.Setup0_Process:0000000000000000 Setup0_Process
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1489   .text.Setup0_Process:000000000000025c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1501   .text.Setup0_Process:0000000000000284 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1537   .text.Setup0_Process:00000000000002b4 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1545   .text.Out0_Process:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1552   .text.Out0_Process:0000000000000000 Out0_Process
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1728   .text.Out0_Process:00000000000000a8 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1738   .text.SetDeviceAddress:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1745   .text.SetDeviceAddress:0000000000000000 SetDeviceAddress
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1793   .text.SetDeviceAddress:0000000000000030 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1799   .text.In0_Process:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1806   .text.In0_Process:0000000000000000 In0_Process
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1886   .text.In0_Process:0000000000000050 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1893   .text.NOP_Process:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1900   .text.NOP_Process:0000000000000000 NOP_Process
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1918   .bss.Data_Mul_MaxPacketSize:0000000000000000 Data_Mul_MaxPacketSize
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1919   .bss.Data_Mul_MaxPacketSize:0000000000000000 $d
+     /tmp/ccJaPNVe.s:244    .text.DataStageIn:0000000000000000 $t
+     /tmp/ccJaPNVe.s:250    .text.DataStageIn:0000000000000000 DataStageIn
+     /tmp/ccJaPNVe.s:376    .text.DataStageIn:0000000000000094 $d
+     /tmp/ccJaPNVe.s:386    .text.Standard_SetConfiguration:0000000000000000 $t
+     /tmp/ccJaPNVe.s:393    .text.Standard_SetConfiguration:0000000000000000 Standard_SetConfiguration
+     /tmp/ccJaPNVe.s:439    .text.Standard_SetConfiguration:000000000000002c $d
+     /tmp/ccJaPNVe.s:446    .text.Standard_SetInterface:0000000000000000 $t
+     /tmp/ccJaPNVe.s:453    .text.Standard_SetInterface:0000000000000000 Standard_SetInterface
+     /tmp/ccJaPNVe.s:520    .text.Standard_SetInterface:0000000000000040 $d
+     /tmp/ccJaPNVe.s:527    .text.Standard_ClearFeature:0000000000000000 $t
+     /tmp/ccJaPNVe.s:534    .text.Standard_ClearFeature:0000000000000000 Standard_ClearFeature
+     /tmp/ccJaPNVe.s:686    .text.Standard_ClearFeature:00000000000000b0 $d
+     /tmp/ccJaPNVe.s:695    .text.Standard_SetEndPointFeature:0000000000000000 $t
+     /tmp/ccJaPNVe.s:702    .text.Standard_SetEndPointFeature:0000000000000000 Standard_SetEndPointFeature
+     /tmp/ccJaPNVe.s:819    .text.Standard_SetEndPointFeature:0000000000000070 $d
+     /tmp/ccJaPNVe.s:826    .text.Standard_SetDeviceFeature:0000000000000000 $t
+     /tmp/ccJaPNVe.s:833    .text.Standard_SetDeviceFeature:0000000000000000 Standard_SetDeviceFeature
+     /tmp/ccJaPNVe.s:861    .text.Standard_SetDeviceFeature:000000000000001c $d
+     /tmp/ccJaPNVe.s:867    .text.Standard_GetDescriptorData:0000000000000000 $t
+     /tmp/ccJaPNVe.s:874    .text.Standard_GetDescriptorData:0000000000000000 Standard_GetDescriptorData
+     /tmp/ccJaPNVe.s:912    .text.Standard_GetDescriptorData:0000000000000018 $d
+     /tmp/ccJaPNVe.s:917    .text.Post0_Process:0000000000000000 $t
+     /tmp/ccJaPNVe.s:924    .text.Post0_Process:0000000000000000 Post0_Process
+     /tmp/ccJaPNVe.s:963    .text.Post0_Process:0000000000000030 $d
+     /tmp/ccJaPNVe.s:971    .text.Setup0_Process:0000000000000000 $t
+     /tmp/ccJaPNVe.s:978    .text.Setup0_Process:0000000000000000 Setup0_Process
+     /tmp/ccJaPNVe.s:1489   .text.Setup0_Process:000000000000025c $d
+     /tmp/ccJaPNVe.s:1501   .text.Setup0_Process:0000000000000284 $t
+     /tmp/ccJaPNVe.s:1537   .text.Setup0_Process:00000000000002b4 $d
+     /tmp/ccJaPNVe.s:1545   .text.Out0_Process:0000000000000000 $t
+     /tmp/ccJaPNVe.s:1552   .text.Out0_Process:0000000000000000 Out0_Process
+     /tmp/ccJaPNVe.s:1728   .text.Out0_Process:00000000000000a8 $d
+     /tmp/ccJaPNVe.s:1738   .text.SetDeviceAddress:0000000000000000 $t
+     /tmp/ccJaPNVe.s:1745   .text.SetDeviceAddress:0000000000000000 SetDeviceAddress
+     /tmp/ccJaPNVe.s:1793   .text.SetDeviceAddress:0000000000000030 $d
+     /tmp/ccJaPNVe.s:1799   .text.In0_Process:0000000000000000 $t
+     /tmp/ccJaPNVe.s:1806   .text.In0_Process:0000000000000000 In0_Process
+     /tmp/ccJaPNVe.s:1886   .text.In0_Process:0000000000000050 $d
+     /tmp/ccJaPNVe.s:1893   .text.NOP_Process:0000000000000000 $t
+     /tmp/ccJaPNVe.s:1900   .text.NOP_Process:0000000000000000 NOP_Process
+     /tmp/ccJaPNVe.s:1918   .bss.Data_Mul_MaxPacketSize:0000000000000000 Data_Mul_MaxPacketSize
+     /tmp/ccJaPNVe.s:1919   .bss.Data_Mul_MaxPacketSize:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 pInformation

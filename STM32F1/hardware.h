@@ -30,9 +30,6 @@
 #include "cortexm3_macro.h"
 #include "common.h"
 
-// qemu build disables ECID hash step check 
-#define QEMU_BUILD 1
-
 /* macro'd register and peripheral definitions */
 #define RCC   ((u32)0x40021000)
 #define FLASH ((u32)0x40022000)
@@ -295,6 +292,9 @@ unsigned int crMask(int pin);
 bool readPin(u32 bank, u8 pin);
 void strobePin(u32 bank, u8 pin, u8 count, u32 rate,u8 onState);
 
+/*
+    Hardware functions
+*/
 void uartInit(void);
 void systemHardReset(void);
 void systemReset(void);
@@ -303,7 +303,11 @@ void setupLEDAndButton(void);
 void setupFLASH(void);
 void jumpToUser(u32 usrAddr);
 int checkAndClearBootloaderFlag();
+void uid_read(struct u_id *id);
 
+/*
+    Flash Functions
+*/
 bool flashWriteWord(u32 addr, u32 word);
 bool flashErasePage(u32 addr);
 bool flashErasePages(u32 addr, u16 n);
@@ -314,11 +318,26 @@ void nvicDisableInterrupts(void);
 
 int getFlashEnd(void);
 int getFlashPageSize(void);
-	
 
+/*
+    Debug functions
+*/
+#ifdef DEBUG
 void uart_printf(const char *fmt, ...);
 void hexdump(unsigned char *data, size_t size);
+void print_hex(const char *label, const uint8_t *data, int len);
+#endif
 
-void uid_read(struct u_id *id);
+/*
+    Security Fusings
+*/
+int isSecure(void);
+int isProduction(void);
+
+/*
+    Base64 functions
+*/
+size_t decode_b64(const char* input, char* output);
+size_t encode_b64(const char* input, char* output, int blocksize);
 
 #endif

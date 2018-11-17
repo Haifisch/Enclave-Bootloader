@@ -3760,42 +3760,42 @@
  3402 003f 00       		.byte	0
  3403              		.text
  3404              	.Letext0:
- 3405              		.file 2 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
- 3406              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
- 3407              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
- 3408              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 3405              		.file 2 "/usr/arm-none-eabi/include/sys/lock.h"
+ 3406              		.file 3 "/usr/arm-none-eabi/include/sys/_types.h"
+ 3407              		.file 4 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 3408              		.file 5 "/usr/arm-none-eabi/include/sys/reent.h"
  3409              		.file 6 "25519/sha256.h"
  3410              		.file 7 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sha256.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:16     .text.sha256_starts:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:23     .text.sha256_starts:0000000000000000 sha256_starts
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:66     .text.sha256_starts:0000000000000034 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:77     .text.sha256_process:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:84     .text.sha256_process:0000000000000000 sha256_process
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:573    .text.sha256_process:00000000000003d0 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:586    .text.sha256_process:0000000000000400 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:994    .text.sha256_process:00000000000007b4 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:1005   .text.sha256_process:00000000000007dc $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:1380   .text.sha256_process:0000000000000b54 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:1389   .text.sha256_process:0000000000000b74 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:1745   .text.sha256_process:0000000000000ef0 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:1754   .text.sha256_process:0000000000000f10 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2124   .text.sha256_process:000000000000128c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2135   .text.sha256_process:00000000000012b0 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2526   .text.sha256_process:000000000000168c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2537   .text.sha256_process:00000000000016b0 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2920   .text.sha256_process:0000000000001a34 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2932   .text.sha256_update.part.0:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:2938   .text.sha256_update.part.0:0000000000000000 sha256_update.part.0
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3062   .text.sha256_update:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3069   .text.sha256_update:0000000000000000 sha256_update
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3088   .text.sha256_finish:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3095   .text.sha256_finish:0000000000000000 sha256_finish
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3260   .text.sha256_finish:00000000000000fc $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3269   .data.k:0000000000000000 k
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3266   .data.k:0000000000000000 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccA9CKZl.s:3338   .data.sha256_padding:0000000000000000 sha256_padding
+     /tmp/ccAiy0HX.s:16     .text.sha256_starts:0000000000000000 $t
+     /tmp/ccAiy0HX.s:23     .text.sha256_starts:0000000000000000 sha256_starts
+     /tmp/ccAiy0HX.s:66     .text.sha256_starts:0000000000000034 $d
+     /tmp/ccAiy0HX.s:77     .text.sha256_process:0000000000000000 $t
+     /tmp/ccAiy0HX.s:84     .text.sha256_process:0000000000000000 sha256_process
+     /tmp/ccAiy0HX.s:573    .text.sha256_process:00000000000003d0 $d
+     /tmp/ccAiy0HX.s:586    .text.sha256_process:0000000000000400 $t
+     /tmp/ccAiy0HX.s:994    .text.sha256_process:00000000000007b4 $d
+     /tmp/ccAiy0HX.s:1005   .text.sha256_process:00000000000007dc $t
+     /tmp/ccAiy0HX.s:1380   .text.sha256_process:0000000000000b54 $d
+     /tmp/ccAiy0HX.s:1389   .text.sha256_process:0000000000000b74 $t
+     /tmp/ccAiy0HX.s:1745   .text.sha256_process:0000000000000ef0 $d
+     /tmp/ccAiy0HX.s:1754   .text.sha256_process:0000000000000f10 $t
+     /tmp/ccAiy0HX.s:2124   .text.sha256_process:000000000000128c $d
+     /tmp/ccAiy0HX.s:2135   .text.sha256_process:00000000000012b0 $t
+     /tmp/ccAiy0HX.s:2526   .text.sha256_process:000000000000168c $d
+     /tmp/ccAiy0HX.s:2537   .text.sha256_process:00000000000016b0 $t
+     /tmp/ccAiy0HX.s:2920   .text.sha256_process:0000000000001a34 $d
+     /tmp/ccAiy0HX.s:2932   .text.sha256_update.part.0:0000000000000000 $t
+     /tmp/ccAiy0HX.s:2938   .text.sha256_update.part.0:0000000000000000 sha256_update.part.0
+     /tmp/ccAiy0HX.s:3062   .text.sha256_update:0000000000000000 $t
+     /tmp/ccAiy0HX.s:3069   .text.sha256_update:0000000000000000 sha256_update
+     /tmp/ccAiy0HX.s:3088   .text.sha256_finish:0000000000000000 $t
+     /tmp/ccAiy0HX.s:3095   .text.sha256_finish:0000000000000000 sha256_finish
+     /tmp/ccAiy0HX.s:3260   .text.sha256_finish:00000000000000fc $d
+     /tmp/ccAiy0HX.s:3269   .data.k:0000000000000000 k
+     /tmp/ccAiy0HX.s:3266   .data.k:0000000000000000 $d
+     /tmp/ccAiy0HX.s:3338   .data.sha256_padding:0000000000000000 sha256_padding
 
 UNDEFINED SYMBOLS
 memcpy

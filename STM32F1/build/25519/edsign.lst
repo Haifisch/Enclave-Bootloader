@@ -1007,34 +1007,34 @@
  721 001f 10       		.byte	16
  722              		.text
  723              	.Letext0:
- 724              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
- 725              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
- 726              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
- 727              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
- 728              		.file 8 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
- 729              		.file 9 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 724              		.file 4 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 725              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 726              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 727              		.file 7 "/usr/arm-none-eabi/include/sys/lock.h"
+ 728              		.file 8 "/usr/arm-none-eabi/include/sys/_types.h"
+ 729              		.file 9 "/usr/arm-none-eabi/include/sys/reent.h"
  730              		.file 10 "25519/f25519.h"
  731              		.file 11 "25519/fprime.h"
  732              		.file 12 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 edsign.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:16     .text.hash_with_prefix:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:22     .text.hash_with_prefix:0000000000000000 hash_with_prefix
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:154    .text.hash_with_prefix:0000000000000088 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:161    .text.expand_key:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:167    .text.expand_key:0000000000000000 expand_key
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:247    .text.expand_key:0000000000000050 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:252    .text.sm_pack:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:258    .text.sm_pack:0000000000000000 sm_pack
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:306    .text.sm_pack:0000000000000028 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:311    .text.edsign_sec_to_pub:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:318    .text.edsign_sec_to_pub:0000000000000000 edsign_sec_to_pub
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:351    .text.edsign_sign:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:358    .text.edsign_sign:0000000000000000 edsign_sign
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:512    .text.edsign_sign:00000000000000c0 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:517    .text.edsign_verify:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:524    .text.edsign_verify:0000000000000000 edsign_verify
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccH5URBh.s:689    .rodata.ed25519_order:0000000000000000 ed25519_order
+     /tmp/ccXnsgDm.s:16     .text.hash_with_prefix:0000000000000000 $t
+     /tmp/ccXnsgDm.s:22     .text.hash_with_prefix:0000000000000000 hash_with_prefix
+     /tmp/ccXnsgDm.s:154    .text.hash_with_prefix:0000000000000088 $d
+     /tmp/ccXnsgDm.s:161    .text.expand_key:0000000000000000 $t
+     /tmp/ccXnsgDm.s:167    .text.expand_key:0000000000000000 expand_key
+     /tmp/ccXnsgDm.s:247    .text.expand_key:0000000000000050 $d
+     /tmp/ccXnsgDm.s:252    .text.sm_pack:0000000000000000 $t
+     /tmp/ccXnsgDm.s:258    .text.sm_pack:0000000000000000 sm_pack
+     /tmp/ccXnsgDm.s:306    .text.sm_pack:0000000000000028 $d
+     /tmp/ccXnsgDm.s:311    .text.edsign_sec_to_pub:0000000000000000 $t
+     /tmp/ccXnsgDm.s:318    .text.edsign_sec_to_pub:0000000000000000 edsign_sec_to_pub
+     /tmp/ccXnsgDm.s:351    .text.edsign_sign:0000000000000000 $t
+     /tmp/ccXnsgDm.s:358    .text.edsign_sign:0000000000000000 edsign_sign
+     /tmp/ccXnsgDm.s:512    .text.edsign_sign:00000000000000c0 $d
+     /tmp/ccXnsgDm.s:517    .text.edsign_verify:0000000000000000 $t
+     /tmp/ccXnsgDm.s:524    .text.edsign_verify:0000000000000000 edsign_verify
+     /tmp/ccXnsgDm.s:689    .rodata.ed25519_order:0000000000000000 ed25519_order
 
 UNDEFINED SYMBOLS
 memcpy

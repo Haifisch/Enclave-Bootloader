@@ -21,29 +21,16 @@
 #include "edsign.h"
 #include "image.h"
 
-uint8_t rootCA[32] = {
-      0x0f, 0x72, 0xeb, 0xd1, 0x64, 0x3e, 0xab, 0x54, 0xc8, 0xcf, 0x60, 0xe6, 0x6f, 0xc3, 0x9d, 0x64, 0xa4, 0xcf, 0x43, 0x77, 0x46, 0x7b, 0x09, 0x52, 0x19, 0xc7, 0x06, 0x6c, 0x72, 0x1d, 0x3c, 0x86
-    };
+// hard coded root ca public key 
+uint8_t rootCA[32] = { 0x0f, 0x72, 0xeb, 0xd1, 0x64, 0x3e, 0xab, 0x54, 0xc8, 0xcf, 0x60, 
+      				   0xe6, 0x6f, 0xc3, 0x9d, 0x64, 0xa4, 0xcf, 0x43, 0x77, 0x46, 0x7b, 
+    				   0x09, 0x52, 0x19, 0xc7, 0x06, 0x6c, 0x72, 0x1d, 0x3c, 0x86 };
 
-static void print_hex(const char *label, const uint8_t *data, int len)
-{
-    int i;
-
-    uart_printf("%s: ", label);
-    for (i = 0; i < len; i++)
-        uart_printf("%02x", data[i]);
-    uart_printf("\n");
-}
-
-void failErase () {
-	// for whatever reason this only flashes upto 0x08008800
-	flashErasePage((u32)(0x08008000));
-	flashErasePage((u32)(0x08008000+1024));
-	flashErasePage((u32)(0x08008000+(u32)(0x190*2)));
-	flashErasePage((u32)(0x08008000+(u32)(0x190*3)));
-	flashErasePage((u32)(0x08008000+(u32)(0x190*4)));
-	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
-}
+// imageCheckFromAddress debugging macro
+#define debug_print_retval(ret) ({ \
+	        debug_print("image check ret: %X\n", ret); \
+	        return 1; \
+	    })
 
 int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool shouldEraseFlashOnFail)
 {
@@ -72,6 +59,7 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 			failErase();
 		}
 		*newHandle = &state;
+		debug_print_retval(kImageImageMissingMagic);
 		return(kImageImageMissingMagic);		/* magic must match */
 	}
 	if ((hdr->signing.imageType) != 0x45444f53)
@@ -83,6 +71,7 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 			failErase();
 		}
 		*newHandle = &state;
+		debug_print_retval(kImageImageMissingMagic);
 		return(kImageImageMissingMagic);		/* magic must match */
 	}
 	state.flags = kImageImageWasInstantiated;
@@ -121,6 +110,7 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     	debug_print("Calculated hash is probably wrong...\n");
     	state.flags = kImageImageHashCalcFailed;
     	*newHandle = &state;
+    	debug_print_retval(kImageImageHashCalcFailed);
 		return(kImageImageHashCalcFailed);
     }
 
@@ -166,17 +156,32 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 
     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
     	state.flags = kImageImageRejectSignature;
+    	/* dead code at the moment, flashErase needs work
     	if (shouldEraseFlashOnFail)
 		{
 			failErase();
 		}
+		*/
     	*newHandle = &state;
+    	debug_print_retval(kImageImageRejectSignature);
     	return kImageImageRejectSignature;
     } else {
     	state.flags = kImageImageIsTrusted;
     	*newHandle = &state;
+    	debug_print_retval(kImageImageIsTrusted);
     	return kImageImageIsTrusted;
     }
 	*newHandle = &state;
 	return(0);
+}
+
+
+void failErase () {
+	// for whatever reason this only flashes upto 0x08008800
+	flashErasePage((u32)(0x08008000));
+	flashErasePage((u32)(0x08008000+1024));
+	flashErasePage((u32)(0x08008000+(u32)(0x190*2)));
+	flashErasePage((u32)(0x08008000+(u32)(0x190*3)));
+	flashErasePage((u32)(0x08008000+(u32)(0x190*4)));
+	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
 }

@@ -10,6 +10,9 @@
  */
 #include <stdint.h>
 
+#ifndef __IMAGE_H
+#define __IMAGE_H
+
 typedef struct _ImageObjectHeader {
 	uint32_t	ihMagic;
 #define kImageHeaderMagic		'Ebc2'
@@ -105,3 +108,5 @@ int imageCheckFromAddress(
         vu32 flashAddress, bool shouldEraseFlashOnFail);
 
 uint8_t rootCA[32];
+
+#endif

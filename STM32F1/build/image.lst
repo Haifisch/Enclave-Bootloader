@@ -45,22 +45,163 @@
   21:image.c       **** #include "edsign.h"
   22:image.c       **** #include "image.h"
   23:image.c       **** 
-  24:image.c       **** uint8_t rootCA[32] = {
-  25:image.c       ****       0x0f, 0x72, 0xeb, 0xd1, 0x64, 0x3e, 0xab, 0x54, 0xc8, 0xcf, 0x60, 0xe6, 0x6f, 0xc3, 0x9d, 0x6
-  26:image.c       ****     };
-  27:image.c       **** 
-  28:image.c       **** static void print_hex(const char *label, const uint8_t *data, int len)
-  29:image.c       **** {
-  30:image.c       ****     int i;
-  31:image.c       **** 
-  32:image.c       ****     uart_printf("%s: ", label);
-  33:image.c       ****     for (i = 0; i < len; i++)
-  34:image.c       ****         uart_printf("%02x", data[i]);
-  35:image.c       ****     uart_printf("\n");
-  36:image.c       **** }
-  37:image.c       **** 
-  38:image.c       **** void failErase () {
-  26              		.loc 1 38 0
+  24:image.c       **** // hard coded root ca public key 
+  25:image.c       **** uint8_t rootCA[32] = { 0x0f, 0x72, 0xeb, 0xd1, 0x64, 0x3e, 0xab, 0x54, 0xc8, 0xcf, 0x60, 
+  26:image.c       ****       				   0xe6, 0x6f, 0xc3, 0x9d, 0x64, 0xa4, 0xcf, 0x43, 0x77, 0x46, 0x7b, 
+  27:image.c       ****     				   0x09, 0x52, 0x19, 0xc7, 0x06, 0x6c, 0x72, 0x1d, 0x3c, 0x86 };
+  28:image.c       **** 
+  29:image.c       **** // imageCheckFromAddress debugging macro
+  30:image.c       **** #define debug_print_retval(ret) ({ \
+  31:image.c       **** 	        debug_print("image check ret: %X\n", ret); \
+  32:image.c       **** 	        return 1; \
+  33:image.c       **** 	    })
+  34:image.c       **** 
+  35:image.c       **** int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool shouldEraseFlashOnF
+  36:image.c       **** {
+  37:image.c       **** 	ImageRootHeader		*hdr;
+  38:image.c       **** 	ImageInternalState		state;
+  39:image.c       **** 	int bufferSize = 0x28+0x40;
+  40:image.c       **** 	unsigned char imageBuffer[bufferSize];
+  41:image.c       ****     memset(imageBuffer, 0xFF, sizeof(imageBuffer));
+  42:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
+  43:image.c       ****     memset(&state, 0, sizeof(state));
+  44:image.c       **** 
+  45:image.c       **** 	hdr = (ImageRootHeader *)imageBuffer;
+  46:image.c       **** 	if (bufferSize < sizeof(hdr)) {
+  47:image.c       **** 		debug_print("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
+  48:image.c       **** 		if (shouldEraseFlashOnFail)
+  49:image.c       **** 		{
+  50:image.c       **** 			failErase();
+  51:image.c       **** 		}
+  52:image.c       **** 		return(EINVAL);		/* buffer too small to really contain header */
+  53:image.c       **** 	}
+  54:image.c       **** 	if ((hdr->header.magic) != kImageHeaderMagic) {
+  55:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
+  56:image.c       **** 		state.flags = kImageImageMissingMagic;
+  57:image.c       **** 		if (shouldEraseFlashOnFail)
+  58:image.c       **** 		{
+  59:image.c       **** 			failErase();
+  60:image.c       **** 		}
+  61:image.c       **** 		*newHandle = &state;
+  62:image.c       **** 		debug_print_retval(kImageImageMissingMagic);
+  63:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
+  64:image.c       **** 	}
+  65:image.c       **** 	if ((hdr->signing.imageType) != 0x45444f53)
+  66:image.c       **** 	{
+  67:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
+  68:image.c       **** 		state.flags = kImageImageMissingMagic;
+  69:image.c       **** 		if (shouldEraseFlashOnFail)
+  70:image.c       **** 		{
+  71:image.c       **** 			failErase();
+  72:image.c       **** 		}
+  73:image.c       **** 		*newHandle = &state;
+  74:image.c       **** 		debug_print_retval(kImageImageMissingMagic);
+  75:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
+  76:image.c       **** 	}
+  77:image.c       **** 	state.flags = kImageImageWasInstantiated;
+  78:image.c       **** 
+  79:image.c       **** 	debug_print("dataSize: 0x%X\n", (hdr->header.dataSize));
+  80:image.c       **** 
+  81:image.c       **** 	state.cursor = hdr->header.dataSize;
+  82:image.c       **** 	state.lastTag = -1;
+  83:image.c       **** 
+  84:image.c       **** 	unsigned char sha256sum[32];
+  85:image.c       **** 
+  86:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
+  87:image.c       **** 
+  88:image.c       ****     sha256_context ctx;
+  89:image.c       ****     sha256_starts(&ctx);
+  90:image.c       **** 
+  91:image.c       ****     int buffSize = 0x1;
+  92:image.c       ****     char buff[buffSize];
+  93:image.c       **** 
+  94:image.c       ****     int i = 0x84;
+  95:image.c       ****     hexdump((flashAddress+i), 0x10);
+  96:image.c       **** 
+  97:image.c       ****     int finish = hdr->header.dataSize + 0x84;
+  98:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
+  99:image.c       ****     while (i < finish)
+ 100:image.c       ****     {
+ 101:image.c       ****     	memset(buff, 0xFF, buffSize);
+ 102:image.c       ****     	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
+ 103:image.c       **** 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
+ 104:image.c       **** 		i += 0x1;
+ 105:image.c       ****     }
+ 106:image.c       ****     debug_print("Ended at: %X\n", (flashAddress+i));
+ 107:image.c       ****     hexdump((vu32 *)(flashAddress+i), 0x10);
+ 108:image.c       ****     if ((flashAddress+i) != (flashAddress+finish))
+ 109:image.c       ****     {
+ 110:image.c       ****     	debug_print("Calculated hash is probably wrong...\n");
+ 111:image.c       ****     	state.flags = kImageImageHashCalcFailed;
+ 112:image.c       ****     	*newHandle = &state;
+ 113:image.c       ****     	debug_print_retval(kImageImageHashCalcFailed);
+ 114:image.c       **** 		return(kImageImageHashCalcFailed);
+ 115:image.c       ****     }
+ 116:image.c       **** 
+ 117:image.c       ****     if (!QEMU_BUILD)
+ 118:image.c       ****     {
+ 119:image.c       ****     	struct u_id id;
+ 120:image.c       **** 		unsigned char uniqueID[0x17];
+ 121:image.c       **** 		unsigned char temp_sha256sum[32];  
+ 122:image.c       **** 		uint8_t publickey[EDSIGN_PUBLIC_KEY_SIZE];
+ 123:image.c       **** 		// read our unique id
+ 124:image.c       **** 		uid_read(&id);
+ 125:image.c       **** 		sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+ 126:image.c       **** 		// start sha256 context
+ 127:image.c       **** 		sha256_context ctx2;
+ 128:image.c       **** 		sha256_starts(&ctx2);
+ 129:image.c       **** 		// hash in our unique id
+ 130:image.c       **** 		sha256_update(&ctx2, uniqueID, 0x17);
+ 131:image.c       **** 		sha256_finish(&ctx2, temp_sha256sum);
+ 132:image.c       **** 		// get our public key
+ 133:image.c       **** 		memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
+ 134:image.c       **** 		edsign_sec_to_pub(publickey, temp_sha256sum);
+ 135:image.c       **** 		debug_print("publickey:\n");
+ 136:image.c       **** 		hexdump(publickey, 32);
+ 137:image.c       ****     	/*
+ 138:image.c       ****     	struct u_id id;
+ 139:image.c       **** 	    uid_read(&id);
+ 140:image.c       **** 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+ 141:image.c       **** 	    */
+ 142:image.c       **** 	    sha256_update(&ctx, (unsigned char*)publickey, 32);
+ 143:image.c       ****     }
+ 144:image.c       **** 
+ 145:image.c       ****     //debug_print("%s\n", uniqueID);
+ 146:image.c       ****     
+ 147:image.c       ****     sha256_finish(&ctx, sha256sum);
+ 148:image.c       ****     // verify signature against recalc hash
+ 149:image.c       ****     debug_print("Signature:\n");
+ 150:image.c       ****     hexdump(hdr->signing.imageSignature, 0x40);
+ 151:image.c       **** 	debug_print("sha256sum:\n");
+ 152:image.c       **** 	print_hash(sha256sum);
+ 153:image.c       **** 
+ 154:image.c       **** 	char sigbuff[64];
+ 155:image.c       **** 	memcpy(sigbuff, hdr->signing.imageSignature, 64);
+ 156:image.c       **** 
+ 157:image.c       ****     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
+ 158:image.c       ****     	state.flags = kImageImageRejectSignature;
+ 159:image.c       ****     	/* dead code at the moment, flashErase needs work
+ 160:image.c       ****     	if (shouldEraseFlashOnFail)
+ 161:image.c       **** 		{
+ 162:image.c       **** 			failErase();
+ 163:image.c       **** 		}
+ 164:image.c       **** 		*/
+ 165:image.c       ****     	*newHandle = &state;
+ 166:image.c       ****     	debug_print_retval(kImageImageRejectSignature);
+ 167:image.c       ****     	return kImageImageRejectSignature;
+ 168:image.c       ****     } else {
+ 169:image.c       ****     	state.flags = kImageImageIsTrusted;
+ 170:image.c       ****     	*newHandle = &state;
+ 171:image.c       ****     	debug_print_retval(kImageImageIsTrusted);
+ 172:image.c       ****     	return kImageImageIsTrusted;
+ 173:image.c       ****     }
+ 174:image.c       **** 	*newHandle = &state;
+ 175:image.c       **** 	return(0);
+ 176:image.c       **** }
+ 177:image.c       **** 
+ 178:image.c       **** 
+ 179:image.c       **** void failErase () {
+  26              		.loc 1 179 0
   27              		.cfi_startproc
   28              		@ args = 0, pretend = 0, frame = 0
   29              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -68,41 +209,41 @@
   31              		.cfi_def_cfa_offset 8
   32              		.cfi_offset 3, -8
   33              		.cfi_offset 14, -4
-  39:image.c       **** 	// for whatever reason this only flashes upto 0x08008800
-  40:image.c       **** 	flashErasePage((u32)(0x08008000));
-  34              		.loc 1 40 0
+ 180:image.c       **** 	// for whatever reason this only flashes upto 0x08008800
+ 181:image.c       **** 	flashErasePage((u32)(0x08008000));
+  34              		.loc 1 181 0
   35 0002 0A48     		ldr	r0, .L2
   36 0004 FFF7FEFF 		bl	flashErasePage
   37              	.LVL0:
-  41:image.c       **** 	flashErasePage((u32)(0x08008000+1024));
-  38              		.loc 1 41 0
+ 182:image.c       **** 	flashErasePage((u32)(0x08008000+1024));
+  38              		.loc 1 182 0
   39 0008 0948     		ldr	r0, .L2+4
   40 000a FFF7FEFF 		bl	flashErasePage
   41              	.LVL1:
-  42:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*2)));
-  42              		.loc 1 42 0
+ 183:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*2)));
+  42              		.loc 1 183 0
   43 000e 0948     		ldr	r0, .L2+8
   44 0010 FFF7FEFF 		bl	flashErasePage
   45              	.LVL2:
-  43:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*3)));
-  46              		.loc 1 43 0
+ 184:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*3)));
+  46              		.loc 1 184 0
   47 0014 0848     		ldr	r0, .L2+12
   48 0016 FFF7FEFF 		bl	flashErasePage
   49              	.LVL3:
-  44:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*4)));
-  50              		.loc 1 44 0
+ 185:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*4)));
+  50              		.loc 1 185 0
   51 001a 0848     		ldr	r0, .L2+16
   52 001c FFF7FEFF 		bl	flashErasePage
   53              	.LVL4:
-  45:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
-  46:image.c       **** }
-  54              		.loc 1 46 0
+ 186:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
+ 187:image.c       **** }...
+  54              		.loc 1 187 0
   55 0020 BDE80840 		pop	{r3, lr}
   56              		.cfi_restore 14
   57              		.cfi_restore 3
   58              		.cfi_def_cfa_offset 0
-  45:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
-  59              		.loc 1 45 0
+ 186:image.c       **** 	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
+  59              		.loc 1 186 0
   60 0024 0648     		ldr	r0, .L2+20
   61 0026 FFF7FEBF 		b	flashErasePage
   62              	.LVL5:
@@ -125,568 +266,447 @@
   80              		.thumb_func
   81              		.fpu softvfp
   83              	imageCheckFromAddress:
-  84              	.LFB5:
-  47:image.c       **** 
-  48:image.c       **** int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool shouldEraseFlashOnF
-  49:image.c       **** {
-  85              		.loc 1 49 0
+  84              	.LFB3:
+  36:image.c       **** {
+  85              		.loc 1 36 0
   86              		.cfi_startproc
   87              		@ args = 0, pretend = 0, frame = 336
   88              		@ frame_needed = 0, uses_anonymous_args = 0
   89              	.LVL6:
-  90 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
-  91              		.cfi_def_cfa_offset 24
-  92              		.cfi_offset 4, -24
-  93              		.cfi_offset 5, -20
-  94              		.cfi_offset 6, -16
-  95              		.cfi_offset 7, -12
-  96              		.cfi_offset 8, -8
-  97              		.cfi_offset 14, -4
-  98 0004 D4B0     		sub	sp, sp, #336
-  99              		.cfi_def_cfa_offset 360
- 100              	.LVL7:
- 101              		.loc 1 49 0
- 102 0006 0191     		str	r1, [sp, #4]
-  50:image.c       **** 	ImageRootHeader		*hdr;
-  51:image.c       **** 	ImageInternalState		state;
-  52:image.c       **** 	int bufferSize = 0x28+0x40;
-  53:image.c       **** 	unsigned char imageBuffer[bufferSize];
-  54:image.c       ****     memset(imageBuffer, 0xFF, sizeof(imageBuffer));
-  55:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
- 103              		.loc 1 55 0
- 104 0008 0199     		ldr	r1, [sp, #4]
- 105              	.LVL8:
-  49:image.c       **** 	ImageRootHeader		*hdr;
- 106              		.loc 1 49 0
- 107 000a 0746     		mov	r7, r0
- 108 000c 9046     		mov	r8, r2
- 109              		.loc 1 55 0
- 110 000e 3AA8     		add	r0, sp, #232
- 111              	.LVL9:
- 112 0010 6822     		movs	r2, #104
- 113              	.LVL10:
-  56:image.c       ****     memset(&state, 0, sizeof(state));
- 114              		.loc 1 56 0
- 115 0012 03AE     		add	r6, sp, #12
-  55:image.c       ****     memset(&state, 0, sizeof(state));
- 116              		.loc 1 55 0
- 117 0014 FFF7FEFF 		bl	memcpy
- 118              	.LVL11:
- 119              		.loc 1 56 0
- 120 0018 1422     		movs	r2, #20
- 121 001a 0021     		movs	r1, #0
- 122 001c 3046     		mov	r0, r6
- 123 001e FFF7FEFF 		bl	memset
- 124              	.LVL12:
-  57:image.c       **** 
-  58:image.c       **** 	hdr = (ImageRootHeader *)imageBuffer;
-  59:image.c       **** 	if (bufferSize < sizeof(hdr)) {
-  60:image.c       **** 		debug_print("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
-  61:image.c       **** 		if (shouldEraseFlashOnFail)
-  62:image.c       **** 		{
-  63:image.c       **** 			failErase();
-  64:image.c       **** 		}
-  65:image.c       **** 		return(EINVAL);		/* buffer too small to really contain header */
-  66:image.c       **** 	}
-  67:image.c       **** 	if ((hdr->header.magic) != kImageHeaderMagic) {
- 125              		.loc 1 67 0
- 126 0022 3A99     		ldr	r1, [sp, #232]
- 127 0024 464A     		ldr	r2, .L21
- 128 0026 9142     		cmp	r1, r2
- 129 0028 0ED0     		beq	.L5
-  68:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
- 130              		.loc 1 68 0 discriminator 1
- 131 002a 4648     		ldr	r0, .L21+4
- 132              	.L20:
- 133 002c FFF7FEFF 		bl	uart_printf
- 134              	.LVL13:
-  69:image.c       **** 		state.flags = kImageImageMissingMagic;
- 135              		.loc 1 69 0 discriminator 1
- 136 0030 0423     		movs	r3, #4
- 137 0032 7360     		str	r3, [r6, #4]
-  70:image.c       **** 		if (shouldEraseFlashOnFail)
- 138              		.loc 1 70 0 discriminator 1
- 139 0034 B8F1000F 		cmp	r8, #0
- 140 0038 01D0     		beq	.L7
-  71:image.c       **** 		{
-  72:image.c       **** 			failErase();
- 141              		.loc 1 72 0
- 142 003a FFF7FEFF 		bl	failErase
- 143              	.LVL14:
- 144              	.L7:
-  73:image.c       **** 		}
-  74:image.c       **** 		*newHandle = &state;
-  75:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
- 145              		.loc 1 75 0
- 146 003e 0420     		movs	r0, #4
-  74:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
- 147              		.loc 1 74 0
- 148 0040 3E60     		str	r6, [r7]
- 149              	.L4:
-  76:image.c       **** 	}
-  77:image.c       **** 	if ((hdr->signing.imageType) != 0x45444f53)
-  78:image.c       **** 	{
-  79:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
-  80:image.c       **** 		state.flags = kImageImageMissingMagic;
-  81:image.c       **** 		if (shouldEraseFlashOnFail)
-  82:image.c       **** 		{
-  83:image.c       **** 			failErase();
-  84:image.c       **** 		}
-  85:image.c       **** 		*newHandle = &state;
-  86:image.c       **** 		return(kImageImageMissingMagic);		/* magic must match */
-  87:image.c       **** 	}
-  88:image.c       **** 	state.flags = kImageImageWasInstantiated;
-  89:image.c       **** 
-  90:image.c       **** 	debug_print("dataSize: 0x%X\n", (hdr->header.dataSize));
-  91:image.c       **** 
-  92:image.c       **** 	state.cursor = hdr->header.dataSize;
-  93:image.c       **** 	state.lastTag = -1;
-  94:image.c       **** 
-  95:image.c       **** 	unsigned char sha256sum[32];
-  96:image.c       **** 
-  97:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
-  98:image.c       **** 
-  99:image.c       ****     sha256_context ctx;
- 100:image.c       ****     sha256_starts(&ctx);
- 101:image.c       **** 
- 102:image.c       ****     int buffSize = 0x1;
- 103:image.c       ****     char buff[buffSize];
- 104:image.c       **** 
- 105:image.c       ****     int i = 0x84;
- 106:image.c       ****     hexdump((flashAddress+i), 0x10);
- 107:image.c       **** 
- 108:image.c       ****     int finish = hdr->header.dataSize + 0x84;
- 109:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
- 110:image.c       ****     while (i < finish)
- 111:image.c       ****     {
- 112:image.c       ****     	memset(buff, 0xFF, buffSize);
- 113:image.c       ****     	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
- 114:image.c       **** 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
- 115:image.c       **** 		i += 0x1;
- 116:image.c       ****     }
- 117:image.c       ****     debug_print("Ended at: %X\n", (flashAddress+i));
- 118:image.c       ****     hexdump((vu32 *)(flashAddress+i), 0x10);
- 119:image.c       ****     if ((flashAddress+i) != (flashAddress+finish))
- 120:image.c       ****     {
- 121:image.c       ****     	debug_print("Calculated hash is probably wrong...\n");
- 122:image.c       ****     	state.flags = kImageImageHashCalcFailed;
- 123:image.c       ****     	*newHandle = &state;
- 124:image.c       **** 		return(kImageImageHashCalcFailed);
- 125:image.c       ****     }
- 126:image.c       **** 
- 127:image.c       ****     if (!QEMU_BUILD)
- 128:image.c       ****     {
- 129:image.c       ****     	struct u_id id;
- 130:image.c       **** 		unsigned char uniqueID[0x17];
- 131:image.c       **** 		unsigned char temp_sha256sum[32];  
- 132:image.c       **** 		uint8_t publickey[EDSIGN_PUBLIC_KEY_SIZE];
- 133:image.c       **** 		// read our unique id
- 134:image.c       **** 		uid_read(&id);
- 135:image.c       **** 		sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
- 136:image.c       **** 		// start sha256 context
- 137:image.c       **** 		sha256_context ctx2;
- 138:image.c       **** 		sha256_starts(&ctx2);
- 139:image.c       **** 		// hash in our unique id
- 140:image.c       **** 		sha256_update(&ctx2, uniqueID, 0x17);
- 141:image.c       **** 		sha256_finish(&ctx2, temp_sha256sum);
- 142:image.c       **** 		// get our public key
- 143:image.c       **** 		memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
- 144:image.c       **** 		edsign_sec_to_pub(publickey, temp_sha256sum);
- 145:image.c       **** 		debug_print("publickey:\n");
- 146:image.c       **** 		hexdump(publickey, 32);
- 147:image.c       ****     	/*
- 148:image.c       ****     	struct u_id id;
- 149:image.c       **** 	    uid_read(&id);
- 150:image.c       **** 	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
- 151:image.c       **** 	    */
- 152:image.c       **** 	    sha256_update(&ctx, (unsigned char*)publickey, 32);
- 153:image.c       ****     }
- 154:image.c       **** 
- 155:image.c       ****     //debug_print("%s\n", uniqueID);
- 156:image.c       ****     
- 157:image.c       ****     sha256_finish(&ctx, sha256sum);
- 158:image.c       ****     // verify signature against recalc hash
- 159:image.c       ****     debug_print("Signature:\n");
- 160:image.c       ****     hexdump(hdr->signing.imageSignature, 0x40);
- 161:image.c       **** 	debug_print("sha256sum:\n");
- 162:image.c       **** 	print_hash(sha256sum);
- 163:image.c       **** 
- 164:image.c       **** 	char sigbuff[64];
- 165:image.c       **** 	memcpy(sigbuff, hdr->signing.imageSignature, 64);
- 166:image.c       **** 
- 167:image.c       ****     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
- 168:image.c       ****     	state.flags = kImageImageRejectSignature;
- 169:image.c       ****     	if (shouldEraseFlashOnFail)
- 170:image.c       **** 		{
- 171:image.c       **** 			failErase();
- 172:image.c       **** 		}
- 173:image.c       ****     	*newHandle = &state;
- 174:image.c       ****     	return kImageImageRejectSignature;
- 175:image.c       ****     } else {
- 176:image.c       ****     	state.flags = kImageImageIsTrusted;
- 177:image.c       ****     	*newHandle = &state;
- 178:image.c       ****     	return kImageImageIsTrusted;
- 179:image.c       ****     }
- 180:image.c       **** 	*newHandle = &state;
- 181:image.c       **** 	return(0);
- 182:image.c       **** }
- 150              		.loc 1 182 0
- 151 0042 54B0     		add	sp, sp, #336
- 152              		.cfi_remember_state
- 153              		.cfi_def_cfa_offset 24
- 154              		@ sp needed
- 155 0044 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  90 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  91              		.cfi_def_cfa_offset 20
+  92              		.cfi_offset 4, -20
+  93              		.cfi_offset 5, -16
+  94              		.cfi_offset 6, -12
+  95              		.cfi_offset 7, -8
+  96              		.cfi_offset 14, -4
+  97 0002 D5B0     		sub	sp, sp, #340
+  98              		.cfi_def_cfa_offset 360
+  99              	.LVL7:
+  36:image.c       **** {
+ 100              		.loc 1 36 0
+ 101 0004 0191     		str	r1, [sp, #4]
+  42:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
+ 102              		.loc 1 42 0
+ 103 0006 0199     		ldr	r1, [sp, #4]
+ 104              	.LVL8:
+  36:image.c       **** {
+ 105              		.loc 1 36 0
+ 106 0008 0746     		mov	r7, r0
+ 107 000a 1446     		mov	r4, r2
+  42:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
+ 108              		.loc 1 42 0
+ 109 000c 3AA8     		add	r0, sp, #232
+ 110              	.LVL9:
+ 111 000e 6822     		movs	r2, #104
+ 112              	.LVL10:
+  43:image.c       ****     memset(&state, 0, sizeof(state));
+ 113              		.loc 1 43 0
+ 114 0010 03AE     		add	r6, sp, #12
+  42:image.c       ****     memcpy(imageBuffer, (vu32 *)flashAddress, bufferSize);
+ 115              		.loc 1 42 0
+ 116 0012 FFF7FEFF 		bl	memcpy
+ 117              	.LVL11:
+  43:image.c       ****     memset(&state, 0, sizeof(state));
+ 118              		.loc 1 43 0
+ 119 0016 1422     		movs	r2, #20
+ 120 0018 0021     		movs	r1, #0
+ 121 001a 3046     		mov	r0, r6
+ 122 001c FFF7FEFF 		bl	memset
+ 123              	.LVL12:
+  54:image.c       **** 	if ((hdr->header.magic) != kImageHeaderMagic) {
+ 124              		.loc 1 54 0
+ 125 0020 3A99     		ldr	r1, [sp, #232]
+ 126 0022 434A     		ldr	r2, .L19
+ 127 0024 9142     		cmp	r1, r2
+ 128 0026 0FD0     		beq	.L5
+  55:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
+ 129              		.loc 1 55 0 discriminator 1
+ 130 0028 4248     		ldr	r0, .L19+4
+ 131              	.L16:
+ 132 002a FFF7FEFF 		bl	uart_printf
+ 133              	.LVL13:
+  56:image.c       **** 		state.flags = kImageImageMissingMagic;
+ 134              		.loc 1 56 0 discriminator 1
+ 135 002e 0423     		movs	r3, #4
+ 136 0030 7360     		str	r3, [r6, #4]
+  57:image.c       **** 		if (shouldEraseFlashOnFail)
+ 137              		.loc 1 57 0 discriminator 1
+ 138 0032 0CB1     		cbz	r4, .L7
+ 139              	.LBB2:
+  59:image.c       **** 			failErase();
+ 140              		.loc 1 59 0
+ 141 0034 FFF7FEFF 		bl	failErase
+ 142              	.LVL14:
+ 143              	.L7:
+ 144              	.LBE2:
+ 145              	.LBB3:
+  62:image.c       **** 		debug_print_retval(kImageImageMissingMagic);
+ 146              		.loc 1 62 0
+ 147 0038 0421     		movs	r1, #4
+ 148              	.LBE3:
+  61:image.c       **** 		*newHandle = &state;
+ 149              		.loc 1 61 0
+ 150 003a 3E60     		str	r6, [r7]
+ 151              	.L17:
+ 152              	.LBB4:
+ 171:image.c       ****     	debug_print_retval(kImageImageIsTrusted);
+ 153              		.loc 1 171 0
+ 154 003c 3E48     		ldr	r0, .L19+8
+ 155 003e FFF7FEFF 		bl	uart_printf
  156              	.LVL15:
- 157              	.L5:
- 158              		.cfi_restore_state
-  77:image.c       **** 	{
- 159              		.loc 1 77 0
- 160 0048 3E99     		ldr	r1, [sp, #248]
- 161 004a 3F4A     		ldr	r2, .L21+8
- 162 004c 9142     		cmp	r1, r2
- 163 004e 01D0     		beq	.L9
-  79:image.c       **** 		state.flags = kImageImageMissingMagic;
- 164              		.loc 1 79 0 discriminator 1
- 165 0050 3E48     		ldr	r0, .L21+12
- 166 0052 EBE7     		b	.L20
- 167              	.L9:
-  88:image.c       **** 
- 168              		.loc 1 88 0
- 169 0054 0123     		movs	r3, #1
- 170 0056 7360     		str	r3, [r6, #4]
-  90:image.c       **** 
- 171              		.loc 1 90 0
- 172 0058 3C99     		ldr	r1, [sp, #240]
- 173 005a 3D48     		ldr	r0, .L21+16
- 174 005c FFF7FEFF 		bl	uart_printf
- 175              	.LVL16:
-  92:image.c       **** 	state.lastTag = -1;
- 176              		.loc 1 92 0
- 177 0060 3C9B     		ldr	r3, [sp, #240]
-  97:image.c       **** 
- 178              		.loc 1 97 0
- 179 0062 2022     		movs	r2, #32
-  92:image.c       **** 	state.lastTag = -1;
- 180              		.loc 1 92 0
- 181 0064 F360     		str	r3, [r6, #12]
-  93:image.c       **** 
- 182              		.loc 1 93 0
- 183 0066 4FF0FF33 		mov	r3, #-1
-  97:image.c       **** 
- 184              		.loc 1 97 0
- 185 006a 0DEB0200 		add	r0, sp, r2
- 186 006e FF21     		movs	r1, #255
-  93:image.c       **** 
- 187              		.loc 1 93 0
- 188 0070 3361     		str	r3, [r6, #16]
-  97:image.c       **** 
- 189              		.loc 1 97 0
- 190 0072 FFF7FEFF 		bl	memset
- 191              	.LVL17:
- 100:image.c       **** 
- 192              		.loc 1 100 0
- 193 0076 20A8     		add	r0, sp, #128
- 194 0078 FFF7FEFF 		bl	sha256_starts
- 195              	.LVL18:
- 106:image.c       **** 
- 196              		.loc 1 106 0
- 197 007c 0198     		ldr	r0, [sp, #4]
- 198 007e 1021     		movs	r1, #16
- 199 0080 8430     		adds	r0, r0, #132
- 200 0082 FFF7FEFF 		bl	hexdump
- 201              	.LVL19:
- 108:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
- 202              		.loc 1 108 0
- 203 0086 3C9D     		ldr	r5, [sp, #240]
- 109:image.c       ****     while (i < finish)
- 204              		.loc 1 109 0
- 205 0088 0199     		ldr	r1, [sp, #4]
- 206 008a 019A     		ldr	r2, [sp, #4]
- 108:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
- 207              		.loc 1 108 0
- 208 008c 8435     		adds	r5, r5, #132
- 209              	.LVL20:
- 109:image.c       ****     while (i < finish)
- 210              		.loc 1 109 0
- 211 008e 2A44     		add	r2, r2, r5
- 212 0090 8431     		adds	r1, r1, #132
- 213 0092 3048     		ldr	r0, .L21+20
- 214 0094 FFF7FEFF 		bl	uart_printf
- 215              	.LVL21:
- 105:image.c       ****     hexdump((flashAddress+i), 0x10);
- 216              		.loc 1 105 0
- 217 0098 8424     		movs	r4, #132
- 218              	.LVL22:
- 219              	.L11:
- 110:image.c       ****     {
- 220              		.loc 1 110 0
- 221 009a AC42     		cmp	r4, r5
- 222 009c 15DB     		blt	.L12
- 117:image.c       ****     hexdump((vu32 *)(flashAddress+i), 0x10);
- 223              		.loc 1 117 0 discriminator 1
- 224 009e 0199     		ldr	r1, [sp, #4]
- 225 00a0 2D48     		ldr	r0, .L21+24
- 226 00a2 2144     		add	r1, r1, r4
- 227 00a4 FFF7FEFF 		bl	uart_printf
- 228              	.LVL23:
- 118:image.c       ****     if ((flashAddress+i) != (flashAddress+finish))
- 229              		.loc 1 118 0 discriminator 1
- 230 00a8 0198     		ldr	r0, [sp, #4]
- 231 00aa 1021     		movs	r1, #16
- 232 00ac 2044     		add	r0, r0, r4
- 233 00ae FFF7FEFF 		bl	hexdump
- 234              	.LVL24:
- 119:image.c       ****     {
- 235              		.loc 1 119 0 discriminator 1
- 236 00b2 019A     		ldr	r2, [sp, #4]
- 237 00b4 019B     		ldr	r3, [sp, #4]
- 238 00b6 1444     		add	r4, r4, r2
- 239              	.LVL25:
- 240 00b8 1D44     		add	r5, r5, r3
- 241              	.LVL26:
- 242 00ba AC42     		cmp	r4, r5
- 243 00bc 0ED0     		beq	.L13
- 121:image.c       ****     	state.flags = kImageImageHashCalcFailed;
- 244              		.loc 1 121 0 discriminator 1
- 245 00be 2748     		ldr	r0, .L21+28
- 246 00c0 FFF7FEFF 		bl	uart_printf
- 247              	.LVL27:
- 123:image.c       **** 		return(kImageImageHashCalcFailed);
- 248              		.loc 1 123 0 discriminator 1
- 249 00c4 3E60     		str	r6, [r7]
- 124:image.c       ****     }
- 250              		.loc 1 124 0 discriminator 1
- 251 00c6 0520     		movs	r0, #5
- 252 00c8 BBE7     		b	.L4
- 253              	.LVL28:
- 254              	.L12:
- 113:image.c       **** 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
- 255              		.loc 1 113 0
- 256 00ca 019B     		ldr	r3, [sp, #4]
- 114:image.c       **** 		i += 0x1;
- 257              		.loc 1 114 0
- 258 00cc 0199     		ldr	r1, [sp, #4]
- 259 00ce 0122     		movs	r2, #1
- 260 00d0 2144     		add	r1, r1, r4
- 261 00d2 20A8     		add	r0, sp, #128
- 262 00d4 FFF7FEFF 		bl	sha256_update
- 263              	.LVL29:
- 115:image.c       ****     }
- 264              		.loc 1 115 0
- 265 00d8 0134     		adds	r4, r4, #1
- 266              	.LVL30:
- 267 00da DEE7     		b	.L11
- 268              	.LVL31:
- 269              	.L13:
- 157:image.c       ****     // verify signature against recalc hash
- 270              		.loc 1 157 0
- 271 00dc 08A9     		add	r1, sp, #32
- 272 00de 20A8     		add	r0, sp, #128
- 273 00e0 FFF7FEFF 		bl	sha256_finish
- 274              	.LVL32:
- 159:image.c       ****     hexdump(hdr->signing.imageSignature, 0x40);
- 275              		.loc 1 159 0
- 276 00e4 1E48     		ldr	r0, .L21+32
- 277 00e6 FFF7FEFF 		bl	uart_printf
- 278              	.LVL33:
- 160:image.c       **** 	debug_print("sha256sum:\n");
- 279              		.loc 1 160 0
- 280 00ea 4021     		movs	r1, #64
- 281 00ec 3FA8     		add	r0, sp, #252
- 282 00ee FFF7FEFF 		bl	hexdump
- 283              	.LVL34:
- 161:image.c       **** 	print_hash(sha256sum);
- 284              		.loc 1 161 0
- 285 00f2 1C48     		ldr	r0, .L21+36
- 286 00f4 FFF7FEFF 		bl	uart_printf
- 287              	.LVL35:
- 165:image.c       **** 
- 288              		.loc 1 165 0
- 289 00f8 10AD     		add	r5, sp, #64
- 162:image.c       **** 
- 290              		.loc 1 162 0
- 291 00fa 08A8     		add	r0, sp, #32
- 165:image.c       **** 
- 292              		.loc 1 165 0
- 293 00fc 3FAC     		add	r4, sp, #252
- 162:image.c       **** 
- 294              		.loc 1 162 0
- 295 00fe FFF7FEFF 		bl	print_hash
- 296              	.LVL36:
- 165:image.c       **** 
- 297              		.loc 1 165 0
- 298 0102 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 299 0104 0FC5     		stmia	r5!, {r0, r1, r2, r3}
- 300 0106 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 301 0108 0FC5     		stmia	r5!, {r0, r1, r2, r3}
- 302 010a 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 303 010c 0FC5     		stmia	r5!, {r0, r1, r2, r3}
- 304 010e 94E80F00 		ldm	r4, {r0, r1, r2, r3}
- 305 0112 85E80F00 		stm	r5, {r0, r1, r2, r3}
- 167:image.c       ****     	state.flags = kImageImageRejectSignature;
- 306              		.loc 1 167 0
- 307 0116 2023     		movs	r3, #32
- 308 0118 1349     		ldr	r1, .L21+40
- 309 011a 0DEB0302 		add	r2, sp, r3
- 310 011e 10A8     		add	r0, sp, #64
- 311 0120 FFF7FEFF 		bl	edsign_verify
- 312              	.LVL37:
- 313 0124 48B9     		cbnz	r0, .L14
- 168:image.c       ****     	if (shouldEraseFlashOnFail)
- 314              		.loc 1 168 0
- 315 0126 0223     		movs	r3, #2
- 316 0128 7360     		str	r3, [r6, #4]
- 169:image.c       **** 		{
- 317              		.loc 1 169 0
- 318 012a B8F1000F 		cmp	r8, #0
- 319 012e 01D0     		beq	.L15
- 171:image.c       **** 		}
- 320              		.loc 1 171 0
- 321 0130 FFF7FEFF 		bl	failErase
- 322              	.LVL38:
- 323              	.L15:
- 173:image.c       ****     	return kImageImageRejectSignature;
- 324              		.loc 1 173 0
- 325 0134 3E60     		str	r6, [r7]
- 174:image.c       ****     } else {
- 326              		.loc 1 174 0
- 327 0136 0220     		movs	r0, #2
- 328 0138 83E7     		b	.L4
+ 157              	.LBE4:
+ 176:image.c       **** }
+ 158              		.loc 1 176 0
+ 159 0042 0120     		movs	r0, #1
+ 160 0044 55B0     		add	sp, sp, #340
+ 161              		.cfi_remember_state
+ 162              		.cfi_def_cfa_offset 20
+ 163              		@ sp needed
+ 164 0046 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 165              	.LVL16:
+ 166              	.L5:
+ 167              		.cfi_restore_state
+  65:image.c       **** 	if ((hdr->signing.imageType) != 0x45444f53)
+ 168              		.loc 1 65 0
+ 169 0048 3E99     		ldr	r1, [sp, #248]
+ 170 004a 3C4A     		ldr	r2, .L19+12
+ 171 004c 9142     		cmp	r1, r2
+ 172 004e 01D0     		beq	.L9
+  67:image.c       **** 		debug_print("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
+ 173              		.loc 1 67 0 discriminator 1
+ 174 0050 3B48     		ldr	r0, .L19+16
+ 175 0052 EAE7     		b	.L16
+ 176              	.L9:
+  77:image.c       **** 	state.flags = kImageImageWasInstantiated;
+ 177              		.loc 1 77 0
+ 178 0054 0123     		movs	r3, #1
+ 179 0056 7360     		str	r3, [r6, #4]
+  79:image.c       **** 	debug_print("dataSize: 0x%X\n", (hdr->header.dataSize));
+ 180              		.loc 1 79 0
+ 181 0058 3C99     		ldr	r1, [sp, #240]
+ 182 005a 3A48     		ldr	r0, .L19+20
+ 183 005c FFF7FEFF 		bl	uart_printf
+ 184              	.LVL17:
+  81:image.c       **** 	state.cursor = hdr->header.dataSize;
+ 185              		.loc 1 81 0
+ 186 0060 3C9B     		ldr	r3, [sp, #240]
+  86:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
+ 187              		.loc 1 86 0
+ 188 0062 2022     		movs	r2, #32
+  81:image.c       **** 	state.cursor = hdr->header.dataSize;
+ 189              		.loc 1 81 0
+ 190 0064 F360     		str	r3, [r6, #12]
+  82:image.c       **** 	state.lastTag = -1;
+ 191              		.loc 1 82 0
+ 192 0066 4FF0FF33 		mov	r3, #-1
+  86:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
+ 193              		.loc 1 86 0
+ 194 006a 0DEB0200 		add	r0, sp, r2
+ 195 006e FF21     		movs	r1, #255
+  82:image.c       **** 	state.lastTag = -1;
+ 196              		.loc 1 82 0
+ 197 0070 3361     		str	r3, [r6, #16]
+  86:image.c       ****     memset(sha256sum, 0xFF, sizeof(sha256sum));
+ 198              		.loc 1 86 0
+ 199 0072 FFF7FEFF 		bl	memset
+ 200              	.LVL18:
+  89:image.c       ****     sha256_starts(&ctx);
+ 201              		.loc 1 89 0
+ 202 0076 20A8     		add	r0, sp, #128
+ 203 0078 FFF7FEFF 		bl	sha256_starts
+ 204              	.LVL19:
+  95:image.c       ****     hexdump((flashAddress+i), 0x10);
+ 205              		.loc 1 95 0
+ 206 007c 0198     		ldr	r0, [sp, #4]
+ 207 007e 1021     		movs	r1, #16
+ 208 0080 8430     		adds	r0, r0, #132
+ 209 0082 FFF7FEFF 		bl	hexdump
+ 210              	.LVL20:
+  97:image.c       ****     int finish = hdr->header.dataSize + 0x84;
+ 211              		.loc 1 97 0
+ 212 0086 3C9D     		ldr	r5, [sp, #240]
+  98:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
+ 213              		.loc 1 98 0
+ 214 0088 0199     		ldr	r1, [sp, #4]
+ 215 008a 019A     		ldr	r2, [sp, #4]
+  97:image.c       ****     int finish = hdr->header.dataSize + 0x84;
+ 216              		.loc 1 97 0
+ 217 008c 8435     		adds	r5, r5, #132
+ 218              	.LVL21:
+  98:image.c       ****     debug_print("Start: %X\nFinish: %X\n", (flashAddress+i), (flashAddress+ finish));
+ 219              		.loc 1 98 0
+ 220 008e 2A44     		add	r2, r2, r5
+ 221 0090 8431     		adds	r1, r1, #132
+ 222 0092 2D48     		ldr	r0, .L19+24
+ 223 0094 FFF7FEFF 		bl	uart_printf
+ 224              	.LVL22:
+  94:image.c       ****     int i = 0x84;
+ 225              		.loc 1 94 0
+ 226 0098 8424     		movs	r4, #132
+ 227              	.LVL23:
+ 228              	.L11:
+  99:image.c       ****     while (i < finish)
+ 229              		.loc 1 99 0
+ 230 009a AC42     		cmp	r4, r5
+ 231 009c 16DB     		blt	.L12
+ 106:image.c       ****     debug_print("Ended at: %X\n", (flashAddress+i));
+ 232              		.loc 1 106 0 discriminator 1
+ 233 009e 0199     		ldr	r1, [sp, #4]
+ 234 00a0 2A48     		ldr	r0, .L19+28
+ 235 00a2 2144     		add	r1, r1, r4
+ 236 00a4 FFF7FEFF 		bl	uart_printf
+ 237              	.LVL24:
+ 107:image.c       ****     hexdump((vu32 *)(flashAddress+i), 0x10);
+ 238              		.loc 1 107 0 discriminator 1
+ 239 00a8 0198     		ldr	r0, [sp, #4]
+ 240 00aa 1021     		movs	r1, #16
+ 241 00ac 2044     		add	r0, r0, r4
+ 242 00ae FFF7FEFF 		bl	hexdump
+ 243              	.LVL25:
+ 108:image.c       ****     if ((flashAddress+i) != (flashAddress+finish))
+ 244              		.loc 1 108 0 discriminator 1
+ 245 00b2 019A     		ldr	r2, [sp, #4]
+ 246 00b4 019B     		ldr	r3, [sp, #4]
+ 247 00b6 1444     		add	r4, r4, r2
+ 248              	.LVL26:
+ 249 00b8 1D44     		add	r5, r5, r3
+ 250              	.LVL27:
+ 251 00ba AC42     		cmp	r4, r5
+ 252 00bc 0FD0     		beq	.L13
+ 110:image.c       ****     	debug_print("Calculated hash is probably wrong...\n");
+ 253              		.loc 1 110 0 discriminator 1
+ 254 00be 2448     		ldr	r0, .L19+32
+ 255 00c0 FFF7FEFF 		bl	uart_printf
+ 256              	.LVL28:
+ 111:image.c       ****     	state.flags = kImageImageHashCalcFailed;
+ 257              		.loc 1 111 0 discriminator 1
+ 258 00c4 0521     		movs	r1, #5
+ 259              	.L18:
+ 169:image.c       ****     	state.flags = kImageImageIsTrusted;
+ 260              		.loc 1 169 0
+ 261 00c6 7160     		str	r1, [r6, #4]
+ 170:image.c       ****     	*newHandle = &state;
+ 262              		.loc 1 170 0
+ 263 00c8 3E60     		str	r6, [r7]
+ 264 00ca B7E7     		b	.L17
+ 265              	.LVL29:
+ 266              	.L12:
+ 102:image.c       ****     	memcpy(buff, (unsigned char *)(flashAddress+i), buffSize);
+ 267              		.loc 1 102 0
+ 268 00cc 019B     		ldr	r3, [sp, #4]
+ 103:image.c       **** 		sha256_update(&ctx, (vu32 *)(flashAddress+i), buffSize);
+ 269              		.loc 1 103 0
+ 270 00ce 0199     		ldr	r1, [sp, #4]
+ 271 00d0 0122     		movs	r2, #1
+ 272 00d2 2144     		add	r1, r1, r4
+ 273 00d4 20A8     		add	r0, sp, #128
+ 274 00d6 FFF7FEFF 		bl	sha256_update
+ 275              	.LVL30:
+ 104:image.c       **** 		i += 0x1;
+ 276              		.loc 1 104 0
+ 277 00da 0134     		adds	r4, r4, #1
+ 278              	.LVL31:
+ 279 00dc DDE7     		b	.L11
+ 280              	.LVL32:
+ 281              	.L13:
+ 147:image.c       ****     sha256_finish(&ctx, sha256sum);
+ 282              		.loc 1 147 0
+ 283 00de 08A9     		add	r1, sp, #32
+ 284 00e0 20A8     		add	r0, sp, #128
+ 285 00e2 FFF7FEFF 		bl	sha256_finish
+ 286              	.LVL33:
+ 149:image.c       ****     debug_print("Signature:\n");
+ 287              		.loc 1 149 0
+ 288 00e6 1B48     		ldr	r0, .L19+36
+ 289 00e8 FFF7FEFF 		bl	uart_printf
+ 290              	.LVL34:
+ 150:image.c       ****     hexdump(hdr->signing.imageSignature, 0x40);
+ 291              		.loc 1 150 0
+ 292 00ec 4021     		movs	r1, #64
+ 293 00ee 3FA8     		add	r0, sp, #252
+ 294 00f0 FFF7FEFF 		bl	hexdump
+ 295              	.LVL35:
+ 151:image.c       **** 	debug_print("sha256sum:\n");
+ 296              		.loc 1 151 0
+ 297 00f4 1848     		ldr	r0, .L19+40
+ 298 00f6 FFF7FEFF 		bl	uart_printf
+ 299              	.LVL36:
+ 155:image.c       **** 	memcpy(sigbuff, hdr->signing.imageSignature, 64);
+ 300              		.loc 1 155 0
+ 301 00fa 10AD     		add	r5, sp, #64
+ 152:image.c       **** 	print_hash(sha256sum);
+ 302              		.loc 1 152 0
+ 303 00fc 08A8     		add	r0, sp, #32
+ 155:image.c       **** 	memcpy(sigbuff, hdr->signing.imageSignature, 64);
+ 304              		.loc 1 155 0
+ 305 00fe 3FAC     		add	r4, sp, #252
+ 152:image.c       **** 	print_hash(sha256sum);
+ 306              		.loc 1 152 0
+ 307 0100 FFF7FEFF 		bl	print_hash
+ 308              	.LVL37:
+ 155:image.c       **** 	memcpy(sigbuff, hdr->signing.imageSignature, 64);
+ 309              		.loc 1 155 0
+ 310 0104 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 311 0106 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 312 0108 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 313 010a 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 314 010c 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 315 010e 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 316 0110 94E80F00 		ldm	r4, {r0, r1, r2, r3}
+ 317 0114 85E80F00 		stm	r5, {r0, r1, r2, r3}
+ 157:image.c       ****     if (edsign_verify(sigbuff, rootCA, sha256sum, 32) <= 0) {
+ 318              		.loc 1 157 0
+ 319 0118 2023     		movs	r3, #32
+ 320 011a 1049     		ldr	r1, .L19+44
+ 321 011c 0DEB0302 		add	r2, sp, r3
+ 322 0120 10A8     		add	r0, sp, #64
+ 323 0122 FFF7FEFF 		bl	edsign_verify
+ 324              	.LVL38:
+ 325 0126 08B9     		cbnz	r0, .L14
+ 158:image.c       ****     	state.flags = kImageImageRejectSignature;
+ 326              		.loc 1 158 0
+ 327 0128 0221     		movs	r1, #2
+ 328 012a CCE7     		b	.L18
  329              	.L14:
- 177:image.c       ****     	return kImageImageIsTrusted;
- 330              		.loc 1 177 0
- 331 013a 3E60     		str	r6, [r7]
- 178:image.c       ****     }
- 332              		.loc 1 178 0
- 333 013c 0320     		movs	r0, #3
- 334 013e 80E7     		b	.L4
- 335              	.L22:
- 336              		.align	2
- 337              	.L21:
- 338 0140 32636245 		.word	1164075826
- 339 0144 00000000 		.word	.LC0
- 340 0148 534F4445 		.word	1162104659
- 341 014c 23000000 		.word	.LC1
- 342 0150 44000000 		.word	.LC2
- 343 0154 54000000 		.word	.LC3
- 344 0158 6A000000 		.word	.LC4
- 345 015c 78000000 		.word	.LC5
- 346 0160 9E000000 		.word	.LC6
- 347 0164 AA000000 		.word	.LC7
- 348 0168 00000000 		.word	.LANCHOR0
- 349              		.cfi_endproc
- 350              	.LFE5:
- 352              		.global	rootCA
- 353              		.comm	wTransferSize,4,4
- 354              		.section	.data.rootCA,"aw",%progbits
- 355              		.set	.LANCHOR0,. + 0
- 358              	rootCA:
- 359 0000 0F       		.byte	15
- 360 0001 72       		.byte	114
- 361 0002 EB       		.byte	-21
- 362 0003 D1       		.byte	-47
- 363 0004 64       		.byte	100
- 364 0005 3E       		.byte	62
- 365 0006 AB       		.byte	-85
- 366 0007 54       		.byte	84
- 367 0008 C8       		.byte	-56
- 368 0009 CF       		.byte	-49
- 369 000a 60       		.byte	96
- 370 000b E6       		.byte	-26
- 371 000c 6F       		.byte	111
- 372 000d C3       		.byte	-61
- 373 000e 9D       		.byte	-99
- 374 000f 64       		.byte	100
- 375 0010 A4       		.byte	-92
- 376 0011 CF       		.byte	-49
- 377 0012 43       		.byte	67
- 378 0013 77       		.byte	119
- 379 0014 46       		.byte	70
- 380 0015 7B       		.byte	123
- 381 0016 09       		.byte	9
- 382 0017 52       		.byte	82
- 383 0018 19       		.byte	25
- 384 0019 C7       		.byte	-57
- 385 001a 06       		.byte	6
- 386 001b 6C       		.byte	108
- 387 001c 72       		.byte	114
- 388 001d 1D       		.byte	29
- 389 001e 3C       		.byte	60
- 390 001f 86       		.byte	-122
- 391              		.section	.rodata.imageCheckFromAddress.str1.1,"aMS",%progbits,1
- 392              	.LC0:
- 393 0000 62616420 		.ascii	"bad magic 0x%08x expecting 0x%08x\012\000"
- 393      6D616769 
- 393      63203078 
- 393      25303878 
- 393      20657870 
- 394              	.LC1:
- 395 0023 62616420 		.ascii	"bad magic 0x%08x expecting 0x%X\012\000"
- 395      6D616769 
- 395      63203078 
- 395      25303878 
- 395      20657870 
- 396              	.LC2:
- 397 0044 64617461 		.ascii	"dataSize: 0x%X\012\000"
- 397      53697A65 
- 397      3A203078 
- 397      25580A00 
- 398              	.LC3:
- 399 0054 53746172 		.ascii	"Start: %X\012Finish: %X\012\000"
- 399      743A2025 
- 399      580A4669 
- 399      6E697368 
- 399      3A202558 
- 400              	.LC4:
- 401 006a 456E6465 		.ascii	"Ended at: %X\012\000"
- 401      64206174 
- 401      3A202558 
- 401      0A00
- 402              	.LC5:
- 403 0078 43616C63 		.ascii	"Calculated hash is probably wrong...\012\000"
- 403      756C6174 
- 403      65642068 
- 403      61736820 
- 403      69732070 
- 404              	.LC6:
- 405 009e 5369676E 		.ascii	"Signature:\012\000"
- 405      61747572 
- 405      653A0A00 
- 406              	.LC7:
- 407 00aa 73686132 		.ascii	"sha256sum:\012\000"
- 407      35367375 
- 407      6D3A0A00 
- 408              		.text
- 409              	.Letext0:
- 410              		.file 2 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
- 411              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
- 412              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
- 413              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
- 414              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
- 415              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
- 416              		.file 8 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/unistd
- 417              		.file 9 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/errno.
- 418              		.file 10 "./stm32_lib/stm32f10x_type.h"
- 419              		.file 11 "./usb_lib/usb_regs.h"
- 420              		.file 12 "./usb_lib/usb_core.h"
- 421              		.file 13 "./usb_lib/usb_init.h"
- 422              		.file 14 "usb_descriptor.h"
- 423              		.file 15 "usb.h"
- 424              		.file 16 "hardware.h"
- 425              		.file 17 "./25519/sha256.h"
- 426              		.file 18 "image.h"
- 427              		.file 19 "<built-in>"
- 428              		.file 20 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/string.h"
- 429              		.file 21 "./25519/edsign.h"
+ 169:image.c       ****     	state.flags = kImageImageIsTrusted;
+ 330              		.loc 1 169 0
+ 331 012c 0321     		movs	r1, #3
+ 332 012e CAE7     		b	.L18
+ 333              	.L20:
+ 334              		.align	2
+ 335              	.L19:
+ 336 0130 32636245 		.word	1164075826
+ 337 0134 00000000 		.word	.LC0
+ 338 0138 23000000 		.word	.LC1
+ 339 013c 534F4445 		.word	1162104659
+ 340 0140 38000000 		.word	.LC2
+ 341 0144 59000000 		.word	.LC3
+ 342 0148 69000000 		.word	.LC4
+ 343 014c 7F000000 		.word	.LC5
+ 344 0150 8D000000 		.word	.LC6
+ 345 0154 B3000000 		.word	.LC7
+ 346 0158 BF000000 		.word	.LC8
+ 347 015c 00000000 		.word	.LANCHOR0
+ 348              		.cfi_endproc
+ 349              	.LFE3:
+ 351              		.global	rootCA
+ 352              		.comm	wTransferSize,4,4
+ 353              		.section	.data.rootCA,"aw",%progbits
+ 354              		.set	.LANCHOR0,. + 0
+ 357              	rootCA:
+ 358 0000 0F       		.byte	15
+ 359 0001 72       		.byte	114
+ 360 0002 EB       		.byte	-21
+ 361 0003 D1       		.byte	-47
+ 362 0004 64       		.byte	100
+ 363 0005 3E       		.byte	62
+ 364 0006 AB       		.byte	-85
+ 365 0007 54       		.byte	84
+ 366 0008 C8       		.byte	-56
+ 367 0009 CF       		.byte	-49
+ 368 000a 60       		.byte	96
+ 369 000b E6       		.byte	-26
+ 370 000c 6F       		.byte	111
+ 371 000d C3       		.byte	-61
+ 372 000e 9D       		.byte	-99
+ 373 000f 64       		.byte	100
+ 374 0010 A4       		.byte	-92
+ 375 0011 CF       		.byte	-49
+ 376 0012 43       		.byte	67
+ 377 0013 77       		.byte	119
+ 378 0014 46       		.byte	70
+ 379 0015 7B       		.byte	123
+ 380 0016 09       		.byte	9
+ 381 0017 52       		.byte	82
+ 382 0018 19       		.byte	25
+ 383 0019 C7       		.byte	-57
+ 384 001a 06       		.byte	6
+ 385 001b 6C       		.byte	108
+ 386 001c 72       		.byte	114
+ 387 001d 1D       		.byte	29
+ 388 001e 3C       		.byte	60
+ 389 001f 86       		.byte	-122
+ 390              		.section	.rodata.imageCheckFromAddress.str1.1,"aMS",%progbits,1
+ 391              	.LC0:
+ 392 0000 62616420 		.ascii	"bad magic 0x%08x expecting 0x%08x\012\000"
+ 392      6D616769 
+ 392      63203078 
+ 392      25303878 
+ 392      20657870 
+ 393              	.LC1:
+ 394 0023 696D6167 		.ascii	"image check ret: %X\012\000"
+ 394      65206368 
+ 394      65636B20 
+ 394      7265743A 
+ 394      2025580A 
+ 395              	.LC2:
+ 396 0038 62616420 		.ascii	"bad magic 0x%08x expecting 0x%X\012\000"
+ 396      6D616769 
+ 396      63203078 
+ 396      25303878 
+ 396      20657870 
+ 397              	.LC3:
+ 398 0059 64617461 		.ascii	"dataSize: 0x%X\012\000"
+ 398      53697A65 
+ 398      3A203078 
+ 398      25580A00 
+ 399              	.LC4:
+ 400 0069 53746172 		.ascii	"Start: %X\012Finish: %X\012\000"
+ 400      743A2025 
+ 400      580A4669 
+ 400      6E697368 
+ 400      3A202558 
+ 401              	.LC5:
+ 402 007f 456E6465 		.ascii	"Ended at: %X\012\000"
+ 402      64206174 
+ 402      3A202558 
+ 402      0A00
+ 403              	.LC6:
+ 404 008d 43616C63 		.ascii	"Calculated hash is probably wrong...\012\000"
+ 404      756C6174 
+ 404      65642068 
+ 404      61736820 
+ 404      69732070 
+ 405              	.LC7:
+ 406 00b3 5369676E 		.ascii	"Signature:\012\000"
+ 406      61747572 
+ 406      653A0A00 
+ 407              	.LC8:
+ 408 00bf 73686132 		.ascii	"sha256sum:\012\000"
+ 408      35367375 
+ 408      6D3A0A00 
+ 409              		.text
+ 410              	.Letext0:
+ 411              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 412              		.file 3 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 413              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 414              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 415              		.file 6 "/usr/arm-none-eabi/include/sys/reent.h"
+ 416              		.file 7 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 417              		.file 8 "/usr/arm-none-eabi/include/sys/unistd.h"
+ 418              		.file 9 "/usr/arm-none-eabi/include/sys/errno.h"
+ 419              		.file 10 "./stm32_lib/stm32f10x_type.h"
+ 420              		.file 11 "./usb_lib/usb_regs.h"
+ 421              		.file 12 "./usb_lib/usb_core.h"
+ 422              		.file 13 "./usb_lib/usb_init.h"
+ 423              		.file 14 "usb_descriptor.h"
+ 424              		.file 15 "usb.h"
+ 425              		.file 16 "hardware.h"
+ 426              		.file 17 "./25519/sha256.h"
+ 427              		.file 18 "image.h"
+ 428              		.file 19 "<built-in>"
+ 429              		.file 20 "/usr/arm-none-eabi/include/string.h"
+ 430              		.file 21 "./25519/edsign.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 image.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:16     .text.failErase:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:23     .text.failErase:0000000000000000 failErase
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:66     .text.failErase:000000000000002c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:76     .text.imageCheckFromAddress:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:83     .text.imageCheckFromAddress:0000000000000000 imageCheckFromAddress
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:338    .text.imageCheckFromAddress:0000000000000140 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7ZiS7x.s:358    .data.rootCA:0000000000000000 rootCA
+     /tmp/ccdxXnWt.s:16     .text.failErase:0000000000000000 $t
+     /tmp/ccdxXnWt.s:23     .text.failErase:0000000000000000 failErase
+     /tmp/ccdxXnWt.s:66     .text.failErase:000000000000002c $d
+     /tmp/ccdxXnWt.s:76     .text.imageCheckFromAddress:0000000000000000 $t
+     /tmp/ccdxXnWt.s:83     .text.imageCheckFromAddress:0000000000000000 imageCheckFromAddress
+     /tmp/ccdxXnWt.s:336    .text.imageCheckFromAddress:0000000000000130 $d
+     /tmp/ccdxXnWt.s:357    .data.rootCA:0000000000000000 rootCA
                             *COM*:0000000000000004 wTransferSize
 
 UNDEFINED SYMBOLS

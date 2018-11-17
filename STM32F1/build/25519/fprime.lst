@@ -1337,45 +1337,45 @@
  1017      00000000 
  1018              		.text
  1019              	.Letext0:
- 1020              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
- 1021              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
- 1022              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
- 1023              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
- 1024              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
- 1025              		.file 8 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 1020              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 1021              		.file 4 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 1022              		.file 5 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 1023              		.file 6 "/usr/arm-none-eabi/include/sys/lock.h"
+ 1024              		.file 7 "/usr/arm-none-eabi/include/sys/_types.h"
+ 1025              		.file 8 "/usr/arm-none-eabi/include/sys/reent.h"
  1026              		.file 9 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 fprime.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:16     .text.raw_add:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:22     .text.raw_add:0000000000000000 raw_add
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:67     .text.prime_msb:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:73     .text.prime_msb:0000000000000000 prime_msb
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:120    .text.shift_n_bits:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:126    .text.shift_n_bits:0000000000000000 shift_n_bits
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:165    .text.fprime_load:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:172    .text.fprime_load:0000000000000000 fprime_load
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:213    .text.fprime_eq:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:220    .text.fprime_eq:0000000000000000 fprime_eq
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:274    .text.fprime_select:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:281    .text.fprime_select:0000000000000000 fprime_select
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:329    .text.raw_try_sub:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:335    .text.raw_try_sub:0000000000000000 raw_try_sub
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:392    .text.fprime_from_bytes:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:399    .text.fprime_from_bytes:0000000000000000 fprime_from_bytes
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:545    .text.fprime_normalize:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:552    .text.fprime_normalize:0000000000000000 fprime_normalize
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:605    .text.fprime_add:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:612    .text.fprime_add:0000000000000000 fprime_add
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:649    .text.fprime_sub:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:656    .text.fprime_sub:0000000000000000 fprime_sub
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:701    .text.fprime_mul:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:708    .text.fprime_mul:0000000000000000 fprime_mul
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:838    .text.fprime_inv:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:845    .text.fprime_inv:0000000000000000 fprime_inv
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1010   .rodata.fprime_one:0000000000000000 fprime_one
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1016   .rodata.fprime_zero:0000000000000000 fprime_zero
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1012   .rodata.fprime_one:0000000000000001 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1017   .rodata.fprime_zero:0000000000000000 $d
+     /tmp/ccgDioZd.s:16     .text.raw_add:0000000000000000 $t
+     /tmp/ccgDioZd.s:22     .text.raw_add:0000000000000000 raw_add
+     /tmp/ccgDioZd.s:67     .text.prime_msb:0000000000000000 $t
+     /tmp/ccgDioZd.s:73     .text.prime_msb:0000000000000000 prime_msb
+     /tmp/ccgDioZd.s:120    .text.shift_n_bits:0000000000000000 $t
+     /tmp/ccgDioZd.s:126    .text.shift_n_bits:0000000000000000 shift_n_bits
+     /tmp/ccgDioZd.s:165    .text.fprime_load:0000000000000000 $t
+     /tmp/ccgDioZd.s:172    .text.fprime_load:0000000000000000 fprime_load
+     /tmp/ccgDioZd.s:213    .text.fprime_eq:0000000000000000 $t
+     /tmp/ccgDioZd.s:220    .text.fprime_eq:0000000000000000 fprime_eq
+     /tmp/ccgDioZd.s:274    .text.fprime_select:0000000000000000 $t
+     /tmp/ccgDioZd.s:281    .text.fprime_select:0000000000000000 fprime_select
+     /tmp/ccgDioZd.s:329    .text.raw_try_sub:0000000000000000 $t
+     /tmp/ccgDioZd.s:335    .text.raw_try_sub:0000000000000000 raw_try_sub
+     /tmp/ccgDioZd.s:392    .text.fprime_from_bytes:0000000000000000 $t
+     /tmp/ccgDioZd.s:399    .text.fprime_from_bytes:0000000000000000 fprime_from_bytes
+     /tmp/ccgDioZd.s:545    .text.fprime_normalize:0000000000000000 $t
+     /tmp/ccgDioZd.s:552    .text.fprime_normalize:0000000000000000 fprime_normalize
+     /tmp/ccgDioZd.s:605    .text.fprime_add:0000000000000000 $t
+     /tmp/ccgDioZd.s:612    .text.fprime_add:0000000000000000 fprime_add
+     /tmp/ccgDioZd.s:649    .text.fprime_sub:0000000000000000 $t
+     /tmp/ccgDioZd.s:656    .text.fprime_sub:0000000000000000 fprime_sub
+     /tmp/ccgDioZd.s:701    .text.fprime_mul:0000000000000000 $t
+     /tmp/ccgDioZd.s:708    .text.fprime_mul:0000000000000000 fprime_mul
+     /tmp/ccgDioZd.s:838    .text.fprime_inv:0000000000000000 $t
+     /tmp/ccgDioZd.s:845    .text.fprime_inv:0000000000000000 fprime_inv
+     /tmp/ccgDioZd.s:1010   .rodata.fprime_one:0000000000000000 fprime_one
+     /tmp/ccgDioZd.s:1016   .rodata.fprime_zero:0000000000000000 fprime_zero
+     /tmp/ccgDioZd.s:1012   .rodata.fprime_one:0000000000000001 $d
+     /tmp/ccgDioZd.s:1017   .rodata.fprime_zero:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 memset

@@ -1,4 +1,5 @@
 # Makefile skeleton adapted from Peter Harrison's - www.micromouse.com
+BUILD_NUMBER_FILE=bl_build_number.txt
 
 # MCU name and submodel
 MCU      = cortex-m3
@@ -32,14 +33,16 @@ CFLAGS += -Wpointer-arith -Wswitch
 CFLAGS += -Wredundant-decls -Wreturn-type -Wshadow -Wunused
 CFLAGS += -Wa,-adhlns=$(BUILDDIR)/$(subst $(suffix $<),.lst,$<)
 CFLAGS += $(patsubst %,-I%,$(INCDIRS))
+# QEMU Flags
+ifdef QEMU_BUILD 
+CFLAGS += -DQEMU_BUILD=1
+endif
 
 # Aeembler Flags
 ASFLAGS = -Wa,-adhlns=$(BUILDDIR)/$(<:.s=.lst)#,--g$(DEBUG)
 
 LDFLAGS = -nostartfiles -Wl,-Map=$(TARGET).map,--cref,--gc-sections -specs=nano.specs -specs=nosys.specs
-LDFLAGS += -lc -lgcc -L. -lstm32fw
-
-
+LDFLAGS += -lc -lgcc -L. -lstm32fw 
 
 # Define programs and commands.
 SHELL = sh
@@ -171,13 +174,13 @@ copy_maple-rev5:
 	
 build_generic-pc13: TARGETFLAGS= -DTARGET_GENERIC_F103_PC13
 # Set the linker script
-build_generic-pc13: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld
+build_generic-pc13: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld 
 build_generic-pc13: elf bin lss sym
 copy_generic-pc13: 
 	@echo
 	@echo "Copying to binaries folder"
 	@echo
-	cp $(TARGET).bin binaries/generic_boot20_pc13.bin
+	cp $(TARGET).bin binaries/generic_boot20_pc13.bin 
 	@echo	
 	
 build_generic-pg15: TARGETFLAGS= -DTARGET_GENERIC_F103_PG15
@@ -407,7 +410,7 @@ run: $(TARGET).bin
 	$(OBJCOPY) -O binary $< $@
 
 # Create final output file (.bin) from ELF output file.
-%.bin: %.elf
+%.bin: %.elf 
 	@echo
 	@echo $(MSG_FLASH) $@
 	$(OBJCOPY) -O binary $< $@
@@ -432,10 +435,10 @@ run: $(TARGET).bin
 .SECONDARY : $(TARGET).elf
 .PRECIOUS : $(COBJ) $(AOBJ)
 
-%.elf:  $(COBJ) $(AOBJ)
+%.elf: $(COBJ) $(AOBJ) $(BUILD_NUMBER_FILE) 
 	@echo
 	@echo $(MSG_LINKING) $@
-	$(CC) $(THUMB) $(ALL_CFLAGS) $(AOBJ) $(COBJ) --output $@ $(LDFLAGS)
+	$(CC) $(THUMB) $(ALL_CFLAGS) $(AOBJ) $(COBJ) --output $@ $(LDFLAGS) $(BUILD_NUMBER_LDFLAGS)
 
 # Compile: create object files from C source files. ARM/Thumb
 $(COBJ) : $(BUILDDIR)/%.o : %.c
@@ -483,3 +486,5 @@ build elf hex bin lss sym clean clean_list program cscope
 cscope:
 	rm -rf *.cscope
 	find . -iname "*.[hcs]" | grep -v examples | xargs cscope -R -b
+
+include buildnumber.mak

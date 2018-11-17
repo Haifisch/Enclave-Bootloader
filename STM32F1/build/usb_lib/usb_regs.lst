@@ -2831,145 +2831,145 @@
  2191              		.file 5 "usb_lib/usb_init.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_regs.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:16     .text.SetCNTR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:23     .text.SetCNTR:0000000000000000 SetCNTR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:40     .text.SetCNTR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:45     .text.GetCNTR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:52     .text.GetCNTR:0000000000000000 GetCNTR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:68     .text.GetCNTR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:73     .text.SetISTR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:80     .text.SetISTR:0000000000000000 SetISTR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:96     .text.SetISTR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:101    .text.GetISTR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:108    .text.GetISTR:0000000000000000 GetISTR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:124    .text.GetISTR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:129    .text.GetFNR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:136    .text.GetFNR:0000000000000000 GetFNR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:152    .text.GetFNR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:157    .text.SetDADDR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:164    .text.SetDADDR:0000000000000000 SetDADDR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:180    .text.SetDADDR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:185    .text.GetDADDR:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:192    .text.GetDADDR:0000000000000000 GetDADDR
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:208    .text.GetDADDR:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:213    .text.SetBTABLE:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:220    .text.SetBTABLE:0000000000000000 SetBTABLE
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:238    .text.SetBTABLE:000000000000000c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:243    .text.GetBTABLE:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:250    .text.GetBTABLE:0000000000000000 GetBTABLE
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:266    .text.GetBTABLE:0000000000000008 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:271    .text.SetENDPOINT:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:278    .text.SetENDPOINT:0000000000000000 SetENDPOINT
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:298    .text.GetENDPOINT:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:305    .text.GetENDPOINT:0000000000000000 GetENDPOINT
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:326    .text.SetEPType:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:333    .text.SetEPType:0000000000000000 SetEPType
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:359    .text.GetEPType:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:366    .text.GetEPType:0000000000000000 GetEPType
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:387    .text.SetEPTxStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:394    .text.SetEPTxStatus:0000000000000000 SetEPTxStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:429    .text.SetEPRxStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:436    .text.SetEPRxStatus:0000000000000000 SetEPRxStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:471    .text.SetDouBleBuffEPStall:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:478    .text.SetDouBleBuffEPStall:0000000000000000 SetDouBleBuffEPStall
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:527    .text.GetEPTxStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:534    .text.GetEPTxStatus:0000000000000000 GetEPTxStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:555    .text.GetEPRxStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:562    .text.GetEPRxStatus:0000000000000000 GetEPRxStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:583    .text.SetEPTxValid:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:590    .text.SetEPTxValid:0000000000000000 SetEPTxValid
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:619    .text.SetEPRxValid:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:626    .text.SetEPRxValid:0000000000000000 SetEPRxValid
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:655    .text.SetEP_KIND:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:662    .text.SetEP_KIND:0000000000000000 SetEP_KIND
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:687    .text.ClearEP_KIND:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:694    .text.ClearEP_KIND:0000000000000000 ClearEP_KIND
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:719    .text.Clear_Status_Out:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:726    .text.Clear_Status_Out:0000000000000000 Clear_Status_Out
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:737    .text.Set_Status_Out:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:744    .text.Set_Status_Out:0000000000000000 Set_Status_Out
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:755    .text.SetEPDoubleBuff:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:762    .text.SetEPDoubleBuff:0000000000000000 SetEPDoubleBuff
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:773    .text.ClearEPDoubleBuff:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:780    .text.ClearEPDoubleBuff:0000000000000000 ClearEPDoubleBuff
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:791    .text.GetTxStallStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:798    .text.GetTxStallStatus:0000000000000000 GetTxStallStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:822    .text.GetRxStallStatus:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:829    .text.GetRxStallStatus:0000000000000000 GetRxStallStatus
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:853    .text.ClearEP_CTR_RX:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:860    .text.ClearEP_CTR_RX:0000000000000000 ClearEP_CTR_RX
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:884    .text.ClearEP_CTR_TX:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:891    .text.ClearEP_CTR_TX:0000000000000000 ClearEP_CTR_TX
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:916    .text.ToggleDTOG_RX:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:923    .text.ToggleDTOG_RX:0000000000000000 ToggleDTOG_RX
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:949    .text.ToggleDTOG_TX:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:956    .text.ToggleDTOG_TX:0000000000000000 ToggleDTOG_TX
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:982    .text.ClearDTOG_RX:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:989    .text.ClearDTOG_RX:0000000000000000 ClearDTOG_RX
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1020   .text.ClearDTOG_TX:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1027   .text.ClearDTOG_TX:0000000000000000 ClearDTOG_TX
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1058   .text.SetEPAddress:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1065   .text.SetEPAddress:0000000000000000 SetEPAddress
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1092   .text.GetEPAddress:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1099   .text.GetEPAddress:0000000000000000 GetEPAddress
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1120   .text.SetEPTxAddr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1127   .text.SetEPTxAddr:0000000000000000 SetEPTxAddr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1153   .text.SetEPTxAddr:000000000000001c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1158   .text.SetEPRxAddr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1165   .text.SetEPRxAddr:0000000000000000 SetEPRxAddr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1191   .text.SetEPRxAddr:0000000000000018 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1197   .text.GetEPTxAddr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1204   .text.GetEPTxAddr:0000000000000000 GetEPTxAddr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1227   .text.GetEPTxAddr:0000000000000018 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1232   .text.GetEPRxAddr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1239   .text.GetEPRxAddr:0000000000000000 GetEPRxAddr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1262   .text.GetEPRxAddr:0000000000000014 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1268   .text.SetEPTxCount:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1275   .text.SetEPTxCount:0000000000000000 SetEPTxCount
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1298   .text.SetEPTxCount:0000000000000014 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1304   .text.SetEPCountRxReg:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1311   .text.SetEPCountRxReg:0000000000000000 SetEPCountRxReg
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1360   .text.SetEPRxCount:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1367   .text.SetEPRxCount:0000000000000000 SetEPRxCount
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1429   .text.SetEPRxCount:0000000000000038 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1437   .text.GetEPTxCount:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1444   .text.GetEPTxCount:0000000000000000 GetEPTxCount
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1468   .text.GetEPTxCount:0000000000000018 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1474   .text.GetEPRxCount:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1481   .text.GetEPRxCount:0000000000000000 GetEPRxCount
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1505   .text.GetEPRxCount:0000000000000018 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1511   .text.SetEPDblBuffAddr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1518   .text.SetEPDblBuffAddr:0000000000000000 SetEPDblBuffAddr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1558   .text.SetEPDblBuffAddr:0000000000000030 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1564   .text.SetEPDblBuf0Addr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1571   .text.SetEPDblBuf0Addr:0000000000000000 SetEPDblBuf0Addr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1582   .text.SetEPDblBuf1Addr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1589   .text.SetEPDblBuf1Addr:0000000000000000 SetEPDblBuf1Addr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1600   .text.GetEPDblBuf0Addr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1607   .text.GetEPDblBuf0Addr:0000000000000000 GetEPDblBuf0Addr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1618   .text.GetEPDblBuf1Addr:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1625   .text.GetEPDblBuf1Addr:0000000000000000 GetEPDblBuf1Addr
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1636   .text.SetEPDblBuffCount:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1643   .text.SetEPDblBuffCount:0000000000000000 SetEPDblBuffCount
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1793   .text.SetEPDblBuffCount:000000000000009c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1800   .text.SetEPDblBuf0Count:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1807   .text.SetEPDblBuf0Count:0000000000000000 SetEPDblBuf0Count
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1888   .text.SetEPDblBuf0Count:0000000000000054 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1894   .text.SetEPDblBuf1Count:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1901   .text.SetEPDblBuf1Count:0000000000000000 SetEPDblBuf1Count
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1982   .text.SetEPDblBuf1Count:0000000000000054 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1988   .text.GetEPDblBuf0Count:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:1995   .text.GetEPDblBuf0Count:0000000000000000 GetEPDblBuf0Count
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2006   .text.GetEPDblBuf1Count:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2013   .text.GetEPDblBuf1Count:0000000000000000 GetEPDblBuf1Count
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2024   .text.GetEPDblBufDir:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2031   .text.GetEPDblBufDir:0000000000000000 GetEPDblBufDir
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2075   .text.GetEPDblBufDir:0000000000000038 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2082   .text.FreeUserBuffer:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2089   .text.FreeUserBuffer:0000000000000000 FreeUserBuffer
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2138   .text.ToWord:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2145   .text.ToWord:0000000000000000 ToWord
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2161   .text.ByteSwap:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cchYRr8E.s:2168   .text.ByteSwap:0000000000000000 ByteSwap
+     /tmp/ccT6ScAQ.s:16     .text.SetCNTR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:23     .text.SetCNTR:0000000000000000 SetCNTR
+     /tmp/ccT6ScAQ.s:40     .text.SetCNTR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:45     .text.GetCNTR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:52     .text.GetCNTR:0000000000000000 GetCNTR
+     /tmp/ccT6ScAQ.s:68     .text.GetCNTR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:73     .text.SetISTR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:80     .text.SetISTR:0000000000000000 SetISTR
+     /tmp/ccT6ScAQ.s:96     .text.SetISTR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:101    .text.GetISTR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:108    .text.GetISTR:0000000000000000 GetISTR
+     /tmp/ccT6ScAQ.s:124    .text.GetISTR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:129    .text.GetFNR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:136    .text.GetFNR:0000000000000000 GetFNR
+     /tmp/ccT6ScAQ.s:152    .text.GetFNR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:157    .text.SetDADDR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:164    .text.SetDADDR:0000000000000000 SetDADDR
+     /tmp/ccT6ScAQ.s:180    .text.SetDADDR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:185    .text.GetDADDR:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:192    .text.GetDADDR:0000000000000000 GetDADDR
+     /tmp/ccT6ScAQ.s:208    .text.GetDADDR:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:213    .text.SetBTABLE:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:220    .text.SetBTABLE:0000000000000000 SetBTABLE
+     /tmp/ccT6ScAQ.s:238    .text.SetBTABLE:000000000000000c $d
+     /tmp/ccT6ScAQ.s:243    .text.GetBTABLE:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:250    .text.GetBTABLE:0000000000000000 GetBTABLE
+     /tmp/ccT6ScAQ.s:266    .text.GetBTABLE:0000000000000008 $d
+     /tmp/ccT6ScAQ.s:271    .text.SetENDPOINT:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:278    .text.SetENDPOINT:0000000000000000 SetENDPOINT
+     /tmp/ccT6ScAQ.s:298    .text.GetENDPOINT:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:305    .text.GetENDPOINT:0000000000000000 GetENDPOINT
+     /tmp/ccT6ScAQ.s:326    .text.SetEPType:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:333    .text.SetEPType:0000000000000000 SetEPType
+     /tmp/ccT6ScAQ.s:359    .text.GetEPType:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:366    .text.GetEPType:0000000000000000 GetEPType
+     /tmp/ccT6ScAQ.s:387    .text.SetEPTxStatus:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:394    .text.SetEPTxStatus:0000000000000000 SetEPTxStatus
+     /tmp/ccT6ScAQ.s:429    .text.SetEPRxStatus:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:436    .text.SetEPRxStatus:0000000000000000 SetEPRxStatus
+     /tmp/ccT6ScAQ.s:471    .text.SetDouBleBuffEPStall:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:478    .text.SetDouBleBuffEPStall:0000000000000000 SetDouBleBuffEPStall
+     /tmp/ccT6ScAQ.s:527    .text.GetEPTxStatus:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:534    .text.GetEPTxStatus:0000000000000000 GetEPTxStatus
+     /tmp/ccT6ScAQ.s:555    .text.GetEPRxStatus:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:562    .text.GetEPRxStatus:0000000000000000 GetEPRxStatus
+     /tmp/ccT6ScAQ.s:583    .text.SetEPTxValid:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:590    .text.SetEPTxValid:0000000000000000 SetEPTxValid
+     /tmp/ccT6ScAQ.s:619    .text.SetEPRxValid:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:626    .text.SetEPRxValid:0000000000000000 SetEPRxValid
+     /tmp/ccT6ScAQ.s:655    .text.SetEP_KIND:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:662    .text.SetEP_KIND:0000000000000000 SetEP_KIND
+     /tmp/ccT6ScAQ.s:687    .text.ClearEP_KIND:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:694    .text.ClearEP_KIND:0000000000000000 ClearEP_KIND
+     /tmp/ccT6ScAQ.s:719    .text.Clear_Status_Out:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:726    .text.Clear_Status_Out:0000000000000000 Clear_Status_Out
+     /tmp/ccT6ScAQ.s:737    .text.Set_Status_Out:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:744    .text.Set_Status_Out:0000000000000000 Set_Status_Out
+     /tmp/ccT6ScAQ.s:755    .text.SetEPDoubleBuff:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:762    .text.SetEPDoubleBuff:0000000000000000 SetEPDoubleBuff
+     /tmp/ccT6ScAQ.s:773    .text.ClearEPDoubleBuff:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:780    .text.ClearEPDoubleBuff:0000000000000000 ClearEPDoubleBuff
+     /tmp/ccT6ScAQ.s:791    .text.GetTxStallStatus:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:798    .text.GetTxStallStatus:0000000000000000 GetTxStallStatus
+     /tmp/ccT6ScAQ.s:822    .text.GetRxStallStatus:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:829    .text.GetRxStallStatus:0000000000000000 GetRxStallStatus
+     /tmp/ccT6ScAQ.s:853    .text.ClearEP_CTR_RX:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:860    .text.ClearEP_CTR_RX:0000000000000000 ClearEP_CTR_RX
+     /tmp/ccT6ScAQ.s:884    .text.ClearEP_CTR_TX:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:891    .text.ClearEP_CTR_TX:0000000000000000 ClearEP_CTR_TX
+     /tmp/ccT6ScAQ.s:916    .text.ToggleDTOG_RX:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:923    .text.ToggleDTOG_RX:0000000000000000 ToggleDTOG_RX
+     /tmp/ccT6ScAQ.s:949    .text.ToggleDTOG_TX:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:956    .text.ToggleDTOG_TX:0000000000000000 ToggleDTOG_TX
+     /tmp/ccT6ScAQ.s:982    .text.ClearDTOG_RX:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:989    .text.ClearDTOG_RX:0000000000000000 ClearDTOG_RX
+     /tmp/ccT6ScAQ.s:1020   .text.ClearDTOG_TX:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1027   .text.ClearDTOG_TX:0000000000000000 ClearDTOG_TX
+     /tmp/ccT6ScAQ.s:1058   .text.SetEPAddress:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1065   .text.SetEPAddress:0000000000000000 SetEPAddress
+     /tmp/ccT6ScAQ.s:1092   .text.GetEPAddress:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1099   .text.GetEPAddress:0000000000000000 GetEPAddress
+     /tmp/ccT6ScAQ.s:1120   .text.SetEPTxAddr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1127   .text.SetEPTxAddr:0000000000000000 SetEPTxAddr
+     /tmp/ccT6ScAQ.s:1153   .text.SetEPTxAddr:000000000000001c $d
+     /tmp/ccT6ScAQ.s:1158   .text.SetEPRxAddr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1165   .text.SetEPRxAddr:0000000000000000 SetEPRxAddr
+     /tmp/ccT6ScAQ.s:1191   .text.SetEPRxAddr:0000000000000018 $d
+     /tmp/ccT6ScAQ.s:1197   .text.GetEPTxAddr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1204   .text.GetEPTxAddr:0000000000000000 GetEPTxAddr
+     /tmp/ccT6ScAQ.s:1227   .text.GetEPTxAddr:0000000000000018 $d
+     /tmp/ccT6ScAQ.s:1232   .text.GetEPRxAddr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1239   .text.GetEPRxAddr:0000000000000000 GetEPRxAddr
+     /tmp/ccT6ScAQ.s:1262   .text.GetEPRxAddr:0000000000000014 $d
+     /tmp/ccT6ScAQ.s:1268   .text.SetEPTxCount:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1275   .text.SetEPTxCount:0000000000000000 SetEPTxCount
+     /tmp/ccT6ScAQ.s:1298   .text.SetEPTxCount:0000000000000014 $d
+     /tmp/ccT6ScAQ.s:1304   .text.SetEPCountRxReg:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1311   .text.SetEPCountRxReg:0000000000000000 SetEPCountRxReg
+     /tmp/ccT6ScAQ.s:1360   .text.SetEPRxCount:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1367   .text.SetEPRxCount:0000000000000000 SetEPRxCount
+     /tmp/ccT6ScAQ.s:1429   .text.SetEPRxCount:0000000000000038 $d
+     /tmp/ccT6ScAQ.s:1437   .text.GetEPTxCount:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1444   .text.GetEPTxCount:0000000000000000 GetEPTxCount
+     /tmp/ccT6ScAQ.s:1468   .text.GetEPTxCount:0000000000000018 $d
+     /tmp/ccT6ScAQ.s:1474   .text.GetEPRxCount:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1481   .text.GetEPRxCount:0000000000000000 GetEPRxCount
+     /tmp/ccT6ScAQ.s:1505   .text.GetEPRxCount:0000000000000018 $d
+     /tmp/ccT6ScAQ.s:1511   .text.SetEPDblBuffAddr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1518   .text.SetEPDblBuffAddr:0000000000000000 SetEPDblBuffAddr
+     /tmp/ccT6ScAQ.s:1558   .text.SetEPDblBuffAddr:0000000000000030 $d
+     /tmp/ccT6ScAQ.s:1564   .text.SetEPDblBuf0Addr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1571   .text.SetEPDblBuf0Addr:0000000000000000 SetEPDblBuf0Addr
+     /tmp/ccT6ScAQ.s:1582   .text.SetEPDblBuf1Addr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1589   .text.SetEPDblBuf1Addr:0000000000000000 SetEPDblBuf1Addr
+     /tmp/ccT6ScAQ.s:1600   .text.GetEPDblBuf0Addr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1607   .text.GetEPDblBuf0Addr:0000000000000000 GetEPDblBuf0Addr
+     /tmp/ccT6ScAQ.s:1618   .text.GetEPDblBuf1Addr:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1625   .text.GetEPDblBuf1Addr:0000000000000000 GetEPDblBuf1Addr
+     /tmp/ccT6ScAQ.s:1636   .text.SetEPDblBuffCount:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1643   .text.SetEPDblBuffCount:0000000000000000 SetEPDblBuffCount
+     /tmp/ccT6ScAQ.s:1793   .text.SetEPDblBuffCount:000000000000009c $d
+     /tmp/ccT6ScAQ.s:1800   .text.SetEPDblBuf0Count:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1807   .text.SetEPDblBuf0Count:0000000000000000 SetEPDblBuf0Count
+     /tmp/ccT6ScAQ.s:1888   .text.SetEPDblBuf0Count:0000000000000054 $d
+     /tmp/ccT6ScAQ.s:1894   .text.SetEPDblBuf1Count:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1901   .text.SetEPDblBuf1Count:0000000000000000 SetEPDblBuf1Count
+     /tmp/ccT6ScAQ.s:1982   .text.SetEPDblBuf1Count:0000000000000054 $d
+     /tmp/ccT6ScAQ.s:1988   .text.GetEPDblBuf0Count:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:1995   .text.GetEPDblBuf0Count:0000000000000000 GetEPDblBuf0Count
+     /tmp/ccT6ScAQ.s:2006   .text.GetEPDblBuf1Count:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:2013   .text.GetEPDblBuf1Count:0000000000000000 GetEPDblBuf1Count
+     /tmp/ccT6ScAQ.s:2024   .text.GetEPDblBufDir:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:2031   .text.GetEPDblBufDir:0000000000000000 GetEPDblBufDir
+     /tmp/ccT6ScAQ.s:2075   .text.GetEPDblBufDir:0000000000000038 $d
+     /tmp/ccT6ScAQ.s:2082   .text.FreeUserBuffer:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:2089   .text.FreeUserBuffer:0000000000000000 FreeUserBuffer
+     /tmp/ccT6ScAQ.s:2138   .text.ToWord:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:2145   .text.ToWord:0000000000000000 ToWord
+     /tmp/ccT6ScAQ.s:2161   .text.ByteSwap:0000000000000000 $t
+     /tmp/ccT6ScAQ.s:2168   .text.ByteSwap:0000000000000000 ByteSwap
 
 NO UNDEFINED SYMBOLS

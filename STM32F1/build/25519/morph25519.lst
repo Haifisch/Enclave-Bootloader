@@ -391,22 +391,22 @@
  291 001f 52       		.byte	82
  292              		.text
  293              	.Letext0:
- 294              		.file 2 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
- 295              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
- 296              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
- 297              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
- 298              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
- 299              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 294              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 295              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 296              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 297              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 298              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 299              		.file 7 "/usr/arm-none-eabi/include/sys/reent.h"
  300              		.file 8 "25519/f25519.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 morph25519.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:16     .text.morph25519_e2m:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:23     .text.morph25519_e2m:0000000000000000 morph25519_e2m
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:82     .text.morph25519_e2m:000000000000003c $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:87     .text.morph25519_m2e:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:94     .text.morph25519_m2e:0000000000000000 morph25519_m2e
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:250    .text.morph25519_m2e:00000000000000cc $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:259    .rodata.d.4633:0000000000000000 d.4633
+     /tmp/ccXs8Nwc.s:16     .text.morph25519_e2m:0000000000000000 $t
+     /tmp/ccXs8Nwc.s:23     .text.morph25519_e2m:0000000000000000 morph25519_e2m
+     /tmp/ccXs8Nwc.s:82     .text.morph25519_e2m:000000000000003c $d
+     /tmp/ccXs8Nwc.s:87     .text.morph25519_m2e:0000000000000000 $t
+     /tmp/ccXs8Nwc.s:94     .text.morph25519_m2e:0000000000000000 morph25519_m2e
+     /tmp/ccXs8Nwc.s:250    .text.morph25519_m2e:00000000000000cc $d
+     /tmp/ccXs8Nwc.s:259    .rodata.d.4633:0000000000000000 d.4633
 
 UNDEFINED SYMBOLS
 f25519_sub

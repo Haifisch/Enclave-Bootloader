@@ -1,54 +1,54 @@
 Archive member included to satisfy reference by file (symbol)
 
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
                               build/25519/ed25519.o (memcpy)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
                               build/main.o (memset)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
                               build/main.o (sprintf)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
-                              build/main.o (strlen)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
+                              build/hardware.o (strlen)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
                               build/hardware.o (vsprintf)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o) (_impure_ptr)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o) (_svfprintf_r)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_printf_i)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (memchr)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (memmove)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_free_r)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_malloc_r)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_realloc_r)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o) (_sbrk_r)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o) (__malloc_lock)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o) (_malloc_usable_size_r)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o) (errno)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o) (_impure_ptr)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o) (_svfprintf_r)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_printf_i)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (memchr)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (memmove)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_free_r)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_malloc_r)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o) (_realloc_r)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o) (_sbrk_r)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o) (__malloc_lock)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o) (_malloc_usable_size_r)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o) (errno)
 ./libstm32fw.a(stm32f10x_gpio.o)
                               build/hardware.o (GPIO_Init)
 ./libstm32fw.a(stm32f10x_rcc.o)
                               build/hardware.o (RCC_APB2PeriphClockCmd)
 ./libstm32fw.a(stm32f10x_usart.o)
                               build/hardware.o (USART_Init)
-/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
-                              /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o) (_sbrk)
+/usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+                              /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o) (_sbrk)
 
 Allocating common symbols
 Common symbol       size              file
 
 SaveRState          0x2               build/usb_lib/usb_int.o
 SaveState           0x2               build/usb_lib/usb_init.o
-errno               0x4               /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+errno               0x4               /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
 wTransferSize       0x4               build/usb.o
 input               0x5c              build/dfu.o
 wIstr               0x2               build/usb.o
@@ -86,13 +86,11 @@ Discarded input sections
                 0x0000000000000000        0x1 build/usb_descriptor.o
  .text          0x0000000000000000        0x0 build/main.o
  .bss           0x0000000000000000        0x0 build/main.o
- .text.decode_b64
-                0x0000000000000000       0x26 build/main.o
- .text.isSecureMode
-                0x0000000000000000        0x4 build/main.o
  COMMON         0x0000000000000000        0x0 build/main.o
  .text          0x0000000000000000        0x0 build/hardware.o
  .bss           0x0000000000000000        0x0 build/hardware.o
+ .text.decode_b64
+                0x0000000000000000       0x26 build/hardware.o
  .text.bkp10Write
                 0x0000000000000000       0x30 build/hardware.o
  .text.checkAndClearBootloaderFlag
@@ -109,16 +107,18 @@ Discarded input sections
                 0x0000000000000000        0xc build/dfu.o
  .text.dfuUploadDone
                 0x0000000000000000       0x18 build/dfu.o
- .text          0x0000000000000000        0x0 build/25519/c25519.o
- .bss           0x0000000000000000        0x0 build/25519/c25519.o
- .text.xc_diffadd
-                0x0000000000000000       0x88 build/25519/c25519.o
- .text.c25519_smult
-                0x0000000000000000      0x158 build/25519/c25519.o
- .rodata.c25519_base_x
-                0x0000000000000000       0x20 build/25519/c25519.o
  .text          0x0000000000000000        0x0 build/25519/ed25519.o
  .bss           0x0000000000000000        0x0 build/25519/ed25519.o
+ .text          0x0000000000000000        0x0 build/25519/sha512.o
+ .bss           0x0000000000000000        0x0 build/25519/sha512.o
+ .text          0x0000000000000000        0x0 build/25519/morph25519.o
+ .bss           0x0000000000000000        0x0 build/25519/morph25519.o
+ .text.morph25519_e2m
+                0x0000000000000000       0x40 build/25519/morph25519.o
+ .text.morph25519_m2e
+                0x0000000000000000       0xd4 build/25519/morph25519.o
+ .rodata.d.4633
+                0x0000000000000000       0x20 build/25519/morph25519.o
  .text          0x0000000000000000        0x0 build/25519/edsign.o
  .bss           0x0000000000000000        0x0 build/25519/edsign.o
  .text          0x0000000000000000        0x0 build/25519/f25519.o
@@ -129,6 +129,16 @@ Discarded input sections
                 0x0000000000000000       0x28 build/25519/f25519.o
  .rodata.f25519_zero
                 0x0000000000000000       0x20 build/25519/f25519.o
+ .text          0x0000000000000000        0x0 build/25519/c25519.o
+ .bss           0x0000000000000000        0x0 build/25519/c25519.o
+ .text.xc_diffadd
+                0x0000000000000000       0x88 build/25519/c25519.o
+ .text.c25519_smult
+                0x0000000000000000      0x158 build/25519/c25519.o
+ .rodata.c25519_base_x
+                0x0000000000000000       0x20 build/25519/c25519.o
+ .text          0x0000000000000000        0x0 build/25519/sha256.o
+ .bss           0x0000000000000000        0x0 build/25519/sha256.o
  .text          0x0000000000000000        0x0 build/25519/fprime.o
  .bss           0x0000000000000000        0x0 build/25519/fprime.o
  .text.fprime_load
@@ -145,18 +155,6 @@ Discarded input sections
                 0x0000000000000000       0x20 build/25519/fprime.o
  .rodata.fprime_zero
                 0x0000000000000000       0x20 build/25519/fprime.o
- .text          0x0000000000000000        0x0 build/25519/morph25519.o
- .bss           0x0000000000000000        0x0 build/25519/morph25519.o
- .text.morph25519_e2m
-                0x0000000000000000       0x40 build/25519/morph25519.o
- .text.morph25519_m2e
-                0x0000000000000000       0xd4 build/25519/morph25519.o
- .rodata.d.4633
-                0x0000000000000000       0x20 build/25519/morph25519.o
- .text          0x0000000000000000        0x0 build/25519/sha256.o
- .bss           0x0000000000000000        0x0 build/25519/sha256.o
- .text          0x0000000000000000        0x0 build/25519/sha512.o
- .bss           0x0000000000000000        0x0 build/25519/sha512.o
  .text          0x0000000000000000        0x0 build/base64/cdecode.o
  .bss           0x0000000000000000        0x0 build/base64/cdecode.o
  .text.base64_decode_value
@@ -278,55 +276,55 @@ Discarded input sections
                 0x0000000000000000        0x2 build/usb_lib/usb_core.o
  .text          0x0000000000000000        0x0 build/usb_lib/usb_mem.o
  .bss           0x0000000000000000        0x0 build/usb_lib/usb_mem.o
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
  .text._sprintf_r
-                0x0000000000000000       0x38 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
- .text          0x0000000000000000       0x10 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+                0x0000000000000000       0x38 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+ .text          0x0000000000000000       0x10 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
  .rodata._global_impure_ptr
-                0x0000000000000000        0x4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000000000000        0x4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
  .text.__ssprint_r
-                0x0000000000000000       0xf0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                0x0000000000000000       0xf0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
  .text.cleanup_glue
-                0x0000000000000000       0x1a /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                0x0000000000000000       0x1a /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
  .text._reclaim_reent
-                0x0000000000000000       0xb8 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                0x0000000000000000       0xb8 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
  .bss           0x0000000000000000        0x0 ./libstm32fw.a(stm32f10x_gpio.o)
  .bss           0x0000000000000000        0x0 ./libstm32fw.a(stm32f10x_rcc.o)
  .bss           0x0000000000000000        0x0 ./libstm32fw.a(stm32f10x_usart.o)
- .text          0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
- .bss           0x0000000000000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+ .text          0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+ .bss           0x0000000000000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
 
 Memory Configuration
 
@@ -345,14 +343,14 @@ LOAD build/usb_descriptor.o
 LOAD build/main.o
 LOAD build/hardware.o
 LOAD build/dfu.o
-LOAD build/25519/c25519.o
 LOAD build/25519/ed25519.o
+LOAD build/25519/sha512.o
+LOAD build/25519/morph25519.o
 LOAD build/25519/edsign.o
 LOAD build/25519/f25519.o
-LOAD build/25519/fprime.o
-LOAD build/25519/morph25519.o
+LOAD build/25519/c25519.o
 LOAD build/25519/sha256.o
-LOAD build/25519/sha512.o
+LOAD build/25519/fprime.o
 LOAD build/base64/cdecode.o
 LOAD build/base64/cencode.o
 LOAD build/image.o
@@ -361,23 +359,25 @@ LOAD build/usb_lib/usb_int.o
 LOAD build/usb_lib/usb_init.o
 LOAD build/usb_lib/usb_core.o
 LOAD build/usb_lib/usb_mem.o
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
 LOAD ./libstm32fw.a
+                0x000000000133f07c                __BUILD_DATE = 0x133f07c
+                0x0000000000000001                __BUILD_NUMBER = 0x1
 START GROUP
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libg_nano.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libg_nano.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
 END GROUP
 START GROUP
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a
 END GROUP
 START GROUP
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
-LOAD /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
+LOAD /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a
 END GROUP
                 0x0000000000000800                __Stack_Size = 0x800
                 [!provide]                        PROVIDE (_Stack_Size = __Stack_Size)
@@ -398,7 +398,7 @@ END GROUP
  *(.flashtext)
                 0x00000000080000f0                . = ALIGN (0x4)
 
-.text           0x00000000080000f0     0x651c
+.text           0x00000000080000f0     0x67a4
                 0x00000000080000f0                . = ALIGN (0x4)
  *(.text)
  .text          0x00000000080000f0      0x2e8 ./libstm32fw.a(stm32f10x_gpio.o)
@@ -489,7 +489,7 @@ END GROUP
                 0x0000000008000b4c                Reset_Handler
  .text.Default_Handler
                 0x0000000008000b8c        0x2 build/stm32_lib/c_only_startup.o
-                0x0000000008000b8c                USBWakeUp_IRQHandler
+                0x0000000008000b8c                EXTI2_IRQHandler
                 0x0000000008000b8c                DebugMon_Handler
                 0x0000000008000b8c                TIM1_CC_IRQHandler
                 0x0000000008000b8c                HardFault_Handler
@@ -540,7 +540,7 @@ END GROUP
                 0x0000000008000b8c                BusFault_Handler
                 0x0000000008000b8c                USART1_IRQHandler
                 0x0000000008000b8c                I2C1_ER_IRQHandler
-                0x0000000008000b8c                EXTI2_IRQHandler
+                0x0000000008000b8c                USBWakeUp_IRQHandler
  .text.usbStatusIn
                 0x0000000008000b8e        0x2 build/usb.o
                 0x0000000008000b8e                usbStatusIn
@@ -636,470 +636,479 @@ END GROUP
  .text.USB_LP_CAN1_RX0_IRQHandler
                 0x0000000008000f7c       0xb4 build/usb.o
                 0x0000000008000f7c                USB_LP_CAN1_RX0_IRQHandler
- .text.encode_b64
-                0x0000000008001030       0x2e build/main.o
-                0x0000000008001030                encode_b64
- *fill*         0x000000000800105e        0x2 
  .text.transmit_publickey_data
-                0x0000000008001060       0xc8 build/main.o
-                0x0000000008001060                transmit_publickey_data
+                0x0000000008001030       0xd8 build/main.o
+                0x0000000008001030                transmit_publickey_data
  .text.print_bootheader
-                0x0000000008001128       0x40 build/main.o
-                0x0000000008001128                print_bootheader
+                0x0000000008001108       0xd8 build/main.o
+                0x0000000008001108                print_bootheader
  .text.startup.main
-                0x0000000008001168       0xf4 build/main.o
-                0x0000000008001168                main
+                0x00000000080011e0       0xf8 build/main.o
+                0x00000000080011e0                main
  .text.gpio_write_bit
-                0x000000000800125c       0x14 build/hardware.o
-                0x000000000800125c                gpio_write_bit
- .text.readPin  0x0000000008001270       0x12 build/hardware.o
-                0x0000000008001270                readPin
+                0x00000000080012d8       0x14 build/hardware.o
+                0x00000000080012d8                gpio_write_bit
+ .text.readPin  0x00000000080012ec       0x12 build/hardware.o
+                0x00000000080012ec                readPin
  .text.strobePin
-                0x0000000008001282       0x50 build/hardware.o
-                0x0000000008001282                strobePin
+                0x00000000080012fe       0x50 build/hardware.o
+                0x00000000080012fe                strobePin
  .text.UU_PutChar
-                0x00000000080012d2        0xc build/hardware.o
-                0x00000000080012d2                UU_PutChar
+                0x000000000800134e        0xc build/hardware.o
+                0x000000000800134e                UU_PutChar
  .text.UU_PutString
-                0x00000000080012de       0x16 build/hardware.o
-                0x00000000080012de                UU_PutString
- .text.vprint   0x00000000080012f4       0x24 build/hardware.o
-                0x00000000080012f4                vprint
+                0x000000000800135a       0x16 build/hardware.o
+                0x000000000800135a                UU_PutString
+ .text.vprint   0x0000000008001370       0x24 build/hardware.o
+                0x0000000008001370                vprint
  .text.uart_printf
-                0x0000000008001318       0x1a build/hardware.o
-                0x0000000008001318                uart_printf
- *fill*         0x0000000008001332        0x2 
- .text.hexdump  0x0000000008001334       0xb8 build/hardware.o
-                0x0000000008001334                hexdump
+                0x0000000008001394       0x1a build/hardware.o
+                0x0000000008001394                uart_printf
+ *fill*         0x00000000080013ae        0x2 
+ .text.print_hex
+                0x00000000080013b0       0x3c build/hardware.o
+                0x00000000080013b0                print_hex
+ .text.hexdump  0x00000000080013ec       0xb8 build/hardware.o
+                0x00000000080013ec                hexdump
  .text.print_hash
-                0x00000000080013ec       0x2c build/hardware.o
-                0x00000000080013ec                print_hash
+                0x00000000080014a4       0x2c build/hardware.o
+                0x00000000080014a4                print_hash
+ .text.encode_b64
+                0x00000000080014d0       0x2e build/hardware.o
+                0x00000000080014d0                encode_b64
+ *fill*         0x00000000080014fe        0x2 
  .text.uartInit
-                0x0000000008001418       0x84 build/hardware.o
-                0x0000000008001418                uartInit
+                0x0000000008001500       0x84 build/hardware.o
+                0x0000000008001500                uartInit
  .text.systemReset
-                0x000000000800149c       0x48 build/hardware.o
-                0x000000000800149c                systemReset
+                0x0000000008001584       0x48 build/hardware.o
+                0x0000000008001584                systemReset
  .text.setupCLK
-                0x00000000080014e4       0x60 build/hardware.o
-                0x00000000080014e4                setupCLK
+                0x00000000080015cc       0x60 build/hardware.o
+                0x00000000080015cc                setupCLK
  .text.setupLEDAndButton
-                0x0000000008001544       0x14 build/hardware.o
-                0x0000000008001544                setupLEDAndButton
+                0x000000000800162c       0x14 build/hardware.o
+                0x000000000800162c                setupLEDAndButton
  .text.setupFLASH
-                0x0000000008001558       0x1c build/hardware.o
-                0x0000000008001558                setupFLASH
+                0x0000000008001640       0x1c build/hardware.o
+                0x0000000008001640                setupFLASH
  .text.uid_read
-                0x0000000008001574        0x2 build/hardware.o
-                0x0000000008001574                uid_read
- *fill*         0x0000000008001576        0x2 
+                0x000000000800165c        0x2 build/hardware.o
+                0x000000000800165c                uid_read
+ *fill*         0x000000000800165e        0x2 
  .text.setMspAndJump
-                0x0000000008001578       0x14 build/hardware.o
-                0x0000000008001578                setMspAndJump
+                0x0000000008001660       0x14 build/hardware.o
+                0x0000000008001660                setMspAndJump
  .text.nvicInit
-                0x000000000800158c       0x6c build/hardware.o
-                0x000000000800158c                nvicInit
+                0x0000000008001674       0x6c build/hardware.o
+                0x0000000008001674                nvicInit
  .text.nvicDisableInterrupts
-                0x00000000080015f8       0x24 build/hardware.o
-                0x00000000080015f8                nvicDisableInterrupts
+                0x00000000080016e0       0x24 build/hardware.o
+                0x00000000080016e0                nvicDisableInterrupts
  .text.jumpToUser
-                0x000000000800161c       0x1e build/hardware.o
-                0x000000000800161c                jumpToUser
- *fill*         0x000000000800163a        0x2 
+                0x0000000008001704       0x1e build/hardware.o
+                0x0000000008001704                jumpToUser
+ *fill*         0x0000000008001722        0x2 
  .text.systemHardReset
-                0x000000000800163c       0x14 build/hardware.o
-                0x000000000800163c                systemHardReset
+                0x0000000008001724       0x14 build/hardware.o
+                0x0000000008001724                systemHardReset
  .text.flashErasePage
-                0x0000000008001650       0x38 build/hardware.o
-                0x0000000008001650                flashErasePage
+                0x0000000008001738       0x38 build/hardware.o
+                0x0000000008001738                flashErasePage
  .text.flashWriteWord
-                0x0000000008001688       0x50 build/hardware.o
-                0x0000000008001688                flashWriteWord
+                0x0000000008001770       0x50 build/hardware.o
+                0x0000000008001770                flashWriteWord
  .text.flashLock
-                0x00000000080016d8        0xc build/hardware.o
-                0x00000000080016d8                flashLock
+                0x00000000080017c0        0xc build/hardware.o
+                0x00000000080017c0                flashLock
  .text.flashUnlock
-                0x00000000080016e4       0x18 build/hardware.o
-                0x00000000080016e4                flashUnlock
- .text.crMask   0x00000000080016fc       0x12 build/hardware.o
-                0x00000000080016fc                crMask
- *fill*         0x000000000800170e        0x2 
+                0x00000000080017cc       0x18 build/hardware.o
+                0x00000000080017cc                flashUnlock
+ .text.crMask   0x00000000080017e4       0x12 build/hardware.o
+                0x00000000080017e4                crMask
+ *fill*         0x00000000080017f6        0x2 
  .text.getFlashEnd
-                0x0000000008001710       0x10 build/hardware.o
-                0x0000000008001710                getFlashEnd
+                0x00000000080017f8       0x10 build/hardware.o
+                0x00000000080017f8                getFlashEnd
  .text.getFlashPageSize
-                0x0000000008001720       0x18 build/hardware.o
-                0x0000000008001720                getFlashPageSize
- .text.dfuInit  0x0000000008001738       0x88 build/dfu.o
-                0x0000000008001738                dfuInit
+                0x0000000008001808       0x18 build/hardware.o
+                0x0000000008001808                getFlashPageSize
+ .text.isSecure
+                0x0000000008001820        0x4 build/hardware.o
+                0x0000000008001820                isSecure
+ .text.isProduction
+                0x0000000008001824        0x4 build/hardware.o
+                0x0000000008001824                isProduction
+ .text.dfuInit  0x0000000008001828       0x88 build/dfu.o
+                0x0000000008001828                dfuInit
  .text.dfuUpdateByReset
-                0x00000000080017c0       0x44 build/dfu.o
-                0x00000000080017c0                dfuUpdateByReset
+                0x00000000080018b0       0x44 build/dfu.o
+                0x00000000080018b0                dfuUpdateByReset
  .text.dfuCopyState
-                0x0000000008001804       0x18 build/dfu.o
-                0x0000000008001804                dfuCopyState
+                0x00000000080018f4       0x18 build/dfu.o
+                0x00000000080018f4                dfuCopyState
  .text.dfuCopyStatus
-                0x000000000800181c       0x18 build/dfu.o
-                0x000000000800181c                dfuCopyStatus
+                0x000000000800190c       0x18 build/dfu.o
+                0x000000000800190c                dfuCopyStatus
  .text.dfuCopyDNLOAD
-                0x0000000008001834       0x28 build/dfu.o
-                0x0000000008001834                dfuCopyDNLOAD
+                0x0000000008001924       0x28 build/dfu.o
+                0x0000000008001924                dfuCopyDNLOAD
  .text.dfuCopyUPLOAD
-                0x000000000800185c       0x30 build/dfu.o
-                0x000000000800185c                dfuCopyUPLOAD
+                0x000000000800194c       0x30 build/dfu.o
+                0x000000000800194c                dfuCopyUPLOAD
  .text.dfuCopyBufferToExec
-                0x000000000800188c       0x58 build/dfu.o
-                0x000000000800188c                dfuCopyBufferToExec
+                0x000000000800197c       0x58 build/dfu.o
+                0x000000000800197c                dfuCopyBufferToExec
  .text.dfuUpdateByRequest
-                0x00000000080018e4      0x254 build/dfu.o
-                0x00000000080018e4                dfuUpdateByRequest
+                0x00000000080019d4      0x254 build/dfu.o
+                0x00000000080019d4                dfuUpdateByRequest
  .text.dfuUploadStarted
-                0x0000000008001b38        0xc build/dfu.o
-                0x0000000008001b38                dfuUploadStarted
+                0x0000000008001c28        0xc build/dfu.o
+                0x0000000008001c28                dfuUploadStarted
  .text.dfuFinishUpload
-                0x0000000008001b44        0x2 build/dfu.o
-                0x0000000008001b44                dfuFinishUpload
+                0x0000000008001c34        0x2 build/dfu.o
+                0x0000000008001c34                dfuFinishUpload
  .text.ed25519_project
-                0x0000000008001b46       0x4a build/25519/ed25519.o
-                0x0000000008001b46                ed25519_project
+                0x0000000008001c36       0x4a build/25519/ed25519.o
+                0x0000000008001c36                ed25519_project
  .text.ed25519_unproject
-                0x0000000008001b90       0x3a build/25519/ed25519.o
-                0x0000000008001b90                ed25519_unproject
+                0x0000000008001c80       0x3a build/25519/ed25519.o
+                0x0000000008001c80                ed25519_unproject
  .text.ed25519_pack
-                0x0000000008001bca       0x54 build/25519/ed25519.o
-                0x0000000008001bca                ed25519_pack
- *fill*         0x0000000008001c1e        0x2 
+                0x0000000008001cba       0x54 build/25519/ed25519.o
+                0x0000000008001cba                ed25519_pack
+ *fill*         0x0000000008001d0e        0x2 
  .text.ed25519_try_unpack
-                0x0000000008001c20       0xa8 build/25519/ed25519.o
-                0x0000000008001c20                ed25519_try_unpack
+                0x0000000008001d10       0xa8 build/25519/ed25519.o
+                0x0000000008001d10                ed25519_try_unpack
  .text.ed25519_add
-                0x0000000008001cc8       0xe0 build/25519/ed25519.o
-                0x0000000008001cc8                ed25519_add
+                0x0000000008001db8       0xe0 build/25519/ed25519.o
+                0x0000000008001db8                ed25519_add
  .text.ed25519_double
-                0x0000000008001da8       0xb4 build/25519/ed25519.o
-                0x0000000008001da8                ed25519_double
+                0x0000000008001e98       0xb4 build/25519/ed25519.o
+                0x0000000008001e98                ed25519_double
  .text.ed25519_smult
-                0x0000000008001e5c       0x84 build/25519/ed25519.o
-                0x0000000008001e5c                ed25519_smult
- .text.hash_with_prefix
-                0x0000000008001ee0       0x90 build/25519/edsign.o
- .text.expand_key
-                0x0000000008001f70       0x54 build/25519/edsign.o
- .text.sm_pack  0x0000000008001fc4       0x2c build/25519/edsign.o
- .text.edsign_sec_to_pub
-                0x0000000008001ff0       0x18 build/25519/edsign.o
-                0x0000000008001ff0                edsign_sec_to_pub
- .text.edsign_sign
-                0x0000000008002008       0xc4 build/25519/edsign.o
-                0x0000000008002008                edsign_sign
- .text.edsign_verify
-                0x00000000080020cc       0xbe build/25519/edsign.o
-                0x00000000080020cc                edsign_verify
- .text.f25519_load
-                0x000000000800218a       0x1e build/25519/f25519.o
-                0x000000000800218a                f25519_load
- .text.f25519_eq
-                0x00000000080021a8       0x36 build/25519/f25519.o
-                0x00000000080021a8                f25519_eq
- .text.f25519_select
-                0x00000000080021de       0x2c build/25519/f25519.o
-                0x00000000080021de                f25519_select
- .text.f25519_normalize
-                0x000000000800220a       0x5e build/25519/f25519.o
-                0x000000000800220a                f25519_normalize
- .text.f25519_add
-                0x0000000008002268       0x50 build/25519/f25519.o
-                0x0000000008002268                f25519_add
- .text.f25519_sub
-                0x00000000080022b8       0x5c build/25519/f25519.o
-                0x00000000080022b8                f25519_sub
- .text.f25519_neg
-                0x0000000008002314       0x48 build/25519/f25519.o
-                0x0000000008002314                f25519_neg
- .text.f25519_mul__distinct
-                0x000000000800235c       0x70 build/25519/f25519.o
-                0x000000000800235c                f25519_mul__distinct
- .text.f25519_mul_c
-                0x00000000080023cc       0x40 build/25519/f25519.o
-                0x00000000080023cc                f25519_mul_c
- .text.f25519_inv__distinct
-                0x000000000800240c       0x88 build/25519/f25519.o
-                0x000000000800240c                f25519_inv__distinct
- .text.f25519_sqrt
-                0x0000000008002494       0x9a build/25519/f25519.o
-                0x0000000008002494                f25519_sqrt
- .text.raw_add  0x000000000800252e       0x22 build/25519/fprime.o
- .text.prime_msb
-                0x0000000008002550       0x1c build/25519/fprime.o
- .text.shift_n_bits
-                0x000000000800256c       0x1e build/25519/fprime.o
- .text.fprime_select
-                0x000000000800258a       0x2c build/25519/fprime.o
-                0x000000000800258a                fprime_select
- .text.raw_try_sub
-                0x00000000080025b6       0x2e build/25519/fprime.o
- .text.fprime_from_bytes
-                0x00000000080025e4       0xa0 build/25519/fprime.o
-                0x00000000080025e4                fprime_from_bytes
- .text.fprime_add
-                0x0000000008002684       0x16 build/25519/fprime.o
-                0x0000000008002684                fprime_add
- .text.fprime_mul
-                0x000000000800269a       0x7e build/25519/fprime.o
-                0x000000000800269a                fprime_mul
- .text.sha256_starts
-                0x0000000008002718       0x50 build/25519/sha256.o
-                0x0000000008002718                sha256_starts
- .text.sha256_process
-                0x0000000008002768     0x1a54 build/25519/sha256.o
-                0x0000000008002768                sha256_process
- .text.sha256_update.part.0
-                0x00000000080041bc       0x86 build/25519/sha256.o
- .text.sha256_update
-                0x0000000008004242        0x8 build/25519/sha256.o
-                0x0000000008004242                sha256_update
- *fill*         0x000000000800424a        0x2 
- .text.sha256_finish
-                0x000000000800424c      0x100 build/25519/sha256.o
-                0x000000000800424c                sha256_finish
- .text.store64  0x000000000800434c       0x1e build/25519/sha512.o
- *fill*         0x000000000800436a        0x2 
+                0x0000000008001f4c       0x84 build/25519/ed25519.o
+                0x0000000008001f4c                ed25519_smult
+ .text.store64  0x0000000008001fd0       0x1e build/25519/sha512.o
+ *fill*         0x0000000008001fee        0x2 
  .text.sha512_block
-                0x000000000800436c      0x404 build/25519/sha512.o
-                0x000000000800436c                sha512_block
+                0x0000000008001ff0      0x404 build/25519/sha512.o
+                0x0000000008001ff0                sha512_block
  .text.sha512_final
-                0x0000000008004770       0x5a build/25519/sha512.o
-                0x0000000008004770                sha512_final
+                0x00000000080023f4       0x5a build/25519/sha512.o
+                0x00000000080023f4                sha512_final
  .text.sha512_get
-                0x00000000080047ca       0x9e build/25519/sha512.o
-                0x00000000080047ca                sha512_get
+                0x000000000800244e       0x9e build/25519/sha512.o
+                0x000000000800244e                sha512_get
+ .text.hash_with_prefix
+                0x00000000080024ec       0x90 build/25519/edsign.o
+ .text.expand_key
+                0x000000000800257c       0x54 build/25519/edsign.o
+ .text.sm_pack  0x00000000080025d0       0x2c build/25519/edsign.o
+ .text.edsign_sec_to_pub
+                0x00000000080025fc       0x18 build/25519/edsign.o
+                0x00000000080025fc                edsign_sec_to_pub
+ .text.edsign_sign
+                0x0000000008002614       0xc4 build/25519/edsign.o
+                0x0000000008002614                edsign_sign
+ .text.edsign_verify
+                0x00000000080026d8       0xbe build/25519/edsign.o
+                0x00000000080026d8                edsign_verify
+ .text.f25519_load
+                0x0000000008002796       0x1e build/25519/f25519.o
+                0x0000000008002796                f25519_load
+ .text.f25519_eq
+                0x00000000080027b4       0x36 build/25519/f25519.o
+                0x00000000080027b4                f25519_eq
+ .text.f25519_select
+                0x00000000080027ea       0x2c build/25519/f25519.o
+                0x00000000080027ea                f25519_select
+ .text.f25519_normalize
+                0x0000000008002816       0x5e build/25519/f25519.o
+                0x0000000008002816                f25519_normalize
+ .text.f25519_add
+                0x0000000008002874       0x50 build/25519/f25519.o
+                0x0000000008002874                f25519_add
+ .text.f25519_sub
+                0x00000000080028c4       0x5c build/25519/f25519.o
+                0x00000000080028c4                f25519_sub
+ .text.f25519_neg
+                0x0000000008002920       0x48 build/25519/f25519.o
+                0x0000000008002920                f25519_neg
+ .text.f25519_mul__distinct
+                0x0000000008002968       0x70 build/25519/f25519.o
+                0x0000000008002968                f25519_mul__distinct
+ .text.f25519_mul_c
+                0x00000000080029d8       0x40 build/25519/f25519.o
+                0x00000000080029d8                f25519_mul_c
+ .text.f25519_inv__distinct
+                0x0000000008002a18       0x88 build/25519/f25519.o
+                0x0000000008002a18                f25519_inv__distinct
+ .text.f25519_sqrt
+                0x0000000008002aa0       0x9a build/25519/f25519.o
+                0x0000000008002aa0                f25519_sqrt
+ *fill*         0x0000000008002b3a        0x2 
+ .text.sha256_starts
+                0x0000000008002b3c       0x50 build/25519/sha256.o
+                0x0000000008002b3c                sha256_starts
+ .text.sha256_process
+                0x0000000008002b8c     0x1a54 build/25519/sha256.o
+                0x0000000008002b8c                sha256_process
+ .text.sha256_update.part.0
+                0x00000000080045e0       0x86 build/25519/sha256.o
+ .text.sha256_update
+                0x0000000008004666        0x8 build/25519/sha256.o
+                0x0000000008004666                sha256_update
+ *fill*         0x000000000800466e        0x2 
+ .text.sha256_finish
+                0x0000000008004670      0x100 build/25519/sha256.o
+                0x0000000008004670                sha256_finish
+ .text.raw_add  0x0000000008004770       0x22 build/25519/fprime.o
+ .text.prime_msb
+                0x0000000008004792       0x1c build/25519/fprime.o
+ .text.shift_n_bits
+                0x00000000080047ae       0x1e build/25519/fprime.o
+ .text.fprime_select
+                0x00000000080047cc       0x2c build/25519/fprime.o
+                0x00000000080047cc                fprime_select
+ .text.raw_try_sub
+                0x00000000080047f8       0x2e build/25519/fprime.o
+ .text.fprime_from_bytes
+                0x0000000008004826       0xa0 build/25519/fprime.o
+                0x0000000008004826                fprime_from_bytes
+ .text.fprime_add
+                0x00000000080048c6       0x16 build/25519/fprime.o
+                0x00000000080048c6                fprime_add
+ .text.fprime_mul
+                0x00000000080048dc       0x7e build/25519/fprime.o
+                0x00000000080048dc                fprime_mul
  .text.base64_init_encodestate
-                0x0000000008004868        0xa build/base64/cencode.o
-                0x0000000008004868                base64_init_encodestate
- *fill*         0x0000000008004872        0x2 
+                0x000000000800495a        0xa build/base64/cencode.o
+                0x000000000800495a                base64_init_encodestate
  .text.base64_encode_value
-                0x0000000008004874       0x10 build/base64/cencode.o
-                0x0000000008004874                base64_encode_value
+                0x0000000008004964       0x10 build/base64/cencode.o
+                0x0000000008004964                base64_encode_value
  .text.base64_encode_block
-                0x0000000008004884       0xc0 build/base64/cencode.o
-                0x0000000008004884                base64_encode_block
+                0x0000000008004974       0xc0 build/base64/cencode.o
+                0x0000000008004974                base64_encode_block
  .text.base64_encode_blockend
-                0x0000000008004944       0x3e build/base64/cencode.o
-                0x0000000008004944                base64_encode_blockend
- *fill*         0x0000000008004982        0x2 
+                0x0000000008004a34       0x3e build/base64/cencode.o
+                0x0000000008004a34                base64_encode_blockend
+ *fill*         0x0000000008004a72        0x2 
  .text.failErase
-                0x0000000008004984       0x44 build/image.o
-                0x0000000008004984                failErase
+                0x0000000008004a74       0x44 build/image.o
+                0x0000000008004a74                failErase
  .text.imageCheckFromAddress
-                0x00000000080049c8      0x16c build/image.o
-                0x00000000080049c8                imageCheckFromAddress
+                0x0000000008004ab8      0x160 build/image.o
+                0x0000000008004ab8                imageCheckFromAddress
  .text.SetEPTxStatus
-                0x0000000008004b34       0x2a build/usb_lib/usb_regs.o
-                0x0000000008004b34                SetEPTxStatus
+                0x0000000008004c18       0x2a build/usb_lib/usb_regs.o
+                0x0000000008004c18                SetEPTxStatus
  .text.SetEPRxValid
-                0x0000000008004b5e       0x1e build/usb_lib/usb_regs.o
-                0x0000000008004b5e                SetEPRxValid
+                0x0000000008004c42       0x1e build/usb_lib/usb_regs.o
+                0x0000000008004c42                SetEPRxValid
  .text.ClearEP_KIND
-                0x0000000008004b7c       0x1c build/usb_lib/usb_regs.o
-                0x0000000008004b7c                ClearEP_KIND
+                0x0000000008004c60       0x1c build/usb_lib/usb_regs.o
+                0x0000000008004c60                ClearEP_KIND
  .text.Clear_Status_Out
-                0x0000000008004b98        0x4 build/usb_lib/usb_regs.o
-                0x0000000008004b98                Clear_Status_Out
+                0x0000000008004c7c        0x4 build/usb_lib/usb_regs.o
+                0x0000000008004c7c                Clear_Status_Out
  .text.ClearDTOG_RX
-                0x0000000008004b9c       0x26 build/usb_lib/usb_regs.o
-                0x0000000008004b9c                ClearDTOG_RX
+                0x0000000008004c80       0x26 build/usb_lib/usb_regs.o
+                0x0000000008004c80                ClearDTOG_RX
  .text.ClearDTOG_TX
-                0x0000000008004bc2       0x26 build/usb_lib/usb_regs.o
-                0x0000000008004bc2                ClearDTOG_TX
+                0x0000000008004ca6       0x26 build/usb_lib/usb_regs.o
+                0x0000000008004ca6                ClearDTOG_TX
  .text.GetEPTxAddr
-                0x0000000008004be8       0x1c build/usb_lib/usb_regs.o
-                0x0000000008004be8                GetEPTxAddr
+                0x0000000008004ccc       0x1c build/usb_lib/usb_regs.o
+                0x0000000008004ccc                GetEPTxAddr
  .text.GetEPRxAddr
-                0x0000000008004c04       0x1c build/usb_lib/usb_regs.o
-                0x0000000008004c04                GetEPRxAddr
+                0x0000000008004ce8       0x1c build/usb_lib/usb_regs.o
+                0x0000000008004ce8                GetEPRxAddr
  .text.SetEPTxCount
-                0x0000000008004c20       0x1c build/usb_lib/usb_regs.o
-                0x0000000008004c20                SetEPTxCount
+                0x0000000008004d04       0x1c build/usb_lib/usb_regs.o
+                0x0000000008004d04                SetEPTxCount
  .text.SetEPRxCount
-                0x0000000008004c3c       0x40 build/usb_lib/usb_regs.o
-                0x0000000008004c3c                SetEPRxCount
- .text.CTR_LP   0x0000000008004c7c      0x170 build/usb_lib/usb_int.o
-                0x0000000008004c7c                CTR_LP
+                0x0000000008004d20       0x40 build/usb_lib/usb_regs.o
+                0x0000000008004d20                SetEPRxCount
+ .text.CTR_LP   0x0000000008004d60      0x170 build/usb_lib/usb_int.o
+                0x0000000008004d60                CTR_LP
  .text.USB_Init
-                0x0000000008004dec       0x34 build/usb_lib/usb_init.o
-                0x0000000008004dec                USB_Init
+                0x0000000008004ed0       0x34 build/usb_lib/usb_init.o
+                0x0000000008004ed0                USB_Init
  .text.Standard_GetConfiguration
-                0x0000000008004e20       0x24 build/usb_lib/usb_core.o
-                0x0000000008004e20                Standard_GetConfiguration
+                0x0000000008004f04       0x24 build/usb_lib/usb_core.o
+                0x0000000008004f04                Standard_GetConfiguration
  .text.Standard_GetInterface
-                0x0000000008004e44       0x24 build/usb_lib/usb_core.o
-                0x0000000008004e44                Standard_GetInterface
+                0x0000000008004f28       0x24 build/usb_lib/usb_core.o
+                0x0000000008004f28                Standard_GetInterface
  .text.Standard_GetStatus
-                0x0000000008004e68       0x88 build/usb_lib/usb_core.o
-                0x0000000008004e68                Standard_GetStatus
+                0x0000000008004f4c       0x88 build/usb_lib/usb_core.o
+                0x0000000008004f4c                Standard_GetStatus
  .text.DataStageIn
-                0x0000000008004ef0       0xac build/usb_lib/usb_core.o
+                0x0000000008004fd4       0xac build/usb_lib/usb_core.o
  .text.Standard_SetConfiguration
-                0x0000000008004f9c       0x38 build/usb_lib/usb_core.o
-                0x0000000008004f9c                Standard_SetConfiguration
+                0x0000000008005080       0x38 build/usb_lib/usb_core.o
+                0x0000000008005080                Standard_SetConfiguration
  .text.Standard_SetInterface
-                0x0000000008004fd4       0x4c build/usb_lib/usb_core.o
-                0x0000000008004fd4                Standard_SetInterface
+                0x00000000080050b8       0x4c build/usb_lib/usb_core.o
+                0x00000000080050b8                Standard_SetInterface
  .text.Standard_ClearFeature
-                0x0000000008005020       0xc4 build/usb_lib/usb_core.o
-                0x0000000008005020                Standard_ClearFeature
+                0x0000000008005104       0xc4 build/usb_lib/usb_core.o
+                0x0000000008005104                Standard_ClearFeature
  .text.Standard_SetEndPointFeature
-                0x00000000080050e4       0x7c build/usb_lib/usb_core.o
-                0x00000000080050e4                Standard_SetEndPointFeature
+                0x00000000080051c8       0x7c build/usb_lib/usb_core.o
+                0x00000000080051c8                Standard_SetEndPointFeature
  .text.Standard_SetDeviceFeature
-                0x0000000008005160       0x24 build/usb_lib/usb_core.o
-                0x0000000008005160                Standard_SetDeviceFeature
+                0x0000000008005244       0x24 build/usb_lib/usb_core.o
+                0x0000000008005244                Standard_SetDeviceFeature
  .text.Standard_GetDescriptorData
-                0x0000000008005184       0x1c build/usb_lib/usb_core.o
-                0x0000000008005184                Standard_GetDescriptorData
+                0x0000000008005268       0x1c build/usb_lib/usb_core.o
+                0x0000000008005268                Standard_GetDescriptorData
  .text.Post0_Process
-                0x00000000080051a0       0x40 build/usb_lib/usb_core.o
-                0x00000000080051a0                Post0_Process
+                0x0000000008005284       0x40 build/usb_lib/usb_core.o
+                0x0000000008005284                Post0_Process
  .text.Setup0_Process
-                0x00000000080051e0      0x2bc build/usb_lib/usb_core.o
-                0x00000000080051e0                Setup0_Process
+                0x00000000080052c4      0x2bc build/usb_lib/usb_core.o
+                0x00000000080052c4                Setup0_Process
  .text.Out0_Process
-                0x000000000800549c       0xc0 build/usb_lib/usb_core.o
-                0x000000000800549c                Out0_Process
+                0x0000000008005580       0xc0 build/usb_lib/usb_core.o
+                0x0000000008005580                Out0_Process
  .text.SetDeviceAddress
-                0x000000000800555c       0x38 build/usb_lib/usb_core.o
-                0x000000000800555c                SetDeviceAddress
+                0x0000000008005640       0x38 build/usb_lib/usb_core.o
+                0x0000000008005640                SetDeviceAddress
  .text.In0_Process
-                0x0000000008005594       0x5c build/usb_lib/usb_core.o
-                0x0000000008005594                In0_Process
+                0x0000000008005678       0x5c build/usb_lib/usb_core.o
+                0x0000000008005678                In0_Process
  .text.UserToPMABufferCopy
-                0x00000000080055f0       0x1e build/usb_lib/usb_mem.o
-                0x00000000080055f0                UserToPMABufferCopy
+                0x00000000080056d4       0x1e build/usb_lib/usb_mem.o
+                0x00000000080056d4                UserToPMABufferCopy
  .text.PMAToUserBufferCopy
-                0x000000000800560e       0x24 build/usb_lib/usb_mem.o
-                0x000000000800560e                PMAToUserBufferCopy
- .text.memcpy   0x0000000008005632       0x16 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
-                0x0000000008005632                memcpy
- .text.memset   0x0000000008005648       0x10 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
-                0x0000000008005648                memset
- .text.sprintf  0x0000000008005658       0x40 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
-                0x0000000008005658                sprintf
-                0x0000000008005658                siprintf
+                0x00000000080056f2       0x24 build/usb_lib/usb_mem.o
+                0x00000000080056f2                PMAToUserBufferCopy
+ .text.memcpy   0x0000000008005716       0x16 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+                0x0000000008005716                memcpy
+ .text.memset   0x000000000800572c       0x10 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+                0x000000000800572c                memset
+ .text.sprintf  0x000000000800573c       0x40 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+                0x000000000800573c                sprintf
+                0x000000000800573c                siprintf
  .text._vsprintf_r
-                0x0000000008005698       0x2c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
-                0x0000000008005698                _vsiprintf_r
-                0x0000000008005698                _vsprintf_r
+                0x000000000800577c       0x2c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+                0x000000000800577c                _vsiprintf_r
+                0x000000000800577c                _vsprintf_r
  .text.vsprintf
-                0x00000000080056c4       0x14 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
-                0x00000000080056c4                vsprintf
-                0x00000000080056c4                vsiprintf
+                0x00000000080057a8       0x14 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+                0x00000000080057a8                vsprintf
+                0x00000000080057a8                vsiprintf
  .text.__ssputs_r
-                0x00000000080056d8       0xb4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x00000000080056d8                __ssputs_r
+                0x00000000080057bc       0xb4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x00000000080057bc                __ssputs_r
  .text._svfprintf_r
-                0x000000000800578c      0x1f0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-                0x000000000800578c                _svfprintf_r
-                0x000000000800578c                _svfiprintf_r
+                0x0000000008005870      0x1f0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000000008005870                _svfprintf_r
+                0x0000000008005870                _svfiprintf_r
  .text._printf_common
-                0x000000000800597c       0xec /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x000000000800597c                _printf_common
+                0x0000000008005a60       0xec /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008005a60                _printf_common
  .text._printf_i
-                0x0000000008005a68      0x224 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000000008005a68                _printf_i
- .text.memchr   0x0000000008005c8c       0x1c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
-                0x0000000008005c8c                memchr
- .text.memmove  0x0000000008005ca8       0x32 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
-                0x0000000008005ca8                memmove
- *fill*         0x0000000008005cda        0x2 
- .text._free_r  0x0000000008005cdc       0x98 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
-                0x0000000008005cdc                _free_r
+                0x0000000008005b4c      0x224 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008005b4c                _printf_i
+ .text.memchr   0x0000000008005d70       0x1c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+                0x0000000008005d70                memchr
+ .text.memmove  0x0000000008005d8c       0x32 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+                0x0000000008005d8c                memmove
+ *fill*         0x0000000008005dbe        0x2 
+ .text._free_r  0x0000000008005dc0       0x98 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+                0x0000000008005dc0                _free_r
  .text._malloc_r
-                0x0000000008005d74       0xb4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-                0x0000000008005d74                _malloc_r
+                0x0000000008005e58       0xb4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008005e58                _malloc_r
  .text._realloc_r
-                0x0000000008005e28       0x4c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-                0x0000000008005e28                _realloc_r
- .text._sbrk_r  0x0000000008005e74       0x20 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
-                0x0000000008005e74                _sbrk_r
+                0x0000000008005f0c       0x4c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                0x0000000008005f0c                _realloc_r
+ .text._sbrk_r  0x0000000008005f58       0x20 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+                0x0000000008005f58                _sbrk_r
  .text.__malloc_lock
-                0x0000000008005e94        0x2 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
-                0x0000000008005e94                __malloc_lock
+                0x0000000008005f78        0x2 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+                0x0000000008005f78                __malloc_lock
  .text.__malloc_unlock
-                0x0000000008005e96        0x2 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
-                0x0000000008005e96                __malloc_unlock
+                0x0000000008005f7a        0x2 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+                0x0000000008005f7a                __malloc_unlock
  .text._malloc_usable_size_r
-                0x0000000008005e98       0x10 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
-                0x0000000008005e98                _malloc_usable_size_r
- .text._sbrk    0x0000000008005ea8       0x1c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
-                0x0000000008005ea8                _sbrk
+                0x0000000008005f7c       0x10 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+                0x0000000008005f7c                _malloc_usable_size_r
+ .text._sbrk    0x0000000008005f8c       0x1c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+                0x0000000008005f8c                _sbrk
  *(.rodata)
  *(.rodata*)
  .rodata.main.str1.1
-                0x0000000008005ec4       0xd7 build/main.o
+                0x0000000008005fa8       0xeb build/main.o
  .rodata.print_bootheader.str1.1
-                0x0000000008005f9b       0x59 build/main.o
+                0x0000000008006093      0x1c7 build/main.o
  .rodata.transmit_publickey_data.str1.1
-                0x0000000008005ff4       0x5f build/main.o
+                0x000000000800625a       0x6a build/main.o
  .rodata.hexdump.str1.1
-                0x0000000008006053       0x11 build/hardware.o
+                0x00000000080062c4       0x11 build/hardware.o
                                          0x13 (size before relaxing)
- .rodata.print_hash.str1.1
-                0x0000000008006064        0x5 build/hardware.o
-                                          0x7 (size before relaxing)
+ .rodata.print_hex.str1.1
+                0x00000000080062d5        0xa build/hardware.o
+                                          0xc (size before relaxing)
  .rodata.dfuUpdateByRequest.str1.1
-                0x0000000008006069       0x33 build/dfu.o
-                                         0x48 (size before relaxing)
+                0x00000000080062df       0x48 build/dfu.o
  .rodata.ed25519_base
-                0x000000000800609c       0x80 build/25519/ed25519.o
-                0x000000000800609c                ed25519_base
+                0x0000000008006327       0x80 build/25519/ed25519.o
+                0x0000000008006327                ed25519_base
  .rodata.ed25519_d
-                0x000000000800611c       0x20 build/25519/ed25519.o
+                0x00000000080063a7       0x20 build/25519/ed25519.o
  .rodata.ed25519_k
-                0x000000000800613c       0x20 build/25519/ed25519.o
+                0x00000000080063c7       0x20 build/25519/ed25519.o
  .rodata.ed25519_neutral
-                0x000000000800615c       0x80 build/25519/ed25519.o
-                0x000000000800615c                ed25519_neutral
- .rodata.ed25519_order
-                0x00000000080061dc       0x20 build/25519/edsign.o
- .rodata.f25519_one
-                0x00000000080061fc       0x20 build/25519/f25519.o
-                0x00000000080061fc                f25519_one
- *fill*         0x000000000800621c        0x4 
+                0x00000000080063e7       0x80 build/25519/ed25519.o
+                0x00000000080063e7                ed25519_neutral
+ *fill*         0x0000000008006467        0x1 
  .rodata.round_k
-                0x0000000008006220      0x280 build/25519/sha512.o
+                0x0000000008006468      0x280 build/25519/sha512.o
  .rodata.sha512_initial_state
-                0x00000000080064a0       0x40 build/25519/sha512.o
-                0x00000000080064a0                sha512_initial_state
+                0x00000000080066e8       0x40 build/25519/sha512.o
+                0x00000000080066e8                sha512_initial_state
+ .rodata.ed25519_order
+                0x0000000008006728       0x20 build/25519/edsign.o
+ .rodata.f25519_one
+                0x0000000008006748       0x20 build/25519/f25519.o
+                0x0000000008006748                f25519_one
  .rodata.base64_encode_value.str1.1
-                0x00000000080064e0       0x41 build/base64/cencode.o
+                0x0000000008006768       0x41 build/base64/cencode.o
  .rodata.imageCheckFromAddress.str1.1
-                0x0000000008006521       0xb6 build/image.o
+                0x00000000080067a9       0xb6 build/image.o
+                                         0xcb (size before relaxing)
  .rodata._svfprintf_r.str1.1
-                0x00000000080065d7       0x11 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x000000000800685f       0x11 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
  .rodata._printf_i.str1.1
-                0x00000000080065e8       0x22 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000000008006870       0x22 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
  *(.glue_7)
- .glue_7        0x000000000800660a        0x0 linker stubs
+ .glue_7        0x0000000008006892        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x000000000800660a        0x0 linker stubs
-                0x000000000800660c                . = ALIGN (0x4)
- *fill*         0x000000000800660a        0x2 
-                0x000000000800660c                _etext = .
-                0x000000000800660c                _sidata = _etext
+ .glue_7t       0x0000000008006892        0x0 linker stubs
+                0x0000000008006894                . = ALIGN (0x4)
+ *fill*         0x0000000008006892        0x2 
+                0x0000000008006894                _etext = .
+                0x0000000008006894                _sidata = _etext
 
-.vfp11_veneer   0x000000000800660c        0x0
- .vfp11_veneer  0x000000000800660c        0x0 linker stubs
+.vfp11_veneer   0x0000000008006894        0x0
+ .vfp11_veneer  0x0000000008006894        0x0 linker stubs
 
-.v4_bx          0x000000000800660c        0x0
- .v4_bx         0x000000000800660c        0x0 linker stubs
+.v4_bx          0x0000000008006894        0x0
+ .v4_bx         0x0000000008006894        0x0 linker stubs
 
-.iplt           0x000000000800660c        0x0
- .iplt          0x000000000800660c        0x0 build/stm32_lib/c_only_startup.o
+.iplt           0x0000000008006894        0x0
+ .iplt          0x0000000008006894        0x0 build/stm32_lib/c_only_startup.o
 
-.rel.dyn        0x000000000800660c        0x0
- .rel.iplt      0x000000000800660c        0x0 build/stm32_lib/c_only_startup.o
+.rel.dyn        0x0000000008006894        0x0
+ .rel.iplt      0x0000000008006894        0x0 build/stm32_lib/c_only_startup.o
 
-.data           0x0000000020000000      0x488 load address 0x000000000800660c
+.data           0x0000000020000000      0x488 load address 0x0000000008006894
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -1111,14 +1120,14 @@ END GROUP
  .data          0x0000000020000000        0x0 build/main.o
  .data          0x0000000020000000        0x0 build/hardware.o
  .data          0x0000000020000000        0x0 build/dfu.o
- .data          0x0000000020000000        0x0 build/25519/c25519.o
  .data          0x0000000020000000        0x0 build/25519/ed25519.o
+ .data          0x0000000020000000        0x0 build/25519/sha512.o
+ .data          0x0000000020000000        0x0 build/25519/morph25519.o
  .data          0x0000000020000000        0x0 build/25519/edsign.o
  .data          0x0000000020000000        0x0 build/25519/f25519.o
- .data          0x0000000020000000        0x0 build/25519/fprime.o
- .data          0x0000000020000000        0x0 build/25519/morph25519.o
+ .data          0x0000000020000000        0x0 build/25519/c25519.o
  .data          0x0000000020000000        0x0 build/25519/sha256.o
- .data          0x0000000020000000        0x0 build/25519/sha512.o
+ .data          0x0000000020000000        0x0 build/25519/fprime.o
  .data          0x0000000020000000        0x0 build/base64/cdecode.o
  .data          0x0000000020000000        0x0 build/base64/cencode.o
  .data          0x0000000020000000        0x0 build/image.o
@@ -1127,27 +1136,27 @@ END GROUP
  .data          0x0000000020000000        0x0 build/usb_lib/usb_init.o
  .data          0x0000000020000000        0x0 build/usb_lib/usb_core.o
  .data          0x0000000020000000        0x0 build/usb_lib/usb_mem.o
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
- .data          0x0000000020000000        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+ .data          0x0000000020000000        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
  .data          0x0000000020000000        0x0 ./libstm32fw.a(stm32f10x_gpio.o)
  .data          0x0000000020000000       0x14 ./libstm32fw.a(stm32f10x_rcc.o)
  .data          0x0000000020000014        0x0 ./libstm32fw.a(stm32f10x_usart.o)
- .data          0x0000000020000014        0x0 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+ .data          0x0000000020000014        0x0 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
  *(.data.*)
  .data.Device_Property
                 0x0000000020000014       0x34 build/usb.o
@@ -1219,17 +1228,17 @@ END GROUP
  .data.rootCA   0x0000000020000404       0x20 build/image.o
                 0x0000000020000404                rootCA
  .data._impure_ptr
-                0x0000000020000424        0x4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+                0x0000000020000424        0x4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
                 0x0000000020000424                _impure_ptr
  .data.impure_data
-                0x0000000020000428       0x60 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+                0x0000000020000428       0x60 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
                 0x0000000020000488                . = ALIGN (0x4)
                 0x0000000020000488                _edata = .
 
-.igot.plt       0x0000000020000488        0x0 load address 0x0000000008006a94
+.igot.plt       0x0000000020000488        0x0 load address 0x0000000008006d1c
  .igot.plt      0x0000000020000488        0x0 build/stm32_lib/c_only_startup.o
 
-.bss            0x0000000020000488      0x12c load address 0x0000000008006a94
+.bss            0x0000000020000488      0x12c load address 0x0000000008006d1c
                 0x0000000020000488                . = ALIGN (0x4)
                 0x0000000020000488                _sbss = .
  *(.bss)
@@ -1258,7 +1267,7 @@ END GROUP
                 0x00000000200005ac                wInterrupt_Mask
  COMMON         0x00000000200005ae        0x2 build/usb_lib/usb_core.o
                 0x00000000200005ae                StatusInfo
- COMMON         0x00000000200005b0        0x4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+ COMMON         0x00000000200005b0        0x4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
                 0x00000000200005b0                errno
                 0x00000000200005b4                . = ALIGN (0x4)
                 0x00000000200005b4                _ebss = .
@@ -1266,76 +1275,76 @@ END GROUP
                 [!provide]                        PROVIDE (_end = _ebss)
 
 .bss.bDeviceState
-                0x00000000200005b4        0x4 load address 0x0000000008006bc0
+                0x00000000200005b4        0x4 load address 0x0000000008006e48
  .bss.bDeviceState
                 0x00000000200005b4        0x4 build/usb.o
                 0x00000000200005b4                bDeviceState
 
 .bss.bIntPackSOF
-                0x00000000200005b8        0x1 load address 0x0000000008006bc4
+                0x00000000200005b8        0x1 load address 0x0000000008006e4c
  .bss.bIntPackSOF
                 0x00000000200005b8        0x1 build/usb.o
                 0x00000000200005b8                bIntPackSOF
 
 .bss.dfuAppStatus
-                0x00000000200005b9        0x6 load address 0x0000000008006bc5
+                0x00000000200005b9        0x6 load address 0x0000000008006e4d
  .bss.dfuAppStatus
                 0x00000000200005b9        0x6 build/dfu.o
 
-.bss.dfuBusy    0x00000000200005bf        0x1 load address 0x0000000008006bcb
+.bss.dfuBusy    0x00000000200005bf        0x1 load address 0x0000000008006e53
  .bss.dfuBusy   0x00000000200005bf        0x1 build/dfu.o
                 0x00000000200005bf                dfuBusy
 
 .bss.recvBuffer
-                0x00000000200005c0      0x800 load address 0x0000000008006bcc
+                0x00000000200005c0      0x800 load address 0x0000000008006e54
  .bss.recvBuffer
                 0x00000000200005c0      0x800 build/dfu.o
 
 .bss.thisBlockLen
-                0x0000000020000dc0        0x2 load address 0x00000000080073cc
+                0x0000000020000dc0        0x2 load address 0x0000000008007654
  .bss.thisBlockLen
                 0x0000000020000dc0        0x2 build/dfu.o
 
 .bss.uploadBlockLen
-                0x0000000020000dc2        0x2 load address 0x00000000080073ce
+                0x0000000020000dc2        0x2 load address 0x0000000008007656
  .bss.uploadBlockLen
                 0x0000000020000dc2        0x2 build/dfu.o
 
 .bss.userFirmwareLen
-                0x0000000020000dc4        0x4 load address 0x00000000080073d0
+                0x0000000020000dc4        0x4 load address 0x0000000008007658
  .bss.userFirmwareLen
                 0x0000000020000dc4        0x4 build/dfu.o
 
 .bss.userUploadType
-                0x0000000020000dc8        0x1 load address 0x00000000080073d4
+                0x0000000020000dc8        0x1 load address 0x000000000800765c
  .bss.userUploadType
                 0x0000000020000dc8        0x1 build/dfu.o
                 0x0000000020000dc8                userUploadType
 
 .bss.Data_Mul_MaxPacketSize
-                0x0000000020000dc9        0x1 load address 0x00000000080073d5
+                0x0000000020000dc9        0x1 load address 0x000000000800765d
  .bss.Data_Mul_MaxPacketSize
                 0x0000000020000dc9        0x1 build/usb_lib/usb_core.o
                 0x0000000020000dc9                Data_Mul_MaxPacketSize
 
 .bss.__malloc_free_list
-                0x0000000020000dcc        0x4 load address 0x00000000080073d8
+                0x0000000020000dcc        0x4 load address 0x0000000008007660
  .bss.__malloc_free_list
-                0x0000000020000dcc        0x4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000020000dcc        0x4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
                 0x0000000020000dcc                __malloc_free_list
 
 .bss.__malloc_sbrk_start
-                0x0000000020000dd0        0x4 load address 0x00000000080073dc
+                0x0000000020000dd0        0x4 load address 0x0000000008007664
  .bss.__malloc_sbrk_start
-                0x0000000020000dd0        0x4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000020000dd0        0x4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
                 0x0000000020000dd0                __malloc_sbrk_start
 
 .bss.heap_end.4102
-                0x0000000020000dd4        0x4 load address 0x00000000080073e0
+                0x0000000020000dd4        0x4 load address 0x0000000008007668
  .bss.heap_end.4102
-                0x0000000020000dd4        0x4 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+                0x0000000020000dd4        0x4 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
 
-._usrstack      0x0000000020000dd8      0x100 load address 0x00000000080073e4
+._usrstack      0x0000000020000dd8      0x100 load address 0x000000000800766c
                 0x0000000020000dd8                . = ALIGN (0x4)
                 0x0000000020000dd8                _susrstack = .
                 0x0000000020000ed8                . = (. + _Minimum_Stack_Size)
@@ -1377,14 +1386,14 @@ DISCARD
  .comment       0x000000000000007f       0x80 build/main.o
  .comment       0x000000000000007f       0x80 build/hardware.o
  .comment       0x000000000000007f       0x80 build/dfu.o
- .comment       0x000000000000007f       0x80 build/25519/c25519.o
  .comment       0x000000000000007f       0x80 build/25519/ed25519.o
+ .comment       0x000000000000007f       0x80 build/25519/sha512.o
+ .comment       0x000000000000007f       0x80 build/25519/morph25519.o
  .comment       0x000000000000007f       0x80 build/25519/edsign.o
  .comment       0x000000000000007f       0x80 build/25519/f25519.o
- .comment       0x000000000000007f       0x80 build/25519/fprime.o
- .comment       0x000000000000007f       0x80 build/25519/morph25519.o
+ .comment       0x000000000000007f       0x80 build/25519/c25519.o
  .comment       0x000000000000007f       0x80 build/25519/sha256.o
- .comment       0x000000000000007f       0x80 build/25519/sha512.o
+ .comment       0x000000000000007f       0x80 build/25519/fprime.o
  .comment       0x000000000000007f       0x80 build/base64/cdecode.o
  .comment       0x000000000000007f       0x80 build/base64/cencode.o
  .comment       0x000000000000007f       0x80 build/image.o
@@ -1417,21 +1426,21 @@ DISCARD
  .ARM.attributes
                 0x0000000000000141       0x33 build/dfu.o
  .ARM.attributes
-                0x0000000000000174       0x33 build/25519/c25519.o
+                0x0000000000000174       0x33 build/25519/ed25519.o
  .ARM.attributes
-                0x00000000000001a7       0x33 build/25519/ed25519.o
+                0x00000000000001a7       0x33 build/25519/sha512.o
  .ARM.attributes
-                0x00000000000001da       0x33 build/25519/edsign.o
+                0x00000000000001da       0x33 build/25519/morph25519.o
  .ARM.attributes
-                0x000000000000020d       0x33 build/25519/f25519.o
+                0x000000000000020d       0x33 build/25519/edsign.o
  .ARM.attributes
-                0x0000000000000240       0x33 build/25519/fprime.o
+                0x0000000000000240       0x33 build/25519/f25519.o
  .ARM.attributes
-                0x0000000000000273       0x33 build/25519/morph25519.o
+                0x0000000000000273       0x33 build/25519/c25519.o
  .ARM.attributes
                 0x00000000000002a6       0x33 build/25519/sha256.o
  .ARM.attributes
-                0x00000000000002d9       0x33 build/25519/sha512.o
+                0x00000000000002d9       0x33 build/25519/fprime.o
  .ARM.attributes
                 0x000000000000030c       0x33 build/base64/cdecode.o
  .ARM.attributes
@@ -1449,39 +1458,39 @@ DISCARD
  .ARM.attributes
                 0x0000000000000471       0x33 build/usb_lib/usb_mem.o
  .ARM.attributes
-                0x00000000000004a4       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+                0x00000000000004a4       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
  .ARM.attributes
-                0x00000000000004d1       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+                0x00000000000004d1       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
  .ARM.attributes
-                0x00000000000004fe       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+                0x00000000000004fe       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
  .ARM.attributes
-                0x000000000000052b       0x17 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
+                0x000000000000052b       0x17 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
  .ARM.attributes
-                0x0000000000000542       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+                0x0000000000000542       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
  .ARM.attributes
-                0x000000000000056f       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+                0x000000000000056f       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
  .ARM.attributes
-                0x000000000000059c       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                0x000000000000059c       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
  .ARM.attributes
-                0x00000000000005c9       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00000000000005c9       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
  .ARM.attributes
-                0x00000000000005f6       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+                0x00000000000005f6       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
  .ARM.attributes
-                0x0000000000000623       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+                0x0000000000000623       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
  .ARM.attributes
-                0x0000000000000650       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+                0x0000000000000650       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
  .ARM.attributes
-                0x000000000000067d       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                0x000000000000067d       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
  .ARM.attributes
-                0x00000000000006aa       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                0x00000000000006aa       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
  .ARM.attributes
-                0x00000000000006d7       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+                0x00000000000006d7       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
  .ARM.attributes
-                0x0000000000000704       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+                0x0000000000000704       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
  .ARM.attributes
-                0x0000000000000731       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+                0x0000000000000731       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
  .ARM.attributes
-                0x000000000000075e       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                0x000000000000075e       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
  .ARM.attributes
                 0x000000000000078b       0x33 ./libstm32fw.a(stm32f10x_gpio.o)
  .ARM.attributes
@@ -1489,7 +1498,7 @@ DISCARD
  .ARM.attributes
                 0x00000000000007f1       0x33 ./libstm32fw.a(stm32f10x_usart.o)
  .ARM.attributes
-                0x0000000000000824       0x2d /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+                0x0000000000000824       0x2d /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
 
 .debug
  *(.debug)
@@ -1503,7 +1512,7 @@ DISCARD
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000      0x8a8
+.debug_aranges  0x0000000000000000      0x8b0
  *(.debug_aranges)
  .debug_aranges
                 0x0000000000000000       0x28 build/stm32_lib/c_only_startup.o
@@ -1514,236 +1523,236 @@ DISCARD
  .debug_aranges
                 0x0000000000000120       0x18 build/usb_descriptor.o
  .debug_aranges
-                0x0000000000000138       0x48 build/main.o
+                0x0000000000000138       0x30 build/main.o
  .debug_aranges
-                0x0000000000000180      0x108 build/hardware.o
+                0x0000000000000168      0x128 build/hardware.o
  .debug_aranges
-                0x0000000000000288       0x88 build/dfu.o
+                0x0000000000000290       0x88 build/dfu.o
  .debug_aranges
-                0x0000000000000310       0x28 build/25519/c25519.o
+                0x0000000000000318       0x50 build/25519/ed25519.o
  .debug_aranges
-                0x0000000000000338       0x50 build/25519/ed25519.o
+                0x0000000000000368       0x38 build/25519/sha512.o
  .debug_aranges
-                0x0000000000000388       0x48 build/25519/edsign.o
+                0x00000000000003a0       0x28 build/25519/morph25519.o
  .debug_aranges
-                0x00000000000003d0       0x80 build/25519/f25519.o
+                0x00000000000003c8       0x48 build/25519/edsign.o
  .debug_aranges
-                0x0000000000000450       0x80 build/25519/fprime.o
+                0x0000000000000410       0x80 build/25519/f25519.o
  .debug_aranges
-                0x00000000000004d0       0x28 build/25519/morph25519.o
+                0x0000000000000490       0x28 build/25519/c25519.o
  .debug_aranges
-                0x00000000000004f8       0x40 build/25519/sha256.o
+                0x00000000000004b8       0x40 build/25519/sha256.o
  .debug_aranges
-                0x0000000000000538       0x38 build/25519/sha512.o
+                0x00000000000004f8       0x80 build/25519/fprime.o
  .debug_aranges
-                0x0000000000000570       0x30 build/base64/cdecode.o
+                0x0000000000000578       0x30 build/base64/cdecode.o
  .debug_aranges
-                0x00000000000005a0       0x38 build/base64/cencode.o
+                0x00000000000005a8       0x38 build/base64/cencode.o
  .debug_aranges
-                0x00000000000005d8       0x28 build/image.o
+                0x00000000000005e0       0x28 build/image.o
  .debug_aranges
-                0x0000000000000600      0x1a0 build/usb_lib/usb_regs.o
+                0x0000000000000608      0x1a0 build/usb_lib/usb_regs.o
  .debug_aranges
-                0x00000000000007a0       0x28 build/usb_lib/usb_int.o
+                0x00000000000007a8       0x28 build/usb_lib/usb_int.o
  .debug_aranges
-                0x00000000000007c8       0x20 build/usb_lib/usb_init.o
+                0x00000000000007d0       0x20 build/usb_lib/usb_init.o
  .debug_aranges
-                0x00000000000007e8       0x98 build/usb_lib/usb_core.o
+                0x00000000000007f0       0x98 build/usb_lib/usb_core.o
  .debug_aranges
-                0x0000000000000880       0x28 build/usb_lib/usb_mem.o
+                0x0000000000000888       0x28 build/usb_lib/usb_mem.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x13f7d
+.debug_info     0x0000000000000000    0x14171
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000       0x22 build/stm32_lib/c_only_startup.o
  .debug_info    0x0000000000000022       0x26 build/stm32_lib/cortexm3_macro.o
  .debug_info    0x0000000000000048     0x169e build/usb.o
  .debug_info    0x00000000000016e6      0xebe build/usb_descriptor.o
- .debug_info    0x00000000000025a4     0x1802 build/main.o
- .debug_info    0x0000000000003da6     0x1f09 build/hardware.o
- .debug_info    0x0000000000005caf     0x14c7 build/dfu.o
- .debug_info    0x0000000000007176     0x107e build/25519/c25519.o
- .debug_info    0x00000000000081f4     0x1647 build/25519/ed25519.o
- .debug_info    0x000000000000983b     0x1484 build/25519/edsign.o
- .debug_info    0x000000000000acbf     0x11e1 build/25519/f25519.o
- .debug_info    0x000000000000bea0     0x1133 build/25519/fprime.o
- .debug_info    0x000000000000cfd3      0xdd9 build/25519/morph25519.o
- .debug_info    0x000000000000ddac      0xc79 build/25519/sha256.o
- .debug_info    0x000000000000ea25      0xee7 build/25519/sha512.o
- .debug_info    0x000000000000f90c      0x1d8 build/base64/cdecode.o
- .debug_info    0x000000000000fae4      0x278 build/base64/cencode.o
- .debug_info    0x000000000000fd5c     0x14b8 build/image.o
- .debug_info    0x0000000000011214      0xfb5 build/usb_lib/usb_regs.o
- .debug_info    0x00000000000121c9      0x5d7 build/usb_lib/usb_int.o
- .debug_info    0x00000000000127a0      0x495 build/usb_lib/usb_init.o
- .debug_info    0x0000000000012c35      0xe14 build/usb_lib/usb_core.o
- .debug_info    0x0000000000013a49      0x534 build/usb_lib/usb_mem.o
+ .debug_info    0x00000000000025a4     0x168b build/main.o
+ .debug_info    0x0000000000003c2f     0x2225 build/hardware.o
+ .debug_info    0x0000000000005e54     0x14c7 build/dfu.o
+ .debug_info    0x000000000000731b     0x1647 build/25519/ed25519.o
+ .debug_info    0x0000000000008962      0xee7 build/25519/sha512.o
+ .debug_info    0x0000000000009849      0xdd9 build/25519/morph25519.o
+ .debug_info    0x000000000000a622     0x1484 build/25519/edsign.o
+ .debug_info    0x000000000000baa6     0x11e1 build/25519/f25519.o
+ .debug_info    0x000000000000cc87     0x107e build/25519/c25519.o
+ .debug_info    0x000000000000dd05      0xc79 build/25519/sha256.o
+ .debug_info    0x000000000000e97e     0x1133 build/25519/fprime.o
+ .debug_info    0x000000000000fab1      0x1d8 build/base64/cdecode.o
+ .debug_info    0x000000000000fc89      0x278 build/base64/cencode.o
+ .debug_info    0x000000000000ff01     0x1507 build/image.o
+ .debug_info    0x0000000000011408      0xfb5 build/usb_lib/usb_regs.o
+ .debug_info    0x00000000000123bd      0x5d7 build/usb_lib/usb_int.o
+ .debug_info    0x0000000000012994      0x495 build/usb_lib/usb_init.o
+ .debug_info    0x0000000000012e29      0xe14 build/usb_lib/usb_core.o
+ .debug_info    0x0000000000013c3d      0x534 build/usb_lib/usb_mem.o
 
-.debug_abbrev   0x0000000000000000     0x3b4f
+.debug_abbrev   0x0000000000000000     0x3b77
  *(.debug_abbrev)
  .debug_abbrev  0x0000000000000000       0x12 build/stm32_lib/c_only_startup.o
  .debug_abbrev  0x0000000000000012       0x14 build/stm32_lib/cortexm3_macro.o
  .debug_abbrev  0x0000000000000026      0x4a1 build/usb.o
  .debug_abbrev  0x00000000000004c7      0x1fa build/usb_descriptor.o
- .debug_abbrev  0x00000000000006c1      0x335 build/main.o
- .debug_abbrev  0x00000000000009f6      0x4b6 build/hardware.o
- .debug_abbrev  0x0000000000000eac      0x405 build/dfu.o
- .debug_abbrev  0x00000000000012b1      0x2d7 build/25519/c25519.o
- .debug_abbrev  0x0000000000001588      0x346 build/25519/ed25519.o
- .debug_abbrev  0x00000000000018ce      0x33d build/25519/edsign.o
- .debug_abbrev  0x0000000000001c0b      0x313 build/25519/f25519.o
- .debug_abbrev  0x0000000000001f1e      0x338 build/25519/fprime.o
- .debug_abbrev  0x0000000000002256      0x2c5 build/25519/morph25519.o
- .debug_abbrev  0x000000000000251b      0x2d5 build/25519/sha256.o
- .debug_abbrev  0x00000000000027f0      0x327 build/25519/sha512.o
- .debug_abbrev  0x0000000000002b17      0x128 build/base64/cdecode.o
- .debug_abbrev  0x0000000000002c3f      0x12d build/base64/cencode.o
- .debug_abbrev  0x0000000000002d6c      0x340 build/image.o
- .debug_abbrev  0x00000000000030ac      0x2a4 build/usb_lib/usb_regs.o
- .debug_abbrev  0x0000000000003350      0x182 build/usb_lib/usb_int.o
- .debug_abbrev  0x00000000000034d2      0x118 build/usb_lib/usb_init.o
- .debug_abbrev  0x00000000000035ea      0x419 build/usb_lib/usb_core.o
- .debug_abbrev  0x0000000000003a03      0x14c build/usb_lib/usb_mem.o
+ .debug_abbrev  0x00000000000006c1      0x2f2 build/main.o
+ .debug_abbrev  0x00000000000009b3      0x4fa build/hardware.o
+ .debug_abbrev  0x0000000000000ead      0x405 build/dfu.o
+ .debug_abbrev  0x00000000000012b2      0x346 build/25519/ed25519.o
+ .debug_abbrev  0x00000000000015f8      0x327 build/25519/sha512.o
+ .debug_abbrev  0x000000000000191f      0x2c5 build/25519/morph25519.o
+ .debug_abbrev  0x0000000000001be4      0x33d build/25519/edsign.o
+ .debug_abbrev  0x0000000000001f21      0x313 build/25519/f25519.o
+ .debug_abbrev  0x0000000000002234      0x2d7 build/25519/c25519.o
+ .debug_abbrev  0x000000000000250b      0x2d5 build/25519/sha256.o
+ .debug_abbrev  0x00000000000027e0      0x338 build/25519/fprime.o
+ .debug_abbrev  0x0000000000002b18      0x128 build/base64/cdecode.o
+ .debug_abbrev  0x0000000000002c40      0x12d build/base64/cencode.o
+ .debug_abbrev  0x0000000000002d6d      0x367 build/image.o
+ .debug_abbrev  0x00000000000030d4      0x2a4 build/usb_lib/usb_regs.o
+ .debug_abbrev  0x0000000000003378      0x182 build/usb_lib/usb_int.o
+ .debug_abbrev  0x00000000000034fa      0x118 build/usb_lib/usb_init.o
+ .debug_abbrev  0x0000000000003612      0x419 build/usb_lib/usb_core.o
+ .debug_abbrev  0x0000000000003a2b      0x14c build/usb_lib/usb_mem.o
 
-.debug_line     0x0000000000000000     0x3efd
+.debug_line     0x0000000000000000     0x3699
  *(.debug_line)
  .debug_line    0x0000000000000000       0x75 build/stm32_lib/c_only_startup.o
  .debug_line    0x0000000000000075       0xa6 build/stm32_lib/cortexm3_macro.o
- .debug_line    0x000000000000011b      0x445 build/usb.o
- .debug_line    0x0000000000000560        0x0 build/usb_callbacks.o
- .debug_line    0x0000000000000560      0x196 build/usb_descriptor.o
- .debug_line    0x00000000000006f6      0x3d7 build/main.o
- .debug_line    0x0000000000000acd      0x642 build/hardware.o
- .debug_line    0x000000000000110f      0x49e build/dfu.o
- .debug_line    0x00000000000015ad      0x276 build/25519/c25519.o
- .debug_line    0x0000000000001823      0x30f build/25519/ed25519.o
- .debug_line    0x0000000000001b32      0x2ce build/25519/edsign.o
- .debug_line    0x0000000000001e00      0x489 build/25519/f25519.o
- .debug_line    0x0000000000002289      0x468 build/25519/fprime.o
- .debug_line    0x00000000000026f1      0x1db build/25519/morph25519.o
- .debug_line    0x00000000000028cc      0x313 build/25519/sha256.o
- .debug_line    0x0000000000002bdf      0x3e4 build/25519/sha512.o
- .debug_line    0x0000000000002fc3       0xca build/base64/cdecode.o
- .debug_line    0x000000000000308d       0xe2 build/base64/cencode.o
- .debug_line    0x000000000000316f      0x340 build/image.o
- .debug_line    0x00000000000034af      0x4a5 build/usb_lib/usb_regs.o
- .debug_line    0x0000000000003954       0xda build/usb_lib/usb_int.o
- .debug_line    0x0000000000003a2e       0x83 build/usb_lib/usb_init.o
- .debug_line    0x0000000000003ab1      0x399 build/usb_lib/usb_core.o
- .debug_line    0x0000000000003e4a       0xb3 build/usb_lib/usb_mem.o
+ .debug_line    0x000000000000011b      0x3dd build/usb.o
+ .debug_line    0x00000000000004f8        0x0 build/usb_callbacks.o
+ .debug_line    0x00000000000004f8      0x12e build/usb_descriptor.o
+ .debug_line    0x0000000000000626      0x2cc build/main.o
+ .debug_line    0x00000000000008f2      0x606 build/hardware.o
+ .debug_line    0x0000000000000ef8      0x3ce build/dfu.o
+ .debug_line    0x00000000000012c6      0x273 build/25519/ed25519.o
+ .debug_line    0x0000000000001539      0x348 build/25519/sha512.o
+ .debug_line    0x0000000000001881      0x13f build/25519/morph25519.o
+ .debug_line    0x00000000000019c0      0x232 build/25519/edsign.o
+ .debug_line    0x0000000000001bf2      0x3ed build/25519/f25519.o
+ .debug_line    0x0000000000001fdf      0x1da build/25519/c25519.o
+ .debug_line    0x00000000000021b9      0x2ab build/25519/sha256.o
+ .debug_line    0x0000000000002464      0x3cc build/25519/fprime.o
+ .debug_line    0x0000000000002830       0xca build/base64/cdecode.o
+ .debug_line    0x00000000000028fa       0xe2 build/base64/cencode.o
+ .debug_line    0x00000000000029dc      0x26f build/image.o
+ .debug_line    0x0000000000002c4b      0x4a5 build/usb_lib/usb_regs.o
+ .debug_line    0x00000000000030f0       0xda build/usb_lib/usb_int.o
+ .debug_line    0x00000000000031ca       0x83 build/usb_lib/usb_init.o
+ .debug_line    0x000000000000324d      0x399 build/usb_lib/usb_core.o
+ .debug_line    0x00000000000035e6       0xb3 build/usb_lib/usb_mem.o
 
-.debug_frame    0x0000000000000000     0x1bec
+.debug_frame    0x0000000000000000     0x1c3c
  *(.debug_frame)
  .debug_frame   0x0000000000000000      0x2d4 build/usb.o
- .debug_frame   0x00000000000002d4       0xcc build/main.o
- .debug_frame   0x00000000000003a0      0x304 build/hardware.o
- .debug_frame   0x00000000000006a4      0x154 build/dfu.o
- .debug_frame   0x00000000000007f8       0x74 build/25519/c25519.o
- .debug_frame   0x000000000000086c      0x138 build/25519/ed25519.o
- .debug_frame   0x00000000000009a4      0x110 build/25519/edsign.o
- .debug_frame   0x0000000000000ab4      0x1d0 build/25519/f25519.o
- .debug_frame   0x0000000000000c84      0x1d8 build/25519/fprime.o
- .debug_frame   0x0000000000000e5c       0x64 build/25519/morph25519.o
- .debug_frame   0x0000000000000ec0       0xcc build/25519/sha256.o
- .debug_frame   0x0000000000000f8c       0xb8 build/25519/sha512.o
- .debug_frame   0x0000000000001044       0x5c build/base64/cdecode.o
- .debug_frame   0x00000000000010a0       0x78 build/base64/cencode.o
- .debug_frame   0x0000000000001118       0x60 build/image.o
- .debug_frame   0x0000000000001178      0x3d8 build/usb_lib/usb_regs.o
- .debug_frame   0x0000000000001550       0x5c build/usb_lib/usb_int.o
- .debug_frame   0x00000000000015ac       0x20 build/usb_lib/usb_init.o
- .debug_frame   0x00000000000015cc      0x21c build/usb_lib/usb_core.o
- .debug_frame   0x00000000000017e8       0x3c build/usb_lib/usb_mem.o
- .debug_frame   0x0000000000001824       0x28 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x000000000000184c       0x20 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
- .debug_frame   0x000000000000186c       0x6c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
- .debug_frame   0x00000000000018d8       0x3c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
- .debug_frame   0x0000000000001914       0x90 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x00000000000019a4       0x60 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x0000000000001a04       0x28 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
- .debug_frame   0x0000000000001a2c       0x28 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
- .debug_frame   0x0000000000001a54       0x38 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x0000000000001a8c       0x2c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x0000000000001ab8       0x3c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x0000000000001af4       0x2c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x0000000000001b20       0x30 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
- .debug_frame   0x0000000000001b50       0x20 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
- .debug_frame   0x0000000000001b70       0x5c /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
- .debug_frame   0x0000000000001bcc       0x20 /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+ .debug_frame   0x00000000000002d4       0x80 build/main.o
+ .debug_frame   0x0000000000000354      0x3a0 build/hardware.o
+ .debug_frame   0x00000000000006f4      0x154 build/dfu.o
+ .debug_frame   0x0000000000000848      0x138 build/25519/ed25519.o
+ .debug_frame   0x0000000000000980       0xb8 build/25519/sha512.o
+ .debug_frame   0x0000000000000a38       0x64 build/25519/morph25519.o
+ .debug_frame   0x0000000000000a9c      0x110 build/25519/edsign.o
+ .debug_frame   0x0000000000000bac      0x1d0 build/25519/f25519.o
+ .debug_frame   0x0000000000000d7c       0x74 build/25519/c25519.o
+ .debug_frame   0x0000000000000df0       0xcc build/25519/sha256.o
+ .debug_frame   0x0000000000000ebc      0x1d8 build/25519/fprime.o
+ .debug_frame   0x0000000000001094       0x5c build/base64/cdecode.o
+ .debug_frame   0x00000000000010f0       0x78 build/base64/cencode.o
+ .debug_frame   0x0000000000001168       0x60 build/image.o
+ .debug_frame   0x00000000000011c8      0x3d8 build/usb_lib/usb_regs.o
+ .debug_frame   0x00000000000015a0       0x5c build/usb_lib/usb_int.o
+ .debug_frame   0x00000000000015fc       0x20 build/usb_lib/usb_init.o
+ .debug_frame   0x000000000000161c      0x21c build/usb_lib/usb_core.o
+ .debug_frame   0x0000000000001838       0x3c build/usb_lib/usb_mem.o
+ .debug_frame   0x0000000000001874       0x28 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x000000000000189c       0x20 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x00000000000018bc       0x6c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+ .debug_frame   0x0000000000001928       0x3c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+ .debug_frame   0x0000000000001964       0x90 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x00000000000019f4       0x60 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x0000000000001a54       0x28 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+ .debug_frame   0x0000000000001a7c       0x28 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+ .debug_frame   0x0000000000001aa4       0x38 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x0000000000001adc       0x2c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x0000000000001b08       0x3c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x0000000000001b44       0x2c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x0000000000001b70       0x30 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x0000000000001ba0       0x20 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x0000000000001bc0       0x5c /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+ .debug_frame   0x0000000000001c1c       0x20 /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
 
-.debug_str      0x0000000000000000     0x29d1
+.debug_str      0x0000000000000000     0x2a25
  *(.debug_str)
- .debug_str     0x0000000000000000       0x69 build/stm32_lib/c_only_startup.o
- .debug_str     0x0000000000000069       0x1d build/stm32_lib/cortexm3_macro.o
-                                         0x6b (size before relaxing)
- .debug_str     0x0000000000000086      0xddc build/usb.o
-                                        0xff4 (size before relaxing)
- .debug_str     0x0000000000000e62       0x10 build/usb_callbacks.o
-                                         0xee (size before relaxing)
- .debug_str     0x0000000000000e72       0xc1 build/usb_descriptor.o
-                                        0xb34 (size before relaxing)
- .debug_str     0x0000000000000f33      0x3ac build/main.o
-                                        0xe7f (size before relaxing)
- .debug_str     0x00000000000012df      0x5c9 build/hardware.o
-                                       0x1209 (size before relaxing)
- .debug_str     0x00000000000018a8      0x245 build/dfu.o
-                                        0xed5 (size before relaxing)
- .debug_str     0x0000000000001aed       0xb8 build/25519/c25519.o
-                                        0x65d (size before relaxing)
- .debug_str     0x0000000000001ba5      0x114 build/25519/ed25519.o
-                                        0x6fe (size before relaxing)
- .debug_str     0x0000000000001cb9      0x152 build/25519/edsign.o
-                                        0x7b6 (size before relaxing)
- .debug_str     0x0000000000001e0b       0x3e build/25519/f25519.o
-                                        0x68d (size before relaxing)
- .debug_str     0x0000000000001e49       0xd6 build/25519/fprime.o
-                                        0x6d8 (size before relaxing)
- .debug_str     0x0000000000001f1f       0x55 build/25519/morph25519.o
-                                        0x654 (size before relaxing)
- .debug_str     0x0000000000001f74       0x5b build/25519/sha256.o
-                                        0x625 (size before relaxing)
- .debug_str     0x0000000000001fcf       0x4b build/25519/sha512.o
-                                        0x65b (size before relaxing)
- .debug_str     0x000000000000201a       0x80 build/base64/cdecode.o
-                                        0x1fa (size before relaxing)
- .debug_str     0x000000000000209a       0x60 build/base64/cencode.o
-                                        0x21c (size before relaxing)
- .debug_str     0x00000000000020fa       0xde build/image.o
-                                        0xd5d (size before relaxing)
- .debug_str     0x00000000000021d8      0x3ab build/usb_lib/usb_regs.o
-                                        0x92d (size before relaxing)
- .debug_str     0x0000000000002583       0x48 build/usb_lib/usb_int.o
-                                        0x5b5 (size before relaxing)
- .debug_str     0x00000000000025cb       0x13 build/usb_lib/usb_init.o
-                                        0x557 (size before relaxing)
- .debug_str     0x00000000000025de      0x3bd build/usb_lib/usb_core.o
-                                        0xadf (size before relaxing)
- .debug_str     0x000000000000299b       0x36 build/usb_lib/usb_mem.o
-                                        0x5a5 (size before relaxing)
+ .debug_str     0x0000000000000000       0x73 build/stm32_lib/c_only_startup.o
+ .debug_str     0x0000000000000073       0x1d build/stm32_lib/cortexm3_macro.o
+                                         0x75 (size before relaxing)
+ .debug_str     0x0000000000000090      0xddc build/usb.o
+                                        0xffe (size before relaxing)
+ .debug_str     0x0000000000000e6c       0x10 build/usb_callbacks.o
+                                         0xf8 (size before relaxing)
+ .debug_str     0x0000000000000e7c       0xc1 build/usb_descriptor.o
+                                        0xb3e (size before relaxing)
+ .debug_str     0x0000000000000f3d      0x2c9 build/main.o
+                                        0xd90 (size before relaxing)
+ .debug_str     0x0000000000001206      0x6f6 build/hardware.o
+                                       0x1377 (size before relaxing)
+ .debug_str     0x00000000000018fc      0x245 build/dfu.o
+                                        0xedf (size before relaxing)
+ .debug_str     0x0000000000001b41      0x17f build/25519/ed25519.o
+                                        0x708 (size before relaxing)
+ .debug_str     0x0000000000001cc0       0xa9 build/25519/sha512.o
+                                        0x665 (size before relaxing)
+ .debug_str     0x0000000000001d69       0x55 build/25519/morph25519.o
+                                        0x65e (size before relaxing)
+ .debug_str     0x0000000000001dbe      0x100 build/25519/edsign.o
+                                        0x7c0 (size before relaxing)
+ .debug_str     0x0000000000001ebe       0x4b build/25519/f25519.o
+                                        0x697 (size before relaxing)
+ .debug_str     0x0000000000001f09       0x40 build/25519/c25519.o
+                                        0x667 (size before relaxing)
+ .debug_str     0x0000000000001f49       0x4f build/25519/sha256.o
+                                        0x62f (size before relaxing)
+ .debug_str     0x0000000000001f98       0xd6 build/25519/fprime.o
+                                        0x6e2 (size before relaxing)
+ .debug_str     0x000000000000206e       0x80 build/base64/cdecode.o
+                                        0x204 (size before relaxing)
+ .debug_str     0x00000000000020ee       0x60 build/base64/cencode.o
+                                        0x226 (size before relaxing)
+ .debug_str     0x000000000000214e       0xde build/image.o
+                                        0xd67 (size before relaxing)
+ .debug_str     0x000000000000222c      0x3ab build/usb_lib/usb_regs.o
+                                        0x937 (size before relaxing)
+ .debug_str     0x00000000000025d7       0x48 build/usb_lib/usb_int.o
+                                        0x5bf (size before relaxing)
+ .debug_str     0x000000000000261f       0x13 build/usb_lib/usb_init.o
+                                        0x561 (size before relaxing)
+ .debug_str     0x0000000000002632      0x3bd build/usb_lib/usb_core.o
+                                        0xae9 (size before relaxing)
+ .debug_str     0x00000000000029ef       0x36 build/usb_lib/usb_mem.o
+                                        0x5af (size before relaxing)
 
-.debug_loc      0x0000000000000000     0x7911
+.debug_loc      0x0000000000000000     0x79a2
  *(.debug_loc)
  .debug_loc     0x0000000000000000      0x1f4 build/usb.o
- .debug_loc     0x00000000000001f4      0x18d build/main.o
- .debug_loc     0x0000000000000381      0x63f build/hardware.o
- .debug_loc     0x00000000000009c0      0x14e build/dfu.o
- .debug_loc     0x0000000000000b0e      0x1a7 build/25519/c25519.o
- .debug_loc     0x0000000000000cb5      0x50a build/25519/ed25519.o
- .debug_loc     0x00000000000011bf      0x649 build/25519/edsign.o
- .debug_loc     0x0000000000001808      0xb70 build/25519/f25519.o
- .debug_loc     0x0000000000002378      0xa68 build/25519/fprime.o
- .debug_loc     0x0000000000002de0      0x188 build/25519/morph25519.o
- .debug_loc     0x0000000000002f68     0x2399 build/25519/sha256.o
- .debug_loc     0x0000000000005301      0x8a3 build/25519/sha512.o
- .debug_loc     0x0000000000005ba4      0x1ac build/base64/cdecode.o
- .debug_loc     0x0000000000005d50      0x360 build/base64/cencode.o
- .debug_loc     0x00000000000060b0       0xd6 build/image.o
- .debug_loc     0x0000000000006186      0xab1 build/usb_lib/usb_regs.o
- .debug_loc     0x0000000000006c37      0x16d build/usb_lib/usb_int.o
- .debug_loc     0x0000000000006da4      0x94f build/usb_lib/usb_core.o
- .debug_loc     0x00000000000076f3      0x21e build/usb_lib/usb_mem.o
+ .debug_loc     0x00000000000001f4       0x62 build/main.o
+ .debug_loc     0x0000000000000256      0x7fb build/hardware.o
+ .debug_loc     0x0000000000000a51      0x14e build/dfu.o
+ .debug_loc     0x0000000000000b9f      0x50a build/25519/ed25519.o
+ .debug_loc     0x00000000000010a9      0x8a3 build/25519/sha512.o
+ .debug_loc     0x000000000000194c      0x188 build/25519/morph25519.o
+ .debug_loc     0x0000000000001ad4      0x649 build/25519/edsign.o
+ .debug_loc     0x000000000000211d      0xb70 build/25519/f25519.o
+ .debug_loc     0x0000000000002c8d      0x1a7 build/25519/c25519.o
+ .debug_loc     0x0000000000002e34     0x2399 build/25519/sha256.o
+ .debug_loc     0x00000000000051cd      0xa68 build/25519/fprime.o
+ .debug_loc     0x0000000000005c35      0x1ac build/base64/cdecode.o
+ .debug_loc     0x0000000000005de1      0x360 build/base64/cencode.o
+ .debug_loc     0x0000000000006141       0xd6 build/image.o
+ .debug_loc     0x0000000000006217      0xab1 build/usb_lib/usb_regs.o
+ .debug_loc     0x0000000000006cc8      0x16d build/usb_lib/usb_int.o
+ .debug_loc     0x0000000000006e35      0x94f build/usb_lib/usb_core.o
+ .debug_loc     0x0000000000007784      0x21e build/usb_lib/usb_mem.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1761,28 +1770,28 @@ DISCARD
  *(.debug_varnames)
 OUTPUT(build/enclave_stage1.elf elf32-littlearm)
 
-.debug_ranges   0x0000000000000000      0xba8
+.debug_ranges   0x0000000000000000      0xbc8
  .debug_ranges  0x0000000000000000       0x20 build/stm32_lib/c_only_startup.o
  .debug_ranges  0x0000000000000020      0x100 build/usb.o
  .debug_ranges  0x0000000000000120       0x38 build/main.o
- .debug_ranges  0x0000000000000158       0xf8 build/hardware.o
- .debug_ranges  0x0000000000000250       0x78 build/dfu.o
- .debug_ranges  0x00000000000002c8       0x18 build/25519/c25519.o
- .debug_ranges  0x00000000000002e0       0xa8 build/25519/ed25519.o
- .debug_ranges  0x0000000000000388       0xc8 build/25519/edsign.o
- .debug_ranges  0x0000000000000450       0x90 build/25519/f25519.o
- .debug_ranges  0x00000000000004e0       0xf8 build/25519/fprime.o
- .debug_ranges  0x00000000000005d8       0x30 build/25519/morph25519.o
- .debug_ranges  0x0000000000000608       0x30 build/25519/sha256.o
- .debug_ranges  0x0000000000000638       0xe0 build/25519/sha512.o
- .debug_ranges  0x0000000000000718       0x20 build/base64/cdecode.o
- .debug_ranges  0x0000000000000738       0x28 build/base64/cencode.o
- .debug_ranges  0x0000000000000760       0x18 build/image.o
- .debug_ranges  0x0000000000000778      0x298 build/usb_lib/usb_regs.o
- .debug_ranges  0x0000000000000a10       0x30 build/usb_lib/usb_int.o
- .debug_ranges  0x0000000000000a40       0x10 build/usb_lib/usb_init.o
- .debug_ranges  0x0000000000000a50      0x140 build/usb_lib/usb_core.o
- .debug_ranges  0x0000000000000b90       0x18 build/usb_lib/usb_mem.o
+ .debug_ranges  0x0000000000000158      0x118 build/hardware.o
+ .debug_ranges  0x0000000000000270       0x78 build/dfu.o
+ .debug_ranges  0x00000000000002e8       0xa8 build/25519/ed25519.o
+ .debug_ranges  0x0000000000000390       0xe0 build/25519/sha512.o
+ .debug_ranges  0x0000000000000470       0x30 build/25519/morph25519.o
+ .debug_ranges  0x00000000000004a0       0xc8 build/25519/edsign.o
+ .debug_ranges  0x0000000000000568       0x90 build/25519/f25519.o
+ .debug_ranges  0x00000000000005f8       0x18 build/25519/c25519.o
+ .debug_ranges  0x0000000000000610       0x30 build/25519/sha256.o
+ .debug_ranges  0x0000000000000640       0xf8 build/25519/fprime.o
+ .debug_ranges  0x0000000000000738       0x20 build/base64/cdecode.o
+ .debug_ranges  0x0000000000000758       0x28 build/base64/cencode.o
+ .debug_ranges  0x0000000000000780       0x18 build/image.o
+ .debug_ranges  0x0000000000000798      0x298 build/usb_lib/usb_regs.o
+ .debug_ranges  0x0000000000000a30       0x30 build/usb_lib/usb_int.o
+ .debug_ranges  0x0000000000000a60       0x10 build/usb_lib/usb_init.o
+ .debug_ranges  0x0000000000000a70      0x140 build/usb_lib/usb_core.o
+ .debug_ranges  0x0000000000000bb0       0x18 build/usb_lib/usb_mem.o
 
 Cross Reference Table
 
@@ -2052,6 +2061,7 @@ User_Standard_Requests                            build/usb.o
                                                   build/usb_lib/usb_init.o
 WWDG_IRQHandler                                   build/stm32_lib/c_only_startup.o
 __BASEPRICONFIG                                   build/stm32_lib/cortexm3_macro.o
+__BUILD_NUMBER                                    build/main.o
 __DMB                                             build/stm32_lib/cortexm3_macro.o
 __DSB                                             build/stm32_lib/cortexm3_macro.o
 __GetBASEPRI                                      build/stm32_lib/cortexm3_macro.o
@@ -2074,83 +2084,83 @@ __SEV                                             build/stm32_lib/cortexm3_macro
 __SVC                                             build/stm32_lib/cortexm3_macro.o
 __WFE                                             build/stm32_lib/cortexm3_macro.o
 __WFI                                             build/stm32_lib/cortexm3_macro.o
-__malloc_free_list                                /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
-__malloc_lock                                     /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
-__malloc_sbrk_start                               /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-__malloc_unlock                                   /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
-__sf_fake_stderr                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
-__sf_fake_stdin                                   /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
-__sf_fake_stdout                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
-__ssprint_r                                       /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-__ssputs_r                                        /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+__malloc_free_list                                /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+__malloc_lock                                     /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+__malloc_sbrk_start                               /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+__malloc_unlock                                   /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-mlock.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+__sf_fake_stderr                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+__sf_fake_stdin                                   /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+__sf_fake_stdout                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+__ssprint_r                                       /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+__ssputs_r                                        /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
 _ebss                                             build/stm32_lib/c_only_startup.o
 _edata                                            build/stm32_lib/c_only_startup.o
 _estack                                           build/stm32_lib/c_only_startup.o
-_free_r                                           /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-_global_impure_ptr                                /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
-_impure_ptr                                       /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
-_malloc_r                                         /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-_malloc_usable_size_r                             /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-_printf_common                                    /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
-_printf_float                                     /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-_printf_i                                         /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-_realloc_r                                        /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-_reclaim_reent                                    /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
-_sbrk                                             /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
-_sbrk_r                                           /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+_free_r                                           /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-freer.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+_global_impure_ptr                                /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+_impure_ptr                                       /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-impure.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+_malloc_r                                         /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+_malloc_usable_size_r                             /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-msizer.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+_printf_common                                    /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+_printf_float                                     /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+_printf_i                                         /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+_realloc_r                                        /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+_reclaim_reent                                    /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+_sbrk                                             /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+_sbrk_r                                           /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-mallocr.o)
 _sbss                                             build/stm32_lib/c_only_startup.o
 _sdata                                            build/stm32_lib/c_only_startup.o
 _sidata                                           build/stm32_lib/c_only_startup.o
-_siprintf_r                                       /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
-_sprintf_r                                        /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
-_svfiprintf_r                                     /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-_svfprintf_r                                      /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
-_vsiprintf_r                                      /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
-_vsprintf_r                                       /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+_siprintf_r                                       /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+_sprintf_r                                        /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+_svfiprintf_r                                     /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+_svfprintf_r                                      /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+_vsiprintf_r                                      /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+_vsprintf_r                                       /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
 bDeviceState                                      build/usb.o
 bIntPackSOF                                       build/usb.o
 base64_decode_block                               build/base64/cdecode.o
-                                                  build/main.o
+                                                  build/hardware.o
 base64_decode_value                               build/base64/cdecode.o
 base64_encode_block                               build/base64/cencode.o
-                                                  build/main.o
+                                                  build/hardware.o
 base64_encode_blockend                            build/base64/cencode.o
-                                                  build/main.o
+                                                  build/hardware.o
 base64_encode_value                               build/base64/cencode.o
 base64_init_decodestate                           build/base64/cdecode.o
-                                                  build/main.o
+                                                  build/hardware.o
 base64_init_encodestate                           build/base64/cencode.o
-                                                  build/main.o
+                                                  build/hardware.o
 bkp10Write                                        build/hardware.o
 c25519_base_x                                     build/25519/c25519.o
 c25519_smult                                      build/25519/c25519.o
 checkAndClearBootloaderFlag                       build/hardware.o
-cleanup_glue                                      /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+cleanup_glue                                      /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
 code_copy_lock                                    build/dfu.o
 crMask                                            build/hardware.o
                                                   build/usb.o
 ctx                                               build/dfu.o
-decode_b64                                        build/main.o
+decode_b64                                        build/hardware.o
 dfuBusy                                           build/dfu.o
 dfuCopyBufferToExec                               build/dfu.o
 dfuCopyDNLOAD                                     build/dfu.o
@@ -2197,54 +2207,55 @@ edsign_sign                                       build/25519/edsign.o
                                                   build/main.o
 edsign_verify                                     build/25519/edsign.o
                                                   build/image.o
-encode_b64                                        build/main.o
-end                                               /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
-errno                                             /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
+encode_b64                                        build/hardware.o
+                                                  build/main.o
+end                                               /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libnosys.a(sbrk.o)
+errno                                             /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-reent.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sbrkr.o)
 f25519_add                                        build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_eq                                         build/25519/f25519.o
-                                                  build/25519/morph25519.o
                                                   build/25519/edsign.o
+                                                  build/25519/morph25519.o
                                                   build/25519/ed25519.o
 f25519_inv                                        build/25519/f25519.o
 f25519_inv__distinct                              build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_load                                       build/25519/f25519.o
                                                   build/25519/ed25519.o
 f25519_mul                                        build/25519/f25519.o
 f25519_mul__distinct                              build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_mul_c                                      build/25519/f25519.o
                                                   build/25519/c25519.o
 f25519_neg                                        build/25519/f25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
 f25519_normalize                                  build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_one                                        build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_select                                     build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_sqrt                                       build/25519/f25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
 f25519_sub                                        build/25519/f25519.o
+                                                  build/25519/c25519.o
                                                   build/25519/morph25519.o
                                                   build/25519/ed25519.o
-                                                  build/25519/c25519.o
 f25519_zero                                       build/25519/f25519.o
 failErase                                         build/image.o
 flashErasePage                                    build/hardware.o
@@ -2284,30 +2295,33 @@ imageCheckFromAddress                             build/image.o
                                                   build/dfu.o
                                                   build/main.o
 input                                             build/dfu.o
-isSecureMode                                      build/main.o
+isProduction                                      build/hardware.o
+                                                  build/main.o
+isSecure                                          build/hardware.o
+                                                  build/main.o
 jumpToUser                                        build/hardware.o
                                                   build/main.o
 k                                                 build/25519/sha256.o
 main                                              build/main.o
                                                   build/stm32_lib/c_only_startup.o
-memchr                                            /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-memcpy                                            /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+memchr                                            /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memchr-stub.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-vfprintf_i.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+memcpy                                            /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memcpy-stub.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-reallocr.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
                                                   build/image.o
-                                                  build/25519/sha512.o
                                                   build/25519/sha256.o
                                                   build/25519/edsign.o
-                                                  build/25519/ed25519.o
-memmove                                           /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
-                                                  /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
-memset                                            /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
-                                                  build/image.o
                                                   build/25519/sha512.o
+                                                  build/25519/ed25519.o
+memmove                                           /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memmove.o)
+                                                  /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-nano-svfprintf.o)
+memset                                            /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-memset.o)
+                                                  build/image.o
                                                   build/25519/fprime.o
                                                   build/25519/c25519.o
+                                                  build/25519/sha512.o
                                                   build/dfu.o
                                                   build/hardware.o
                                                   build/main.o
@@ -2334,6 +2348,8 @@ pUser_Standard_Requests                           build/usb_lib/usb_init.o
 print_bootheader                                  build/main.o
 print_hash                                        build/hardware.o
                                                   build/image.o
+print_hex                                         build/hardware.o
+                                                  build/main.o
 readPin                                           build/hardware.o
                                                   build/main.o
 rootCA                                            build/image.o
@@ -2370,11 +2386,11 @@ sha512_get                                        build/25519/sha512.o
                                                   build/25519/edsign.o
 sha512_initial_state                              build/25519/sha512.o
                                                   build/25519/edsign.o
-siprintf                                          /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
-sprintf                                           /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+siprintf                                          /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
+sprintf                                           /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-sprintf.o)
                                                   build/main.o
-strlen                                            /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
-                                                  build/main.o
+strlen                                            /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-strlen.o)
+                                                  build/hardware.o
 strobePin                                         build/hardware.o
                                                   build/main.o
 systemHardReset                                   build/hardware.o
@@ -2446,8 +2462,8 @@ usbStringDescriptor                               build/usb_descriptor.o
 usbSuspend                                        build/usb.o
 userUploadType                                    build/dfu.o
 vprint                                            build/hardware.o
-vsiprintf                                         /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
-vsprintf                                          /usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+vsiprintf                                         /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
+vsprintf                                          /usr/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-vsprintf.o)
                                                   build/hardware.o
 wInterrupt_Mask                                   build/usb_lib/usb_init.o
                                                   build/usb.o

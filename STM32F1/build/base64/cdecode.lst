@@ -509,15 +509,15 @@
  384              		.file 2 "base64/cdecode.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 cdecode.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:16     .text.base64_decode_value:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:23     .text.base64_decode_value:0000000000000000 base64_decode_value
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:51     .text.base64_decode_value:0000000000000014 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:56     .text.base64_init_decodestate:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:63     .text.base64_init_decodestate:0000000000000000 base64_init_decodestate
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:82     .text.base64_decode_block:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:89     .text.base64_decode_block:0000000000000000 base64_decode_block
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:123    .text.base64_decode_block:0000000000000016 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:127    .text.base64_decode_block:000000000000001a $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cca7Keqx.s:301    .rodata.decoding.4120:0000000000000000 decoding.4120
+     /tmp/cc0XU9cq.s:16     .text.base64_decode_value:0000000000000000 $t
+     /tmp/cc0XU9cq.s:23     .text.base64_decode_value:0000000000000000 base64_decode_value
+     /tmp/cc0XU9cq.s:51     .text.base64_decode_value:0000000000000014 $d
+     /tmp/cc0XU9cq.s:56     .text.base64_init_decodestate:0000000000000000 $t
+     /tmp/cc0XU9cq.s:63     .text.base64_init_decodestate:0000000000000000 base64_init_decodestate
+     /tmp/cc0XU9cq.s:82     .text.base64_decode_block:0000000000000000 $t
+     /tmp/cc0XU9cq.s:89     .text.base64_decode_block:0000000000000000 base64_decode_block
+     /tmp/cc0XU9cq.s:123    .text.base64_decode_block:0000000000000016 $d
+     /tmp/cc0XU9cq.s:127    .text.base64_decode_block:000000000000001a $t
+     /tmp/cc0XU9cq.s:301    .rodata.decoding.4120:0000000000000000 decoding.4120
 
 NO UNDEFINED SYMBOLS

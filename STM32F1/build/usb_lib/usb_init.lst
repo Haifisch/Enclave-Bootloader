@@ -141,9 +141,9 @@
   78              		.file 5 "usb_lib/usb_init.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_init.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7QjJzn.s:16     .text.USB_Init:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7QjJzn.s:23     .text.USB_Init:0000000000000000 USB_Init
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7QjJzn.s:57     .text.USB_Init:000000000000001c $d
+     /tmp/ccEWxGdb.s:16     .text.USB_Init:0000000000000000 $t
+     /tmp/ccEWxGdb.s:23     .text.USB_Init:0000000000000000 USB_Init
+     /tmp/ccEWxGdb.s:57     .text.USB_Init:000000000000001c $d
                             *COM*:000000000000001c Device_Info
                             *COM*:0000000000000004 pInformation
                             *COM*:0000000000000004 pProperty

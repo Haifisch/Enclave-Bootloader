@@ -202,9 +202,9 @@
  124              		.file 5 "usb_lib/usb_init.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_mem.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccNRvt3K.s:16     .text.UserToPMABufferCopy:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccNRvt3K.s:23     .text.UserToPMABufferCopy:0000000000000000 UserToPMABufferCopy
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccNRvt3K.s:66     .text.PMAToUserBufferCopy:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccNRvt3K.s:73     .text.PMAToUserBufferCopy:0000000000000000 PMAToUserBufferCopy
+     /tmp/ccCx0aEE.s:16     .text.UserToPMABufferCopy:0000000000000000 $t
+     /tmp/ccCx0aEE.s:23     .text.UserToPMABufferCopy:0000000000000000 UserToPMABufferCopy
+     /tmp/ccCx0aEE.s:66     .text.PMAToUserBufferCopy:0000000000000000 $t
+     /tmp/ccCx0aEE.s:73     .text.PMAToUserBufferCopy:0000000000000000 PMAToUserBufferCopy
 
 NO UNDEFINED SYMBOLS

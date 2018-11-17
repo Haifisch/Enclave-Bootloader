@@ -1518,43 +1518,43 @@
  1103      00000000 
  1104              		.text
  1105              	.Letext0:
- 1106              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
- 1107              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
- 1108              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
- 1109              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
- 1110              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
- 1111              		.file 8 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 1106              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 1107              		.file 4 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 1108              		.file 5 "/usr/arm-none-eabi/include/sys/lock.h"
+ 1109              		.file 6 "/usr/arm-none-eabi/include/sys/_types.h"
+ 1110              		.file 7 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 1111              		.file 8 "/usr/arm-none-eabi/include/sys/reent.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 f25519.c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:16     .text.f25519_load:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:23     .text.f25519_load:0000000000000000 f25519_load
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:65     .text.f25519_eq:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:72     .text.f25519_eq:0000000000000000 f25519_eq
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:126    .text.f25519_select:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:133    .text.f25519_select:0000000000000000 f25519_select
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:181    .text.f25519_normalize:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:188    .text.f25519_normalize:0000000000000000 f25519_normalize
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:284    .text.f25519_add:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:291    .text.f25519_add:0000000000000000 f25519_add
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:368    .text.f25519_sub:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:375    .text.f25519_sub:0000000000000000 f25519_sub
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:454    .text.f25519_neg:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:461    .text.f25519_neg:0000000000000000 f25519_neg
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:533    .text.f25519_mul__distinct:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:540    .text.f25519_mul__distinct:0000000000000000 f25519_mul__distinct
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:650    .text.f25519_mul:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:657    .text.f25519_mul:0000000000000000 f25519_mul
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:706    .text.f25519_mul_c:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:713    .text.f25519_mul_c:0000000000000000 f25519_mul_c
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:784    .text.f25519_inv__distinct:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:791    .text.f25519_inv__distinct:0000000000000000 f25519_inv__distinct
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:896    .text.f25519_inv:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:903    .text.f25519_inv:0000000000000000 f25519_inv
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:951    .text.f25519_sqrt:0000000000000000 $t
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:958    .text.f25519_sqrt:0000000000000000 f25519_sqrt
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:1096   .rodata.f25519_one:0000000000000000 f25519_one
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:1102   .rodata.f25519_zero:0000000000000000 f25519_zero
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:1098   .rodata.f25519_one:0000000000000001 $d
-/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc4wbwVp.s:1103   .rodata.f25519_zero:0000000000000000 $d
+     /tmp/ccgw6nhw.s:16     .text.f25519_load:0000000000000000 $t
+     /tmp/ccgw6nhw.s:23     .text.f25519_load:0000000000000000 f25519_load
+     /tmp/ccgw6nhw.s:65     .text.f25519_eq:0000000000000000 $t
+     /tmp/ccgw6nhw.s:72     .text.f25519_eq:0000000000000000 f25519_eq
+     /tmp/ccgw6nhw.s:126    .text.f25519_select:0000000000000000 $t
+     /tmp/ccgw6nhw.s:133    .text.f25519_select:0000000000000000 f25519_select
+     /tmp/ccgw6nhw.s:181    .text.f25519_normalize:0000000000000000 $t
+     /tmp/ccgw6nhw.s:188    .text.f25519_normalize:0000000000000000 f25519_normalize
+     /tmp/ccgw6nhw.s:284    .text.f25519_add:0000000000000000 $t
+     /tmp/ccgw6nhw.s:291    .text.f25519_add:0000000000000000 f25519_add
+     /tmp/ccgw6nhw.s:368    .text.f25519_sub:0000000000000000 $t
+     /tmp/ccgw6nhw.s:375    .text.f25519_sub:0000000000000000 f25519_sub
+     /tmp/ccgw6nhw.s:454    .text.f25519_neg:0000000000000000 $t
+     /tmp/ccgw6nhw.s:461    .text.f25519_neg:0000000000000000 f25519_neg
+     /tmp/ccgw6nhw.s:533    .text.f25519_mul__distinct:0000000000000000 $t
+     /tmp/ccgw6nhw.s:540    .text.f25519_mul__distinct:0000000000000000 f25519_mul__distinct
+     /tmp/ccgw6nhw.s:650    .text.f25519_mul:0000000000000000 $t
+     /tmp/ccgw6nhw.s:657    .text.f25519_mul:0000000000000000 f25519_mul
+     /tmp/ccgw6nhw.s:706    .text.f25519_mul_c:0000000000000000 $t
+     /tmp/ccgw6nhw.s:713    .text.f25519_mul_c:0000000000000000 f25519_mul_c
+     /tmp/ccgw6nhw.s:784    .text.f25519_inv__distinct:0000000000000000 $t
+     /tmp/ccgw6nhw.s:791    .text.f25519_inv__distinct:0000000000000000 f25519_inv__distinct
+     /tmp/ccgw6nhw.s:896    .text.f25519_inv:0000000000000000 $t
+     /tmp/ccgw6nhw.s:903    .text.f25519_inv:0000000000000000 f25519_inv
+     /tmp/ccgw6nhw.s:951    .text.f25519_sqrt:0000000000000000 $t
+     /tmp/ccgw6nhw.s:958    .text.f25519_sqrt:0000000000000000 f25519_sqrt
+     /tmp/ccgw6nhw.s:1096   .rodata.f25519_one:0000000000000000 f25519_one
+     /tmp/ccgw6nhw.s:1102   .rodata.f25519_zero:0000000000000000 f25519_zero
+     /tmp/ccgw6nhw.s:1098   .rodata.f25519_one:0000000000000001 $d
+     /tmp/ccgw6nhw.s:1103   .rodata.f25519_zero:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

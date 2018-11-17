@@ -44,6 +44,8 @@
 #include "edsign.h"
 #include "c25519.h"
 #include "image.h"
+#include "cencode.h"
+#include "cdecode.h"
 
 /*
 void setPin(u32 bank, u8 pin) {
@@ -311,6 +313,16 @@ void uart_printf(const char *fmt, ...) // custom printf() function
     va_end(argp);
 }
 
+void print_hex(const char *label, const uint8_t *data, int len)
+{
+    int i;
+
+    uart_printf("%s: ", label);
+    for (i = 0; i < len; i++)
+        uart_printf("%02x", data[i]);
+    uart_printf("\n");
+}
+
 void hexdump(unsigned char *data, size_t size)
 {
     int i;
@@ -354,8 +366,37 @@ void print_hash(unsigned char hash[])
       debug_print("%02x",hash[idx]);
    debug_print("\n", 0);
 }
-
 #endif
+
+/*
+    Base64 functions
+*/
+size_t decode_b64(const char* input, char* output)
+{
+    base64_decodestate s;
+    size_t cnt;
+
+    base64_init_decodestate(&s);
+    cnt = base64_decode_block(input, strlen(input), output, &s);
+    output[cnt] = 0;
+
+    return cnt;
+}
+
+size_t encode_b64(const char* input, char* output, int blocksize)
+{
+    base64_encodestate s;
+    size_t cnt;
+
+    base64_init_encodestate(&s);
+    cnt = base64_encode_block(input, blocksize, output, &s);
+    cnt += base64_encode_blockend(output + cnt, &s);
+    output[cnt] = 0;
+
+    return cnt;
+}
+
+
 void uartInit(void) {
     GPIO_InitTypeDef GPIO_InitStructure;
     USART_InitTypeDef USART_InitStructure; 
@@ -715,3 +756,15 @@ int getFlashPageSize(void)
 	}
 }
 
+// Security Fusings
+int isSecure(void) 
+{
+    // TODO proper fusing
+    return 0;
+}
+
+int isProduction(void) 
+{
+    // TODO proper fusing
+    return 0;
+}
