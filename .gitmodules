@@ -1,0 +1,3 @@
+[submodule "Enclave-Bootloader"]
+	path = Enclave-Bootloader
+	url = https://github.com/Haifisch/Enclave-Bootloader.git

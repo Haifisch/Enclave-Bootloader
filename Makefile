@@ -1,7 +1,7 @@
 # QEMU Configuration
 QEMU_BUILD_DIRECTORY = ../qemu/arm-softmmu
 QEMU_TARGET_IMAGE = STM32F1/build/enclave_stage1.bin
-QEMU_MACHINE = stm32-p103
+QEMU_MACHINE = stm32-maple
 
 # building
 build-bl:
@@ -15,9 +15,8 @@ build-os:
 # running within qemu
 run-bl:
 	@echo "Running bootloader in qemu"
-	#$(QEMU_BUILD_DIRECTORY)/qemu-system-arm -M $(QEMU_BOARD_OPT) -nographic -kernel $(QEMU_TARGET_IMAGE)
-	$(QEMU_BUILD_DIRECTORY)/qemu-system-arm -machine $(QEMU_MACHINE) -nographic -kernel $(QEMU_TARGET_IMAGE)
-
+	$(QEMU_BUILD_DIRECTORY)/qemu-system-arm -M $(QEMU_MACHINE) -nographic -kernel $(QEMU_TARGET_IMAGE)
+	
 # clean up
 clean-os:
 	@echo "Cleaning out old OS builds"

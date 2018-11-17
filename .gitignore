@@ -1,2 +1,2 @@
-dev_signing_key
-enclave_qemu.bin
+STM32F1/build/*
+STM32F1/.dep/*

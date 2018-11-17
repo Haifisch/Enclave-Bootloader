@@ -136,6 +136,12 @@ generic-pb12: begin clean gccversion build_generic-pb12 sizeafter finished  copy
 hytiny-stm32f103t: begin clean gccversion build_hytiny-stm32f103t sizeafter finished  copy_hytiny-stm32f103t end
 build: elf bin lss sym
 
+build_layout:
+	mkdir -p $(BUILDDIR)/25519
+	mkdir -p $(BUILDDIR)/base64
+	mkdir -p $(BUILDDIR)/stm32_lib
+	mkdir -p $(BUILDDIR)/usb_lib
+
 build_maple-mini: TARGETFLAGS= -DTARGET_MAPLE_MINI
 # Set the linker script
 build_maple-mini: LDFLAGS +=-T$(ST_LIB)/c_only_md_high_density.ld
@@ -364,7 +370,7 @@ sym: $(TARGET).sym
 dfu: $(TARGET).bin
 	sudo dfu-util -d 0110:1001 -a 0 -D $(TARGET).bin
 
-begin:
+begin: build_layout
 	@echo --
 	@echo $(MSG_BEGIN)
 	@echo $(COBJ)
