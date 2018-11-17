@@ -1,28 +1,27 @@
-   1              		.syntax unified
-   2              		.cpu cortex-m3
-   3              		.fpu softvfp
-   4              		.eabi_attribute 20, 1
-   5              		.eabi_attribute 21, 1
-   6              		.eabi_attribute 23, 3
-   7              		.eabi_attribute 24, 1
-   8              		.eabi_attribute 25, 1
-   9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 4
-  11              		.eabi_attribute 34, 1
-  12              		.eabi_attribute 18, 4
-  13              		.thumb
-  14              		.file	"usb_init.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.USB_Init,"ax",%progbits
-  19              		.align	1
-  20              		.global	USB_Init
-  21              		.thumb
-  22              		.thumb_func
-  24              	USB_Init:
-  25              	.LFB0:
-  26              		.file 1 "usb_lib/usb_init.c"
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"usb_init.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.USB_Init,"ax",%progbits
+  16              		.align	1
+  17              		.global	USB_Init
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	USB_Init:
+  24              	.LFB0:
+  25              		.file 1 "usb_lib/usb_init.c"
    1:usb_lib/usb_init.c **** /******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
    2:usb_lib/usb_init.c **** * File Name          : usb_init.c
    3:usb_lib/usb_init.c **** * Author             : MCD Application Team
@@ -77,84 +76,81 @@
   52:usb_lib/usb_init.c **** *******************************************************************************/
   53:usb_lib/usb_init.c **** void USB_Init(void)
   54:usb_lib/usb_init.c **** {
-  27              		.loc 1 54 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31 0000 08B5     		push	{r3, lr}
-  32              		.cfi_def_cfa_offset 8
-  33              		.cfi_offset 3, -8
-  34              		.cfi_offset 14, -4
+  26              		.loc 1 54 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
   55:usb_lib/usb_init.c ****   pInformation = &Device_Info;
-  35              		.loc 1 55 0
-  36 0002 074A     		ldr	r2, .L2
-  37 0004 074B     		ldr	r3, .L2+4
+  31              		.loc 1 55 0
+  32 0000 064B     		ldr	r3, .L2
+  33 0002 074A     		ldr	r2, .L2+4
   56:usb_lib/usb_init.c ****   pInformation->ControlState = 2;
   57:usb_lib/usb_init.c ****   pProperty = &Device_Property;
   58:usb_lib/usb_init.c ****   pUser_Standard_Requests = &User_Standard_Requests;
-  38              		.loc 1 58 0
-  39 0006 0849     		ldr	r1, .L2+8
+  34              		.loc 1 58 0
+  35 0004 0749     		ldr	r1, .L2+8
   55:usb_lib/usb_init.c ****   pInformation = &Device_Info;
-  40              		.loc 1 55 0
-  41 0008 1360     		str	r3, [r2]
+  36              		.loc 1 55 0
+  37 0006 1360     		str	r3, [r2]
   56:usb_lib/usb_init.c ****   pInformation->ControlState = 2;
-  42              		.loc 1 56 0
-  43 000a 0222     		movs	r2, #2
-  44 000c 1A72     		strb	r2, [r3, #8]
-  57:usb_lib/usb_init.c ****   pProperty = &Device_Property;
-  45              		.loc 1 57 0
-  46 000e 074B     		ldr	r3, .L2+12
-  47 0010 074A     		ldr	r2, .L2+16
-  48 0012 1360     		str	r3, [r2]
-  49              		.loc 1 58 0
-  50 0014 074A     		ldr	r2, .L2+20
+  38              		.loc 1 56 0
+  39 0008 0222     		movs	r2, #2
+  40 000a 1A72     		strb	r2, [r3, #8]
+  57:usb_lib/usb_init.c ****   pUser_Standard_Requests = &User_Standard_Requests;
+  41              		.loc 1 57 0
+  42 000c 064B     		ldr	r3, .L2+12
+  43 000e 074A     		ldr	r2, .L2+16
+  44 0010 1360     		str	r3, [r2]
+  45              		.loc 1 58 0
+  46 0012 074A     		ldr	r2, .L2+20
   59:usb_lib/usb_init.c ****   /* Initialize devices one by one */
   60:usb_lib/usb_init.c **** 
   61:usb_lib/usb_init.c ****   pProperty->Init();
+  47              		.loc 1 61 0
+  48 0014 1B68     		ldr	r3, [r3]
+  58:usb_lib/usb_init.c ****   /* Initialize devices one by one */
+  49              		.loc 1 58 0
+  50 0016 1160     		str	r1, [r2]
   51              		.loc 1 61 0
-  52 0016 1B68     		ldr	r3, [r3]
-  58:usb_lib/usb_init.c ****   pUser_Standard_Requests = &User_Standard_Requests;
-  53              		.loc 1 58 0
-  54 0018 1160     		str	r1, [r2]
-  55              		.loc 1 61 0
-  56 001a 9847     		blx	r3
-  57              	.LVL0:
-  58 001c 08BD     		pop	{r3, pc}
-  59              	.L3:
-  60 001e 00BF     		.align	2
-  61              	.L2:
-  62 0020 00000000 		.word	pInformation
-  63 0024 00000000 		.word	Device_Info
-  64 0028 00000000 		.word	User_Standard_Requests
-  65 002c 00000000 		.word	Device_Property
-  66 0030 00000000 		.word	pProperty
-  67 0034 00000000 		.word	pUser_Standard_Requests
-  68              		.cfi_endproc
-  69              	.LFE0:
-  71              		.comm	pUser_Standard_Requests,4,4
-  72              		.comm	Device_Info,28,4
-  73              		.comm	wInterrupt_Mask,2,2
-  74              		.comm	SaveState,2,2
-  75              		.comm	pProperty,4,4
-  76              		.comm	pInformation,4,4
-  77              		.comm	EPindex,1,1
-  78              		.text
-  79              	.Letext0:
-  80              		.file 2 "usb_lib/usb_type.h"
-  81              		.file 3 "usb_lib/usb_core.h"
+  52 0018 1847     		bx	r3	@ indirect register sibling call
+  53              	.LVL0:
+  54              	.L3:
+  55 001a 00BF     		.align	2
+  56              	.L2:
+  57 001c 00000000 		.word	Device_Info
+  58 0020 00000000 		.word	pInformation
+  59 0024 00000000 		.word	User_Standard_Requests
+  60 0028 00000000 		.word	Device_Property
+  61 002c 00000000 		.word	pProperty
+  62 0030 00000000 		.word	pUser_Standard_Requests
+  63              		.cfi_endproc
+  64              	.LFE0:
+  66              		.comm	pUser_Standard_Requests,4,4
+  67              		.comm	Device_Info,28,4
+  68              		.comm	wInterrupt_Mask,2,2
+  69              		.comm	SaveState,2,2
+  70              		.comm	pProperty,4,4
+  71              		.comm	pInformation,4,4
+  72              		.comm	EPindex,1,1
+  73              		.text
+  74              	.Letext0:
+  75              		.file 2 "usb_lib/usb_type.h"
+  76              		.file 3 "usb_lib/usb_core.h"
+  77              		.file 4 "usb_lib/usb_regs.h"
+  78              		.file 5 "usb_lib/usb_init.h"
 DEFINED SYMBOLS
-                            *ABS*:00000000 usb_init.c
-C:\Users\haifisch\AppData\Local\Temp\ccuwZqSL.s:19     .text.USB_Init:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccuwZqSL.s:24     .text.USB_Init:00000000 USB_Init
-C:\Users\haifisch\AppData\Local\Temp\ccuwZqSL.s:62     .text.USB_Init:00000020 $d
-                            *COM*:00000004 pInformation
-                            *COM*:0000001c Device_Info
-                            *COM*:00000004 pProperty
-                            *COM*:00000004 pUser_Standard_Requests
-                            *COM*:00000002 wInterrupt_Mask
-                            *COM*:00000002 SaveState
-                            *COM*:00000001 EPindex
-                     .debug_frame:00000010 $d
+                            *ABS*:0000000000000000 usb_init.c
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7QjJzn.s:16     .text.USB_Init:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7QjJzn.s:23     .text.USB_Init:0000000000000000 USB_Init
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc7QjJzn.s:57     .text.USB_Init:000000000000001c $d
+                            *COM*:000000000000001c Device_Info
+                            *COM*:0000000000000004 pInformation
+                            *COM*:0000000000000004 pProperty
+                            *COM*:0000000000000004 pUser_Standard_Requests
+                            *COM*:0000000000000002 wInterrupt_Mask
+                            *COM*:0000000000000002 SaveState
+                            *COM*:0000000000000001 EPindex
 
 UNDEFINED SYMBOLS
 User_Standard_Requests

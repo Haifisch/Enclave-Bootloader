@@ -1,6 +1,6 @@
    1              	# 1 "stm32_lib/c_only_startup.s"
    1              	/**
-   0              	
+   1              	...
    0              	
    0              	
    2              	 ******************************************************************************
@@ -67,34 +67,34 @@
   64              	
   65              	/* Copy the data segment initializers from flash to SRAM */
   66 0000 0021     	  movs	r1, #0
-  67 0002 00F004B8 	  b	LoopCopyDataInit
+  67 0002 03E0     	  b	LoopCopyDataInit
   68              	
   69              	CopyDataInit:
-  70 0006 0B4B     		ldr	r3, =_sidata
-  71 0008 5B58     		ldr	r3, [r3, r1]
-  72 000a 4350     		str	r3, [r0, r1]
-  73 000c 0431     		adds	r1, r1, #4
+  70 0004 094B     		ldr	r3, =_sidata
+  71 0006 5B58     		ldr	r3, [r3, r1]
+  72 0008 4350     		str	r3, [r0, r1]
+  73 000a 0431     		adds	r1, r1, #4
   74              	
   75              	LoopCopyDataInit:
-  76 000e 0A48     		ldr	r0, =_sdata
-  77 0010 0A4B     		ldr	r3, =_edata
-  78 0012 4218     		adds	r2, r0, r1
-  79 0014 9A42     		cmp	r2, r3
-  80 0016 FFF4F6AF 		bcc	CopyDataInit
-  81 001a 094A     		ldr	r2, =_sbss
-  82 001c 00F003B8 		b	LoopFillZerobss
+  76 000c 0848     		ldr	r0, =_sdata
+  77 000e 094B     		ldr	r3, =_edata
+  78 0010 4218     		adds	r2, r0, r1
+  79 0012 9A42     		cmp	r2, r3
+  80 0014 F6D3     		bcc	CopyDataInit
+  81 0016 084A     		ldr	r2, =_sbss
+  82 0018 02E0     		b	LoopFillZerobss
   83              	/* Zero fill the bss segment. */
   84              	FillZerobss:
-  85 0020 0023     		movs	r3, #0
-  86 0022 42F8043B 		str	r3, [r2], #4
+  85 001a 0023     		movs	r3, #0
+  86 001c 42F8043B 		str	r3, [r2], #4
   87              	
   88              	LoopFillZerobss:
-  89 0026 074B     		ldr	r3, = _ebss
-  90 0028 9A42     		cmp	r2, r3
-  91 002a FFF4F9AF 		bcc	FillZerobss
+  89 0020 064B     		ldr	r3, = _ebss
+  90 0022 9A42     		cmp	r2, r3
+  91 0024 F9D3     		bcc	FillZerobss
   92              	/* Call the application's entry point.*/
-  93 002e FFF7FEFF 		bl	main
-  94 0032 7047     		bx	lr
+  93 0026 FFF7FEFF 		bl	main
+  94 002a 7047     		bx	lr
   96              	
   97              	/**
   98              	 * @brief  This is the code that gets called when the processor receives an
@@ -107,7 +107,7 @@
  105              	    .section	.text.Default_Handler,"ax",%progbits
  106              	Default_Handler:
  107              	Infinite_Loop:
- 108 0000 FFF7FEBF 		b	Infinite_Loop
+ 108 0000 FEE7     		b	Infinite_Loop
  110              	/******************************************************************************
  111              	*
  112              	* The minimal vector table for a Cortex M3.  Note that the proper constructs
@@ -364,71 +364,71 @@
  365              		.weak	USBWakeUp_IRQHandler
  366              		.thumb_set USBWakeUp_IRQHandler,Default_Handler
 DEFINED SYMBOLS
-stm32_lib/c_only_startup.s:122    .isr_vector:00000000 g_pfnVectors
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 Default_Handler
-stm32_lib/c_only_startup.s:50     *ABS*:f108f85f BootRAM
-stm32_lib/c_only_startup.s:63     .text.Reset_Handler:00000000 Reset_Handler
-stm32_lib/c_only_startup.s:66     .text.Reset_Handler:00000000 $t
-stm32_lib/c_only_startup.s:75     .text.Reset_Handler:0000000e LoopCopyDataInit
-stm32_lib/c_only_startup.s:69     .text.Reset_Handler:00000006 CopyDataInit
-stm32_lib/c_only_startup.s:88     .text.Reset_Handler:00000026 LoopFillZerobss
-stm32_lib/c_only_startup.s:84     .text.Reset_Handler:00000020 FillZerobss
-stm32_lib/c_only_startup.s:107    .text.Default_Handler:00000000 Infinite_Loop
-stm32_lib/c_only_startup.s:108    .text.Default_Handler:00000000 $t
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 NMI_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 HardFault_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 MemManage_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 BusFault_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 UsageFault_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 SVC_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DebugMon_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 PendSV_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 SysTick_Handler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 WWDG_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 PVD_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TAMPER_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 RTC_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 FLASH_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 RCC_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI0_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI1_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI2_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI3_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI4_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel1_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel2_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel3_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel4_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel5_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel6_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 DMA1_Channel7_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 ADC1_2_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 USB_HP_CAN1_TX_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 USB_LP_CAN1_RX0_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 CAN1_RX1_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 CAN1_SCE_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI9_5_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM1_BRK_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM1_UP_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM1_TRG_COM_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM1_CC_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM2_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM3_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 TIM4_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 I2C1_EV_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 I2C1_ER_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 I2C2_EV_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 I2C2_ER_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 SPI1_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 SPI2_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 USART1_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 USART2_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 USART3_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 EXTI15_10_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 RTCAlarm_IRQHandler
-stm32_lib/c_only_startup.s:106    .text.Default_Handler:00000000 USBWakeUp_IRQHandler
-stm32_lib/c_only_startup.s:105    .text.Reset_Handler:00000034 $d
-                   .debug_aranges:0000000c $d
+stm32_lib/c_only_startup.s:122    .isr_vector:0000000000000000 g_pfnVectors
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 Default_Handler
+stm32_lib/c_only_startup.s:50     *ABS*:00000000f108f85f BootRAM
+stm32_lib/c_only_startup.s:63     .text.Reset_Handler:0000000000000000 Reset_Handler
+stm32_lib/c_only_startup.s:66     .text.Reset_Handler:0000000000000000 $t
+stm32_lib/c_only_startup.s:75     .text.Reset_Handler:000000000000000c LoopCopyDataInit
+stm32_lib/c_only_startup.s:69     .text.Reset_Handler:0000000000000004 CopyDataInit
+stm32_lib/c_only_startup.s:88     .text.Reset_Handler:0000000000000020 LoopFillZerobss
+stm32_lib/c_only_startup.s:84     .text.Reset_Handler:000000000000001a FillZerobss
+stm32_lib/c_only_startup.s:107    .text.Default_Handler:0000000000000000 Infinite_Loop
+stm32_lib/c_only_startup.s:108    .text.Default_Handler:0000000000000000 $t
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 NMI_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 HardFault_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 MemManage_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 BusFault_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 UsageFault_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 SVC_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DebugMon_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 PendSV_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 SysTick_Handler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 WWDG_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 PVD_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TAMPER_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 RTC_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 FLASH_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 RCC_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI0_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI1_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI2_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI3_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI4_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel1_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel2_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel3_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel4_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel5_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel6_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 DMA1_Channel7_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 ADC1_2_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 USB_HP_CAN1_TX_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 USB_LP_CAN1_RX0_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 CAN1_RX1_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 CAN1_SCE_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI9_5_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM1_BRK_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM1_UP_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM1_TRG_COM_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM1_CC_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM2_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM3_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 TIM4_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 I2C1_EV_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 I2C1_ER_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 I2C2_EV_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 I2C2_ER_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 SPI1_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 SPI2_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 USART1_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 USART2_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 USART3_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 EXTI15_10_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 RTCAlarm_IRQHandler
+stm32_lib/c_only_startup.s:106    .text.Default_Handler:0000000000000000 USBWakeUp_IRQHandler
+stm32_lib/c_only_startup.s:366    .text.Reset_Handler:000000000000002c $d
+                            .text:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 SystemInit_ExtMemCtl_Dummy

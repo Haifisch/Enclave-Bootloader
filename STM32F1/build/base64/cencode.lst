@@ -1,28 +1,27 @@
-   1              		.syntax unified
-   2              		.cpu cortex-m3
-   3              		.fpu softvfp
-   4              		.eabi_attribute 20, 1
-   5              		.eabi_attribute 21, 1
-   6              		.eabi_attribute 23, 3
-   7              		.eabi_attribute 24, 1
-   8              		.eabi_attribute 25, 1
-   9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 4
-  11              		.eabi_attribute 34, 1
-  12              		.eabi_attribute 18, 4
-  13              		.thumb
-  14              		.file	"cencode.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.base64_init_encodestate,"ax",%progbits
-  19              		.align	1
-  20              		.global	base64_init_encodestate
-  21              		.thumb
-  22              		.thumb_func
-  24              	base64_init_encodestate:
-  25              	.LFB0:
-  26              		.file 1 "base64/cencode.c"
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"cencode.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.base64_init_encodestate,"ax",%progbits
+  16              		.align	1
+  17              		.global	base64_init_encodestate
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	base64_init_encodestate:
+  24              	.LFB0:
+  25              		.file 1 "base64/cencode.c"
    1:base64/cencode.c **** /*
    2:base64/cencode.c **** cencoder.c - c source to a base64 encoding algorithm implementation
    3:base64/cencode.c **** 
@@ -36,95 +35,96 @@
   11:base64/cencode.c **** 
   12:base64/cencode.c **** void base64_init_encodestate(base64_encodestate* state_in)
   13:base64/cencode.c **** {
-  27              		.loc 1 13 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32              	.LVL0:
+  26              		.loc 1 13 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
   14:base64/cencode.c **** 	state_in->step = step_A;
-  33              		.loc 1 14 0
-  34 0000 0023     		movs	r3, #0
-  35 0002 0370     		strb	r3, [r0]
+  32              		.loc 1 14 0
+  33 0000 0023     		movs	r3, #0
+  34 0002 0370     		strb	r3, [r0]
   15:base64/cencode.c **** 	state_in->result = 0;
-  36              		.loc 1 15 0
-  37 0004 4370     		strb	r3, [r0, #1]
+  35              		.loc 1 15 0
+  36 0004 4370     		strb	r3, [r0, #1]
   16:base64/cencode.c **** 	state_in->stepcount = 0;
-  38              		.loc 1 16 0
-  39 0006 4360     		str	r3, [r0, #4]
+  37              		.loc 1 16 0
+  38 0006 4360     		str	r3, [r0, #4]
+  17:base64/cencode.c **** }
+  39              		.loc 1 17 0
   40 0008 7047     		bx	lr
   41              		.cfi_endproc
   42              	.LFE0:
   44              		.section	.text.base64_encode_value,"ax",%progbits
   45              		.align	1
   46              		.global	base64_encode_value
-  47              		.thumb
-  48              		.thumb_func
-  50              	base64_encode_value:
-  51              	.LFB1:
-  17:base64/cencode.c **** }
+  47              		.syntax unified
+  48              		.thumb
+  49              		.thumb_func
+  50              		.fpu softvfp
+  52              	base64_encode_value:
+  53              	.LFB1:
   18:base64/cencode.c **** 
   19:base64/cencode.c **** char base64_encode_value(char value_in)
   20:base64/cencode.c **** {
-  52              		.loc 1 20 0
-  53              		.cfi_startproc
-  54              		@ args = 0, pretend = 0, frame = 0
-  55              		@ frame_needed = 0, uses_anonymous_args = 0
-  56              		@ link register save eliminated.
-  57              	.LVL1:
+  54              		.loc 1 20 0
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58              		@ link register save eliminated.
+  59              	.LVL1:
   21:base64/cencode.c **** 	static const char* encoding = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   22:base64/cencode.c **** 	if (value_in > 63) return '=';
-  58              		.loc 1 22 0
-  59 0000 3F28     		cmp	r0, #63
+  60              		.loc 1 22 0
+  61 0000 3F28     		cmp	r0, #63
   23:base64/cencode.c **** 	return encoding[(int)value_in];
-  60              		.loc 1 23 0
-  61 0002 9ABF     		itte	ls
-  62 0004 014B     		ldrls	r3, .L5
-  63 0006 C05C     		ldrbls	r0, [r0, r3]	@ zero_extendqisi2
-  64              	.LVL2:
-  22:base64/cencode.c **** 	if (value_in > 63) return '=';
-  65              		.loc 1 22 0
-  66 0008 3D20     		movhi	r0, #61
+  62              		.loc 1 23 0
+  63 0002 9ABF     		itte	ls
+  64 0004 014B     		ldrls	r3, .L5
+  65 0006 C05C     		ldrbls	r0, [r0, r3]	@ zero_extendqisi2
+  66              	.LVL2:
+  22:base64/cencode.c **** 	return encoding[(int)value_in];
+  67              		.loc 1 22 0
+  68 0008 3D20     		movhi	r0, #61
   24:base64/cencode.c **** }
-  67              		.loc 1 24 0
-  68 000a 7047     		bx	lr
-  69              	.L6:
-  70              		.align	2
-  71              	.L5:
-  72 000c 00000000 		.word	.LC0
-  73              		.cfi_endproc
-  74              	.LFE1:
-  76              		.section	.text.base64_encode_block,"ax",%progbits
-  77              		.align	1
-  78              		.global	base64_encode_block
-  79              		.thumb
-  80              		.thumb_func
-  82              	base64_encode_block:
-  83              	.LFB2:
+  69              		.loc 1 24 0
+  70 000a 7047     		bx	lr
+  71              	.L6:
+  72              		.align	2
+  73              	.L5:
+  74 000c 00000000 		.word	.LC0
+  75              		.cfi_endproc
+  76              	.LFE1:
+  78              		.section	.text.base64_encode_block,"ax",%progbits
+  79              		.align	1
+  80              		.global	base64_encode_block
+  81              		.syntax unified
+  82              		.thumb
+  83              		.thumb_func
+  84              		.fpu softvfp
+  86              	base64_encode_block:
+  87              	.LFB2:
   25:base64/cencode.c **** 
   26:base64/cencode.c **** int base64_encode_block(const char* plaintext_in, int length_in, char* code_out, base64_encodestate
   27:base64/cencode.c **** {
-  84              		.loc 1 27 0
-  85              		.cfi_startproc
-  86              		@ args = 0, pretend = 0, frame = 8
-  87              		@ frame_needed = 0, uses_anonymous_args = 0
-  88              	.LVL3:
-  89 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
-  90              		.cfi_def_cfa_offset 48
-  91              		.cfi_offset 0, -48
-  92              		.cfi_offset 1, -44
-  93              		.cfi_offset 2, -40
-  94              		.cfi_offset 4, -36
-  95              		.cfi_offset 5, -32
-  96              		.cfi_offset 6, -28
-  97              		.cfi_offset 7, -24
-  98              		.cfi_offset 8, -20
-  99              		.cfi_offset 9, -16
- 100              		.cfi_offset 10, -12
- 101              		.cfi_offset 11, -8
+  88              		.loc 1 27 0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              	.LVL3:
+  93 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  94              		.cfi_def_cfa_offset 32
+  95              		.cfi_offset 3, -32
+  96              		.cfi_offset 4, -28
+  97              		.cfi_offset 5, -24
+  98              		.cfi_offset 6, -20
+  99              		.cfi_offset 7, -16
+ 100              		.cfi_offset 8, -12
+ 101              		.cfi_offset 9, -8
  102              		.cfi_offset 14, -4
  103              		.loc 1 27 0
- 104 0004 1C46     		mov	r4, r3
+ 104 0004 1D46     		mov	r5, r3
   28:base64/cencode.c **** 	const char* plainchar = plaintext_in;
   29:base64/cencode.c **** 	const char* const plaintextend = plaintext_in + length_in;
   30:base64/cencode.c **** 	char* codechar = code_out;
@@ -133,394 +133,410 @@
   33:base64/cencode.c **** 	
   34:base64/cencode.c **** 	result = state_in->result;
  105              		.loc 1 34 0
- 106 0006 5E78     		ldrb	r6, [r3, #1]	@ zero_extendqisi2
+ 106 0006 5C78     		ldrb	r4, [r3, #1]	@ zero_extendqisi2
   35:base64/cencode.c **** 	
   36:base64/cencode.c **** 	switch (state_in->step)
  107              		.loc 1 36 0
  108 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  109              	.LVL4:
-  27:base64/cencode.c **** {
- 110              		.loc 1 27 0
- 111 000a 0546     		mov	r5, r0
- 112              		.loc 1 36 0
- 113 000c 012B     		cmp	r3, #1
-  27:base64/cencode.c **** {
- 114              		.loc 1 27 0
- 115 000e 9046     		mov	r8, r2
-  29:base64/cencode.c **** 	const char* const plaintextend = plaintext_in + length_in;
- 116              		.loc 1 29 0
- 117 0010 00EB010B 		add	fp, r0, r1
- 118              	.LVL5:
- 119              		.loc 1 36 0
- 120 0014 1ED0     		beq	.L18
- 121 0016 04D3     		bcc	.L17
- 122 0018 022B     		cmp	r3, #2
- 123 001a 58D1     		bne	.L22
-  30:base64/cencode.c **** 	char* codechar = code_out;
- 124              		.loc 1 30 0
- 125 001c 1746     		mov	r7, r2
-  28:base64/cencode.c **** 	const char* plainchar = plaintext_in;
- 126              		.loc 1 28 0
- 127 001e 8246     		mov	r10, r0
- 128 0020 2FE0     		b	.L11
- 129              	.L17:
-  30:base64/cencode.c **** 	char* codechar = code_out;
- 130              		.loc 1 30 0
- 131 0022 9146     		mov	r9, r2
- 132              	.LVL6:
- 133              	.L10:
+  29:base64/cencode.c **** 	char* codechar = code_out;
+ 110              		.loc 1 29 0
+ 111 000a 0144     		add	r1, r1, r0
+ 112              	.LVL5:
+ 113              		.loc 1 36 0
+ 114 000c 012B     		cmp	r3, #1
+ 115 000e 21D0     		beq	.L18
+ 116 0010 03D3     		bcc	.L17
+ 117 0012 022B     		cmp	r3, #2
+ 118 0014 36D0     		beq	.L19
   37:base64/cencode.c **** 	{
   38:base64/cencode.c **** 		while (1)
   39:base64/cencode.c **** 		{
   40:base64/cencode.c **** 	case step_A:
   41:base64/cencode.c **** 			if (plainchar == plaintextend)
- 134              		.loc 1 41 0
- 135 0024 5D45     		cmp	r5, fp
- 136 0026 05D1     		bne	.L12
   42:base64/cencode.c **** 			{
   43:base64/cencode.c **** 				state_in->result = result;
   44:base64/cencode.c **** 				state_in->step = step_A;
- 137              		.loc 1 44 0
- 138 0028 0023     		movs	r3, #0
-  43:base64/cencode.c **** 				state_in->result = result;
- 139              		.loc 1 43 0
- 140 002a 6670     		strb	r6, [r4, #1]
- 141              		.loc 1 44 0
- 142 002c 2370     		strb	r3, [r4]
   45:base64/cencode.c **** 				return codechar - code_out;
- 143              		.loc 1 45 0
- 144 002e C8EB0900 		rsb	r0, r8, r9
- 145 0032 4DE0     		b	.L8
- 146              	.L12:
   46:base64/cencode.c **** 			}
   47:base64/cencode.c **** 			fragment = *plainchar++;
- 147              		.loc 1 47 0
- 148 0034 2E78     		ldrb	r6, [r5]	@ zero_extendqisi2
- 149              	.LVL7:
   48:base64/cencode.c **** 			result = (fragment & 0x0fc) >> 2;
   49:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 150              		.loc 1 49 0
- 151 0036 09F10103 		add	r3, r9, #1
- 152 003a B008     		lsrs	r0, r6, #2
- 153 003c 0193     		str	r3, [sp, #4]
- 154 003e FFF7FEFF 		bl	base64_encode_value
- 155              	.LVL8:
-  47:base64/cencode.c **** 			fragment = *plainchar++;
- 156              		.loc 1 47 0
- 157 0042 6F1C     		adds	r7, r5, #1
- 158              	.LVL9:
- 159              		.loc 1 49 0
- 160 0044 89F80000 		strb	r0, [r9]
   50:base64/cencode.c **** 			result = (fragment & 0x003) << 4;
- 161              		.loc 1 50 0
- 162 0048 06F00306 		and	r6, r6, #3
- 163              	.LVL10:
- 164 004c 3601     		lsls	r6, r6, #4
- 165              	.LVL11:
-  47:base64/cencode.c **** 			fragment = *plainchar++;
- 166              		.loc 1 47 0
- 167 004e 3D46     		mov	r5, r7
- 168 0050 019B     		ldr	r3, [sp, #4]
- 169 0052 00E0     		b	.L9
- 170              	.LVL12:
- 171              	.L18:
-  30:base64/cencode.c **** 	char* codechar = code_out;
- 172              		.loc 1 30 0
- 173 0054 1346     		mov	r3, r2
- 174              	.LVL13:
- 175              	.L9:
   51:base64/cencode.c **** 	case step_B:
   52:base64/cencode.c **** 			if (plainchar == plaintextend)
- 176              		.loc 1 52 0
- 177 0056 5D45     		cmp	r5, fp
- 178 0058 05D1     		bne	.L13
   53:base64/cencode.c **** 			{
   54:base64/cencode.c **** 				state_in->result = result;
   55:base64/cencode.c **** 				state_in->step = step_B;
- 179              		.loc 1 55 0
- 180 005a 0122     		movs	r2, #1
-  54:base64/cencode.c **** 				state_in->result = result;
- 181              		.loc 1 54 0
- 182 005c 6670     		strb	r6, [r4, #1]
- 183              		.loc 1 55 0
- 184 005e 2270     		strb	r2, [r4]
   56:base64/cencode.c **** 				return codechar - code_out;
- 185              		.loc 1 56 0
- 186 0060 C8EB0300 		rsb	r0, r8, r3
- 187 0064 34E0     		b	.L8
- 188              	.L13:
   57:base64/cencode.c **** 			}
   58:base64/cencode.c **** 			fragment = *plainchar++;
- 189              		.loc 1 58 0
- 190 0066 05F1010A 		add	r10, r5, #1
- 191              	.LVL14:
- 192 006a 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
- 193              	.LVL15:
   59:base64/cencode.c **** 			result |= (fragment & 0x0f0) >> 4;
   60:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 194              		.loc 1 60 0
- 195 006c 5F1C     		adds	r7, r3, #1
- 196              	.LVL16:
- 197 006e 46EA1510 		orr	r0, r6, r5, lsr #4
- 198 0072 0193     		str	r3, [sp, #4]
- 199              	.LVL17:
- 200 0074 FFF7FEFF 		bl	base64_encode_value
- 201              	.LVL18:
- 202 0078 019B     		ldr	r3, [sp, #4]
   61:base64/cencode.c **** 			result = (fragment & 0x00f) << 2;
- 203              		.loc 1 61 0
- 204 007a 05F00F06 		and	r6, r5, #15
- 205              	.LVL19:
-  60:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 206              		.loc 1 60 0
- 207 007e 1870     		strb	r0, [r3]
- 208              		.loc 1 61 0
- 209 0080 B600     		lsls	r6, r6, #2
- 210              	.LVL20:
- 211              	.L11:
   62:base64/cencode.c **** 	case step_C:
   63:base64/cencode.c **** 			if (plainchar == plaintextend)
- 212              		.loc 1 63 0
- 213 0082 DA45     		cmp	r10, fp
- 214 0084 05D1     		bne	.L14
   64:base64/cencode.c **** 			{
   65:base64/cencode.c **** 				state_in->result = result;
   66:base64/cencode.c **** 				state_in->step = step_C;
- 215              		.loc 1 66 0
- 216 0086 0223     		movs	r3, #2
-  65:base64/cencode.c **** 				state_in->result = result;
- 217              		.loc 1 65 0
- 218 0088 6670     		strb	r6, [r4, #1]
- 219              		.loc 1 66 0
- 220 008a 2370     		strb	r3, [r4]
   67:base64/cencode.c **** 				return codechar - code_out;
- 221              		.loc 1 67 0
- 222 008c C8EB0700 		rsb	r0, r8, r7
- 223 0090 1EE0     		b	.L8
- 224              	.L14:
   68:base64/cencode.c **** 			}
   69:base64/cencode.c **** 			fragment = *plainchar++;
- 225              		.loc 1 69 0
- 226 0092 9AF80090 		ldrb	r9, [r10]	@ zero_extendqisi2
- 227 0096 0AF10105 		add	r5, r10, #1
- 228              	.LVL21:
   70:base64/cencode.c **** 			result |= (fragment & 0x0c0) >> 6;
   71:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 229              		.loc 1 71 0
- 230 009a 46EA9910 		orr	r0, r6, r9, lsr #6
- 231 009e FFF7FEFF 		bl	base64_encode_value
- 232              	.LVL22:
   72:base64/cencode.c **** 			result  = (fragment & 0x03f) >> 0;
- 233              		.loc 1 72 0
- 234 00a2 09F03F06 		and	r6, r9, #63
- 235              	.LVL23:
-  71:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 236              		.loc 1 71 0
- 237 00a6 3870     		strb	r0, [r7]
   73:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 238              		.loc 1 73 0
- 239 00a8 3046     		mov	r0, r6
- 240 00aa FFF7FEFF 		bl	base64_encode_value
- 241              	.LVL24:
- 242 00ae 7870     		strb	r0, [r7, #1]
   74:base64/cencode.c **** 			
   75:base64/cencode.c **** 			++(state_in->stepcount);
- 243              		.loc 1 75 0
- 244 00b0 6368     		ldr	r3, [r4, #4]
- 245 00b2 0133     		adds	r3, r3, #1
   76:base64/cencode.c **** 			if (state_in->stepcount == CHARS_PER_LINE/4)
- 246              		.loc 1 76 0
- 247 00b4 122B     		cmp	r3, #18
-  75:base64/cencode.c **** 			++(state_in->stepcount);
- 248              		.loc 1 75 0
- 249 00b6 6360     		str	r3, [r4, #4]
- 250              		.loc 1 76 0
- 251 00b8 02D0     		beq	.L15
-  73:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
- 252              		.loc 1 73 0
- 253 00ba 07F10209 		add	r9, r7, #2
- 254              	.LVL25:
- 255 00be B1E7     		b	.L10
- 256              	.LVL26:
- 257              	.L15:
   77:base64/cencode.c **** 			{
   78:base64/cencode.c **** 				*codechar++ = '\n';
- 258              		.loc 1 78 0
- 259 00c0 0A23     		movs	r3, #10
- 260 00c2 BB70     		strb	r3, [r7, #2]
   79:base64/cencode.c **** 				state_in->stepcount = 0;
- 261              		.loc 1 79 0
- 262 00c4 0023     		movs	r3, #0
-  78:base64/cencode.c **** 				*codechar++ = '\n';
- 263              		.loc 1 78 0
- 264 00c6 07F10309 		add	r9, r7, #3
- 265              	.LVL27:
- 266              		.loc 1 79 0
- 267 00ca 6360     		str	r3, [r4, #4]
- 268 00cc AAE7     		b	.L10
- 269              	.LVL28:
- 270              	.L22:
   80:base64/cencode.c **** 			}
   81:base64/cencode.c **** 		}
   82:base64/cencode.c **** 	}
   83:base64/cencode.c **** 	/* control should not reach here */
   84:base64/cencode.c **** 	return codechar - code_out;
- 271              		.loc 1 84 0
- 272 00ce 0020     		movs	r0, #0
- 273              	.LVL29:
- 274              	.L8:
+ 119              		.loc 1 84 0
+ 120 0016 0020     		movs	r0, #0
+ 121              	.LVL6:
+ 122 0018 06E0     		b	.L7
+ 123              	.LVL7:
+ 124              	.L17:
+  30:base64/cencode.c **** 	char result;
+ 125              		.loc 1 30 0
+ 126 001a 1746     		mov	r7, r2
+ 127              	.LVL8:
+ 128              	.L10:
+  41:base64/cencode.c **** 			{
+ 129              		.loc 1 41 0
+ 130 001c 8842     		cmp	r0, r1
+ 131 001e 05D1     		bne	.L12
+  44:base64/cencode.c **** 				return codechar - code_out;
+ 132              		.loc 1 44 0
+ 133 0020 0023     		movs	r3, #0
+  43:base64/cencode.c **** 				state_in->step = step_A;
+ 134              		.loc 1 43 0
+ 135 0022 6C70     		strb	r4, [r5, #1]
+  44:base64/cencode.c **** 				return codechar - code_out;
+ 136              		.loc 1 44 0
+ 137 0024 2B70     		strb	r3, [r5]
+  45:base64/cencode.c **** 			}
+ 138              		.loc 1 45 0
+ 139 0026 B81A     		subs	r0, r7, r2
+ 140              	.LVL9:
+ 141              	.L7:
   85:base64/cencode.c **** }
- 275              		.loc 1 85 0
- 276 00d0 03B0     		add	sp, sp, #12
- 277              		@ sp needed
- 278 00d2 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
- 279              		.cfi_endproc
- 280              	.LFE2:
- 282              		.section	.text.base64_encode_blockend,"ax",%progbits
- 283              		.align	1
- 284              		.global	base64_encode_blockend
- 285              		.thumb
- 286              		.thumb_func
- 288              	base64_encode_blockend:
- 289              	.LFB3:
+ 142              		.loc 1 85 0
+ 143 0028 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 144              	.LVL10:
+ 145              	.L12:
+  47:base64/cencode.c **** 			result = (fragment & 0x0fc) >> 2;
+ 146              		.loc 1 47 0
+ 147 002c 0478     		ldrb	r4, [r0]	@ zero_extendqisi2
+ 148              	.LVL11:
+ 149 002e 461C     		adds	r6, r0, #1
+ 150              	.LVL12:
+  49:base64/cencode.c **** 			result = (fragment & 0x003) << 4;
+ 151              		.loc 1 49 0
+ 152 0030 A008     		lsrs	r0, r4, #2
+ 153 0032 FFF7FEFF 		bl	base64_encode_value
+ 154              	.LVL13:
+ 155 0036 3870     		strb	r0, [r7]
+  47:base64/cencode.c **** 			result = (fragment & 0x0fc) >> 2;
+ 156              		.loc 1 47 0
+ 157 0038 3046     		mov	r0, r6
+  50:base64/cencode.c **** 	case step_B:
+ 158              		.loc 1 50 0
+ 159 003a 2401     		lsls	r4, r4, #4
+ 160              	.LVL14:
+  49:base64/cencode.c **** 			result = (fragment & 0x003) << 4;
+ 161              		.loc 1 49 0
+ 162 003c 07F10108 		add	r8, r7, #1
+ 163              	.LVL15:
+  50:base64/cencode.c **** 	case step_B:
+ 164              		.loc 1 50 0
+ 165 0040 04F03004 		and	r4, r4, #48
+ 166              	.LVL16:
+ 167              	.L9:
+  52:base64/cencode.c **** 			{
+ 168              		.loc 1 52 0
+ 169 0044 8842     		cmp	r0, r1
+ 170 0046 07D1     		bne	.L13
+  55:base64/cencode.c **** 				return codechar - code_out;
+ 171              		.loc 1 55 0
+ 172 0048 0123     		movs	r3, #1
+  54:base64/cencode.c **** 				state_in->step = step_B;
+ 173              		.loc 1 54 0
+ 174 004a 6C70     		strb	r4, [r5, #1]
+  55:base64/cencode.c **** 				return codechar - code_out;
+ 175              		.loc 1 55 0
+ 176 004c 2B70     		strb	r3, [r5]
+  56:base64/cencode.c **** 			}
+ 177              		.loc 1 56 0
+ 178 004e A8EB0200 		sub	r0, r8, r2
+ 179              	.LVL17:
+ 180 0052 E9E7     		b	.L7
+ 181              	.LVL18:
+ 182              	.L18:
+  30:base64/cencode.c **** 	char result;
+ 183              		.loc 1 30 0
+ 184 0054 9046     		mov	r8, r2
+ 185 0056 F5E7     		b	.L9
+ 186              	.LVL19:
+ 187              	.L13:
+  58:base64/cencode.c **** 			result |= (fragment & 0x0f0) >> 4;
+ 188              		.loc 1 58 0
+ 189 0058 0778     		ldrb	r7, [r0]	@ zero_extendqisi2
+ 190 005a 00F10109 		add	r9, r0, #1
+ 191              	.LVL20:
+  60:base64/cencode.c **** 			result = (fragment & 0x00f) << 2;
+ 192              		.loc 1 60 0
+ 193 005e 44EA1710 		orr	r0, r4, r7, lsr #4
+ 194 0062 FFF7FEFF 		bl	base64_encode_value
+ 195              	.LVL21:
+ 196 0066 88F80000 		strb	r0, [r8]
+  58:base64/cencode.c **** 			result |= (fragment & 0x0f0) >> 4;
+ 197              		.loc 1 58 0
+ 198 006a 4846     		mov	r0, r9
+  61:base64/cencode.c **** 	case step_C:
+ 199              		.loc 1 61 0
+ 200 006c BC00     		lsls	r4, r7, #2
+ 201              	.LVL22:
+  60:base64/cencode.c **** 			result = (fragment & 0x00f) << 2;
+ 202              		.loc 1 60 0
+ 203 006e 08F10106 		add	r6, r8, #1
+ 204              	.LVL23:
+  61:base64/cencode.c **** 	case step_C:
+ 205              		.loc 1 61 0
+ 206 0072 04F03C04 		and	r4, r4, #60
+ 207              	.LVL24:
+ 208              	.L11:
+  63:base64/cencode.c **** 			{
+ 209              		.loc 1 63 0
+ 210 0076 8842     		cmp	r0, r1
+ 211 0078 06D1     		bne	.L14
+  66:base64/cencode.c **** 				return codechar - code_out;
+ 212              		.loc 1 66 0
+ 213 007a 0223     		movs	r3, #2
+  65:base64/cencode.c **** 				state_in->step = step_C;
+ 214              		.loc 1 65 0
+ 215 007c 6C70     		strb	r4, [r5, #1]
+  66:base64/cencode.c **** 				return codechar - code_out;
+ 216              		.loc 1 66 0
+ 217 007e 2B70     		strb	r3, [r5]
+  67:base64/cencode.c **** 			}
+ 218              		.loc 1 67 0
+ 219 0080 B01A     		subs	r0, r6, r2
+ 220              	.LVL25:
+ 221 0082 D1E7     		b	.L7
+ 222              	.LVL26:
+ 223              	.L19:
+  30:base64/cencode.c **** 	char result;
+ 224              		.loc 1 30 0
+ 225 0084 1646     		mov	r6, r2
+ 226 0086 F6E7     		b	.L11
+ 227              	.LVL27:
+ 228              	.L14:
+  69:base64/cencode.c **** 			result |= (fragment & 0x0c0) >> 6;
+ 229              		.loc 1 69 0
+ 230 0088 0778     		ldrb	r7, [r0]	@ zero_extendqisi2
+ 231 008a 00F10108 		add	r8, r0, #1
+ 232              	.LVL28:
+  71:base64/cencode.c **** 			result  = (fragment & 0x03f) >> 0;
+ 233              		.loc 1 71 0
+ 234 008e 44EA9710 		orr	r0, r4, r7, lsr #6
+ 235 0092 FFF7FEFF 		bl	base64_encode_value
+ 236              	.LVL29:
+  72:base64/cencode.c **** 			*codechar++ = base64_encode_value(result);
+ 237              		.loc 1 72 0
+ 238 0096 07F03F04 		and	r4, r7, #63
+ 239              	.LVL30:
+  71:base64/cencode.c **** 			result  = (fragment & 0x03f) >> 0;
+ 240              		.loc 1 71 0
+ 241 009a 3070     		strb	r0, [r6]
+  73:base64/cencode.c **** 			
+ 242              		.loc 1 73 0
+ 243 009c 2046     		mov	r0, r4
+ 244 009e FFF7FEFF 		bl	base64_encode_value
+ 245              	.LVL31:
+ 246 00a2 7070     		strb	r0, [r6, #1]
+  75:base64/cencode.c **** 			if (state_in->stepcount == CHARS_PER_LINE/4)
+ 247              		.loc 1 75 0
+ 248 00a4 6B68     		ldr	r3, [r5, #4]
+  69:base64/cencode.c **** 			result |= (fragment & 0x0c0) >> 6;
+ 249              		.loc 1 69 0
+ 250 00a6 4046     		mov	r0, r8
+  75:base64/cencode.c **** 			if (state_in->stepcount == CHARS_PER_LINE/4)
+ 251              		.loc 1 75 0
+ 252 00a8 0133     		adds	r3, r3, #1
+  76:base64/cencode.c **** 			{
+ 253              		.loc 1 76 0
+ 254 00aa 122B     		cmp	r3, #18
+  75:base64/cencode.c **** 			if (state_in->stepcount == CHARS_PER_LINE/4)
+ 255              		.loc 1 75 0
+ 256 00ac 6B60     		str	r3, [r5, #4]
+  78:base64/cencode.c **** 				state_in->stepcount = 0;
+ 257              		.loc 1 78 0
+ 258 00ae 03BF     		ittte	eq
+ 259 00b0 0A23     		moveq	r3, #10
+ 260 00b2 B370     		strbeq	r3, [r6, #2]
+  79:base64/cencode.c **** 			}
+ 261              		.loc 1 79 0
+ 262 00b4 0023     		moveq	r3, #0
+  73:base64/cencode.c **** 			
+ 263              		.loc 1 73 0
+ 264 00b6 B71C     		addne	r7, r6, #2
+ 265              	.LVL32:
+  78:base64/cencode.c **** 				state_in->stepcount = 0;
+ 266              		.loc 1 78 0
+ 267 00b8 04BF     		itt	eq
+ 268 00ba F71C     		addeq	r7, r6, #3
+ 269              	.LVL33:
+  79:base64/cencode.c **** 			}
+ 270              		.loc 1 79 0
+ 271 00bc 6B60     		streq	r3, [r5, #4]
+ 272 00be ADE7     		b	.L10
+ 273              		.cfi_endproc
+ 274              	.LFE2:
+ 276              		.section	.text.base64_encode_blockend,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	base64_encode_blockend
+ 279              		.syntax unified
+ 280              		.thumb
+ 281              		.thumb_func
+ 282              		.fpu softvfp
+ 284              	base64_encode_blockend:
+ 285              	.LFB3:
   86:base64/cencode.c **** 
   87:base64/cencode.c **** int base64_encode_blockend(char* code_out, base64_encodestate* state_in)
   88:base64/cencode.c **** {
- 290              		.loc 1 88 0
- 291              		.cfi_startproc
- 292              		@ args = 0, pretend = 0, frame = 0
- 293              		@ frame_needed = 0, uses_anonymous_args = 0
- 294              	.LVL30:
+ 286              		.loc 1 88 0
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 0
+ 289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 290              	.LVL34:
+ 291 0000 08B5     		push	{r3, lr}
+ 292              		.cfi_def_cfa_offset 8
+ 293              		.cfi_offset 3, -8
+ 294              		.cfi_offset 14, -4
   89:base64/cencode.c **** 	char* codechar = code_out;
   90:base64/cencode.c **** 	
   91:base64/cencode.c **** 	switch (state_in->step)
  295              		.loc 1 91 0
- 296 0000 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
-  88:base64/cencode.c **** {
+ 296 0002 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+  88:base64/cencode.c **** 	char* codechar = code_out;
  297              		.loc 1 88 0
- 298 0002 10B5     		push	{r4, lr}
- 299              		.cfi_def_cfa_offset 8
- 300              		.cfi_offset 4, -8
- 301              		.cfi_offset 14, -4
- 302              		.loc 1 91 0
- 303 0004 012B     		cmp	r3, #1
-  88:base64/cencode.c **** {
- 304              		.loc 1 88 0
- 305 0006 0446     		mov	r4, r0
- 306              		.loc 1 91 0
- 307 0008 0AD0     		beq	.L25
- 308 000a 022B     		cmp	r3, #2
- 309 000c 11D1     		bne	.L29
- 310              	.LVL31:
+ 298 0004 0246     		mov	r2, r0
+ 299              		.loc 1 91 0
+ 300 0006 012B     		cmp	r3, #1
+ 301 0008 03D0     		beq	.L24
+ 302 000a 022B     		cmp	r3, #2
+ 303 000c 0ED0     		beq	.L25
+ 304 000e 0346     		mov	r3, r0
+ 305 0010 07E0     		b	.L23
+ 306              	.L24:
+ 307              	.LVL35:
   92:base64/cencode.c **** 	{
   93:base64/cencode.c **** 	case step_B:
   94:base64/cencode.c **** 		*codechar++ = base64_encode_value(state_in->result);
+ 308              		.loc 1 94 0
+ 309 0012 4878     		ldrb	r0, [r1, #1]	@ zero_extendqisi2
+ 310              	.LVL36:
+ 311 0014 FFF7FEFF 		bl	base64_encode_value
+ 312              	.LVL37:
   95:base64/cencode.c **** 		*codechar++ = '=';
+ 313              		.loc 1 95 0
+ 314 0018 3D21     		movs	r1, #61
+ 315              	.LVL38:
+  94:base64/cencode.c **** 		*codechar++ = '=';
+ 316              		.loc 1 94 0
+ 317 001a 1070     		strb	r0, [r2]
+ 318              	.LVL39:
+ 319              		.loc 1 95 0
+ 320 001c 5170     		strb	r1, [r2, #1]
   96:base64/cencode.c **** 		*codechar++ = '=';
+ 321              		.loc 1 96 0
+ 322 001e D31C     		adds	r3, r2, #3
+ 323              	.LVL40:
+ 324 0020 9170     		strb	r1, [r2, #2]
+ 325              	.L23:
+ 326              	.LVL41:
   97:base64/cencode.c **** 		break;
   98:base64/cencode.c **** 	case step_C:
   99:base64/cencode.c **** 		*codechar++ = base64_encode_value(state_in->result);
- 311              		.loc 1 99 0
- 312 000e 4878     		ldrb	r0, [r1, #1]	@ zero_extendqisi2
- 313              	.LVL32:
- 314 0010 FFF7FEFF 		bl	base64_encode_value
- 315              	.LVL33:
- 316 0014 2346     		mov	r3, r4
  100:base64/cencode.c **** 		*codechar++ = '=';
- 317              		.loc 1 100 0
- 318 0016 3D22     		movs	r2, #61
-  99:base64/cencode.c **** 		*codechar++ = base64_encode_value(state_in->result);
- 319              		.loc 1 99 0
- 320 0018 03F8020B 		strb	r0, [r3], #2
- 321              	.LVL34:
- 322              		.loc 1 100 0
- 323 001c 6270     		strb	r2, [r4, #1]
  101:base64/cencode.c **** 		break;
- 324              		.loc 1 101 0
- 325 001e 09E0     		b	.L24
- 326              	.LVL35:
- 327              	.L25:
-  94:base64/cencode.c **** 		*codechar++ = base64_encode_value(state_in->result);
- 328              		.loc 1 94 0
- 329 0020 4878     		ldrb	r0, [r1, #1]	@ zero_extendqisi2
- 330              	.LVL36:
- 331 0022 FFF7FEFF 		bl	base64_encode_value
- 332              	.LVL37:
-  95:base64/cencode.c **** 		*codechar++ = '=';
- 333              		.loc 1 95 0
- 334 0026 3D22     		movs	r2, #61
-  94:base64/cencode.c **** 		*codechar++ = base64_encode_value(state_in->result);
- 335              		.loc 1 94 0
- 336 0028 2070     		strb	r0, [r4]
- 337              	.LVL38:
-  95:base64/cencode.c **** 		*codechar++ = '=';
- 338              		.loc 1 95 0
- 339 002a 6270     		strb	r2, [r4, #1]
-  96:base64/cencode.c **** 		*codechar++ = '=';
- 340              		.loc 1 96 0
- 341 002c E31C     		adds	r3, r4, #3
- 342              	.LVL39:
- 343 002e A270     		strb	r2, [r4, #2]
-  97:base64/cencode.c **** 		break;
- 344              		.loc 1 97 0
- 345 0030 00E0     		b	.L24
- 346              	.LVL40:
- 347              	.L29:
-  91:base64/cencode.c **** 	switch (state_in->step)
- 348              		.loc 1 91 0
- 349 0032 0346     		mov	r3, r0
- 350              	.LVL41:
- 351              	.L24:
  102:base64/cencode.c **** 	case step_A:
  103:base64/cencode.c **** 		break;
  104:base64/cencode.c **** 	}
  105:base64/cencode.c **** 	*codechar++ = '\n';
- 352              		.loc 1 105 0
- 353 0034 1846     		mov	r0, r3
- 354 0036 0A22     		movs	r2, #10
- 355 0038 00F8012B 		strb	r2, [r0], #1
- 356              	.LVL42:
+ 327              		.loc 1 105 0
+ 328 0022 0A21     		movs	r1, #10
+ 329 0024 03F8011B 		strb	r1, [r3], #1
+ 330              	.LVL42:
  106:base64/cencode.c **** 	
  107:base64/cencode.c **** 	return codechar - code_out;
  108:base64/cencode.c **** }
- 357              		.loc 1 108 0
- 358 003c 001B     		subs	r0, r0, r4
- 359              	.LVL43:
- 360 003e 10BD     		pop	{r4, pc}
- 361              		.cfi_endproc
- 362              	.LFE3:
- 364              		.global	CHARS_PER_LINE
- 365              		.section	.rodata.CHARS_PER_LINE,"a",%progbits
- 366              		.align	2
- 369              	CHARS_PER_LINE:
- 370 0000 48000000 		.word	72
- 371              		.section	.rodata.str1.1,"aMS",%progbits,1
- 372              	.LC0:
- 373 0000 41424344 		.ascii	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy"
- 373      45464748 
- 373      494A4B4C 
- 373      4D4E4F50 
- 373      51525354 
- 374 0033 7A303132 		.ascii	"z0123456789+/\000"
- 374      33343536 
- 374      3738392B 
- 374      2F00
- 375              		.text
- 376              	.Letext0:
- 377              		.file 2 "base64/cencode.h"
+ 331              		.loc 1 108 0
+ 332 0028 981A     		subs	r0, r3, r2
+ 333 002a 08BD     		pop	{r3, pc}
+ 334              	.LVL43:
+ 335              	.L25:
+  99:base64/cencode.c **** 		*codechar++ = '=';
+ 336              		.loc 1 99 0
+ 337 002c 4878     		ldrb	r0, [r1, #1]	@ zero_extendqisi2
+ 338              	.LVL44:
+ 339 002e FFF7FEFF 		bl	base64_encode_value
+ 340              	.LVL45:
+ 100:base64/cencode.c **** 		break;
+ 341              		.loc 1 100 0
+ 342 0032 3D21     		movs	r1, #61
+ 343              	.LVL46:
+  99:base64/cencode.c **** 		*codechar++ = '=';
+ 344              		.loc 1 99 0
+ 345 0034 1346     		mov	r3, r2
+ 346 0036 03F8020B 		strb	r0, [r3], #2
+ 347              	.LVL47:
+ 100:base64/cencode.c **** 		break;
+ 348              		.loc 1 100 0
+ 349 003a 5170     		strb	r1, [r2, #1]
+ 101:base64/cencode.c **** 	case step_A:
+ 350              		.loc 1 101 0
+ 351 003c F1E7     		b	.L23
+ 352              		.cfi_endproc
+ 353              	.LFE3:
+ 355              		.global	CHARS_PER_LINE
+ 356              		.section	.rodata.CHARS_PER_LINE,"a",%progbits
+ 357              		.align	2
+ 360              	CHARS_PER_LINE:
+ 361 0000 48000000 		.word	72
+ 362              		.section	.rodata.base64_encode_value.str1.1,"aMS",%progbits,1
+ 363              	.LC0:
+ 364 0000 41424344 		.ascii	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy"
+ 364      45464748 
+ 364      494A4B4C 
+ 364      4D4E4F50 
+ 364      51525354 
+ 365 0033 7A303132 		.ascii	"z0123456789+/\000"
+ 365      33343536 
+ 365      3738392B 
+ 365      2F00
+ 366              		.text
+ 367              	.Letext0:
+ 368              		.file 2 "base64/cencode.h"
 DEFINED SYMBOLS
-                            *ABS*:00000000 cencode.c
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:19     .text.base64_init_encodestate:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:24     .text.base64_init_encodestate:00000000 base64_init_encodestate
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:45     .text.base64_encode_value:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:50     .text.base64_encode_value:00000000 base64_encode_value
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:72     .text.base64_encode_value:0000000c $d
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:77     .text.base64_encode_block:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:82     .text.base64_encode_block:00000000 base64_encode_block
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:283    .text.base64_encode_blockend:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:288    .text.base64_encode_blockend:00000000 base64_encode_blockend
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:369    .rodata.CHARS_PER_LINE:00000000 CHARS_PER_LINE
-C:\Users\haifisch\AppData\Local\Temp\ccu5Hw7l.s:366    .rodata.CHARS_PER_LINE:00000000 $d
-                     .debug_frame:00000010 $d
+                            *ABS*:0000000000000000 cencode.c
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:16     .text.base64_init_encodestate:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:23     .text.base64_init_encodestate:0000000000000000 base64_init_encodestate
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:45     .text.base64_encode_value:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:52     .text.base64_encode_value:0000000000000000 base64_encode_value
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:74     .text.base64_encode_value:000000000000000c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:79     .text.base64_encode_block:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:86     .text.base64_encode_block:0000000000000000 base64_encode_block
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:277    .text.base64_encode_blockend:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:284    .text.base64_encode_blockend:0000000000000000 base64_encode_blockend
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:360    .rodata.CHARS_PER_LINE:0000000000000000 CHARS_PER_LINE
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccGBkmoO.s:357    .rodata.CHARS_PER_LINE:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

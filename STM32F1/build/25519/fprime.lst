@@ -1,28 +1,26 @@
-   1              		.syntax unified
-   2              		.cpu cortex-m3
-   3              		.fpu softvfp
-   4              		.eabi_attribute 20, 1
-   5              		.eabi_attribute 21, 1
-   6              		.eabi_attribute 23, 3
-   7              		.eabi_attribute 24, 1
-   8              		.eabi_attribute 25, 1
-   9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 2
-  11              		.eabi_attribute 34, 1
-  12              		.eabi_attribute 18, 4
-  13              		.thumb
-  14              		.file	"fprime.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.fprime_load,"ax",%progbits
-  19              		.align	2
-  20              		.global	fprime_load
-  21              		.thumb
-  22              		.thumb_func
-  24              	fprime_load:
-  25              	.LFB5:
-  26              		.file 1 "25519/fprime.c"
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"fprime.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.raw_add,"ax",%progbits
+  16              		.align	1
+  17              		.syntax unified
+  18              		.thumb
+  19              		.thumb_func
+  20              		.fpu softvfp
+  22              	raw_add:
+  23              	.LFB1:
+  24              		.file 1 "25519/fprime.c"
    1:25519/fprime.c **** /* Arithmetic in prime fields
    2:25519/fprime.c ****  * Daniel Beer <dlbeer@gmail.com>, 10 Jan 2014
    3:25519/fprime.c ****  *
@@ -36,15 +34,66 @@
   11:25519/fprime.c **** 
   12:25519/fprime.c **** static void raw_add(uint8_t *x, const uint8_t *p)
   13:25519/fprime.c **** {
+  25              		.loc 1 13 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              	.LVL0:
   14:25519/fprime.c **** 	uint16_t c = 0;
+  30              		.loc 1 14 0
+  31 0000 0023     		movs	r3, #0
+  13:25519/fprime.c **** 	uint16_t c = 0;
+  32              		.loc 1 13 0
+  33 0002 30B5     		push	{r4, r5, lr}
+  34              		.cfi_def_cfa_offset 12
+  35              		.cfi_offset 4, -12
+  36              		.cfi_offset 5, -8
+  37              		.cfi_offset 14, -4
+  38 0004 421E     		subs	r2, r0, #1
+  39 0006 0139     		subs	r1, r1, #1
+  40              	.LVL1:
+  41 0008 1F30     		adds	r0, r0, #31
+  42              	.LVL2:
+  43              	.L2:
   15:25519/fprime.c **** 	int i;
   16:25519/fprime.c **** 
   17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
   18:25519/fprime.c **** 		c += ((uint16_t)x[i]) + ((uint16_t)p[i]);
+  44              		.loc 1 18 0 discriminator 3
+  45 000a 12F8014F 		ldrb	r4, [r2, #1]!	@ zero_extendqisi2
+  46              	.LVL3:
+  47 000e 11F8015F 		ldrb	r5, [r1, #1]!	@ zero_extendqisi2
+  17:25519/fprime.c **** 		c += ((uint16_t)x[i]) + ((uint16_t)p[i]);
+  48              		.loc 1 17 0 discriminator 3
+  49 0012 9042     		cmp	r0, r2
+  50              		.loc 1 18 0 discriminator 3
+  51 0014 2C44     		add	r4, r4, r5
+  52 0016 2344     		add	r3, r3, r4
+  53              	.LVL4:
   19:25519/fprime.c **** 		x[i] = c;
+  54              		.loc 1 19 0 discriminator 3
+  55 0018 1370     		strb	r3, [r2]
   20:25519/fprime.c **** 		c >>= 8;
+  56              		.loc 1 20 0 discriminator 3
+  57 001a C3F30F23 		ubfx	r3, r3, #8, #16
+  58              	.LVL5:
+  17:25519/fprime.c **** 		c += ((uint16_t)x[i]) + ((uint16_t)p[i]);
+  59              		.loc 1 17 0 discriminator 3
+  60 001e F4D1     		bne	.L2
   21:25519/fprime.c **** 	}
   22:25519/fprime.c **** }
+  61              		.loc 1 22 0
+  62 0020 30BD     		pop	{r4, r5, pc}
+  63              		.cfi_endproc
+  64              	.LFE1:
+  66              		.section	.text.prime_msb,"ax",%progbits
+  67              		.align	1
+  68              		.syntax unified
+  69              		.thumb
+  70              		.thumb_func
+  71              		.fpu softvfp
+  73              	prime_msb:
+  74              	.LFB3:
   23:25519/fprime.c **** 
   24:25519/fprime.c **** static void raw_try_sub(uint8_t *x, const uint8_t *p)
   25:25519/fprime.c **** {
@@ -64,89 +113,198 @@
   39:25519/fprime.c **** /* Warning: this function is variable-time */
   40:25519/fprime.c **** static int prime_msb(const uint8_t *p)
   41:25519/fprime.c **** {
+  75              		.loc 1 41 0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  80              	.LVL6:
   42:25519/fprime.c **** 	int i;
   43:25519/fprime.c **** 	uint8_t x;
   44:25519/fprime.c **** 
   45:25519/fprime.c **** 	for (i = FPRIME_SIZE - 1; i >= 0; i--)
+  81              		.loc 1 45 0
+  82 0000 1F23     		movs	r3, #31
+  83              	.LVL7:
+  84              	.L6:
   46:25519/fprime.c **** 		if (p[i])
+  85              		.loc 1 46 0
+  86 0002 C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+  87 0004 12B9     		cbnz	r2, .L5
+  45:25519/fprime.c **** 		if (p[i])
+  88              		.loc 1 45 0 discriminator 2
+  89 0006 13F1FF33 		adds	r3, r3, #-1
+  90              	.LVL8:
+  91 000a FAD2     		bcs	.L6
+  92              	.LVL9:
+  93              	.L5:
   47:25519/fprime.c **** 			break;
   48:25519/fprime.c **** 
   49:25519/fprime.c **** 	x = p[i];
+  94              		.loc 1 49 0
+  95 000c C25C     		ldrb	r2, [r0, r3]	@ zero_extendqisi2
+  96              	.LVL10:
   50:25519/fprime.c **** 	i <<= 3;
+  97              		.loc 1 50 0
+  98 000e D800     		lsls	r0, r3, #3
+  99              	.LVL11:
+ 100              	.L7:
   51:25519/fprime.c **** 
   52:25519/fprime.c **** 	while (x) {
+ 101              		.loc 1 52 0
+ 102 0010 0AB9     		cbnz	r2, .L8
   53:25519/fprime.c **** 		x >>= 1;
   54:25519/fprime.c **** 		i++;
   55:25519/fprime.c **** 	}
   56:25519/fprime.c **** 
   57:25519/fprime.c **** 	return i - 1;
   58:25519/fprime.c **** }
+ 103              		.loc 1 58 0
+ 104 0012 0138     		subs	r0, r0, #1
+ 105              	.LVL12:
+ 106 0014 7047     		bx	lr
+ 107              	.LVL13:
+ 108              	.L8:
+  53:25519/fprime.c **** 		x >>= 1;
+ 109              		.loc 1 53 0
+ 110 0016 5208     		lsrs	r2, r2, #1
+ 111              	.LVL14:
+  54:25519/fprime.c **** 	}
+ 112              		.loc 1 54 0
+ 113 0018 0130     		adds	r0, r0, #1
+ 114              	.LVL15:
+ 115 001a F9E7     		b	.L7
+ 116              		.cfi_endproc
+ 117              	.LFE3:
+ 119              		.section	.text.shift_n_bits,"ax",%progbits
+ 120              		.align	1
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.fpu softvfp
+ 126              	shift_n_bits:
+ 127              	.LFB4:
   59:25519/fprime.c **** 
   60:25519/fprime.c **** /* Warning: this function may be variable-time in the argument n */
   61:25519/fprime.c **** static void shift_n_bits(uint8_t *x, int n)
   62:25519/fprime.c **** {
+ 128              		.loc 1 62 0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132              	.LVL16:
+ 133 0000 10B5     		push	{r4, lr}
+ 134              		.cfi_def_cfa_offset 8
+ 135              		.cfi_offset 4, -8
+ 136              		.cfi_offset 14, -4
   63:25519/fprime.c **** 	uint16_t c = 0;
+ 137              		.loc 1 63 0
+ 138 0002 0024     		movs	r4, #0
+ 139 0004 421E     		subs	r2, r0, #1
+ 140 0006 1F30     		adds	r0, r0, #31
+ 141              	.LVL17:
+ 142              	.L11:
   64:25519/fprime.c **** 	int i;
   65:25519/fprime.c **** 
   66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
   67:25519/fprime.c **** 		c |= ((uint16_t)x[i]) << n;
+ 143              		.loc 1 67 0 discriminator 3
+ 144 0008 12F8013F 		ldrb	r3, [r2, #1]!	@ zero_extendqisi2
+ 145              	.LVL18:
+ 146 000c 8B40     		lsls	r3, r3, r1
+ 147 000e 2343     		orrs	r3, r3, r4
+ 148 0010 1BB2     		sxth	r3, r3
+ 149              	.LVL19:
+  66:25519/fprime.c **** 		c |= ((uint16_t)x[i]) << n;
+ 150              		.loc 1 66 0 discriminator 3
+ 151 0012 9042     		cmp	r0, r2
   68:25519/fprime.c **** 		x[i] = c;
+ 152              		.loc 1 68 0 discriminator 3
+ 153 0014 1370     		strb	r3, [r2]
   69:25519/fprime.c **** 		c >>= 8;
+ 154              		.loc 1 69 0 discriminator 3
+ 155 0016 C3F30724 		ubfx	r4, r3, #8, #8
+ 156              	.LVL20:
+  66:25519/fprime.c **** 		c |= ((uint16_t)x[i]) << n;
+ 157              		.loc 1 66 0 discriminator 3
+ 158 001a F5D1     		bne	.L11
   70:25519/fprime.c **** 	}
   71:25519/fprime.c **** }
+ 159              		.loc 1 71 0
+ 160 001c 10BD     		pop	{r4, pc}
+ 161              		.cfi_endproc
+ 162              	.LFE4:
+ 164              		.section	.text.fprime_load,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	fprime_load
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 170              		.fpu softvfp
+ 172              	fprime_load:
+ 173              	.LFB5:
   72:25519/fprime.c **** 
   73:25519/fprime.c **** void fprime_load(uint8_t *x, uint32_t c)
   74:25519/fprime.c **** {
-  27              		.loc 1 74 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32              	.LVL0:
-  33 0000 10B4     		push	{r4}
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 4, -4
+ 174              		.loc 1 74 0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178              		@ link register save eliminated.
+ 179              	.LVL21:
+ 180 0000 431E     		subs	r3, r0, #1
+ 181 0002 C21C     		adds	r2, r0, #3
+ 182              	.LVL22:
+ 183              	.L14:
   75:25519/fprime.c **** 	int i;
   76:25519/fprime.c **** 
   77:25519/fprime.c **** 	for (i = 0; i < sizeof(c); i++) {
+ 184              		.loc 1 77 0 discriminator 1
+ 185 0004 9342     		cmp	r3, r2
+ 186 0006 06D1     		bne	.L15
   78:25519/fprime.c **** 		x[i] = c;
   79:25519/fprime.c **** 		c >>= 8;
-  36              		.loc 1 79 0
-  37 0002 0A0C     		lsrs	r2, r1, #16
-  38 0004 0C0A     		lsrs	r4, r1, #8
-  39              	.LVL1:
-  40 0006 0B0E     		lsrs	r3, r1, #24
-  78:25519/fprime.c **** 		x[i] = c;
-  41              		.loc 1 78 0
-  42 0008 0170     		strb	r1, [r0]
-  43 000a 8270     		strb	r2, [r0, #2]
-  44              	.LVL2:
-  45 000c 4470     		strb	r4, [r0, #1]
-  46 000e C370     		strb	r3, [r0, #3]
-  47              	.LVL3:
-  48 0010 0021     		movs	r1, #0
-  49 0012 0430     		adds	r0, r0, #4
-  50              	.LVL4:
-  51 0014 1C22     		movs	r2, #28
-  52              	.LVL5:
   80:25519/fprime.c **** 	}
   81:25519/fprime.c **** 
   82:25519/fprime.c **** 	for (; i < FPRIME_SIZE; i++)
   83:25519/fprime.c **** 		x[i] = 0;
+ 187              		.loc 1 83 0
+ 188 0008 0022     		movs	r2, #0
+ 189 000a 1F30     		adds	r0, r0, #31
+ 190              	.LVL23:
+ 191              	.L16:
+ 192              		.loc 1 83 0 is_stmt 0 discriminator 2
+ 193 000c 03F8012F 		strb	r2, [r3, #1]!
+ 194              	.LVL24:
+  82:25519/fprime.c **** 		x[i] = 0;
+ 195              		.loc 1 82 0 is_stmt 1 discriminator 2
+ 196 0010 8342     		cmp	r3, r0
+ 197 0012 FBD1     		bne	.L16
   84:25519/fprime.c **** }
-  53              		.loc 1 84 0
-  54 0016 5DF8044B 		ldr	r4, [sp], #4
-  55 001a FFF7FEBF 		b	memset
-  56              	.LVL6:
-  57              		.cfi_endproc
-  58              	.LFE5:
-  60 001e 00BF     		.section	.text.fprime_from_bytes,"ax",%progbits
-  61              		.align	2
-  62              		.global	fprime_from_bytes
-  63              		.thumb
-  64              		.thumb_func
-  66              	fprime_from_bytes:
-  67              	.LFB7:
+ 198              		.loc 1 84 0
+ 199 0014 7047     		bx	lr
+ 200              	.LVL25:
+ 201              	.L15:
+  78:25519/fprime.c **** 		x[i] = c;
+ 202              		.loc 1 78 0 discriminator 3
+ 203 0016 03F8011F 		strb	r1, [r3, #1]!
+ 204              	.LVL26:
+  79:25519/fprime.c **** 	}
+ 205              		.loc 1 79 0 discriminator 3
+ 206 001a 090A     		lsrs	r1, r1, #8
+ 207              	.LVL27:
+ 208 001c F2E7     		b	.L14
+ 209              		.cfi_endproc
+ 210              	.LFE5:
+ 212              		.section	.text.fprime_eq,"ax",%progbits
+ 213              		.align	1
+ 214              		.global	fprime_eq
+ 215              		.syntax unified
+ 216              		.thumb
+ 217              		.thumb_func
+ 218              		.fpu softvfp
+ 220              	fprime_eq:
+ 221              	.LFB9:
   85:25519/fprime.c **** 
   86:25519/fprime.c **** static inline int min_int(int a, int b)
   87:25519/fprime.c **** {
@@ -157,348 +315,27 @@
   92:25519/fprime.c **** 		       const uint8_t *x, size_t len,
   93:25519/fprime.c **** 		       const uint8_t *modulus)
   94:25519/fprime.c **** {
-  68              		.loc 1 94 0
-  69              		.cfi_startproc
-  70              		@ args = 0, pretend = 0, frame = 40
-  71              		@ frame_needed = 0, uses_anonymous_args = 0
-  72              	.LVL7:
-  73 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-  74              		.cfi_def_cfa_offset 36
-  75              		.cfi_offset 4, -36
-  76              		.cfi_offset 5, -32
-  77              		.cfi_offset 6, -28
-  78              		.cfi_offset 7, -24
-  79              		.cfi_offset 8, -20
-  80              		.cfi_offset 9, -16
-  81              		.cfi_offset 10, -12
-  82              		.cfi_offset 11, -8
-  83              		.cfi_offset 14, -4
-  84 0004 9146     		mov	r9, r2
-  85 0006 8BB0     		sub	sp, sp, #44
-  86              		.cfi_def_cfa_offset 80
-  87              		.loc 1 94 0
-  88 0008 0446     		mov	r4, r0
-  89 000a 0F46     		mov	r7, r1
-  90 000c 1D46     		mov	r5, r3
-  91              	.LVL8:
-  92              	.LBB44:
-  93              	.LBB45:
-  45:25519/fprime.c **** 	for (i = FPRIME_SIZE - 1; i >= 0; i--)
-  94              		.loc 1 45 0
-  95 000e 1F22     		movs	r2, #31
-  96              	.LVL9:
-  97 0010 03E0     		b	.L5
-  98              	.LVL10:
-  99              	.L56:
- 100 0012 12F1FF32 		adds	r2, r2, #-1
- 101              	.LVL11:
- 102 0016 C0F0B380 		bcc	.L55
- 103              	.LVL12:
- 104              	.L5:
-  46:25519/fprime.c **** 		if (p[i])
- 105              		.loc 1 46 0
- 106 001a AB5C     		ldrb	r3, [r5, r2]	@ zero_extendqisi2
- 107 001c 002B     		cmp	r3, #0
- 108 001e F8D0     		beq	.L56
- 109              	.LVL13:
-  50:25519/fprime.c **** 	i <<= 3;
- 110              		.loc 1 50 0
- 111 0020 D200     		lsls	r2, r2, #3
- 112              	.LVL14:
- 113              	.L9:
-  52:25519/fprime.c **** 	while (x) {
- 114              		.loc 1 52 0
- 115 0022 5B08     		lsrs	r3, r3, #1
- 116              	.LVL15:
-  54:25519/fprime.c **** 		i++;
- 117              		.loc 1 54 0
- 118 0024 02F10102 		add	r2, r2, #1
- 119              	.LVL16:
-  52:25519/fprime.c **** 	while (x) {
- 120              		.loc 1 52 0
- 121 0028 FBD1     		bne	.L9
- 122 002a 023A     		subs	r2, r2, #2
- 123              	.LVL17:
- 124              	.L7:
- 125              	.LBE45:
- 126              	.LBE44:
   95:25519/fprime.c **** 	const int preload_total = min_int(prime_msb(modulus) - 1, len << 3);
- 127              		.loc 1 95 0
- 128 002c 4FEAC90A 		lsl	r10, r9, #3
- 129              	.LVL18:
- 130              	.LBB48:
- 131              	.LBB49:
-  88:25519/fprime.c **** 	return a < b ? a : b;
- 132              		.loc 1 88 0
- 133 0030 5245     		cmp	r2, r10
- 134 0032 B4BF     		ite	lt
- 135 0034 1646     		movlt	r6, r2
- 136 0036 5646     		movge	r6, r10
- 137              	.LBE49:
- 138              	.LBE48:
   96:25519/fprime.c **** 	const int preload_bytes = preload_total >> 3;
- 139              		.loc 1 96 0
- 140 0038 4FEAE608 		asr	r8, r6, #3
- 141              	.LVL19:
   97:25519/fprime.c **** 	const int preload_bits = preload_total & 7;
   98:25519/fprime.c **** 	const int rbits = (len << 3) - preload_total;
   99:25519/fprime.c **** 	int i;
  100:25519/fprime.c **** 
  101:25519/fprime.c **** 	memset(n, 0, FPRIME_SIZE);
- 142              		.loc 1 101 0
- 143 003c 2046     		mov	r0, r4
- 144              	.LVL20:
- 145 003e 0021     		movs	r1, #0
- 146              	.LVL21:
- 147 0040 2022     		movs	r2, #32
- 148              	.LVL22:
- 149 0042 FFF7FEFF 		bl	memset
- 150              	.LVL23:
  102:25519/fprime.c **** 
  103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 151              		.loc 1 103 0
- 152 0046 B8F1000F 		cmp	r8, #0
-  98:25519/fprime.c **** 	const int rbits = (len << 3) - preload_total;
- 153              		.loc 1 98 0
- 154 004a C6EB0A0A 		rsb	r10, r6, r10
- 155              	.LVL24:
-  97:25519/fprime.c **** 	const int preload_bits = preload_total & 7;
- 156              		.loc 1 97 0
- 157 004e 06F00706 		and	r6, r6, #7
- 158              	.LVL25:
- 159              		.loc 1 103 0
- 160 0052 42DD     		ble	.L18
- 161 0054 C8EB090C 		rsb	ip, r8, r9
- 162 0058 07EB0C03 		add	r3, r7, ip
- 163 005c 221D     		adds	r2, r4, #4
- 164 005e 191D     		adds	r1, r3, #4
- 165 0060 9342     		cmp	r3, r2
- 166 0062 38BF     		it	cc
- 167 0064 8C42     		cmpcc	r4, r1
- 168 0066 34BF     		ite	cc
- 169 0068 0022     		movcc	r2, #0
- 170 006a 0122     		movcs	r2, #1
- 171 006c B8F1090F 		cmp	r8, #9
- 172 0070 94BF     		ite	ls
- 173 0072 0022     		movls	r2, #0
- 174 0074 02F00102 		andhi	r2, r2, #1
- 175 0078 002A     		cmp	r2, #0
- 176 007a 00F08780 		beq	.L13
- 177 007e 43EA0402 		orr	r2, r3, r4
- 178 0082 9207     		lsls	r2, r2, #30
- 179 0084 40F08280 		bne	.L13
- 180 0088 4FEA9802 		lsr	r2, r8, #2
- 181 008c 0021     		movs	r1, #0
- 182 008e 4FEA820B 		lsl	fp, r2, #2
- 183 0092 0846     		mov	r0, r1
- 184 0094 0195     		str	r5, [sp, #4]
- 185              	.LVL26:
- 186              	.L19:
  104:25519/fprime.c **** 		n[i] = x[len - preload_bytes + i];
- 187              		.loc 1 104 0 discriminator 2
- 188 0096 5D58     		ldr	r5, [r3, r1]
- 189 0098 0130     		adds	r0, r0, #1
- 190 009a 8242     		cmp	r2, r0
- 191 009c 6550     		str	r5, [r4, r1]
- 192 009e 01F10401 		add	r1, r1, #4
- 193 00a2 F8D8     		bhi	.L19
- 194 00a4 C345     		cmp	fp, r8
- 195 00a6 019D     		ldr	r5, [sp, #4]
- 196 00a8 17D0     		beq	.L18
- 197              	.LVL27:
- 198              		.loc 1 104 0 is_stmt 0
- 199 00aa 07EB0B03 		add	r3, r7, fp
- 200 00ae 13F80C10 		ldrb	r1, [r3, ip]	@ zero_extendqisi2
- 103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 201              		.loc 1 103 0 is_stmt 1
- 202 00b2 0BF10103 		add	r3, fp, #1
- 203              	.LVL28:
- 204 00b6 9845     		cmp	r8, r3
- 205              		.loc 1 104 0
- 206 00b8 04F82210 		strb	r1, [r4, r2, lsl #2]
- 103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 207              		.loc 1 103 0
- 208 00bc 0DDD     		ble	.L18
- 209              		.loc 1 104 0
- 210 00be FA18     		adds	r2, r7, r3
- 211 00c0 12F80C20 		ldrb	r2, [r2, ip]	@ zero_extendqisi2
- 103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 212              		.loc 1 103 0
- 213 00c4 0BF1020B 		add	fp, fp, #2
- 214 00c8 D845     		cmp	r8, fp
- 215              		.loc 1 104 0
- 216 00ca E254     		strb	r2, [r4, r3]
- 217              	.LVL29:
- 103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 218              		.loc 1 103 0
- 219 00cc 05DD     		ble	.L18
- 220              		.loc 1 104 0
- 221 00ce 07EB0B03 		add	r3, r7, fp
- 222 00d2 13F80C30 		ldrb	r3, [r3, ip]	@ zero_extendqisi2
- 223 00d6 04F80B30 		strb	r3, [r4, fp]
- 224              	.LVL30:
- 225              	.L18:
  105:25519/fprime.c **** 
  106:25519/fprime.c **** 	if (preload_bits) {
- 226              		.loc 1 106 0
- 227 00da BEB1     		cbz	r6, .L12
- 228 00dc 0022     		movs	r2, #0
- 229 00de 1346     		mov	r3, r2
- 230              	.L23:
- 231              	.LVL31:
- 232              	.LBB50:
- 233              	.LBB51:
-  67:25519/fprime.c **** 		c |= ((uint16_t)x[i]) << n;
- 234              		.loc 1 67 0
- 235 00e0 E15C     		ldrb	r1, [r4, r3]	@ zero_extendqisi2
- 236 00e2 B140     		lsls	r1, r1, r6
- 237 00e4 0A43     		orrs	r2, r2, r1
- 238              	.LVL32:
- 239 00e6 92B2     		uxth	r2, r2
- 240              	.LVL33:
-  68:25519/fprime.c **** 		x[i] = c;
- 241              		.loc 1 68 0
- 242 00e8 E254     		strb	r2, [r4, r3]
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 243              		.loc 1 66 0
- 244 00ea 0133     		adds	r3, r3, #1
- 245              	.LVL34:
- 246 00ec 202B     		cmp	r3, #32
-  69:25519/fprime.c **** 		c >>= 8;
- 247              		.loc 1 69 0
- 248 00ee 4FEA1222 		lsr	r2, r2, #8
- 249              	.LVL35:
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 250              		.loc 1 66 0
- 251 00f2 F5D1     		bne	.L23
- 252              	.LBE51:
- 253              	.LBE50:
  107:25519/fprime.c **** 		shift_n_bits(n, preload_bits);
  108:25519/fprime.c **** 		n[0] |= x[len - preload_bytes - 1] >> (8 - preload_bits);
- 254              		.loc 1 108 0
- 255 00f4 09F1FF39 		add	r9, r9, #-1
- 256              	.LVL36:
- 257 00f8 C8EB0908 		rsb	r8, r8, r9
- 258              	.LVL37:
- 259 00fc 17F80820 		ldrb	r2, [r7, r8]	@ zero_extendqisi2
- 260              	.LVL38:
- 261 0100 C6F10806 		rsb	r6, r6, #8
- 262              	.LVL39:
- 263 0104 3241     		asrs	r2, r2, r6
- 264 0106 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 265              	.LVL40:
- 266 0108 1343     		orrs	r3, r3, r2
- 267 010a 2370     		strb	r3, [r4]
- 268              	.LVL41:
- 269              	.L12:
  109:25519/fprime.c **** 	}
  110:25519/fprime.c **** 
  111:25519/fprime.c **** 	for (i = rbits - 1; i >= 0; i--) {
- 270              		.loc 1 111 0
- 271 010c BAF1010A 		subs	r10, r10, #1
- 272              	.LVL42:
- 273 0110 33D4     		bmi	.L2
- 274              	.LVL43:
- 275              	.L33:
- 276              	.LBB52:
  112:25519/fprime.c **** 		const uint8_t bit = (x[i >> 3] >> (i & 7)) & 1;
- 277              		.loc 1 112 0 discriminator 2
- 278 0112 4FEAEA03 		asr	r3, r10, #3
- 279 0116 F85C     		ldrb	r0, [r7, r3]	@ zero_extendqisi2
- 280 0118 0AF00703 		and	r3, r10, #7
- 281 011c 1841     		asrs	r0, r0, r3
- 282              	.LBB53:
- 283              	.LBB54:
-  63:25519/fprime.c **** 	uint16_t c = 0;
- 284              		.loc 1 63 0 discriminator 2
- 285 011e 0022     		movs	r2, #0
- 286              	.LBE54:
- 287              	.LBE53:
- 288              		.loc 1 112 0 discriminator 2
- 289 0120 00F00100 		and	r0, r0, #1
- 290              	.LVL44:
- 291              	.LBB56:
- 292              	.LBB55:
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 293              		.loc 1 66 0 discriminator 2
- 294 0124 1346     		mov	r3, r2
- 295              	.LVL45:
- 296              	.L26:
-  67:25519/fprime.c **** 		c |= ((uint16_t)x[i]) << n;
- 297              		.loc 1 67 0
- 298 0126 E15C     		ldrb	r1, [r4, r3]	@ zero_extendqisi2
- 299 0128 42EA4102 		orr	r2, r2, r1, lsl #1
- 300              	.LVL46:
-  68:25519/fprime.c **** 		x[i] = c;
- 301              		.loc 1 68 0
- 302 012c E254     		strb	r2, [r4, r3]
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 303              		.loc 1 66 0
- 304 012e 0133     		adds	r3, r3, #1
- 305              	.LVL47:
- 306 0130 202B     		cmp	r3, #32
-  69:25519/fprime.c **** 		c >>= 8;
- 307              		.loc 1 69 0
- 308 0132 4FEA1222 		lsr	r2, r2, #8
- 309              	.LVL48:
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 310              		.loc 1 66 0
- 311 0136 F6D1     		bne	.L26
- 312              	.LBE55:
- 313              	.LBE56:
  113:25519/fprime.c **** 
  114:25519/fprime.c **** 		shift_n_bits(n, 1);
  115:25519/fprime.c **** 		n[0] |= bit;
- 314              		.loc 1 115 0 discriminator 2
- 315 0138 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 316              	.LVL49:
- 317              	.LBB57:
- 318              	.LBB58:
-  27:25519/fprime.c **** 	uint16_t c = 0;
- 319              		.loc 1 27 0 discriminator 2
- 320 013a 0022     		movs	r2, #0
- 321              	.LVL50:
- 322              	.LBE58:
- 323              	.LBE57:
- 324              		.loc 1 115 0 discriminator 2
- 325 013c 0343     		orrs	r3, r3, r0
- 326 013e 2370     		strb	r3, [r4]
- 327              	.LVL51:
- 328              	.LBB62:
- 329              	.LBB61:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 330              		.loc 1 30 0 discriminator 2
- 331 0140 1346     		mov	r3, r2
- 332              	.LVL52:
- 333              	.L28:
-  31:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
- 334              		.loc 1 31 0
- 335 0142 E05C     		ldrb	r0, [r4, r3]	@ zero_extendqisi2
- 336 0144 E95C     		ldrb	r1, [r5, r3]	@ zero_extendqisi2
- 337 0146 411A     		subs	r1, r0, r1
- 338 0148 8A1A     		subs	r2, r1, r2
- 339              	.LVL53:
- 340 014a 92B2     		uxth	r2, r2
- 341              	.LVL54:
-  32:25519/fprime.c **** 		minusp[i] = c;
- 342              		.loc 1 32 0
- 343 014c 02A8     		add	r0, sp, #8
- 344 014e C254     		strb	r2, [r0, r3]
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 345              		.loc 1 30 0
- 346 0150 0133     		adds	r3, r3, #1
- 347              	.LVL55:
- 348 0152 202B     		cmp	r3, #32
-  33:25519/fprime.c **** 		c = (c >> 8) & 1;
- 349              		.loc 1 33 0
- 350 0154 C2F30022 		ubfx	r2, r2, #8, #1
- 351              	.LVL56:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 352              		.loc 1 30 0
- 353 0158 F3D1     		bne	.L28
- 354              	.LVL57:
- 355              	.LBB59:
- 356              	.LBB60:
  116:25519/fprime.c **** 		raw_try_sub(n, modulus);
  117:25519/fprime.c **** 	}
  118:25519/fprime.c **** }
@@ -513,151 +350,432 @@
  127:25519/fprime.c **** 
  128:25519/fprime.c **** uint8_t fprime_eq(const uint8_t *x, const uint8_t *y)
  129:25519/fprime.c **** {
+ 222              		.loc 1 129 0
+ 223              		.cfi_startproc
+ 224              		@ args = 0, pretend = 0, frame = 0
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226              	.LVL28:
  130:25519/fprime.c **** 	uint8_t sum = 0;
+ 227              		.loc 1 130 0
+ 228 0000 0023     		movs	r3, #0
+ 129:25519/fprime.c **** 	uint8_t sum = 0;
+ 229              		.loc 1 129 0
+ 230 0002 30B5     		push	{r4, r5, lr}
+ 231              		.cfi_def_cfa_offset 12
+ 232              		.cfi_offset 4, -12
+ 233              		.cfi_offset 5, -8
+ 234              		.cfi_offset 14, -4
+ 235 0004 421E     		subs	r2, r0, #1
+ 236 0006 0139     		subs	r1, r1, #1
+ 237              	.LVL29:
+ 238 0008 1F30     		adds	r0, r0, #31
+ 239              	.LVL30:
+ 240              	.L19:
  131:25519/fprime.c **** 	int i;
  132:25519/fprime.c **** 
  133:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
  134:25519/fprime.c **** 		sum |= x[i] ^ y[i];
+ 241              		.loc 1 134 0 discriminator 3
+ 242 000a 12F8014F 		ldrb	r4, [r2, #1]!	@ zero_extendqisi2
+ 243              	.LVL31:
+ 244 000e 11F8015F 		ldrb	r5, [r1, #1]!	@ zero_extendqisi2
+ 133:25519/fprime.c **** 		sum |= x[i] ^ y[i];
+ 245              		.loc 1 133 0 discriminator 3
+ 246 0012 9042     		cmp	r0, r2
+ 247              		.loc 1 134 0 discriminator 3
+ 248 0014 84EA0504 		eor	r4, r4, r5
+ 249 0018 43EA0403 		orr	r3, r3, r4
+ 250              	.LVL32:
+ 133:25519/fprime.c **** 		sum |= x[i] ^ y[i];
+ 251              		.loc 1 133 0 discriminator 3
+ 252 001c F5D1     		bne	.L19
  135:25519/fprime.c **** 
  136:25519/fprime.c **** 	sum |= (sum >> 4);
+ 253              		.loc 1 136 0
+ 254 001e 43EA1313 		orr	r3, r3, r3, lsr #4
+ 255              	.LVL33:
+ 256 0022 03F0FF03 		and	r3, r3, #255
+ 257              	.LVL34:
  137:25519/fprime.c **** 	sum |= (sum >> 2);
+ 258              		.loc 1 137 0
+ 259 0026 43EA9303 		orr	r3, r3, r3, lsr #2
+ 260              	.LVL35:
  138:25519/fprime.c **** 	sum |= (sum >> 1);
+ 261              		.loc 1 138 0
+ 262 002a 43EA5303 		orr	r3, r3, r3, lsr #1
+ 263              	.LVL36:
  139:25519/fprime.c **** 
  140:25519/fprime.c **** 	return (sum ^ 1) & 1;
+ 264              		.loc 1 140 0
+ 265 002e D843     		mvns	r0, r3
+ 266              	.LVL37:
  141:25519/fprime.c **** }
+ 267              		.loc 1 141 0
+ 268 0030 00F00100 		and	r0, r0, #1
+ 269 0034 30BD     		pop	{r4, r5, pc}
+ 270              		.cfi_endproc
+ 271              	.LFE9:
+ 273              		.section	.text.fprime_select,"ax",%progbits
+ 274              		.align	1
+ 275              		.global	fprime_select
+ 276              		.syntax unified
+ 277              		.thumb
+ 278              		.thumb_func
+ 279              		.fpu softvfp
+ 281              	fprime_select:
+ 282              	.LFB10:
  142:25519/fprime.c **** 
  143:25519/fprime.c **** void fprime_select(uint8_t *dst,
  144:25519/fprime.c **** 		   const uint8_t *zero, const uint8_t *one,
  145:25519/fprime.c **** 		   uint8_t condition)
  146:25519/fprime.c **** {
+ 283              		.loc 1 146 0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287              	.LVL38:
  147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 357              		.loc 1 147 0
- 358 015a 5242     		negs	r2, r2
- 359              	.LVL58:
- 360 015c D2B2     		uxtb	r2, r2
- 361              	.LVL59:
+ 288              		.loc 1 147 0
+ 289 0000 5B42     		negs	r3, r3
+ 290              	.LVL39:
+ 146:25519/fprime.c **** 	const uint8_t mask = -condition;
+ 291              		.loc 1 146 0
+ 292 0002 70B5     		push	{r4, r5, r6, lr}
+ 293              		.cfi_def_cfa_offset 16
+ 294              		.cfi_offset 4, -16
+ 295              		.cfi_offset 5, -12
+ 296              		.cfi_offset 6, -8
+ 297              		.cfi_offset 14, -4
+ 298              		.loc 1 147 0
+ 299 0004 DBB2     		uxtb	r3, r3
+ 300              	.LVL40:
+ 301 0006 4E1E     		subs	r6, r1, #1
+ 302 0008 013A     		subs	r2, r2, #1
+ 303              	.LVL41:
+ 304 000a 0138     		subs	r0, r0, #1
+ 305              	.LVL42:
+ 306 000c 1F31     		adds	r1, r1, #31
+ 307              	.LVL43:
+ 308              	.L22:
  148:25519/fprime.c **** 	int i;
  149:25519/fprime.c **** 
  150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 362              		.loc 1 150 0
- 363 015e 0023     		movs	r3, #0
- 364              	.LVL60:
- 365              	.L31:
  151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 366              		.loc 1 151 0
- 367 0160 02A8     		add	r0, sp, #8
- 368 0162 C15C     		ldrb	r1, [r0, r3]	@ zero_extendqisi2
- 369 0164 E05C     		ldrb	r0, [r4, r3]	@ zero_extendqisi2
- 370 0166 4840     		eors	r0, r0, r1
- 371 0168 1040     		ands	r0, r0, r2
- 372 016a 4140     		eors	r1, r1, r0
- 373 016c E154     		strb	r1, [r4, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 374              		.loc 1 150 0
- 375 016e 0133     		adds	r3, r3, #1
- 376              	.LVL61:
- 377 0170 202B     		cmp	r3, #32
- 378 0172 F5D1     		bne	.L31
- 379              	.LBE60:
- 380              	.LBE59:
- 381              	.LBE61:
- 382              	.LBE62:
- 383              	.LBE52:
- 111:25519/fprime.c **** 	for (i = rbits - 1; i >= 0; i--) {
- 384              		.loc 1 111 0
- 385 0174 1AF1FF3A 		adds	r10, r10, #-1
- 386              	.LVL62:
- 387 0178 CBD2     		bcs	.L33
- 388              	.LVL63:
- 389              	.L2:
- 118:25519/fprime.c **** }
- 390              		.loc 1 118 0
- 391 017a 0BB0     		add	sp, sp, #44
- 392              		@ sp needed
- 393 017c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
- 394              	.LVL64:
- 395              	.L55:
- 396              	.LBB63:
- 397              	.LBB46:
-  49:25519/fprime.c **** 	x = p[i];
- 398              		.loc 1 49 0
- 399 0180 15F8013C 		ldrb	r3, [r5, #-1]	@ zero_extendqisi2
- 400              	.LVL65:
-  52:25519/fprime.c **** 	while (x) {
- 401              		.loc 1 52 0
- 402 0184 4BB1     		cbz	r3, .L57
-  50:25519/fprime.c **** 	i <<= 3;
- 403              		.loc 1 50 0
- 404 0186 6FF00702 		mvn	r2, #7
- 405 018a 4AE7     		b	.L9
- 406              	.LVL66:
- 407              	.L13:
- 408              	.LBE46:
- 409              	.LBE63:
- 103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 410              		.loc 1 103 0
- 411 018c 0022     		movs	r2, #0
- 412              	.LVL67:
- 413              	.L21:
- 104:25519/fprime.c **** 		n[i] = x[len - preload_bytes + i];
- 414              		.loc 1 104 0
- 415 018e 995C     		ldrb	r1, [r3, r2]	@ zero_extendqisi2
- 416 0190 A154     		strb	r1, [r4, r2]
- 103:25519/fprime.c **** 	for (i = 0; i < preload_bytes; i++)
- 417              		.loc 1 103 0
- 418 0192 0132     		adds	r2, r2, #1
- 419              	.LVL68:
- 420 0194 4245     		cmp	r2, r8
- 421 0196 FAD1     		bne	.L21
- 422 0198 9FE7     		b	.L18
- 423              	.LVL69:
- 424              	.L57:
- 425              	.LBB64:
- 426              	.LBB47:
-  52:25519/fprime.c **** 	while (x) {
- 427              		.loc 1 52 0
- 428 019a 6FF00902 		mvn	r2, #9
- 429 019e 45E7     		b	.L7
- 430              	.LBE47:
- 431              	.LBE64:
- 432              		.cfi_endproc
- 433              	.LFE7:
- 435              		.section	.text.fprime_normalize,"ax",%progbits
- 436              		.align	2
- 437              		.global	fprime_normalize
- 438              		.thumb
- 439              		.thumb_func
- 441              	fprime_normalize:
- 442              	.LFB8:
- 121:25519/fprime.c **** {
- 443              		.loc 1 121 0
- 444              		.cfi_startproc
- 445              		@ args = 0, pretend = 0, frame = 32
- 446              		@ frame_needed = 0, uses_anonymous_args = 0
- 447              	.LVL70:
- 448 0000 30B5     		push	{r4, r5, lr}
- 449              		.cfi_def_cfa_offset 12
- 450              		.cfi_offset 4, -12
- 451              		.cfi_offset 5, -8
- 452              		.cfi_offset 14, -4
- 453 0002 89B0     		sub	sp, sp, #36
- 454              		.cfi_def_cfa_offset 48
- 121:25519/fprime.c **** {
- 455              		.loc 1 121 0
- 456 0004 0546     		mov	r5, r0
- 457 0006 0B46     		mov	r3, r1
- 124:25519/fprime.c **** 	fprime_from_bytes(n, x, FPRIME_SIZE, modulus);
- 458              		.loc 1 124 0
- 459 0008 2022     		movs	r2, #32
- 460 000a 0146     		mov	r1, r0
- 461              	.LVL71:
- 462 000c 6846     		mov	r0, sp
- 463              	.LVL72:
- 464 000e FFF7FEFF 		bl	fprime_from_bytes
- 465              	.LVL73:
- 466              	.LBB65:
- 467              	.LBB66:
- 468              		.file 2 "25519/fprime.h"
+ 309              		.loc 1 151 0 discriminator 3
+ 310 000e 16F8015F 		ldrb	r5, [r6, #1]!	@ zero_extendqisi2
+ 311              	.LVL44:
+ 312 0012 12F8014F 		ldrb	r4, [r2, #1]!	@ zero_extendqisi2
+ 150:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
+ 313              		.loc 1 150 0 discriminator 3
+ 314 0016 8E42     		cmp	r6, r1
+ 315              		.loc 1 151 0 discriminator 3
+ 316 0018 84EA0504 		eor	r4, r4, r5
+ 317 001c 04EA0304 		and	r4, r4, r3
+ 318 0020 84EA0504 		eor	r4, r4, r5
+ 319 0024 00F8014F 		strb	r4, [r0, #1]!
+ 320              	.LVL45:
+ 150:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
+ 321              		.loc 1 150 0 discriminator 3
+ 322 0028 F1D1     		bne	.L22
+ 152:25519/fprime.c **** }
+ 323              		.loc 1 152 0
+ 324 002a 70BD     		pop	{r4, r5, r6, pc}
+ 325              		.cfi_endproc
+ 326              	.LFE10:
+ 328              		.section	.text.raw_try_sub,"ax",%progbits
+ 329              		.align	1
+ 330              		.syntax unified
+ 331              		.thumb
+ 332              		.thumb_func
+ 333              		.fpu softvfp
+ 335              	raw_try_sub:
+ 336              	.LFB2:
+  25:25519/fprime.c **** 	uint8_t minusp[FPRIME_SIZE];
+ 337              		.loc 1 25 0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 32
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341              	.LVL46:
+ 342 0000 30B5     		push	{r4, r5, lr}
+ 343              		.cfi_def_cfa_offset 12
+ 344              		.cfi_offset 4, -12
+ 345              		.cfi_offset 5, -8
+ 346              		.cfi_offset 14, -4
+  30:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
+ 347              		.loc 1 30 0
+ 348 0002 0025     		movs	r5, #0
+  25:25519/fprime.c **** 	uint8_t minusp[FPRIME_SIZE];
+ 349              		.loc 1 25 0
+ 350 0004 0246     		mov	r2, r0
+  27:25519/fprime.c **** 	int i;
+ 351              		.loc 1 27 0
+ 352 0006 2B46     		mov	r3, r5
+  25:25519/fprime.c **** 	uint8_t minusp[FPRIME_SIZE];
+ 353              		.loc 1 25 0
+ 354 0008 89B0     		sub	sp, sp, #36
+ 355              		.cfi_def_cfa_offset 48
+ 356              	.LVL47:
+ 357              	.L25:
+  31:25519/fprime.c **** 		minusp[i] = c;
+ 358              		.loc 1 31 0 discriminator 3
+ 359 000a 545D     		ldrb	r4, [r2, r5]	@ zero_extendqisi2
+ 360 000c 485D     		ldrb	r0, [r1, r5]	@ zero_extendqisi2
+ 361 000e 241A     		subs	r4, r4, r0
+ 362 0010 E31A     		subs	r3, r4, r3
+ 363              	.LVL48:
+ 364 0012 9BB2     		uxth	r3, r3
+ 365              	.LVL49:
+  32:25519/fprime.c **** 		c = (c >> 8) & 1;
+ 366              		.loc 1 32 0 discriminator 3
+ 367 0014 0DF80530 		strb	r3, [sp, r5]
+  30:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
+ 368              		.loc 1 30 0 discriminator 3
+ 369 0018 0135     		adds	r5, r5, #1
+ 370              	.LVL50:
+ 371 001a 202D     		cmp	r5, #32
+  33:25519/fprime.c **** 	}
+ 372              		.loc 1 33 0 discriminator 3
+ 373 001c C3F30023 		ubfx	r3, r3, #8, #1
+ 374              	.LVL51:
+  30:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
+ 375              		.loc 1 30 0 discriminator 3
+ 376 0020 F3D1     		bne	.L25
+  36:25519/fprime.c **** }
+ 377              		.loc 1 36 0
+ 378 0022 6946     		mov	r1, sp
+ 379              	.LVL52:
+ 380 0024 1046     		mov	r0, r2
+ 381 0026 FFF7FEFF 		bl	fprime_select
+ 382              	.LVL53:
+  37:25519/fprime.c **** 
+ 383              		.loc 1 37 0
+ 384 002a 09B0     		add	sp, sp, #36
+ 385              		.cfi_def_cfa_offset 12
+ 386              		@ sp needed
+ 387 002c 30BD     		pop	{r4, r5, pc}
+ 388              		.cfi_endproc
+ 389              	.LFE2:
+ 391              		.section	.text.fprime_from_bytes,"ax",%progbits
+ 392              		.align	1
+ 393              		.global	fprime_from_bytes
+ 394              		.syntax unified
+ 395              		.thumb
+ 396              		.thumb_func
+ 397              		.fpu softvfp
+ 399              	fprime_from_bytes:
+ 400              	.LFB7:
+  94:25519/fprime.c **** 	const int preload_total = min_int(prime_msb(modulus) - 1, len << 3);
+ 401              		.loc 1 94 0
+ 402              		.cfi_startproc
+ 403              		@ args = 0, pretend = 0, frame = 0
+ 404              		@ frame_needed = 0, uses_anonymous_args = 0
+ 405              	.LVL54:
+ 406 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 407              		.cfi_def_cfa_offset 32
+ 408              		.cfi_offset 4, -32
+ 409              		.cfi_offset 5, -28
+ 410              		.cfi_offset 6, -24
+ 411              		.cfi_offset 7, -20
+ 412              		.cfi_offset 8, -16
+ 413              		.cfi_offset 9, -12
+ 414              		.cfi_offset 10, -8
+ 415              		.cfi_offset 14, -4
+  94:25519/fprime.c **** 	const int preload_total = min_int(prime_msb(modulus) - 1, len << 3);
+ 416              		.loc 1 94 0
+ 417 0004 0446     		mov	r4, r0
+  95:25519/fprime.c **** 	const int preload_bytes = preload_total >> 3;
+ 418              		.loc 1 95 0
+ 419 0006 1846     		mov	r0, r3
+ 420              	.LVL55:
+  94:25519/fprime.c **** 	const int preload_total = min_int(prime_msb(modulus) - 1, len << 3);
+ 421              		.loc 1 94 0
+ 422 0008 1546     		mov	r5, r2
+ 423 000a 0E46     		mov	r6, r1
+ 424 000c 1F46     		mov	r7, r3
+  95:25519/fprime.c **** 	const int preload_bytes = preload_total >> 3;
+ 425              		.loc 1 95 0
+ 426 000e FFF7FEFF 		bl	prime_msb
+ 427              	.LVL56:
+ 428 0012 EB00     		lsls	r3, r5, #3
+ 429              	.LVL57:
+ 430 0014 0138     		subs	r0, r0, #1
+ 431              	.LVL58:
+ 432              	.LBB5:
+ 433              	.LBB6:
+  88:25519/fprime.c **** }
+ 434              		.loc 1 88 0
+ 435 0016 9842     		cmp	r0, r3
+ 436 0018 A8BF     		it	ge
+ 437 001a 1846     		movge	r0, r3
+ 438              	.LVL59:
+ 439              	.LBE6:
+ 440              	.LBE5:
+ 101:25519/fprime.c **** 
+ 441              		.loc 1 101 0
+ 442 001c 2022     		movs	r2, #32
+  98:25519/fprime.c **** 	int i;
+ 443              		.loc 1 98 0
+ 444 001e A3EB0008 		sub	r8, r3, r0
+  96:25519/fprime.c **** 	const int preload_bits = preload_total & 7;
+ 445              		.loc 1 96 0
+ 446 0022 4FEAE00A 		asr	r10, r0, #3
+ 447              	.LVL60:
+  97:25519/fprime.c **** 	const int rbits = (len << 3) - preload_total;
+ 448              		.loc 1 97 0
+ 449 0026 00F00709 		and	r9, r0, #7
+ 450              	.LVL61:
+ 101:25519/fprime.c **** 
+ 451              		.loc 1 101 0
+ 452 002a 0021     		movs	r1, #0
+ 453              	.LVL62:
+ 454 002c 2046     		mov	r0, r4
+ 455 002e FFF7FEFF 		bl	memset
+ 456              	.LVL63:
+ 103:25519/fprime.c **** 		n[i] = x[len - preload_bytes + i];
+ 457              		.loc 1 103 0
+ 458 0032 0023     		movs	r3, #0
+ 104:25519/fprime.c **** 
+ 459              		.loc 1 104 0
+ 460 0034 A5EB0A02 		sub	r2, r5, r10
+ 461 0038 3244     		add	r2, r2, r6
+ 462              	.LVL64:
+ 463              	.L28:
+ 103:25519/fprime.c **** 		n[i] = x[len - preload_bytes + i];
+ 464              		.loc 1 103 0 discriminator 1
+ 465 003a 5345     		cmp	r3, r10
+ 466 003c 18DB     		blt	.L29
+ 106:25519/fprime.c **** 		shift_n_bits(n, preload_bits);
+ 467              		.loc 1 106 0
+ 468 003e B9F1000F 		cmp	r9, #0
+ 469 0042 0ED0     		beq	.L36
+ 108:25519/fprime.c **** 	}
+ 470              		.loc 1 108 0
+ 471 0044 013D     		subs	r5, r5, #1
+ 472              	.LVL65:
+ 107:25519/fprime.c **** 		n[0] |= x[len - preload_bytes - 1] >> (8 - preload_bits);
+ 473              		.loc 1 107 0
+ 474 0046 4946     		mov	r1, r9
+ 475 0048 2046     		mov	r0, r4
+ 108:25519/fprime.c **** 	}
+ 476              		.loc 1 108 0
+ 477 004a A5EB0A05 		sub	r5, r5, r10
+ 478              	.LVL66:
+ 107:25519/fprime.c **** 		n[0] |= x[len - preload_bytes - 1] >> (8 - preload_bits);
+ 479              		.loc 1 107 0
+ 480 004e FFF7FEFF 		bl	shift_n_bits
+ 481              	.LVL67:
+ 108:25519/fprime.c **** 	}
+ 482              		.loc 1 108 0
+ 483 0052 735D     		ldrb	r3, [r6, r5]	@ zero_extendqisi2
+ 484 0054 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
+ 485 0056 C9F10809 		rsb	r9, r9, #8
+ 486              	.LVL68:
+ 487 005a 43FA09F3 		asr	r3, r3, r9
+ 488 005e 1343     		orrs	r3, r3, r2
+ 489 0060 2370     		strb	r3, [r4]
+ 490              	.LVL69:
+ 491              	.L36:
+ 111:25519/fprime.c **** 		const uint8_t bit = (x[i >> 3] >> (i & 7)) & 1;
+ 492              		.loc 1 111 0 discriminator 3
+ 493 0062 08F1FF38 		add	r8, r8, #-1
+ 494              	.LVL70:
+ 495 0066 B8F1000F 		cmp	r8, #0
+ 496 006a 05DA     		bge	.L32
+ 118:25519/fprime.c **** 
+ 497              		.loc 1 118 0
+ 498 006c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 499              	.LVL71:
+ 500              	.L29:
+ 104:25519/fprime.c **** 
+ 501              		.loc 1 104 0 discriminator 3
+ 502 0070 D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 503 0072 E154     		strb	r1, [r4, r3]
+ 103:25519/fprime.c **** 		n[i] = x[len - preload_bytes + i];
+ 504              		.loc 1 103 0 discriminator 3
+ 505 0074 0133     		adds	r3, r3, #1
+ 506              	.LVL72:
+ 507 0076 E0E7     		b	.L28
+ 508              	.LVL73:
+ 509              	.L32:
+ 510              	.LBB7:
+ 112:25519/fprime.c **** 
+ 511              		.loc 1 112 0 discriminator 3
+ 512 0078 4FEAE803 		asr	r3, r8, #3
+ 513 007c F55C     		ldrb	r5, [r6, r3]	@ zero_extendqisi2
+ 114:25519/fprime.c **** 		n[0] |= bit;
+ 514              		.loc 1 114 0 discriminator 3
+ 515 007e 2046     		mov	r0, r4
+ 112:25519/fprime.c **** 
+ 516              		.loc 1 112 0 discriminator 3
+ 517 0080 08F00703 		and	r3, r8, #7
+ 114:25519/fprime.c **** 		n[0] |= bit;
+ 518              		.loc 1 114 0 discriminator 3
+ 519 0084 0121     		movs	r1, #1
+ 112:25519/fprime.c **** 
+ 520              		.loc 1 112 0 discriminator 3
+ 521 0086 1D41     		asrs	r5, r5, r3
+ 114:25519/fprime.c **** 		n[0] |= bit;
+ 522              		.loc 1 114 0 discriminator 3
+ 523 0088 FFF7FEFF 		bl	shift_n_bits
+ 524              	.LVL74:
+ 115:25519/fprime.c **** 		raw_try_sub(n, modulus);
+ 525              		.loc 1 115 0 discriminator 3
+ 526 008c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 112:25519/fprime.c **** 
+ 527              		.loc 1 112 0 discriminator 3
+ 528 008e 05F00105 		and	r5, r5, #1
+ 529              	.LVL75:
+ 115:25519/fprime.c **** 		raw_try_sub(n, modulus);
+ 530              		.loc 1 115 0 discriminator 3
+ 531 0092 1D43     		orrs	r5, r5, r3
+ 532              	.LVL76:
+ 533 0094 2570     		strb	r5, [r4]
+ 116:25519/fprime.c **** 	}
+ 534              		.loc 1 116 0 discriminator 3
+ 535 0096 3946     		mov	r1, r7
+ 536 0098 2046     		mov	r0, r4
+ 537 009a FFF7FEFF 		bl	raw_try_sub
+ 538              	.LVL77:
+ 539 009e E0E7     		b	.L36
+ 540              	.LBE7:
+ 541              		.cfi_endproc
+ 542              	.LFE7:
+ 544              		.section	.text.fprime_normalize,"ax",%progbits
+ 545              		.align	1
+ 546              		.global	fprime_normalize
+ 547              		.syntax unified
+ 548              		.thumb
+ 549              		.thumb_func
+ 550              		.fpu softvfp
+ 552              	fprime_normalize:
+ 553              	.LFB8:
+ 121:25519/fprime.c **** 	uint8_t n[FPRIME_SIZE];
+ 554              		.loc 1 121 0
+ 555              		.cfi_startproc
+ 556              		@ args = 0, pretend = 0, frame = 32
+ 557              		@ frame_needed = 0, uses_anonymous_args = 0
+ 558              	.LVL78:
+ 559 0000 30B5     		push	{r4, r5, lr}
+ 560              		.cfi_def_cfa_offset 12
+ 561              		.cfi_offset 4, -12
+ 562              		.cfi_offset 5, -8
+ 563              		.cfi_offset 14, -4
+ 564 0002 0446     		mov	r4, r0
+ 565 0004 89B0     		sub	sp, sp, #36
+ 566              		.cfi_def_cfa_offset 48
+ 124:25519/fprime.c **** 	fprime_copy(x, n);
+ 567              		.loc 1 124 0
+ 568 0006 0B46     		mov	r3, r1
+ 569 0008 2022     		movs	r2, #32
+ 570 000a 0146     		mov	r1, r0
+ 571              	.LVL79:
+ 572 000c 6846     		mov	r0, sp
+ 573              	.LVL80:
+ 574 000e FFF7FEFF 		bl	fprime_from_bytes
+ 575              	.LVL81:
+ 576              	.LBB10:
+ 577              	.LBB11:
+ 578              		.file 2 "25519/fprime.h"
    1:25519/fprime.h **** /* Arithmetic in prime fields
    2:25519/fprime.h ****  * Daniel Beer <dlbeer@gmail.com>, 10 Jan 2014
    3:25519/fprime.h ****  *
@@ -698,1000 +816,209 @@
   38:25519/fprime.h **** static inline void fprime_copy(uint8_t *x, const uint8_t *a)
   39:25519/fprime.h **** {
   40:25519/fprime.h **** 	memcpy(x, a, FPRIME_SIZE);
- 469              		.loc 2 40 0
- 470 0012 6C46     		mov	r4, sp
- 471 0014 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 472 0016 2860     		str	r0, [r5]	@ unaligned
- 473 0018 6960     		str	r1, [r5, #4]	@ unaligned
- 474 001a AA60     		str	r2, [r5, #8]	@ unaligned
- 475 001c EB60     		str	r3, [r5, #12]	@ unaligned
- 476 001e 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 477 0020 2861     		str	r0, [r5, #16]	@ unaligned
- 478 0022 6961     		str	r1, [r5, #20]	@ unaligned
- 479 0024 AA61     		str	r2, [r5, #24]	@ unaligned
- 480 0026 EB61     		str	r3, [r5, #28]	@ unaligned
- 481              	.LBE66:
- 482              	.LBE65:
- 126:25519/fprime.c **** }
- 483              		.loc 1 126 0
- 484 0028 09B0     		add	sp, sp, #36
- 485              	.LVL74:
- 486              		@ sp needed
- 487 002a 30BD     		pop	{r4, r5, pc}
- 488              		.cfi_endproc
- 489              	.LFE8:
- 491              		.section	.text.fprime_eq,"ax",%progbits
- 492              		.align	2
- 493              		.global	fprime_eq
- 494              		.thumb
- 495              		.thumb_func
- 497              	fprime_eq:
- 498              	.LFB9:
- 129:25519/fprime.c **** {
- 499              		.loc 1 129 0
- 500              		.cfi_startproc
- 501              		@ args = 0, pretend = 0, frame = 0
- 502              		@ frame_needed = 0, uses_anonymous_args = 0
- 503              		@ link register save eliminated.
- 504              	.LVL75:
- 505 0000 40EA0103 		orr	r3, r0, r1
- 506 0004 9B07     		lsls	r3, r3, #30
- 507 0006 F0B4     		push	{r4, r5, r6, r7}
- 508              		.cfi_def_cfa_offset 16
- 509              		.cfi_offset 4, -16
- 510              		.cfi_offset 5, -12
- 511              		.cfi_offset 6, -8
- 512              		.cfi_offset 7, -4
- 513 0008 3CD1     		bne	.L60
- 514              	.LVL76:
- 134:25519/fprime.c **** 		sum |= x[i] ^ y[i];
- 515              		.loc 1 134 0
- 516 000a 0768     		ldr	r7, [r0]
- 517 000c 4268     		ldr	r2, [r0, #4]
- 518 000e 4B68     		ldr	r3, [r1, #4]
- 519 0010 0E68     		ldr	r6, [r1]
- 520 0012 8568     		ldr	r5, [r0, #8]
- 521 0014 8C68     		ldr	r4, [r1, #8]
- 522 0016 82EA030C 		eor	ip, r2, r3
- 523 001a 7E40     		eors	r6, r6, r7
- 524 001c C268     		ldr	r2, [r0, #12]
- 525 001e CB68     		ldr	r3, [r1, #12]
- 526 0020 46EA0C06 		orr	r6, r6, ip
- 527 0024 85EA040C 		eor	ip, r5, r4
- 528 0028 0569     		ldr	r5, [r0, #16]
- 529 002a 0C69     		ldr	r4, [r1, #16]
- 530 002c 46EA0C0C 		orr	ip, r6, ip
- 531 0030 82EA0306 		eor	r6, r2, r3
- 532 0034 4269     		ldr	r2, [r0, #20]
- 533 0036 4B69     		ldr	r3, [r1, #20]
- 534 0038 4CEA060C 		orr	ip, ip, r6
- 535 003c 8769     		ldr	r7, [r0, #24]
- 536 003e 8E69     		ldr	r6, [r1, #24]
- 537 0040 6C40     		eors	r4, r4, r5
- 538 0042 4CEA0404 		orr	r4, ip, r4
- 539 0046 5340     		eors	r3, r3, r2
- 540 0048 C069     		ldr	r0, [r0, #28]
- 541              	.LVL77:
- 542 004a C969     		ldr	r1, [r1, #28]
- 543              	.LVL78:
- 544 004c 44EA0302 		orr	r2, r4, r3
- 545 0050 87EA0604 		eor	r4, r7, r6
- 546 0054 2243     		orrs	r2, r2, r4
- 547 0056 80EA0103 		eor	r3, r0, r1
- 548 005a 1343     		orrs	r3, r3, r2
- 549 005c 43EA1322 		orr	r2, r3, r3, lsr #8
- 550 0060 42EA1342 		orr	r2, r2, r3, lsr #16
- 551 0064 02F0FF02 		and	r2, r2, #255
- 552 0068 42EA1362 		orr	r2, r2, r3, lsr #24
- 553              	.L61:
- 136:25519/fprime.c **** 	sum |= (sum >> 4);
- 554              		.loc 1 136 0
- 555 006c 42EA1212 		orr	r2, r2, r2, lsr #4
- 556              	.LVL79:
- 137:25519/fprime.c **** 	sum |= (sum >> 2);
- 557              		.loc 1 137 0
- 558 0070 42EA9202 		orr	r2, r2, r2, lsr #2
- 559              	.LVL80:
- 138:25519/fprime.c **** 	sum |= (sum >> 1);
- 560              		.loc 1 138 0
- 561 0074 42EA5202 		orr	r2, r2, r2, lsr #1
- 562              	.LVL81:
- 140:25519/fprime.c **** 	return (sum ^ 1) & 1;
- 563              		.loc 1 140 0
- 564 0078 02F00100 		and	r0, r2, #1
- 141:25519/fprime.c **** }
- 565              		.loc 1 141 0
- 566 007c 80F00100 		eor	r0, r0, #1
- 567 0080 F0BC     		pop	{r4, r5, r6, r7}
- 568 0082 7047     		bx	lr
- 569              	.LVL82:
- 570              	.L60:
- 133:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 571              		.loc 1 133 0
- 572 0084 0023     		movs	r3, #0
- 130:25519/fprime.c **** 	uint8_t sum = 0;
- 573              		.loc 1 130 0
- 574 0086 1A46     		mov	r2, r3
- 575              	.LVL83:
- 576              	.L62:
- 134:25519/fprime.c **** 		sum |= x[i] ^ y[i];
- 577              		.loc 1 134 0
- 578 0088 C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
- 579 008a CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
- 133:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 580              		.loc 1 133 0
- 581 008c 0133     		adds	r3, r3, #1
- 582              	.LVL84:
- 134:25519/fprime.c **** 		sum |= x[i] ^ y[i];
- 583              		.loc 1 134 0
- 584 008e 6C40     		eors	r4, r4, r5
- 133:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 585              		.loc 1 133 0
- 586 0090 202B     		cmp	r3, #32
- 134:25519/fprime.c **** 		sum |= x[i] ^ y[i];
- 587              		.loc 1 134 0
- 588 0092 42EA0402 		orr	r2, r2, r4
- 589              	.LVL85:
- 133:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 590              		.loc 1 133 0
- 591 0096 F7D1     		bne	.L62
- 592 0098 E8E7     		b	.L61
- 593              		.cfi_endproc
- 594              	.LFE9:
- 596 009a 00BF     		.section	.text.fprime_select,"ax",%progbits
- 597              		.align	2
- 598              		.global	fprime_select
- 599              		.thumb
- 600              		.thumb_func
- 602              	fprime_select:
- 603              	.LFB10:
- 146:25519/fprime.c **** {
- 604              		.loc 1 146 0
- 605              		.cfi_startproc
- 606              		@ args = 0, pretend = 0, frame = 0
- 607              		@ frame_needed = 0, uses_anonymous_args = 0
- 608              		@ link register save eliminated.
- 609              	.LVL86:
- 610 0000 F0B4     		push	{r4, r5, r6, r7}
- 611              		.cfi_def_cfa_offset 16
- 612              		.cfi_offset 4, -16
- 613              		.cfi_offset 5, -12
- 614              		.cfi_offset 6, -8
- 615              		.cfi_offset 7, -4
- 616 0002 041D     		adds	r4, r0, #4
- 617 0004 0F1D     		adds	r7, r1, #4
- 618 0006 B842     		cmp	r0, r7
- 619 0008 38BF     		it	cc
- 620 000a A142     		cmpcc	r1, r4
- 621 000c 02F10405 		add	r5, r2, #4
- 622 0010 34BF     		ite	cc
- 623 0012 0027     		movcc	r7, #0
- 624 0014 0127     		movcs	r7, #1
- 625 0016 A842     		cmp	r0, r5
- 626 0018 38BF     		it	cc
- 627 001a A242     		cmpcc	r2, r4
- 628 001c 34BF     		ite	cc
- 629 001e 0024     		movcc	r4, #0
- 630 0020 0124     		movcs	r4, #1
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 631              		.loc 1 147 0
- 632 0022 5B42     		negs	r3, r3
- 633              	.LVL87:
- 634 0024 2742     		tst	r7, r4
- 635 0026 DEB2     		uxtb	r6, r3
- 636              	.LVL88:
- 637 0028 3FD0     		beq	.L68
- 638 002a 41EA0203 		orr	r3, r1, r2
- 639              	.LVL89:
- 640 002e 0343     		orrs	r3, r3, r0
- 641 0030 9B07     		lsls	r3, r3, #30
- 642 0032 3AD1     		bne	.L68
- 643 0034 0023     		movs	r3, #0
- 644 0036 66F30703 		bfi	r3, r6, #0, #8
- 645              		.loc 1 151 0
- 646 003a 0C68     		ldr	r4, [r1]
- 647 003c 1568     		ldr	r5, [r2]
- 648 003e 66F30F23 		bfi	r3, r6, #8, #8
- 649 0042 66F31743 		bfi	r3, r6, #16, #8
- 650 0046 66F31F63 		bfi	r3, r6, #24, #8
- 651              	.LVL90:
- 652 004a 6540     		eors	r5, r5, r4
- 653 004c 1D40     		ands	r5, r5, r3
- 654 004e 6C40     		eors	r4, r4, r5
- 655 0050 0460     		str	r4, [r0]
- 656 0052 4C68     		ldr	r4, [r1, #4]
- 657 0054 5568     		ldr	r5, [r2, #4]
- 658 0056 6540     		eors	r5, r5, r4
- 659 0058 1D40     		ands	r5, r5, r3
- 660 005a 6C40     		eors	r4, r4, r5
- 661 005c 4460     		str	r4, [r0, #4]
- 662 005e 8C68     		ldr	r4, [r1, #8]
- 663 0060 9568     		ldr	r5, [r2, #8]
- 664 0062 6540     		eors	r5, r5, r4
- 665 0064 1D40     		ands	r5, r5, r3
- 666 0066 6C40     		eors	r4, r4, r5
- 667 0068 8460     		str	r4, [r0, #8]
- 668 006a CC68     		ldr	r4, [r1, #12]
- 669 006c D568     		ldr	r5, [r2, #12]
- 670 006e 6540     		eors	r5, r5, r4
- 671 0070 1D40     		ands	r5, r5, r3
- 672 0072 6C40     		eors	r4, r4, r5
- 673 0074 C460     		str	r4, [r0, #12]
- 674 0076 0C69     		ldr	r4, [r1, #16]
- 675 0078 1569     		ldr	r5, [r2, #16]
- 676 007a 6540     		eors	r5, r5, r4
- 677 007c 1D40     		ands	r5, r5, r3
- 678 007e 6C40     		eors	r4, r4, r5
- 679 0080 0461     		str	r4, [r0, #16]
- 680 0082 4C69     		ldr	r4, [r1, #20]
- 681 0084 5569     		ldr	r5, [r2, #20]
- 682 0086 6540     		eors	r5, r5, r4
- 683 0088 1D40     		ands	r5, r5, r3
- 684 008a 6C40     		eors	r4, r4, r5
- 685 008c 4461     		str	r4, [r0, #20]
- 686 008e 8C69     		ldr	r4, [r1, #24]
- 687 0090 9569     		ldr	r5, [r2, #24]
- 688 0092 6540     		eors	r5, r5, r4
- 689 0094 1D40     		ands	r5, r5, r3
- 690 0096 6C40     		eors	r4, r4, r5
- 691 0098 8461     		str	r4, [r0, #24]
- 692 009a C969     		ldr	r1, [r1, #28]
- 693              	.LVL91:
- 694 009c D269     		ldr	r2, [r2, #28]
- 695              	.LVL92:
- 152:25519/fprime.c **** }
- 696              		.loc 1 152 0
- 697 009e F0BC     		pop	{r4, r5, r6, r7}
- 698              	.LVL93:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 699              		.loc 1 151 0
- 700 00a0 4A40     		eors	r2, r2, r1
- 701 00a2 1340     		ands	r3, r3, r2
- 702 00a4 5940     		eors	r1, r1, r3
- 703 00a6 C161     		str	r1, [r0, #28]
- 704              		.loc 1 152 0
- 705 00a8 7047     		bx	lr
- 706              	.LVL94:
- 707              	.L68:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 708              		.loc 1 150 0
- 709 00aa 0023     		movs	r3, #0
- 710              	.LVL95:
- 711              	.L70:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 712              		.loc 1 151 0
- 713 00ac CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
- 714 00ae D55C     		ldrb	r5, [r2, r3]	@ zero_extendqisi2
- 715 00b0 6540     		eors	r5, r5, r4
- 716 00b2 3540     		ands	r5, r5, r6
- 717 00b4 6C40     		eors	r4, r4, r5
- 718 00b6 C454     		strb	r4, [r0, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 719              		.loc 1 150 0
- 720 00b8 0133     		adds	r3, r3, #1
- 721              	.LVL96:
- 722 00ba 202B     		cmp	r3, #32
- 723 00bc F6D1     		bne	.L70
- 724              		.loc 1 152 0
- 725 00be F0BC     		pop	{r4, r5, r6, r7}
- 726              	.LVL97:
- 727 00c0 7047     		bx	lr
- 728              		.cfi_endproc
- 729              	.LFE10:
- 731 00c2 00BF     		.section	.text.fprime_add,"ax",%progbits
- 732              		.align	2
- 733              		.global	fprime_add
- 734              		.thumb
- 735              		.thumb_func
- 737              	fprime_add:
- 738              	.LFB11:
+ 579              		.loc 2 40 0
+ 580 0012 6A46     		mov	r2, sp
+ 581 0014 2346     		mov	r3, r4
+ 582 0016 08AD     		add	r5, sp, #32
+ 583              	.LVL82:
+ 584              	.L38:
+ 585 0018 1446     		mov	r4, r2
+ 586 001a 03CC     		ldmia	r4!, {r0, r1}
+ 587 001c AC42     		cmp	r4, r5
+ 588 001e 1860     		str	r0, [r3]	@ unaligned
+ 589 0020 5960     		str	r1, [r3, #4]	@ unaligned
+ 590 0022 2246     		mov	r2, r4
+ 591 0024 03F10803 		add	r3, r3, #8
+ 592 0028 F6D1     		bne	.L38
+ 593              	.LBE11:
+ 594              	.LBE10:
+ 126:25519/fprime.c **** 
+ 595              		.loc 1 126 0
+ 596 002a 09B0     		add	sp, sp, #36
+ 597              		.cfi_def_cfa_offset 12
+ 598              	.LVL83:
+ 599              		@ sp needed
+ 600 002c 30BD     		pop	{r4, r5, pc}
+ 601              		.cfi_endproc
+ 602              	.LFE8:
+ 604              		.section	.text.fprime_add,"ax",%progbits
+ 605              		.align	1
+ 606              		.global	fprime_add
+ 607              		.syntax unified
+ 608              		.thumb
+ 609              		.thumb_func
+ 610              		.fpu softvfp
+ 612              	fprime_add:
+ 613              	.LFB11:
  153:25519/fprime.c **** 
  154:25519/fprime.c **** void fprime_add(uint8_t *r, const uint8_t *a, const uint8_t *modulus)
  155:25519/fprime.c **** {
- 739              		.loc 1 155 0
- 740              		.cfi_startproc
- 741              		@ args = 0, pretend = 0, frame = 32
- 742              		@ frame_needed = 0, uses_anonymous_args = 0
- 743              		@ link register save eliminated.
- 744              	.LVL98:
- 745 0000 70B4     		push	{r4, r5, r6}
- 746              		.cfi_def_cfa_offset 12
- 747              		.cfi_offset 4, -12
- 748              		.cfi_offset 5, -8
- 749              		.cfi_offset 6, -4
- 750              	.LBB75:
- 751              	.LBB76:
-  14:25519/fprime.c **** 	uint16_t c = 0;
- 752              		.loc 1 14 0
- 753 0002 0024     		movs	r4, #0
- 754              	.LVL99:
- 755              	.LBE76:
- 756              	.LBE75:
- 757              		.loc 1 155 0
- 758 0004 89B0     		sub	sp, sp, #36
- 759              		.cfi_def_cfa_offset 48
- 760              	.LBB78:
- 761              	.LBB77:
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 762              		.loc 1 17 0
- 763 0006 2346     		mov	r3, r4
- 764              	.LVL100:
- 765              	.L83:
-  18:25519/fprime.c **** 		c += ((uint16_t)x[i]) + ((uint16_t)p[i]);
- 766              		.loc 1 18 0
- 767 0008 CE5C     		ldrb	r6, [r1, r3]	@ zero_extendqisi2
- 768 000a C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
- 769 000c 3544     		add	r5, r5, r6
- 770 000e 2C44     		add	r4, r4, r5
- 771              	.LVL101:
-  19:25519/fprime.c **** 		x[i] = c;
- 772              		.loc 1 19 0
- 773 0010 C454     		strb	r4, [r0, r3]
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 774              		.loc 1 17 0
- 775 0012 0133     		adds	r3, r3, #1
- 776              	.LVL102:
- 777 0014 202B     		cmp	r3, #32
-  20:25519/fprime.c **** 		c >>= 8;
- 778              		.loc 1 20 0
- 779 0016 C4F30F24 		ubfx	r4, r4, #8, #16
- 780              	.LVL103:
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 781              		.loc 1 17 0
- 782 001a F5D1     		bne	.L83
- 783 001c 0021     		movs	r1, #0
- 784              	.LVL104:
- 785 001e 0B46     		mov	r3, r1
- 786              	.LVL105:
- 787              	.L85:
- 788              	.LBE77:
- 789              	.LBE78:
- 790              	.LBB79:
- 791              	.LBB80:
-  31:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
- 792              		.loc 1 31 0
- 793 0020 C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
- 794 0022 D45C     		ldrb	r4, [r2, r3]	@ zero_extendqisi2
- 795 0024 2C1B     		subs	r4, r5, r4
- 796 0026 611A     		subs	r1, r4, r1
- 797              	.LVL106:
- 798 0028 89B2     		uxth	r1, r1
- 799              	.LVL107:
-  32:25519/fprime.c **** 		minusp[i] = c;
- 800              		.loc 1 32 0
- 801 002a 0DF80310 		strb	r1, [sp, r3]
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 802              		.loc 1 30 0
- 803 002e 0133     		adds	r3, r3, #1
- 804              	.LVL108:
- 805 0030 202B     		cmp	r3, #32
-  33:25519/fprime.c **** 		c = (c >> 8) & 1;
- 806              		.loc 1 33 0
- 807 0032 C1F30021 		ubfx	r1, r1, #8, #1
- 808              	.LVL109:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 809              		.loc 1 30 0
- 810 0036 F3D1     		bne	.L85
- 811              	.LVL110:
- 812              	.LBB81:
- 813              	.LBB82:
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 814              		.loc 1 147 0
- 815 0038 4942     		negs	r1, r1
- 816              	.LVL111:
- 817 003a C9B2     		uxtb	r1, r1
- 818              	.LVL112:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 819              		.loc 1 150 0
- 820 003c 0023     		movs	r3, #0
- 821              	.LVL113:
- 822              	.L88:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 823              		.loc 1 151 0
- 824 003e 1DF80320 		ldrb	r2, [sp, r3]	@ zero_extendqisi2
- 825 0042 C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
- 826 0044 5440     		eors	r4, r4, r2
- 827 0046 0C40     		ands	r4, r4, r1
- 828 0048 6240     		eors	r2, r2, r4
- 829 004a C254     		strb	r2, [r0, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 830              		.loc 1 150 0
- 831 004c 0133     		adds	r3, r3, #1
- 832              	.LVL114:
- 833 004e 202B     		cmp	r3, #32
- 834 0050 F5D1     		bne	.L88
- 835              	.LBE82:
- 836              	.LBE81:
- 837              	.LBE80:
- 838              	.LBE79:
+ 614              		.loc 1 155 0
+ 615              		.cfi_startproc
+ 616              		@ args = 0, pretend = 0, frame = 0
+ 617              		@ frame_needed = 0, uses_anonymous_args = 0
+ 618              	.LVL84:
+ 619 0000 38B5     		push	{r3, r4, r5, lr}
+ 620              		.cfi_def_cfa_offset 16
+ 621              		.cfi_offset 3, -16
+ 622              		.cfi_offset 4, -12
+ 623              		.cfi_offset 5, -8
+ 624              		.cfi_offset 14, -4
+ 625              		.loc 1 155 0
+ 626 0002 0446     		mov	r4, r0
+ 627 0004 1546     		mov	r5, r2
  156:25519/fprime.c **** 	raw_add(r, a);
+ 628              		.loc 1 156 0
+ 629 0006 FFF7FEFF 		bl	raw_add
+ 630              	.LVL85:
  157:25519/fprime.c **** 	raw_try_sub(r, modulus);
+ 631              		.loc 1 157 0
+ 632 000a 2946     		mov	r1, r5
+ 633 000c 2046     		mov	r0, r4
  158:25519/fprime.c **** }
- 839              		.loc 1 158 0
- 840 0052 09B0     		add	sp, sp, #36
- 841              	.LVL115:
- 842              		@ sp needed
- 843 0054 70BC     		pop	{r4, r5, r6}
- 844              	.LVL116:
- 845 0056 7047     		bx	lr
- 846              		.cfi_endproc
- 847              	.LFE11:
- 849              		.section	.text.fprime_sub,"ax",%progbits
- 850              		.align	2
- 851              		.global	fprime_sub
- 852              		.thumb
- 853              		.thumb_func
- 855              	fprime_sub:
- 856              	.LFB12:
+ 634              		.loc 1 158 0
+ 635 000e BDE83840 		pop	{r3, r4, r5, lr}
+ 636              		.cfi_restore 14
+ 637              		.cfi_restore 5
+ 638              		.cfi_restore 4
+ 639              		.cfi_restore 3
+ 640              		.cfi_def_cfa_offset 0
+ 641              	.LVL86:
+ 157:25519/fprime.c **** 	raw_try_sub(r, modulus);
+ 642              		.loc 1 157 0
+ 643 0012 FFF7FEBF 		b	raw_try_sub
+ 644              	.LVL87:
+ 645              		.cfi_endproc
+ 646              	.LFE11:
+ 648              		.section	.text.fprime_sub,"ax",%progbits
+ 649              		.align	1
+ 650              		.global	fprime_sub
+ 651              		.syntax unified
+ 652              		.thumb
+ 653              		.thumb_func
+ 654              		.fpu softvfp
+ 656              	fprime_sub:
+ 657              	.LFB12:
  159:25519/fprime.c **** 
  160:25519/fprime.c **** void fprime_sub(uint8_t *r, const uint8_t *a, const uint8_t *modulus)
  161:25519/fprime.c **** {
- 857              		.loc 1 161 0
- 858              		.cfi_startproc
- 859              		@ args = 0, pretend = 0, frame = 32
- 860              		@ frame_needed = 0, uses_anonymous_args = 0
- 861              		@ link register save eliminated.
- 862              	.LVL117:
- 863 0000 70B4     		push	{r4, r5, r6}
- 864              		.cfi_def_cfa_offset 12
- 865              		.cfi_offset 4, -12
- 866              		.cfi_offset 5, -8
- 867              		.cfi_offset 6, -4
- 868              	.LBB93:
- 869              	.LBB94:
-  14:25519/fprime.c **** 	uint16_t c = 0;
- 870              		.loc 1 14 0
- 871 0002 0024     		movs	r4, #0
- 872              	.LVL118:
- 873              	.LBE94:
- 874              	.LBE93:
- 875              		.loc 1 161 0
- 876 0004 89B0     		sub	sp, sp, #36
- 877              		.cfi_def_cfa_offset 48
- 878              	.LBB96:
- 879              	.LBB95:
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 880              		.loc 1 17 0
- 881 0006 2346     		mov	r3, r4
- 882              	.LVL119:
- 883              	.L94:
-  18:25519/fprime.c **** 		c += ((uint16_t)x[i]) + ((uint16_t)p[i]);
- 884              		.loc 1 18 0
- 885 0008 D65C     		ldrb	r6, [r2, r3]	@ zero_extendqisi2
- 886 000a C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
- 887 000c 3544     		add	r5, r5, r6
- 888 000e 2C44     		add	r4, r4, r5
- 889              	.LVL120:
-  19:25519/fprime.c **** 		x[i] = c;
- 890              		.loc 1 19 0
- 891 0010 C454     		strb	r4, [r0, r3]
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 892              		.loc 1 17 0
- 893 0012 0133     		adds	r3, r3, #1
- 894              	.LVL121:
- 895 0014 202B     		cmp	r3, #32
-  20:25519/fprime.c **** 		c >>= 8;
- 896              		.loc 1 20 0
- 897 0016 C4F30F24 		ubfx	r4, r4, #8, #16
- 898              	.LVL122:
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 899              		.loc 1 17 0
- 900 001a F5D1     		bne	.L94
- 901 001c 0024     		movs	r4, #0
- 902              	.LVL123:
- 903 001e 2346     		mov	r3, r4
- 904              	.LVL124:
- 905              	.L96:
- 906              	.LBE95:
- 907              	.LBE96:
- 908              	.LBB97:
- 909              	.LBB98:
-  31:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
- 910              		.loc 1 31 0
- 911 0020 C65C     		ldrb	r6, [r0, r3]	@ zero_extendqisi2
- 912 0022 CD5C     		ldrb	r5, [r1, r3]	@ zero_extendqisi2
- 913 0024 751B     		subs	r5, r6, r5
- 914 0026 2C1B     		subs	r4, r5, r4
- 915              	.LVL125:
- 916 0028 A4B2     		uxth	r4, r4
- 917              	.LVL126:
-  32:25519/fprime.c **** 		minusp[i] = c;
- 918              		.loc 1 32 0
- 919 002a 0DF80340 		strb	r4, [sp, r3]
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 920              		.loc 1 30 0
- 921 002e 0133     		adds	r3, r3, #1
- 922              	.LVL127:
- 923 0030 202B     		cmp	r3, #32
-  33:25519/fprime.c **** 		c = (c >> 8) & 1;
- 924              		.loc 1 33 0
- 925 0032 C4F30024 		ubfx	r4, r4, #8, #1
- 926              	.LVL128:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 927              		.loc 1 30 0
- 928 0036 F3D1     		bne	.L96
- 929              	.LVL129:
- 930              	.LBB99:
- 931              	.LBB100:
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 932              		.loc 1 147 0
- 933 0038 6442     		negs	r4, r4
- 934              	.LVL130:
- 935 003a E4B2     		uxtb	r4, r4
- 936              	.LVL131:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 937              		.loc 1 150 0
- 938 003c 0023     		movs	r3, #0
- 939              	.LVL132:
- 940              	.L99:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 941              		.loc 1 151 0
- 942 003e 1DF80310 		ldrb	r1, [sp, r3]	@ zero_extendqisi2
- 943 0042 C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
- 944 0044 4D40     		eors	r5, r5, r1
- 945 0046 2540     		ands	r5, r5, r4
- 946 0048 6940     		eors	r1, r1, r5
- 947 004a C154     		strb	r1, [r0, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 948              		.loc 1 150 0
- 949 004c 0133     		adds	r3, r3, #1
- 950              	.LVL133:
- 951 004e 202B     		cmp	r3, #32
- 952 0050 F5D1     		bne	.L99
- 953              	.LVL134:
- 954              	.LBE100:
- 955              	.LBE99:
- 956              	.LBE98:
- 957              	.LBE97:
- 958              	.LBB101:
- 959              	.LBB102:
-  27:25519/fprime.c **** 	uint16_t c = 0;
- 960              		.loc 1 27 0
- 961 0052 0021     		movs	r1, #0
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 962              		.loc 1 30 0
- 963 0054 0B46     		mov	r3, r1
- 964              	.LVL135:
- 965              	.L101:
-  31:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
- 966              		.loc 1 31 0
- 967 0056 C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
- 968 0058 D45C     		ldrb	r4, [r2, r3]	@ zero_extendqisi2
- 969 005a 2C1B     		subs	r4, r5, r4
- 970 005c 611A     		subs	r1, r4, r1
- 971              	.LVL136:
- 972 005e 89B2     		uxth	r1, r1
- 973              	.LVL137:
-  32:25519/fprime.c **** 		minusp[i] = c;
- 974              		.loc 1 32 0
- 975 0060 0DF80310 		strb	r1, [sp, r3]
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 976              		.loc 1 30 0
- 977 0064 0133     		adds	r3, r3, #1
- 978              	.LVL138:
- 979 0066 202B     		cmp	r3, #32
-  33:25519/fprime.c **** 		c = (c >> 8) & 1;
- 980              		.loc 1 33 0
- 981 0068 C1F30021 		ubfx	r1, r1, #8, #1
- 982              	.LVL139:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 983              		.loc 1 30 0
- 984 006c F3D1     		bne	.L101
- 985              	.LVL140:
- 986              	.LBB103:
- 987              	.LBB104:
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 988              		.loc 1 147 0
- 989 006e 4942     		negs	r1, r1
- 990              	.LVL141:
- 991 0070 C9B2     		uxtb	r1, r1
- 992              	.LVL142:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 993              		.loc 1 150 0
- 994 0072 0023     		movs	r3, #0
- 995              	.LVL143:
- 996              	.L104:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 997              		.loc 1 151 0
- 998 0074 1DF80320 		ldrb	r2, [sp, r3]	@ zero_extendqisi2
- 999 0078 C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
- 1000 007a 5440     		eors	r4, r4, r2
- 1001 007c 0C40     		ands	r4, r4, r1
- 1002 007e 6240     		eors	r2, r2, r4
- 1003 0080 C254     		strb	r2, [r0, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1004              		.loc 1 150 0
- 1005 0082 0133     		adds	r3, r3, #1
- 1006              	.LVL144:
- 1007 0084 202B     		cmp	r3, #32
- 1008 0086 F5D1     		bne	.L104
- 1009              	.LBE104:
- 1010              	.LBE103:
- 1011              	.LBE102:
- 1012              	.LBE101:
+ 658              		.loc 1 161 0
+ 659              		.cfi_startproc
+ 660              		@ args = 0, pretend = 0, frame = 0
+ 661              		@ frame_needed = 0, uses_anonymous_args = 0
+ 662              	.LVL88:
+ 663 0000 70B5     		push	{r4, r5, r6, lr}
+ 664              		.cfi_def_cfa_offset 16
+ 665              		.cfi_offset 4, -16
+ 666              		.cfi_offset 5, -12
+ 667              		.cfi_offset 6, -8
+ 668              		.cfi_offset 14, -4
+ 669              		.loc 1 161 0
+ 670 0002 0446     		mov	r4, r0
+ 671 0004 0E46     		mov	r6, r1
+ 672 0006 1546     		mov	r5, r2
  162:25519/fprime.c **** 	raw_add(r, modulus);
+ 673              		.loc 1 162 0
+ 674 0008 1146     		mov	r1, r2
+ 675              	.LVL89:
+ 676 000a FFF7FEFF 		bl	raw_add
+ 677              	.LVL90:
  163:25519/fprime.c **** 	raw_try_sub(r, a);
+ 678              		.loc 1 163 0
+ 679 000e 3146     		mov	r1, r6
+ 680 0010 2046     		mov	r0, r4
+ 681 0012 FFF7FEFF 		bl	raw_try_sub
+ 682              	.LVL91:
  164:25519/fprime.c **** 	raw_try_sub(r, modulus);
+ 683              		.loc 1 164 0
+ 684 0016 2946     		mov	r1, r5
+ 685 0018 2046     		mov	r0, r4
  165:25519/fprime.c **** }
- 1013              		.loc 1 165 0
- 1014 0088 09B0     		add	sp, sp, #36
- 1015              	.LVL145:
- 1016              		@ sp needed
- 1017 008a 70BC     		pop	{r4, r5, r6}
- 1018              	.LVL146:
- 1019 008c 7047     		bx	lr
- 1020              		.cfi_endproc
- 1021              	.LFE12:
- 1023 008e 00BF     		.section	.text.fprime_mul,"ax",%progbits
- 1024              		.align	2
- 1025              		.global	fprime_mul
- 1026              		.thumb
- 1027              		.thumb_func
- 1029              	fprime_mul:
- 1030              	.LFB13:
+ 686              		.loc 1 165 0
+ 687 001a BDE87040 		pop	{r4, r5, r6, lr}
+ 688              		.cfi_restore 14
+ 689              		.cfi_restore 6
+ 690              		.cfi_restore 5
+ 691              		.cfi_restore 4
+ 692              		.cfi_def_cfa_offset 0
+ 693              	.LVL92:
+ 164:25519/fprime.c **** 	raw_try_sub(r, modulus);
+ 694              		.loc 1 164 0
+ 695 001e FFF7FEBF 		b	raw_try_sub
+ 696              	.LVL93:
+ 697              		.cfi_endproc
+ 698              	.LFE12:
+ 700              		.section	.text.fprime_mul,"ax",%progbits
+ 701              		.align	1
+ 702              		.global	fprime_mul
+ 703              		.syntax unified
+ 704              		.thumb
+ 705              		.thumb_func
+ 706              		.fpu softvfp
+ 708              	fprime_mul:
+ 709              	.LFB13:
  166:25519/fprime.c **** 
  167:25519/fprime.c **** void fprime_mul(uint8_t *r, const uint8_t *a, const uint8_t *b,
  168:25519/fprime.c **** 		const uint8_t *modulus)
  169:25519/fprime.c **** {
- 1031              		.loc 1 169 0
- 1032              		.cfi_startproc
- 1033              		@ args = 0, pretend = 0, frame = 64
- 1034              		@ frame_needed = 0, uses_anonymous_args = 0
- 1035              	.LVL147:
- 1036 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
- 1037              		.cfi_def_cfa_offset 36
- 1038              		.cfi_offset 4, -36
- 1039              		.cfi_offset 5, -32
- 1040              		.cfi_offset 6, -28
- 1041              		.cfi_offset 7, -24
- 1042              		.cfi_offset 8, -20
- 1043              		.cfi_offset 9, -16
- 1044              		.cfi_offset 10, -12
- 1045              		.cfi_offset 11, -8
- 1046              		.cfi_offset 14, -4
- 1047 0004 8846     		mov	r8, r1
- 1048 0006 91B0     		sub	sp, sp, #68
- 1049              		.cfi_def_cfa_offset 104
- 1050              		.loc 1 169 0
- 1051 0008 9246     		mov	r10, r2
+ 710              		.loc 1 169 0
+ 711              		.cfi_startproc
+ 712              		@ args = 0, pretend = 0, frame = 32
+ 713              		@ frame_needed = 0, uses_anonymous_args = 0
+ 714              	.LVL94:
+ 715 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 716              		.cfi_def_cfa_offset 36
+ 717              		.cfi_offset 4, -36
+ 718              		.cfi_offset 5, -32
+ 719              		.cfi_offset 6, -28
+ 720              		.cfi_offset 7, -24
+ 721              		.cfi_offset 8, -20
+ 722              		.cfi_offset 9, -16
+ 723              		.cfi_offset 10, -12
+ 724              		.cfi_offset 11, -8
+ 725              		.cfi_offset 14, -4
+ 726 0004 1F46     		mov	r7, r3
+ 727 0006 89B0     		sub	sp, sp, #36
+ 728              		.cfi_def_cfa_offset 72
+ 729              		.loc 1 169 0
+ 730 0008 8946     		mov	r9, r1
+ 731 000a 9246     		mov	r10, r2
  170:25519/fprime.c **** 	int i;
  171:25519/fprime.c **** 
  172:25519/fprime.c **** 	memset(r, 0, FPRIME_SIZE);
- 1052              		.loc 1 172 0
- 1053 000a 0021     		movs	r1, #0
- 1054              	.LVL148:
- 1055 000c 2022     		movs	r2, #32
- 1056              	.LVL149:
- 169:25519/fprime.c **** {
- 1057              		.loc 1 169 0
- 1058 000e 1F46     		mov	r7, r3
- 1059 0010 0546     		mov	r5, r0
- 1060              		.loc 1 172 0
- 1061 0012 FFF7FEFF 		bl	memset
- 1062              	.LVL150:
- 1063              	.LBB126:
- 1064              	.LBB127:
-  45:25519/fprime.c **** 	for (i = FPRIME_SIZE - 1; i >= 0; i--)
- 1065              		.loc 1 45 0
- 1066 0016 1F22     		movs	r2, #31
- 1067 0018 03E0     		b	.L114
- 1068              	.LVL151:
- 1069              	.L153:
- 1070 001a 12F1FF32 		adds	r2, r2, #-1
- 1071              	.LVL152:
- 1072 001e C0F08780 		bcc	.L152
- 1073              	.LVL153:
- 1074              	.L114:
-  46:25519/fprime.c **** 		if (p[i])
- 1075              		.loc 1 46 0
- 1076 0022 BB5C     		ldrb	r3, [r7, r2]	@ zero_extendqisi2
- 1077 0024 002B     		cmp	r3, #0
- 1078 0026 F8D0     		beq	.L153
- 1079              	.LVL154:
-  50:25519/fprime.c **** 	i <<= 3;
- 1080              		.loc 1 50 0
- 1081 0028 D200     		lsls	r2, r2, #3
- 1082              	.LVL155:
- 1083              	.L118:
-  52:25519/fprime.c **** 	while (x) {
- 1084              		.loc 1 52 0
- 1085 002a 5B08     		lsrs	r3, r3, #1
- 1086              	.LVL156:
-  54:25519/fprime.c **** 		i++;
- 1087              		.loc 1 54 0
- 1088 002c 02F10102 		add	r2, r2, #1
- 1089              	.LVL157:
-  52:25519/fprime.c **** 	while (x) {
- 1090              		.loc 1 52 0
- 1091 0030 FBD1     		bne	.L118
- 1092              	.LVL158:
- 1093              	.LBE127:
- 1094              	.LBE126:
+ 732              		.loc 1 172 0
+ 733 000c 0021     		movs	r1, #0
+ 734              	.LVL95:
+ 735 000e 2022     		movs	r2, #32
+ 736              	.LVL96:
+ 169:25519/fprime.c **** 	int i;
+ 737              		.loc 1 169 0
+ 738 0010 0446     		mov	r4, r0
+ 739              		.loc 1 172 0
+ 740 0012 FFF7FEFF 		bl	memset
+ 741              	.LVL97:
  173:25519/fprime.c **** 
  174:25519/fprime.c **** 	for (i = prime_msb(modulus); i >= 0; i--) {
- 1095              		.loc 1 174 0
- 1096 0032 B2F1010C 		subs	ip, r2, #1
- 1097              	.LVL159:
- 1098 0036 78D4     		bmi	.L111
- 1099 0038 08AE     		add	r6, sp, #32
- 1100              	.LVL160:
- 1101              	.L136:
- 1102              	.LBB129:
+ 742              		.loc 1 174 0
+ 743 0016 3846     		mov	r0, r7
+ 744 0018 FFF7FEFF 		bl	prime_msb
+ 745              	.LVL98:
+ 746 001c 0546     		mov	r5, r0
+ 747              	.LVL99:
+ 748              	.LBB15:
+ 749              	.LBB16:
+ 750              	.LBB17:
+ 751              		.loc 2 40 0
+ 752 001e 04F1200B 		add	fp, r4, #32
+ 753              	.LVL100:
+ 754              	.L43:
+ 755              	.LBE17:
+ 756              	.LBE16:
+ 757              	.LBE15:
+ 758              		.loc 1 174 0 discriminator 1
+ 759 0022 002D     		cmp	r5, #0
+ 760 0024 02DA     		bge	.L45
  175:25519/fprime.c **** 		const uint8_t bit = (b[i >> 3] >> (i & 7)) & 1;
- 1103              		.loc 1 175 0 discriminator 2
- 1104 003a 4FEAEC03 		asr	r3, ip, #3
- 1105 003e 1AF80390 		ldrb	r9, [r10, r3]	@ zero_extendqisi2
- 1106 0042 0CF00703 		and	r3, ip, #7
- 1107 0046 49FA03F9 		asr	r9, r9, r3
- 1108              	.LBB130:
- 1109              	.LBB131:
-  63:25519/fprime.c **** 	uint16_t c = 0;
- 1110              		.loc 1 63 0 discriminator 2
- 1111 004a 0022     		movs	r2, #0
- 1112              	.LBE131:
- 1113              	.LBE130:
- 1114              		.loc 1 175 0 discriminator 2
- 1115 004c 09F00109 		and	r9, r9, #1
- 1116              	.LVL161:
- 1117              	.LBB133:
- 1118              	.LBB132:
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1119              		.loc 1 66 0 discriminator 2
- 1120 0050 1346     		mov	r3, r2
- 1121              	.LVL162:
- 1122              	.L121:
-  67:25519/fprime.c **** 		c |= ((uint16_t)x[i]) << n;
- 1123              		.loc 1 67 0
- 1124 0052 E95C     		ldrb	r1, [r5, r3]	@ zero_extendqisi2
- 1125 0054 42EA4102 		orr	r2, r2, r1, lsl #1
- 1126              	.LVL163:
-  68:25519/fprime.c **** 		x[i] = c;
- 1127              		.loc 1 68 0
- 1128 0058 EA54     		strb	r2, [r5, r3]
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1129              		.loc 1 66 0
- 1130 005a 0133     		adds	r3, r3, #1
- 1131              	.LVL164:
- 1132 005c 202B     		cmp	r3, #32
-  69:25519/fprime.c **** 		c >>= 8;
- 1133              		.loc 1 69 0
- 1134 005e 4FEA1222 		lsr	r2, r2, #8
- 1135              	.LVL165:
-  66:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1136              		.loc 1 66 0
- 1137 0062 F6D1     		bne	.L121
- 1138 0064 0022     		movs	r2, #0
- 1139              	.LVL166:
- 1140 0066 1346     		mov	r3, r2
- 1141              	.LVL167:
- 1142              	.L123:
- 1143              	.LBE132:
- 1144              	.LBE133:
- 1145              	.LBB134:
- 1146              	.LBB135:
-  31:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
- 1147              		.loc 1 31 0
- 1148 0068 E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
- 1149 006a F95C     		ldrb	r1, [r7, r3]	@ zero_extendqisi2
- 1150 006c 411A     		subs	r1, r0, r1
- 1151 006e 8A1A     		subs	r2, r1, r2
- 1152              	.LVL168:
- 1153 0070 92B2     		uxth	r2, r2
- 1154              	.LVL169:
-  32:25519/fprime.c **** 		minusp[i] = c;
- 1155              		.loc 1 32 0
- 1156 0072 F254     		strb	r2, [r6, r3]
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1157              		.loc 1 30 0
- 1158 0074 0133     		adds	r3, r3, #1
- 1159              	.LVL170:
- 1160 0076 202B     		cmp	r3, #32
-  33:25519/fprime.c **** 		c = (c >> 8) & 1;
- 1161              		.loc 1 33 0
- 1162 0078 C2F30022 		ubfx	r2, r2, #8, #1
- 1163              	.LVL171:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1164              		.loc 1 30 0
- 1165 007c F4D1     		bne	.L123
- 1166              	.LVL172:
- 1167              	.LBB136:
- 1168              	.LBB137:
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 1169              		.loc 1 147 0
- 1170 007e 5242     		negs	r2, r2
- 1171              	.LVL173:
- 1172 0080 D2B2     		uxtb	r2, r2
- 1173              	.LVL174:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1174              		.loc 1 150 0
- 1175 0082 0023     		movs	r3, #0
- 1176              	.LVL175:
- 1177              	.L126:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 1178              		.loc 1 151 0
- 1179 0084 F15C     		ldrb	r1, [r6, r3]	@ zero_extendqisi2
- 1180 0086 E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
- 1181 0088 4840     		eors	r0, r0, r1
- 1182 008a 1040     		ands	r0, r0, r2
- 1183 008c 4140     		eors	r1, r1, r0
- 1184 008e E954     		strb	r1, [r5, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1185              		.loc 1 150 0
- 1186 0090 0133     		adds	r3, r3, #1
- 1187              	.LVL176:
- 1188 0092 202B     		cmp	r3, #32
- 1189 0094 F6D1     		bne	.L126
- 1190              	.LVL177:
- 1191              	.LBE137:
- 1192              	.LBE136:
- 1193              	.LBE135:
- 1194              	.LBE134:
- 1195              	.LBB138:
- 1196              	.LBB139:
- 1197              		.loc 2 40 0
- 1198 0096 2868     		ldr	r0, [r5]	@ unaligned
- 1199 0098 6968     		ldr	r1, [r5, #4]	@ unaligned
- 1200 009a AA68     		ldr	r2, [r5, #8]	@ unaligned
- 1201              	.LVL178:
- 1202 009c EB68     		ldr	r3, [r5, #12]	@ unaligned
- 1203              	.LVL179:
- 1204 009e 6C46     		mov	r4, sp
- 1205 00a0 0FC4     		stmia	r4!, {r0, r1, r2, r3}
- 1206 00a2 2869     		ldr	r0, [r5, #16]	@ unaligned
- 1207 00a4 6969     		ldr	r1, [r5, #20]	@ unaligned
- 1208 00a6 AA69     		ldr	r2, [r5, #24]	@ unaligned
- 1209 00a8 EB69     		ldr	r3, [r5, #28]	@ unaligned
- 1210              	.LBE139:
- 1211              	.LBE138:
- 1212              	.LBB141:
- 1213              	.LBB142:
- 1214              	.LBB143:
-  14:25519/fprime.c **** 	uint16_t c = 0;
- 1215              		.loc 1 14 0
- 1216 00aa 4FF0000B 		mov	fp, #0
- 1217              	.LBE143:
- 1218              	.LBE142:
- 1219              	.LBE141:
- 1220              	.LBB150:
- 1221              	.LBB140:
- 1222              		.loc 2 40 0
- 1223 00ae 0FC4     		stmia	r4!, {r0, r1, r2, r3}
- 1224              	.LVL180:
- 1225              	.LBE140:
- 1226              	.LBE150:
- 1227              	.LBB151:
- 1228              	.LBB145:
- 1229              	.LBB144:
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1230              		.loc 1 17 0
- 1231 00b0 5C46     		mov	r4, fp
- 1232              	.LVL181:
- 1233              	.L128:
-  18:25519/fprime.c **** 		c += ((uint16_t)x[i]) + ((uint16_t)p[i]);
- 1234              		.loc 1 18 0
- 1235 00b2 1DF80430 		ldrb	r3, [sp, r4]	@ zero_extendqisi2
- 1236 00b6 18F80420 		ldrb	r2, [r8, r4]	@ zero_extendqisi2
- 1237 00ba 1344     		add	r3, r3, r2
- 1238 00bc 5B44     		add	r3, r3, fp
- 1239              	.LVL182:
-  19:25519/fprime.c **** 		x[i] = c;
- 1240              		.loc 1 19 0
- 1241 00be 0DF80430 		strb	r3, [sp, r4]
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1242              		.loc 1 17 0
- 1243 00c2 0134     		adds	r4, r4, #1
- 1244              	.LVL183:
- 1245 00c4 202C     		cmp	r4, #32
-  20:25519/fprime.c **** 		c >>= 8;
- 1246              		.loc 1 20 0
- 1247 00c6 C3F30F2B 		ubfx	fp, r3, #8, #16
- 1248              	.LVL184:
-  17:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1249              		.loc 1 17 0
- 1250 00ca F2D1     		bne	.L128
- 1251 00cc 0023     		movs	r3, #0
- 1252 00ce 1C46     		mov	r4, r3
- 1253              	.LVL185:
- 1254              	.L130:
- 1255              	.LBE144:
- 1256              	.LBE145:
- 1257              	.LBB146:
- 1258              	.LBB147:
-  31:25519/fprime.c **** 		c = ((uint16_t)x[i]) - ((uint16_t)p[i]) - c;
- 1259              		.loc 1 31 0
- 1260 00d0 1DF80410 		ldrb	r1, [sp, r4]	@ zero_extendqisi2
- 1261 00d4 3A5D     		ldrb	r2, [r7, r4]	@ zero_extendqisi2
- 1262 00d6 8A1A     		subs	r2, r1, r2
- 1263 00d8 D31A     		subs	r3, r2, r3
- 1264              	.LVL186:
- 1265 00da 9BB2     		uxth	r3, r3
- 1266              	.LVL187:
-  32:25519/fprime.c **** 		minusp[i] = c;
- 1267              		.loc 1 32 0
- 1268 00dc 3355     		strb	r3, [r6, r4]
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1269              		.loc 1 30 0
- 1270 00de 0134     		adds	r4, r4, #1
- 1271              	.LVL188:
- 1272 00e0 202C     		cmp	r4, #32
-  33:25519/fprime.c **** 		c = (c >> 8) & 1;
- 1273              		.loc 1 33 0
- 1274 00e2 C3F30023 		ubfx	r3, r3, #8, #1
- 1275              	.LVL189:
-  30:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1276              		.loc 1 30 0
- 1277 00e6 F3D1     		bne	.L130
- 1278              	.LVL190:
- 1279              	.LBB148:
- 1280              	.LBB149:
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 1281              		.loc 1 147 0
- 1282 00e8 5B42     		negs	r3, r3
- 1283              	.LVL191:
- 1284 00ea DBB2     		uxtb	r3, r3
- 1285              	.LVL192:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1286              		.loc 1 150 0
- 1287 00ec 0022     		movs	r2, #0
- 1288              	.LVL193:
- 1289              	.L132:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 1290              		.loc 1 151 0
- 1291 00ee B15C     		ldrb	r1, [r6, r2]	@ zero_extendqisi2
- 1292 00f0 1DF80200 		ldrb	r0, [sp, r2]	@ zero_extendqisi2
- 1293 00f4 4840     		eors	r0, r0, r1
- 1294 00f6 1840     		ands	r0, r0, r3
- 1295 00f8 4140     		eors	r1, r1, r0
- 1296 00fa 0DF80210 		strb	r1, [sp, r2]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1297              		.loc 1 150 0
- 1298 00fe 0132     		adds	r2, r2, #1
- 1299              	.LVL194:
- 1300 0100 202A     		cmp	r2, #32
- 1301 0102 F4D1     		bne	.L132
- 1302              	.LVL195:
- 1303              	.LBE149:
- 1304              	.LBE148:
- 1305              	.LBE147:
- 1306              	.LBE146:
- 1307              	.LBE151:
- 1308              	.LBB152:
- 1309              	.LBB153:
- 147:25519/fprime.c **** 	const uint8_t mask = -condition;
- 1310              		.loc 1 147 0
- 1311 0104 C9F10009 		rsb	r9, r9, #0
- 1312              	.LVL196:
- 1313 0108 5FFA89F9 		uxtb	r9, r9
- 1314              	.LVL197:
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1315              		.loc 1 150 0
- 1316 010c 0023     		movs	r3, #0
- 1317              	.LVL198:
- 1318              	.L135:
- 151:25519/fprime.c **** 		dst[i] = zero[i] ^ (mask & (one[i] ^ zero[i]));
- 1319              		.loc 1 151 0
- 1320 010e EA5C     		ldrb	r2, [r5, r3]	@ zero_extendqisi2
- 1321 0110 1DF80310 		ldrb	r1, [sp, r3]	@ zero_extendqisi2
- 1322 0114 5140     		eors	r1, r1, r2
- 1323 0116 09EA0101 		and	r1, r9, r1
- 1324 011a 4A40     		eors	r2, r2, r1
- 1325 011c EA54     		strb	r2, [r5, r3]
- 150:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++)
- 1326              		.loc 1 150 0
- 1327 011e 0133     		adds	r3, r3, #1
- 1328              	.LVL199:
- 1329 0120 202B     		cmp	r3, #32
- 1330 0122 F4D1     		bne	.L135
- 1331              	.LBE153:
- 1332              	.LBE152:
- 1333              	.LBE129:
- 174:25519/fprime.c **** 	for (i = prime_msb(modulus); i >= 0; i--) {
- 1334              		.loc 1 174 0 discriminator 2
- 1335 0124 1CF1FF3C 		adds	ip, ip, #-1
- 1336              	.LVL200:
- 1337 0128 87D2     		bcs	.L136
- 1338              	.LVL201:
- 1339              	.L111:
  176:25519/fprime.c **** 		uint8_t plusa[FPRIME_SIZE];
  177:25519/fprime.c **** 
  178:25519/fprime.c **** 		shift_n_bits(r, 1);
@@ -1703,84 +1030,151 @@
  184:25519/fprime.c **** 		fprime_select(r, r, plusa, bit);
  185:25519/fprime.c **** 	}
  186:25519/fprime.c **** }
- 1340              		.loc 1 186 0
- 1341 012a 11B0     		add	sp, sp, #68
- 1342              		@ sp needed
- 1343 012c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
- 1344              	.LVL202:
- 1345              	.L152:
- 1346              	.LBB154:
- 1347              	.LBB128:
-  49:25519/fprime.c **** 	x = p[i];
- 1348              		.loc 1 49 0
- 1349 0130 17F8013C 		ldrb	r3, [r7, #-1]	@ zero_extendqisi2
- 1350              	.LVL203:
-  52:25519/fprime.c **** 	while (x) {
- 1351              		.loc 1 52 0
- 1352 0134 002B     		cmp	r3, #0
- 1353 0136 F8D0     		beq	.L111
-  50:25519/fprime.c **** 	i <<= 3;
- 1354              		.loc 1 50 0
- 1355 0138 6FF00702 		mvn	r2, #7
- 1356 013c 75E7     		b	.L118
- 1357              	.LBE128:
- 1358              	.LBE154:
- 1359              		.cfi_endproc
- 1360              	.LFE13:
- 1362 013e 00BF     		.section	.text.fprime_inv,"ax",%progbits
- 1363              		.align	2
- 1364              		.global	fprime_inv
- 1365              		.thumb
- 1366              		.thumb_func
- 1368              	fprime_inv:
- 1369              	.LFB14:
+ 761              		.loc 1 186 0
+ 762 0026 09B0     		add	sp, sp, #36
+ 763              		.cfi_remember_state
+ 764              		.cfi_def_cfa_offset 36
+ 765              		@ sp needed
+ 766 0028 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 767              	.LVL101:
+ 768              	.L45:
+ 769              		.cfi_restore_state
+ 770              	.LBB22:
+ 175:25519/fprime.c **** 		const uint8_t bit = (b[i >> 3] >> (i & 7)) & 1;
+ 771              		.loc 1 175 0 discriminator 3
+ 772 002c EB10     		asrs	r3, r5, #3
+ 773 002e 1AF80360 		ldrb	r6, [r10, r3]	@ zero_extendqisi2
+ 178:25519/fprime.c **** 		raw_try_sub(r, modulus);
+ 774              		.loc 1 178 0 discriminator 3
+ 775 0032 0121     		movs	r1, #1
+ 175:25519/fprime.c **** 		const uint8_t bit = (b[i >> 3] >> (i & 7)) & 1;
+ 776              		.loc 1 175 0 discriminator 3
+ 777 0034 05F00703 		and	r3, r5, #7
+ 178:25519/fprime.c **** 		raw_try_sub(r, modulus);
+ 778              		.loc 1 178 0 discriminator 3
+ 779 0038 2046     		mov	r0, r4
+ 175:25519/fprime.c **** 		const uint8_t bit = (b[i >> 3] >> (i & 7)) & 1;
+ 780              		.loc 1 175 0 discriminator 3
+ 781 003a 1E41     		asrs	r6, r6, r3
+ 178:25519/fprime.c **** 		raw_try_sub(r, modulus);
+ 782              		.loc 1 178 0 discriminator 3
+ 783 003c FFF7FEFF 		bl	shift_n_bits
+ 784              	.LVL102:
+ 179:25519/fprime.c **** 
+ 785              		.loc 1 179 0 discriminator 3
+ 786 0040 3946     		mov	r1, r7
+ 787 0042 2046     		mov	r0, r4
+ 788 0044 FFF7FEFF 		bl	raw_try_sub
+ 789              	.LVL103:
+ 790              	.LBB20:
+ 791              	.LBB18:
+ 792              		.loc 2 40 0 discriminator 3
+ 793 0048 6A46     		mov	r2, sp
+ 794 004a 2346     		mov	r3, r4
+ 795 004c 9046     		mov	r8, r2
+ 796              	.LBE18:
+ 797              	.LBE20:
+ 175:25519/fprime.c **** 		const uint8_t bit = (b[i >> 3] >> (i & 7)) & 1;
+ 798              		.loc 1 175 0 discriminator 3
+ 799 004e 06F00106 		and	r6, r6, #1
+ 800              	.LVL104:
+ 801              	.L44:
+ 802              	.LBB21:
+ 803              	.LBB19:
+ 804              		.loc 2 40 0 discriminator 3
+ 805 0052 9446     		mov	ip, r2
+ 806 0054 1868     		ldr	r0, [r3]	@ unaligned
+ 807 0056 5968     		ldr	r1, [r3, #4]	@ unaligned
+ 808 0058 0833     		adds	r3, r3, #8
+ 809 005a ACE80300 		stmia	ip!, {r0, r1}
+ 810 005e 5B45     		cmp	r3, fp
+ 811 0060 6246     		mov	r2, ip
+ 812 0062 F6D1     		bne	.L44
+ 813              	.LVL105:
+ 814              	.LBE19:
+ 815              	.LBE21:
+ 182:25519/fprime.c **** 
+ 816              		.loc 1 182 0 discriminator 3
+ 817 0064 3A46     		mov	r2, r7
+ 818 0066 4946     		mov	r1, r9
+ 819 0068 4046     		mov	r0, r8
+ 820 006a FFF7FEFF 		bl	fprime_add
+ 821              	.LVL106:
+ 184:25519/fprime.c **** 	}
+ 822              		.loc 1 184 0 discriminator 3
+ 823 006e 3346     		mov	r3, r6
+ 824 0070 4246     		mov	r2, r8
+ 825 0072 2146     		mov	r1, r4
+ 826 0074 2046     		mov	r0, r4
+ 827 0076 FFF7FEFF 		bl	fprime_select
+ 828              	.LVL107:
+ 829              	.LBE22:
+ 174:25519/fprime.c **** 		const uint8_t bit = (b[i >> 3] >> (i & 7)) & 1;
+ 830              		.loc 1 174 0 discriminator 3
+ 831 007a 013D     		subs	r5, r5, #1
+ 832              	.LVL108:
+ 833 007c D1E7     		b	.L43
+ 834              		.cfi_endproc
+ 835              	.LFE13:
+ 837              		.section	.text.fprime_inv,"ax",%progbits
+ 838              		.align	1
+ 839              		.global	fprime_inv
+ 840              		.syntax unified
+ 841              		.thumb
+ 842              		.thumb_func
+ 843              		.fpu softvfp
+ 845              	fprime_inv:
+ 846              	.LFB14:
  187:25519/fprime.c **** 
  188:25519/fprime.c **** void fprime_inv(uint8_t *r, const uint8_t *a, const uint8_t *modulus)
  189:25519/fprime.c **** {
- 1370              		.loc 1 189 0
- 1371              		.cfi_startproc
- 1372              		@ args = 0, pretend = 0, frame = 64
- 1373              		@ frame_needed = 0, uses_anonymous_args = 0
- 1374              	.LVL204:
- 1375 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 1376              		.cfi_def_cfa_offset 24
- 1377              		.cfi_offset 4, -24
- 1378              		.cfi_offset 5, -20
- 1379              		.cfi_offset 6, -16
- 1380              		.cfi_offset 7, -12
- 1381              		.cfi_offset 8, -8
- 1382              		.cfi_offset 14, -4
- 1383 0004 1746     		mov	r7, r2
- 1384              	.LBB164:
- 1385              	.LBB165:
- 1386              		.loc 2 40 0
- 1387 0006 FB68     		ldr	r3, [r7, #12]	@ unaligned
- 1388              	.LBE165:
- 1389              	.LBE164:
- 1390              		.loc 1 189 0
- 1391 0008 90B0     		sub	sp, sp, #64
- 1392              		.cfi_def_cfa_offset 88
- 1393              	.LVL205:
- 1394              		.loc 1 189 0
- 1395 000a 0646     		mov	r6, r0
- 1396 000c 8846     		mov	r8, r1
- 1397              	.LBB168:
- 1398              	.LBB166:
- 1399              		.loc 2 40 0
- 1400 000e 1068     		ldr	r0, [r2]	@ unaligned
- 1401              	.LVL206:
- 1402 0010 5168     		ldr	r1, [r2, #4]	@ unaligned
- 1403              	.LVL207:
- 1404 0012 9268     		ldr	r2, [r2, #8]	@ unaligned
- 1405              	.LVL208:
- 1406 0014 6D46     		mov	r5, sp
- 1407 0016 0FC5     		stmia	r5!, {r0, r1, r2, r3}
- 1408 0018 3869     		ldr	r0, [r7, #16]	@ unaligned
- 1409 001a 7969     		ldr	r1, [r7, #20]	@ unaligned
- 1410 001c BA69     		ldr	r2, [r7, #24]	@ unaligned
- 1411 001e FB69     		ldr	r3, [r7, #28]	@ unaligned
- 1412              	.LBE166:
- 1413              	.LBE168:
+ 847              		.loc 1 189 0
+ 848              		.cfi_startproc
+ 849              		@ args = 0, pretend = 0, frame = 64
+ 850              		@ frame_needed = 0, uses_anonymous_args = 0
+ 851              	.LVL109:
+ 852 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 853              		.cfi_def_cfa_offset 24
+ 854              		.cfi_offset 4, -24
+ 855              		.cfi_offset 5, -20
+ 856              		.cfi_offset 6, -16
+ 857              		.cfi_offset 7, -12
+ 858              		.cfi_offset 8, -8
+ 859              		.cfi_offset 14, -4
+ 860 0004 90B0     		sub	sp, sp, #64
+ 861              		.cfi_def_cfa_offset 88
+ 862              	.LVL110:
+ 863              		.loc 1 189 0
+ 864 0006 1446     		mov	r4, r2
+ 865              	.LBB28:
+ 866              	.LBB29:
+ 867              		.loc 2 40 0
+ 868 0008 1346     		mov	r3, r2
+ 869 000a 6A46     		mov	r2, sp
+ 870              	.LVL111:
+ 871              	.LBE29:
+ 872              	.LBE28:
+ 873              		.loc 1 189 0
+ 874 000c 0646     		mov	r6, r0
+ 875 000e 0F46     		mov	r7, r1
+ 876 0010 9446     		mov	ip, r2
+ 877              	.LBB31:
+ 878              	.LBB30:
+ 879              		.loc 2 40 0
+ 880 0012 04F1200E 		add	lr, r4, #32
+ 881              	.LVL112:
+ 882              	.L48:
+ 883 0016 1546     		mov	r5, r2
+ 884 0018 1868     		ldr	r0, [r3]	@ unaligned
+ 885 001a 5968     		ldr	r1, [r3, #4]	@ unaligned
+ 886 001c 0833     		adds	r3, r3, #8
+ 887 001e 03C5     		stmia	r5!, {r0, r1}
+ 888 0020 7345     		cmp	r3, lr
+ 889 0022 2A46     		mov	r2, r5
+ 890 0024 F7D1     		bne	.L48
+ 891              	.LVL113:
+ 892              	.LBE30:
+ 893              	.LBE31:
  190:25519/fprime.c **** 	uint8_t pm2[FPRIME_SIZE];
  191:25519/fprime.c **** 	uint16_t c = 2;
  192:25519/fprime.c **** 	int i;
@@ -1788,268 +1182,200 @@
  194:25519/fprime.c **** 	/* Compute (p-2) */
  195:25519/fprime.c **** 	fprime_copy(pm2, modulus);
  196:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1414              		.loc 1 196 0
- 1415 0020 0024     		movs	r4, #0
- 1416              	.LBB169:
- 1417              	.LBB167:
- 1418              		.loc 2 40 0
- 1419 0022 0FC5     		stmia	r5!, {r0, r1, r2, r3}
- 1420              	.LVL209:
- 1421              	.LBE167:
- 1422              	.LBE169:
- 191:25519/fprime.c **** 	uint16_t c = 2;
- 1423              		.loc 1 191 0
- 1424 0024 0225     		movs	r5, #2
- 1425              	.LVL210:
- 1426              	.L156:
+ 894              		.loc 1 196 0
+ 895 0026 0022     		movs	r2, #0
+ 191:25519/fprime.c **** 	int i;
+ 896              		.loc 1 191 0
+ 897 0028 0221     		movs	r1, #2
+ 898              	.LVL114:
+ 899              	.L49:
  197:25519/fprime.c **** 		c = modulus[i] - c;
- 1427              		.loc 1 197 0 discriminator 2
- 1428 0026 3B5D     		ldrb	r3, [r7, r4]	@ zero_extendqisi2
- 1429 0028 5D1B     		subs	r5, r3, r5
- 1430              	.LVL211:
- 1431 002a ADB2     		uxth	r5, r5
- 1432              	.LVL212:
+ 900              		.loc 1 197 0 discriminator 3
+ 901 002a A35C     		ldrb	r3, [r4, r2]	@ zero_extendqisi2
+ 902 002c 5B1A     		subs	r3, r3, r1
+ 903 002e 9BB2     		uxth	r3, r3
+ 904              	.LVL115:
  198:25519/fprime.c **** 		pm2[i] = c;
- 1433              		.loc 1 198 0 discriminator 2
- 1434 002c 0DF80450 		strb	r5, [sp, r4]
- 196:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1435              		.loc 1 196 0 discriminator 2
- 1436 0030 0134     		adds	r4, r4, #1
- 1437              	.LVL213:
- 1438 0032 202C     		cmp	r4, #32
+ 905              		.loc 1 198 0 discriminator 3
+ 906 0030 0CF80230 		strb	r3, [ip, r2]
+ 196:25519/fprime.c **** 		c = modulus[i] - c;
+ 907              		.loc 1 196 0 discriminator 3
+ 908 0034 0132     		adds	r2, r2, #1
+ 909              	.LVL116:
+ 910 0036 202A     		cmp	r2, #32
  199:25519/fprime.c **** 		c >>= 8;
- 1439              		.loc 1 199 0 discriminator 2
- 1440 0034 4FEA1525 		lsr	r5, r5, #8
- 1441              	.LVL214:
- 196:25519/fprime.c **** 	for (i = 0; i < FPRIME_SIZE; i++) {
- 1442              		.loc 1 196 0 discriminator 2
- 1443 0038 F5D1     		bne	.L156
- 1444              	.LVL215:
- 1445              	.LBB170:
- 1446              	.LBB171:
-  78:25519/fprime.c **** 		x[i] = c;
- 1447              		.loc 1 78 0
- 1448 003a 0021     		movs	r1, #0
- 1449 003c 0123     		movs	r3, #1
- 1450 003e 1C22     		movs	r2, #28
- 1451 0040 3370     		strb	r3, [r6]
- 1452              	.LVL216:
- 1453 0042 7170     		strb	r1, [r6, #1]
- 1454              	.LVL217:
- 1455 0044 B170     		strb	r1, [r6, #2]
- 1456              	.LVL218:
- 1457 0046 F170     		strb	r1, [r6, #3]
- 1458              	.LVL219:
- 1459 0048 301D     		adds	r0, r6, #4
- 1460 004a FFF7FEFF 		bl	memset
- 1461              	.LVL220:
-  83:25519/fprime.c **** 		x[i] = 0;
- 1462              		.loc 1 83 0
- 1463 004e 1F22     		movs	r2, #31
- 1464 0050 02E0     		b	.L159
- 1465              	.LVL221:
- 1466              	.L175:
- 1467              	.LBE171:
- 1468              	.LBE170:
- 1469              	.LBB172:
- 1470              	.LBB173:
-  45:25519/fprime.c **** 	for (i = FPRIME_SIZE - 1; i >= 0; i--)
- 1471              		.loc 1 45 0
- 1472 0052 12F1FF32 		adds	r2, r2, #-1
- 1473              	.LVL222:
- 1474 0056 35D3     		bcc	.L174
- 1475              	.LVL223:
- 1476              	.L159:
-  46:25519/fprime.c **** 		if (p[i])
- 1477              		.loc 1 46 0
- 1478 0058 BB5C     		ldrb	r3, [r7, r2]	@ zero_extendqisi2
- 1479 005a 002B     		cmp	r3, #0
- 1480 005c F9D0     		beq	.L175
- 1481              	.LVL224:
-  50:25519/fprime.c **** 	i <<= 3;
- 1482              		.loc 1 50 0
- 1483 005e D500     		lsls	r5, r2, #3
- 1484              	.LVL225:
- 1485              	.L163:
-  52:25519/fprime.c **** 	while (x) {
- 1486              		.loc 1 52 0
- 1487 0060 5B08     		lsrs	r3, r3, #1
- 1488              	.LVL226:
-  54:25519/fprime.c **** 		i++;
- 1489              		.loc 1 54 0
- 1490 0062 05F10105 		add	r5, r5, #1
- 1491              	.LVL227:
-  52:25519/fprime.c **** 	while (x) {
- 1492              		.loc 1 52 0
- 1493 0066 FBD1     		bne	.L163
- 1494              	.LVL228:
- 1495              	.LBE173:
- 1496              	.LBE172:
+ 911              		.loc 1 199 0 discriminator 3
+ 912 0038 4FEA1321 		lsr	r1, r3, #8
+ 913              	.LVL117:
+ 196:25519/fprime.c **** 		c = modulus[i] - c;
+ 914              		.loc 1 196 0 discriminator 3
+ 915 003c F5D1     		bne	.L49
  200:25519/fprime.c **** 	}
  201:25519/fprime.c **** 
  202:25519/fprime.c **** 	/* Binary exponentiation */
  203:25519/fprime.c **** 	fprime_load(r, 1);
+ 916              		.loc 1 203 0
+ 917 003e 0121     		movs	r1, #1
+ 918              	.LVL118:
+ 919 0040 3046     		mov	r0, r6
+ 920 0042 FFF7FEFF 		bl	fprime_load
+ 921              	.LVL119:
  204:25519/fprime.c **** 
  205:25519/fprime.c **** 	for (i = prime_msb(modulus); i >= 0; i--) {
- 1497              		.loc 1 205 0
- 1498 0068 013D     		subs	r5, r5, #1
- 1499              	.LVL229:
- 1500 006a 0ED5     		bpl	.L167
- 1501 006c 27E0     		b	.L154
- 1502              	.LVL230:
- 1503              	.L165:
- 1504              	.LBB175:
- 1505              	.LBB176:
- 1506              	.LBB177:
- 1507              		.loc 2 40 0
- 1508 006e 08AC     		add	r4, sp, #32
- 1509              	.LVL231:
- 1510              	.LBE177:
- 1511              	.LBE176:
- 1512              	.LBE175:
- 1513              		.loc 1 205 0
- 1514 0070 15F1FF35 		adds	r5, r5, #-1
- 1515              	.LVL232:
- 1516              	.LBB180:
- 1517              	.LBB179:
- 1518              	.LBB178:
- 1519              		.loc 2 40 0
- 1520 0074 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 1521              	.LVL233:
- 1522 0076 3060     		str	r0, [r6]	@ unaligned
- 1523 0078 7160     		str	r1, [r6, #4]	@ unaligned
- 1524 007a B260     		str	r2, [r6, #8]	@ unaligned
- 1525 007c F360     		str	r3, [r6, #12]	@ unaligned
- 1526 007e 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 1527              	.LVL234:
- 1528 0080 3061     		str	r0, [r6, #16]	@ unaligned
- 1529 0082 7161     		str	r1, [r6, #20]	@ unaligned
- 1530 0084 B261     		str	r2, [r6, #24]	@ unaligned
- 1531 0086 F361     		str	r3, [r6, #28]	@ unaligned
- 1532              	.LBE178:
- 1533              	.LBE179:
- 1534              	.LBE180:
- 1535              		.loc 1 205 0
- 1536 0088 19D3     		bcc	.L154
- 1537              	.LVL235:
- 1538              	.L167:
- 1539              	.LBB181:
+ 922              		.loc 1 205 0
+ 923 0046 2046     		mov	r0, r4
+ 924 0048 FFF7FEFF 		bl	prime_msb
+ 925              	.LVL120:
+ 926 004c 0546     		mov	r5, r0
+ 927              	.LVL121:
+ 928              	.LBB32:
+ 929              	.LBB33:
+ 930              	.LBB34:
+ 931              		.loc 2 40 0
+ 932 004e 0DF14008 		add	r8, sp, #64
+ 933              	.LVL122:
+ 934              	.L50:
+ 935              	.LBE34:
+ 936              	.LBE33:
+ 937              	.LBE32:
+ 938              		.loc 1 205 0 discriminator 1
+ 939 0052 002D     		cmp	r5, #0
+ 940 0054 02DA     		bge	.L54
  206:25519/fprime.c **** 		uint8_t r2[FPRIME_SIZE];
  207:25519/fprime.c **** 
  208:25519/fprime.c **** 		fprime_mul(r2, r, r, modulus);
- 1540              		.loc 1 208 0
- 1541 008a 3246     		mov	r2, r6
- 1542 008c 3B46     		mov	r3, r7
- 1543 008e 08A8     		add	r0, sp, #32
- 1544 0090 3146     		mov	r1, r6
- 1545 0092 FFF7FEFF 		bl	fprime_mul
- 1546              	.LVL236:
  209:25519/fprime.c **** 
  210:25519/fprime.c **** 		if ((pm2[i >> 3] >> (i & 7)) & 1)
- 1547              		.loc 1 210 0
- 1548 0096 10AA     		add	r2, sp, #64
- 1549 0098 02EBE503 		add	r3, r2, r5, asr #3
- 1550 009c 13F8402C 		ldrb	r2, [r3, #-64]	@ zero_extendqisi2
- 1551 00a0 05F00703 		and	r3, r5, #7
- 1552 00a4 42FA03F3 		asr	r3, r2, r3
- 1553 00a8 DB07     		lsls	r3, r3, #31
- 1554 00aa E0D5     		bpl	.L165
  211:25519/fprime.c **** 			fprime_mul(r, r2, a, modulus);
- 1555              		.loc 1 211 0
- 1556 00ac 3046     		mov	r0, r6
- 1557 00ae 08A9     		add	r1, sp, #32
- 1558              	.LVL237:
- 1559 00b0 4246     		mov	r2, r8
- 1560 00b2 3B46     		mov	r3, r7
- 1561 00b4 FFF7FEFF 		bl	fprime_mul
- 1562              	.LVL238:
- 1563              	.LBE181:
- 205:25519/fprime.c **** 	for (i = prime_msb(modulus); i >= 0; i--) {
- 1564              		.loc 1 205 0
- 1565 00b8 15F1FF35 		adds	r5, r5, #-1
- 1566              	.LVL239:
- 1567 00bc E5D2     		bcs	.L167
- 1568              	.LVL240:
- 1569              	.L154:
  212:25519/fprime.c **** 		else
  213:25519/fprime.c **** 			fprime_copy(r, r2);
  214:25519/fprime.c **** 	}
  215:25519/fprime.c **** }
- 1570              		.loc 1 215 0
- 1571 00be 10B0     		add	sp, sp, #64
- 1572              	.LVL241:
- 1573              		@ sp needed
- 1574 00c0 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 1575              	.LVL242:
- 1576              	.L174:
- 1577              	.LBB182:
- 1578              	.LBB174:
-  49:25519/fprime.c **** 	x = p[i];
- 1579              		.loc 1 49 0
- 1580 00c4 17F8013C 		ldrb	r3, [r7, #-1]	@ zero_extendqisi2
- 1581              	.LVL243:
-  52:25519/fprime.c **** 	while (x) {
- 1582              		.loc 1 52 0
- 1583 00c8 002B     		cmp	r3, #0
- 1584 00ca F8D0     		beq	.L154
-  50:25519/fprime.c **** 	i <<= 3;
- 1585              		.loc 1 50 0
- 1586 00cc 6FF00705 		mvn	r5, #7
- 1587              	.LVL244:
- 1588 00d0 C6E7     		b	.L163
- 1589              	.LBE174:
- 1590              	.LBE182:
- 1591              		.cfi_endproc
- 1592              	.LFE14:
- 1594              		.global	fprime_one
- 1595              		.global	fprime_zero
- 1596 00d2 00BF     		.section	.rodata.fprime_one,"a",%progbits
- 1597              		.align	2
- 1600              	fprime_one:
- 1601 0000 01       		.byte	1
- 1602 0001 00000000 		.space	31
- 1602      00000000 
- 1602      00000000 
- 1602      00000000 
- 1602      00000000 
- 1603              		.section	.rodata.fprime_zero,"a",%progbits
- 1604              		.align	2
- 1607              	fprime_zero:
- 1608 0000 00000000 		.space	32
- 1608      00000000 
- 1608      00000000 
- 1608      00000000 
- 1608      00000000 
- 1609              		.text
- 1610              	.Letext0:
- 1611              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
- 1612              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
- 1613              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\lib\\gcc\\arm-none-eabi\\4.8
+ 941              		.loc 1 215 0
+ 942 0056 10B0     		add	sp, sp, #64
+ 943              		.cfi_remember_state
+ 944              		.cfi_def_cfa_offset 24
+ 945              	.LVL123:
+ 946              		@ sp needed
+ 947 0058 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 948              	.LVL124:
+ 949              	.L54:
+ 950              		.cfi_restore_state
+ 951              	.LBB37:
+ 208:25519/fprime.c **** 
+ 952              		.loc 1 208 0
+ 953 005c 2346     		mov	r3, r4
+ 954 005e 3246     		mov	r2, r6
+ 955 0060 3146     		mov	r1, r6
+ 956 0062 08A8     		add	r0, sp, #32
+ 957 0064 FFF7FEFF 		bl	fprime_mul
+ 958              	.LVL125:
+ 210:25519/fprime.c **** 			fprime_mul(r, r2, a, modulus);
+ 959              		.loc 1 210 0
+ 960 0068 10AB     		add	r3, sp, #64
+ 961 006a 03EBE503 		add	r3, r3, r5, asr #3
+ 962 006e 13F8403C 		ldrb	r3, [r3, #-64]	@ zero_extendqisi2
+ 963 0072 05F00702 		and	r2, r5, #7
+ 964 0076 1341     		asrs	r3, r3, r2
+ 965 0078 DB07     		lsls	r3, r3, #31
+ 966 007a 07D5     		bpl	.L51
+ 211:25519/fprime.c **** 		else
+ 967              		.loc 1 211 0
+ 968 007c 2346     		mov	r3, r4
+ 969 007e 3A46     		mov	r2, r7
+ 970 0080 08A9     		add	r1, sp, #32
+ 971 0082 3046     		mov	r0, r6
+ 972 0084 FFF7FEFF 		bl	fprime_mul
+ 973              	.LVL126:
+ 974              	.L52:
+ 975              	.LBE37:
+ 205:25519/fprime.c **** 		uint8_t r2[FPRIME_SIZE];
+ 976              		.loc 1 205 0 discriminator 2
+ 977 0088 013D     		subs	r5, r5, #1
+ 978              	.LVL127:
+ 979 008a E2E7     		b	.L50
+ 980              	.L51:
+ 981              	.LVL128:
+ 982              	.LBB38:
+ 983              	.LBB36:
+ 984              	.LBB35:
+ 985              		.loc 2 40 0
+ 986 008c 3246     		mov	r2, r6
+ 987 008e 0DF1200C 		add	ip, sp, #32
+ 988              	.LVL129:
+ 989              	.L53:
+ 990 0092 6346     		mov	r3, ip
+ 991 0094 03CB     		ldmia	r3!, {r0, r1}
+ 992 0096 4345     		cmp	r3, r8
+ 993 0098 1060     		str	r0, [r2]	@ unaligned
+ 994 009a 5160     		str	r1, [r2, #4]	@ unaligned
+ 995 009c 9C46     		mov	ip, r3
+ 996 009e 02F10802 		add	r2, r2, #8
+ 997 00a2 F6D1     		bne	.L53
+ 998 00a4 F0E7     		b	.L52
+ 999              	.LBE35:
+ 1000              	.LBE36:
+ 1001              	.LBE38:
+ 1002              		.cfi_endproc
+ 1003              	.LFE14:
+ 1005              		.global	fprime_one
+ 1006              		.global	fprime_zero
+ 1007              		.section	.rodata.fprime_one,"a",%progbits
+ 1010              	fprime_one:
+ 1011 0000 01       		.byte	1
+ 1012 0001 00000000 		.space	31
+ 1012      00000000 
+ 1012      00000000 
+ 1012      00000000 
+ 1012      00000000 
+ 1013              		.section	.rodata.fprime_zero,"a",%progbits
+ 1016              	fprime_zero:
+ 1017 0000 00000000 		.space	32
+ 1017      00000000 
+ 1017      00000000 
+ 1017      00000000 
+ 1017      00000000 
+ 1018              		.text
+ 1019              	.Letext0:
+ 1020              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
+ 1021              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
+ 1022              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
+ 1023              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
+ 1024              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
+ 1025              		.file 8 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 1026              		.file 9 "<built-in>"
 DEFINED SYMBOLS
-                            *ABS*:00000000 fprime.c
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:19     .text.fprime_load:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:24     .text.fprime_load:00000000 fprime_load
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:61     .text.fprime_from_bytes:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:66     .text.fprime_from_bytes:00000000 fprime_from_bytes
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:436    .text.fprime_normalize:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:441    .text.fprime_normalize:00000000 fprime_normalize
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:492    .text.fprime_eq:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:497    .text.fprime_eq:00000000 fprime_eq
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:597    .text.fprime_select:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:602    .text.fprime_select:00000000 fprime_select
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:732    .text.fprime_add:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:737    .text.fprime_add:00000000 fprime_add
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:850    .text.fprime_sub:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:855    .text.fprime_sub:00000000 fprime_sub
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1024   .text.fprime_mul:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1029   .text.fprime_mul:00000000 fprime_mul
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1363   .text.fprime_inv:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1368   .text.fprime_inv:00000000 fprime_inv
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1600   .rodata.fprime_one:00000000 fprime_one
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1607   .rodata.fprime_zero:00000000 fprime_zero
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1597   .rodata.fprime_one:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\cceKzbJD.s:1604   .rodata.fprime_zero:00000000 $d
-                     .debug_frame:00000010 $d
+                            *ABS*:0000000000000000 fprime.c
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:16     .text.raw_add:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:22     .text.raw_add:0000000000000000 raw_add
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:67     .text.prime_msb:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:73     .text.prime_msb:0000000000000000 prime_msb
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:120    .text.shift_n_bits:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:126    .text.shift_n_bits:0000000000000000 shift_n_bits
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:165    .text.fprime_load:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:172    .text.fprime_load:0000000000000000 fprime_load
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:213    .text.fprime_eq:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:220    .text.fprime_eq:0000000000000000 fprime_eq
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:274    .text.fprime_select:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:281    .text.fprime_select:0000000000000000 fprime_select
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:329    .text.raw_try_sub:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:335    .text.raw_try_sub:0000000000000000 raw_try_sub
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:392    .text.fprime_from_bytes:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:399    .text.fprime_from_bytes:0000000000000000 fprime_from_bytes
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:545    .text.fprime_normalize:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:552    .text.fprime_normalize:0000000000000000 fprime_normalize
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:605    .text.fprime_add:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:612    .text.fprime_add:0000000000000000 fprime_add
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:649    .text.fprime_sub:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:656    .text.fprime_sub:0000000000000000 fprime_sub
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:701    .text.fprime_mul:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:708    .text.fprime_mul:0000000000000000 fprime_mul
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:838    .text.fprime_inv:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:845    .text.fprime_inv:0000000000000000 fprime_inv
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1010   .rodata.fprime_one:0000000000000000 fprime_one
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1016   .rodata.fprime_zero:0000000000000000 fprime_zero
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1012   .rodata.fprime_one:0000000000000001 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cck6zEt0.s:1017   .rodata.fprime_zero:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 memset

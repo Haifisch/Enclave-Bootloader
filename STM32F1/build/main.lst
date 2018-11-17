@@ -1,28 +1,27 @@
-   1              		.syntax unified
-   2              		.cpu cortex-m3
-   3              		.fpu softvfp
-   4              		.eabi_attribute 20, 1
-   5              		.eabi_attribute 21, 1
-   6              		.eabi_attribute 23, 3
-   7              		.eabi_attribute 24, 1
-   8              		.eabi_attribute 25, 1
-   9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 4
-  11              		.eabi_attribute 34, 1
-  12              		.eabi_attribute 18, 4
-  13              		.thumb
-  14              		.file	"main.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.decode_b64,"ax",%progbits
-  19              		.align	1
-  20              		.global	decode_b64
-  21              		.thumb
-  22              		.thumb_func
-  24              	decode_b64:
-  25              	.LFB0:
-  26              		.file 1 "main.c"
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"main.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.decode_b64,"ax",%progbits
+  16              		.align	1
+  17              		.global	decode_b64
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	decode_b64:
+  24              	.LFB3:
+  25              		.file 1 "main.c"
    1:main.c        **** /* *****************************************************************************
    2:main.c        ****  * The MIT License
    3:main.c        ****  *
@@ -70,143 +69,144 @@
   45:main.c        **** #include "cencode.h"
   46:main.c        **** #include "cdecode.h"
   47:main.c        **** /*
-  48:main.c        **** 	Base64 functions
+  48:main.c        ****     Base64 functions
   49:main.c        **** */
   50:main.c        **** size_t decode_b64(const char* input, char* output)
   51:main.c        **** {
-  27              		.loc 1 51 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 8
-  30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31              	.LVL0:
-  32 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
-  33              		.cfi_def_cfa_offset 24
-  34              		.cfi_offset 0, -24
-  35              		.cfi_offset 1, -20
-  36              		.cfi_offset 2, -16
-  37              		.cfi_offset 4, -12
-  38              		.cfi_offset 5, -8
-  39              		.cfi_offset 14, -4
-  40              		.loc 1 51 0
-  41 0002 0546     		mov	r5, r0
+  26              		.loc 1 51 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 8
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+  32              		.cfi_def_cfa_offset 24
+  33              		.cfi_offset 4, -12
+  34              		.cfi_offset 5, -8
+  35              		.cfi_offset 14, -4
+  36              		.loc 1 51 0
+  37 0002 0546     		mov	r5, r0
   52:main.c        ****     base64_decodestate s;
   53:main.c        ****     size_t cnt;
   54:main.c        **** 
   55:main.c        ****     base64_init_decodestate(&s);
-  42              		.loc 1 55 0
-  43 0004 01A8     		add	r0, sp, #4
-  44              	.LVL1:
-  51:main.c        **** {
-  45              		.loc 1 51 0
-  46 0006 0C46     		mov	r4, r1
-  47              		.loc 1 55 0
-  48 0008 FFF7FEFF 		bl	base64_init_decodestate
-  49              	.LVL2:
+  38              		.loc 1 55 0
+  39 0004 01A8     		add	r0, sp, #4
+  40              	.LVL1:
+  51:main.c        ****     base64_decodestate s;
+  41              		.loc 1 51 0
+  42 0006 0C46     		mov	r4, r1
+  43              		.loc 1 55 0
+  44 0008 FFF7FEFF 		bl	base64_init_decodestate
+  45              	.LVL2:
   56:main.c        ****     cnt = base64_decode_block(input, strlen(input), output, &s);
-  50              		.loc 1 56 0
-  51 000c 2846     		mov	r0, r5
-  52 000e FFF7FEFF 		bl	strlen
-  53              	.LVL3:
-  54 0012 2246     		mov	r2, r4
-  55 0014 0146     		mov	r1, r0
-  56 0016 01AB     		add	r3, sp, #4
-  57 0018 2846     		mov	r0, r5
-  58 001a FFF7FEFF 		bl	base64_decode_block
-  59              	.LVL4:
+  46              		.loc 1 56 0
+  47 000c 2846     		mov	r0, r5
+  48 000e FFF7FEFF 		bl	strlen
+  49              	.LVL3:
+  50 0012 2246     		mov	r2, r4
+  51 0014 0146     		mov	r1, r0
+  52 0016 01AB     		add	r3, sp, #4
+  53 0018 2846     		mov	r0, r5
+  54 001a FFF7FEFF 		bl	base64_decode_block
+  55              	.LVL4:
   57:main.c        ****     output[cnt] = 0;
-  60              		.loc 1 57 0
-  61 001e 0022     		movs	r2, #0
-  62 0020 2254     		strb	r2, [r4, r0]
+  56              		.loc 1 57 0
+  57 001e 0022     		movs	r2, #0
+  58 0020 2254     		strb	r2, [r4, r0]
   58:main.c        **** 
   59:main.c        ****     return cnt;
   60:main.c        **** }
-  63              		.loc 1 60 0
-  64 0022 03B0     		add	sp, sp, #12
-  65              		@ sp needed
-  66 0024 30BD     		pop	{r4, r5, pc}
-  67              		.cfi_endproc
-  68              	.LFE0:
-  70              		.section	.text.encode_b64,"ax",%progbits
-  71              		.align	1
-  72              		.global	encode_b64
-  73              		.thumb
-  74              		.thumb_func
-  76              	encode_b64:
-  77              	.LFB1:
+  59              		.loc 1 60 0
+  60 0022 03B0     		add	sp, sp, #12
+  61              		.cfi_def_cfa_offset 12
+  62              		@ sp needed
+  63 0024 30BD     		pop	{r4, r5, pc}
+  64              		.cfi_endproc
+  65              	.LFE3:
+  67              		.section	.text.encode_b64,"ax",%progbits
+  68              		.align	1
+  69              		.global	encode_b64
+  70              		.syntax unified
+  71              		.thumb
+  72              		.thumb_func
+  73              		.fpu softvfp
+  75              	encode_b64:
+  76              	.LFB4:
   61:main.c        **** 
   62:main.c        **** size_t encode_b64(const char* input, char* output, int blocksize)
   63:main.c        **** {
-  78              		.loc 1 63 0
-  79              		.cfi_startproc
-  80              		@ args = 0, pretend = 0, frame = 8
-  81              		@ frame_needed = 0, uses_anonymous_args = 0
-  82              	.LVL5:
-  83 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
-  84              		.cfi_def_cfa_offset 24
-  85              		.cfi_offset 0, -24
-  86              		.cfi_offset 1, -20
-  87              		.cfi_offset 4, -16
-  88              		.cfi_offset 5, -12
-  89              		.cfi_offset 6, -8
-  90              		.cfi_offset 14, -4
-  91              		.loc 1 63 0
-  92 0002 0C46     		mov	r4, r1
-  93 0004 1646     		mov	r6, r2
-  94 0006 0546     		mov	r5, r0
+  77              		.loc 1 63 0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 8
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              	.LVL5:
+  82 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+  83              		.cfi_def_cfa_offset 24
+  84              		.cfi_offset 4, -16
+  85              		.cfi_offset 5, -12
+  86              		.cfi_offset 6, -8
+  87              		.cfi_offset 14, -4
+  88              		.loc 1 63 0
+  89 0002 0D46     		mov	r5, r1
+  90 0004 1646     		mov	r6, r2
+  91 0006 0446     		mov	r4, r0
   64:main.c        ****     base64_encodestate s;
   65:main.c        ****     size_t cnt;
   66:main.c        **** 
   67:main.c        ****     base64_init_encodestate(&s);
-  95              		.loc 1 67 0
-  96 0008 6846     		mov	r0, sp
-  97              	.LVL6:
-  98 000a FFF7FEFF 		bl	base64_init_encodestate
-  99              	.LVL7:
+  92              		.loc 1 67 0
+  93 0008 6846     		mov	r0, sp
+  94              	.LVL6:
+  95 000a FFF7FEFF 		bl	base64_init_encodestate
+  96              	.LVL7:
   68:main.c        ****     cnt = base64_encode_block(input, blocksize, output, &s);
- 100              		.loc 1 68 0
- 101 000e 6B46     		mov	r3, sp
- 102 0010 3146     		mov	r1, r6
- 103 0012 2246     		mov	r2, r4
- 104 0014 2846     		mov	r0, r5
- 105 0016 FFF7FEFF 		bl	base64_encode_block
- 106              	.LVL8:
+  97              		.loc 1 68 0
+  98 000e 6B46     		mov	r3, sp
+  99 0010 2A46     		mov	r2, r5
+ 100 0012 3146     		mov	r1, r6
+ 101 0014 2046     		mov	r0, r4
+ 102 0016 FFF7FEFF 		bl	base64_encode_block
+ 103              	.LVL8:
   69:main.c        ****     cnt += base64_encode_blockend(output + cnt, &s);
- 107              		.loc 1 69 0
- 108 001a 6946     		mov	r1, sp
+ 104              		.loc 1 69 0
+ 105 001a 6946     		mov	r1, sp
   68:main.c        ****     cnt = base64_encode_block(input, blocksize, output, &s);
- 109              		.loc 1 68 0
- 110 001c 0546     		mov	r5, r0
- 111              	.LVL9:
- 112              		.loc 1 69 0
- 113 001e 2018     		adds	r0, r4, r0
- 114              	.LVL10:
- 115 0020 FFF7FEFF 		bl	base64_encode_blockend
- 116              	.LVL11:
+ 106              		.loc 1 68 0
+ 107 001c 0446     		mov	r4, r0
+ 108              	.LVL9:
+ 109              		.loc 1 69 0
+ 110 001e 2818     		adds	r0, r5, r0
+ 111              	.LVL10:
+ 112 0020 FFF7FEFF 		bl	base64_encode_blockend
+ 113              	.LVL11:
   70:main.c        ****     output[cnt] = 0;
- 117              		.loc 1 70 0
- 118 0024 0023     		movs	r3, #0
+ 114              		.loc 1 70 0
+ 115 0024 0023     		movs	r3, #0
   69:main.c        ****     cnt += base64_encode_blockend(output + cnt, &s);
- 119              		.loc 1 69 0
- 120 0026 2844     		add	r0, r0, r5
- 121              	.LVL12:
- 122              		.loc 1 70 0
- 123 0028 2354     		strb	r3, [r4, r0]
+ 116              		.loc 1 69 0
+ 117 0026 2044     		add	r0, r0, r4
+ 118              	.LVL12:
+ 119              		.loc 1 70 0
+ 120 0028 2B54     		strb	r3, [r5, r0]
   71:main.c        **** 
   72:main.c        ****     return cnt;
   73:main.c        **** }
- 124              		.loc 1 73 0
- 125 002a 02B0     		add	sp, sp, #8
- 126              		@ sp needed
- 127 002c 70BD     		pop	{r4, r5, r6, pc}
- 128              		.cfi_endproc
- 129              	.LFE1:
- 131              		.section	.text.transmit_publickey_data,"ax",%progbits
- 132              		.align	1
- 133              		.global	transmit_publickey_data
- 134              		.thumb
- 135              		.thumb_func
+ 121              		.loc 1 73 0
+ 122 002a 02B0     		add	sp, sp, #8
+ 123              		.cfi_def_cfa_offset 16
+ 124              		@ sp needed
+ 125 002c 70BD     		pop	{r4, r5, r6, pc}
+ 126              		.cfi_endproc
+ 127              	.LFE4:
+ 129              		.section	.text.transmit_publickey_data,"ax",%progbits
+ 130              		.align	1
+ 131              		.global	transmit_publickey_data
+ 132              		.syntax unified
+ 133              		.thumb
+ 134              		.thumb_func
+ 135              		.fpu softvfp
  137              	transmit_publickey_data:
- 138              	.LFB2:
+ 138              	.LFB5:
   74:main.c        **** 
   75:main.c        **** /*
   76:main.c        ****   Print the device's public key + signature (ed25519 between the device and the root ca)
@@ -221,519 +221,693 @@
  144              		.cfi_def_cfa_offset 8
  145              		.cfi_offset 4, -8
  146              		.cfi_offset 14, -4
- 147 0002 ADF5467D 		sub	sp, sp, #792
- 148              		.cfi_def_cfa_offset 800
-  80:main.c        ****   struct u_id id;
-  81:main.c        ****   unsigned char uniqueID[0x17];
-  82:main.c        ****   unsigned char sha256sum[0x20];  
-  83:main.c        ****   char signature[EDSIGN_SIGNATURE_SIZE];
-  84:main.c        ****   char publickey[EDSIGN_PUBLIC_KEY_SIZE];
-  85:main.c        ****   char base64_pub[256];
-  86:main.c        ****   char base64_signature[256];
+  80:main.c        ****     struct u_id id;
+  81:main.c        ****     unsigned char uniqueID[0x17];
+  82:main.c        ****     unsigned char sha256sum[0x20];  
+  83:main.c        ****     char signature[EDSIGN_SIGNATURE_SIZE];
+  84:main.c        ****     char publickey[EDSIGN_PUBLIC_KEY_SIZE];
+  85:main.c        ****     char base64_pub[256];
+  86:main.c        ****     char base64_signature[256];
   87:main.c        **** 
-  88:main.c        ****   // read our unique id
-  89:main.c        ****   uid_read(&id);
- 149              		.loc 1 89 0
- 150 0006 03A8     		add	r0, sp, #12
- 151 0008 FFF7FEFF 		bl	uid_read
- 152              	.LVL13:
-  90:main.c        ****   sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
- 153              		.loc 1 90 0
- 154 000c 0499     		ldr	r1, [sp, #16]
- 155 000e BDF80E30 		ldrh	r3, [sp, #14]
- 156 0012 0091     		str	r1, [sp]
- 157 0014 0599     		ldr	r1, [sp, #20]
- 158 0016 BDF80C20 		ldrh	r2, [sp, #12]
- 159 001a 0191     		str	r1, [sp, #4]
- 160 001c 06A8     		add	r0, sp, #24
- 161 001e 2049     		ldr	r1, .L4
- 162 0020 FFF7FEFF 		bl	sprintf
- 163              	.LVL14:
-  91:main.c        ****   // start sha256 context
-  92:main.c        ****   sha256_context ctx;
-  93:main.c        ****   sha256_starts(&ctx);
- 164              		.loc 1 93 0
- 165 0024 2CA8     		add	r0, sp, #176
- 166 0026 FFF7FEFF 		bl	sha256_starts
- 167              	.LVL15:
-  94:main.c        ****   // hash in our unique id
-  95:main.c        ****   sha256_update(&ctx, uniqueID, 0x17);
- 168              		.loc 1 95 0
- 169 002a 2CA8     		add	r0, sp, #176
- 170 002c 06A9     		add	r1, sp, #24
- 171 002e 1722     		movs	r2, #23
- 172 0030 FFF7FEFF 		bl	sha256_update
- 173              	.LVL16:
-  96:main.c        ****   sha256_finish(&ctx, sha256sum);
-  97:main.c        ****   // get our public key
-  98:main.c        ****   memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
- 174              		.loc 1 98 0
- 175 0034 2024     		movs	r4, #32
-  96:main.c        ****   sha256_finish(&ctx, sha256sum);
- 176              		.loc 1 96 0
- 177 0036 2CA8     		add	r0, sp, #176
- 178 0038 0CA9     		add	r1, sp, #48
- 179 003a FFF7FEFF 		bl	sha256_finish
- 180              	.LVL17:
- 181              		.loc 1 98 0
- 182 003e 2246     		mov	r2, r4
- 183 0040 14A8     		add	r0, sp, #80
- 184 0042 0021     		movs	r1, #0
- 185 0044 FFF7FEFF 		bl	memset
- 186              	.LVL18:
-  99:main.c        ****   edsign_sec_to_pub((unsigned char*)publickey, sha256sum);
- 187              		.loc 1 99 0
- 188 0048 14A8     		add	r0, sp, #80
- 189 004a 0CA9     		add	r1, sp, #48
- 190 004c FFF7FEFF 		bl	edsign_sec_to_pub
- 191              	.LVL19:
- 100:main.c        ****   encode_b64(publickey, base64_pub, 0x20);
- 192              		.loc 1 100 0
- 193 0050 46A9     		add	r1, sp, #280
- 194 0052 2246     		mov	r2, r4
- 195 0054 14A8     		add	r0, sp, #80
- 196 0056 FFF7FEFF 		bl	encode_b64
- 197              	.LVL20:
+  88:main.c        ****     // read our unique id
+  89:main.c        ****     uid_read(&id);
+  90:main.c        ****     sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+  91:main.c        ****     // start sha256 context
+  92:main.c        ****     sha256_context ctx;
+  93:main.c        ****     sha256_starts(&ctx);
+  94:main.c        ****     // hash in our unique id
+  95:main.c        ****     sha256_update(&ctx, uniqueID, 0x17);
+  96:main.c        ****     sha256_finish(&ctx, sha256sum);
+  97:main.c        ****     // get our public key
+  98:main.c        ****     memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
+ 147              		.loc 1 98 0
+ 148 0002 2024     		movs	r4, #32
+  79:main.c        ****     struct u_id id;
+ 149              		.loc 1 79 0
+ 150 0004 ADF5467D 		sub	sp, sp, #792
+ 151              		.cfi_def_cfa_offset 800
+  89:main.c        ****     sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+ 152              		.loc 1 89 0
+ 153 0008 03A8     		add	r0, sp, #12
+ 154 000a FFF7FEFF 		bl	uid_read
+ 155              	.LVL13:
+  90:main.c        ****     // start sha256 context
+ 156              		.loc 1 90 0
+ 157 000e 0599     		ldr	r1, [sp, #20]
+ 158 0010 BDF80E30 		ldrh	r3, [sp, #14]
+ 159 0014 0191     		str	r1, [sp, #4]
+ 160 0016 0499     		ldr	r1, [sp, #16]
+ 161 0018 BDF80C20 		ldrh	r2, [sp, #12]
+ 162 001c 0091     		str	r1, [sp]
+ 163 001e 06A8     		add	r0, sp, #24
+ 164 0020 2249     		ldr	r1, .L4
+ 165 0022 FFF7FEFF 		bl	sprintf
+ 166              	.LVL14:
+  93:main.c        ****     // hash in our unique id
+ 167              		.loc 1 93 0
+ 168 0026 2CA8     		add	r0, sp, #176
+ 169 0028 FFF7FEFF 		bl	sha256_starts
+ 170              	.LVL15:
+  95:main.c        ****     sha256_finish(&ctx, sha256sum);
+ 171              		.loc 1 95 0
+ 172 002c 1722     		movs	r2, #23
+ 173 002e 06A9     		add	r1, sp, #24
+ 174 0030 2CA8     		add	r0, sp, #176
+ 175 0032 FFF7FEFF 		bl	sha256_update
+ 176              	.LVL16:
+  96:main.c        ****     // get our public key
+ 177              		.loc 1 96 0
+ 178 0036 0CA9     		add	r1, sp, #48
+ 179 0038 2CA8     		add	r0, sp, #176
+ 180 003a FFF7FEFF 		bl	sha256_finish
+ 181              	.LVL17:
+ 182              		.loc 1 98 0
+ 183 003e 2246     		mov	r2, r4
+ 184 0040 0021     		movs	r1, #0
+ 185 0042 14A8     		add	r0, sp, #80
+ 186 0044 FFF7FEFF 		bl	memset
+ 187              	.LVL18:
+  99:main.c        ****     edsign_sec_to_pub((unsigned char*)publickey, sha256sum);
+ 188              		.loc 1 99 0
+ 189 0048 0CA9     		add	r1, sp, #48
+ 190 004a 14A8     		add	r0, sp, #80
+ 191 004c FFF7FEFF 		bl	edsign_sec_to_pub
+ 192              	.LVL19:
+ 100:main.c        ****     encode_b64(publickey, base64_pub, 0x20);
+ 193              		.loc 1 100 0
+ 194 0050 2246     		mov	r2, r4
+ 195 0052 46A9     		add	r1, sp, #280
+ 196 0054 14A8     		add	r0, sp, #80
+ 197 0056 FFF7FEFF 		bl	encode_b64
+ 198              	.LVL20:
  101:main.c        **** 
- 102:main.c        ****   memset(signature, 0, EDSIGN_SIGNATURE_SIZE);
- 198              		.loc 1 102 0
- 199 005a 1CA8     		add	r0, sp, #112
- 200 005c 0021     		movs	r1, #0
- 201 005e 4022     		movs	r2, #64
- 202 0060 FFF7FEFF 		bl	memset
- 203              	.LVL21:
- 103:main.c        ****   // sign the pub
- 104:main.c        ****   edsign_sign((uint8_t*)signature, rootCA, sha256sum, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE);
- 204              		.loc 1 104 0
- 205 0064 14AB     		add	r3, sp, #80
- 206 0066 1CA8     		add	r0, sp, #112
- 207 0068 0CAA     		add	r2, sp, #48
- 208 006a 0094     		str	r4, [sp]
- 209 006c 0D49     		ldr	r1, .L4+4
- 210 006e FFF7FEFF 		bl	edsign_sign
- 211              	.LVL22:
- 105:main.c        ****   
- 106:main.c        ****   encode_b64(signature, base64_signature, 0x64);
- 212              		.loc 1 106 0
- 213 0072 6422     		movs	r2, #100
- 214 0074 86A9     		add	r1, sp, #536
- 215 0076 1CA8     		add	r0, sp, #112
- 216 0078 FFF7FEFF 		bl	encode_b64
- 217              	.LVL23:
+ 102:main.c        ****     memset(signature, 0, EDSIGN_SIGNATURE_SIZE);
+ 199              		.loc 1 102 0
+ 200 005a 4022     		movs	r2, #64
+ 201 005c 0021     		movs	r1, #0
+ 202 005e 1CA8     		add	r0, sp, #112
+ 203 0060 FFF7FEFF 		bl	memset
+ 204              	.LVL21:
+ 103:main.c        ****     // sign the pub
+ 104:main.c        ****     edsign_sign((uint8_t*)signature, rootCA, sha256sum, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE
+ 205              		.loc 1 104 0
+ 206 0064 14AB     		add	r3, sp, #80
+ 207 0066 0094     		str	r4, [sp]
+ 208 0068 0CAA     		add	r2, sp, #48
+ 209 006a 1CA8     		add	r0, sp, #112
+ 210 006c 1049     		ldr	r1, .L4+4
+ 211 006e FFF7FEFF 		bl	edsign_sign
+ 212              	.LVL22:
+ 105:main.c        **** 
+ 106:main.c        ****     encode_b64(signature, base64_signature, 0x64);
  107:main.c        **** 
- 108:main.c        ****   debug_print("[BEGIN_PUB_DATA][BEGIN_PUB]%s[END_PUB][END_PUB_DATA]", base64_pub);
- 218              		.loc 1 108 0
- 219 007c 46A9     		add	r1, sp, #280
- 220 007e 0A48     		ldr	r0, .L4+8
- 221 0080 FFF7FEFF 		bl	uart_printf
- 222              	.LVL24:
- 109:main.c        ****   debug_print("[BEGIN_SIGNATURE_DATA][BEGIN_SIGNATURE]");
- 223              		.loc 1 109 0
- 224 0084 0948     		ldr	r0, .L4+12
- 225 0086 FFF7FEFF 		bl	uart_printf
- 226              	.LVL25:
- 110:main.c        ****   debug_print("%s", base64_signature);
- 227              		.loc 1 110 0
- 228 008a 86A9     		add	r1, sp, #536
- 229 008c 0848     		ldr	r0, .L4+16
- 230 008e FFF7FEFF 		bl	uart_printf
- 231              	.LVL26:
- 111:main.c        ****   debug_print("[END_SIGNATURE][END_SIGNATURE_DATA]");
- 232              		.loc 1 111 0
- 233 0092 0848     		ldr	r0, .L4+20
- 234 0094 FFF7FEFF 		bl	uart_printf
- 235              	.LVL27:
- 112:main.c        **** }
- 236              		.loc 1 112 0
- 237 0098 0DF5467D 		add	sp, sp, #792
- 238              		@ sp needed
- 239 009c 10BD     		pop	{r4, pc}
- 240              	.L5:
- 241 009e 00BF     		.align	2
- 242              	.L4:
- 243 00a0 00000000 		.word	.LC0
- 244 00a4 00000000 		.word	rootCA
- 245 00a8 09000000 		.word	.LC1
- 246 00ac 3E000000 		.word	.LC2
- 247 00b0 66000000 		.word	.LC3
- 248 00b4 69000000 		.word	.LC4
- 249              		.cfi_endproc
- 250              	.LFE2:
- 252              		.section	.text.startup.main,"ax",%progbits
- 253              		.align	1
- 254              		.global	main
- 255              		.thumb
- 256              		.thumb_func
- 258              	main:
- 259              	.LFB3:
- 113:main.c        **** 
- 114:main.c        **** /*
- 115:main.c        **** 	Bootloader main
- 116:main.c        **** */
- 117:main.c        **** int main() 
- 118:main.c        **** {
- 260              		.loc 1 118 0
- 261              		.cfi_startproc
- 262              		@ args = 0, pretend = 0, frame = 8
- 263              		@ frame_needed = 0, uses_anonymous_args = 0
- 264              	.LVL28:
- 265 0000 30B5     		push	{r4, r5, lr}
- 266              		.cfi_def_cfa_offset 12
- 267              		.cfi_offset 4, -12
- 268              		.cfi_offset 5, -8
- 269              		.cfi_offset 14, -4
- 270 0002 85B0     		sub	sp, sp, #20
- 271              		.cfi_def_cfa_offset 32
- 119:main.c        **** 	bool no_user_jump = FALSE;
- 120:main.c        **** 
- 121:main.c        **** 	// low level hardware init	
- 122:main.c        ****     systemReset(); // peripherals but not PC
- 272              		.loc 1 122 0
- 273 0004 FFF7FEFF 		bl	systemReset
- 274              	.LVL29:
- 123:main.c        ****     setupCLK();
- 275              		.loc 1 123 0
- 276 0008 FFF7FEFF 		bl	setupCLK
- 277              	.LVL30:
- 124:main.c        ****     setupLEDAndButton();
- 278              		.loc 1 124 0
- 279 000c FFF7FEFF 		bl	setupLEDAndButton
- 280              	.LVL31:
- 125:main.c        ****     setupFLASH();
- 281              		.loc 1 125 0
- 282 0010 FFF7FEFF 		bl	setupFLASH
- 283              	.LVL32:
- 126:main.c        ****     uartInit();
- 284              		.loc 1 126 0
- 285 0014 FFF7FEFF 		bl	uartInit
- 286              	.LVL33:
- 127:main.c        **** 	setupUSB();
- 287              		.loc 1 127 0
- 288 0018 FFF7FEFF 		bl	setupUSB
- 289              	.LVL34:
- 128:main.c        **** 
- 129:main.c        **** 	uart_printf("\nBootloader init...\n");
- 290              		.loc 1 129 0
- 291 001c 2A48     		ldr	r0, .L21
- 292 001e FFF7FEFF 		bl	uart_printf
- 293              	.LVL35:
- 130:main.c        ****     if (readPin(GPIOB, 15) == 0x0) // force dfu
- 294              		.loc 1 130 0
- 295 0022 0F21     		movs	r1, #15
- 296 0024 2948     		ldr	r0, .L21+4
- 297 0026 FFF7FEFF 		bl	readPin
- 298              	.LVL36:
- 299 002a 0446     		mov	r4, r0
- 300              	.LVL37:
- 131:main.c        **** 	{
- 132:main.c        **** 		no_user_jump = TRUE;
- 133:main.c        **** 	} 
+ 108:main.c        ****     // spit the base64 publickey
+ 109:main.c        ****     debug_print("\n\n[BEGIN_PUB_DATA]\n");
+ 110:main.c        ****     debug_print("%s", base64_pub);
+ 213              		.loc 1 110 0
+ 214 0072 104C     		ldr	r4, .L4+8
+ 106:main.c        **** 
+ 215              		.loc 1 106 0
+ 216 0074 6422     		movs	r2, #100
+ 217 0076 86A9     		add	r1, sp, #536
+ 218 0078 1CA8     		add	r0, sp, #112
+ 219 007a FFF7FEFF 		bl	encode_b64
+ 220              	.LVL23:
+ 109:main.c        ****     debug_print("%s", base64_pub);
+ 221              		.loc 1 109 0
+ 222 007e 0E48     		ldr	r0, .L4+12
+ 223 0080 FFF7FEFF 		bl	uart_printf
+ 224              	.LVL24:
+ 225              		.loc 1 110 0
+ 226 0084 46A9     		add	r1, sp, #280
+ 227 0086 2046     		mov	r0, r4
+ 228 0088 FFF7FEFF 		bl	uart_printf
+ 229              	.LVL25:
+ 111:main.c        ****     debug_print("[END_PUB_DATA]\n");
+ 230              		.loc 1 111 0
+ 231 008c 0B48     		ldr	r0, .L4+16
+ 232 008e FFF7FEFF 		bl	uart_printf
+ 233              	.LVL26:
+ 112:main.c        ****     // sput the base64 signature
+ 113:main.c        ****     debug_print("\n[BEGIN_SIGNATURE_DATA]\n");
+ 234              		.loc 1 113 0
+ 235 0092 0B48     		ldr	r0, .L4+20
+ 236 0094 FFF7FEFF 		bl	uart_printf
+ 237              	.LVL27:
+ 114:main.c        ****     debug_print("%s", base64_signature);
+ 238              		.loc 1 114 0
+ 239 0098 86A9     		add	r1, sp, #536
+ 240 009a 2046     		mov	r0, r4
+ 241 009c FFF7FEFF 		bl	uart_printf
+ 242              	.LVL28:
+ 115:main.c        ****     debug_print("[END_SIGNATURE_DATA]\n");
+ 243              		.loc 1 115 0
+ 244 00a0 0848     		ldr	r0, .L4+24
+ 245 00a2 FFF7FEFF 		bl	uart_printf
+ 246              	.LVL29:
+ 116:main.c        **** }
+ 247              		.loc 1 116 0
+ 248 00a6 0DF5467D 		add	sp, sp, #792
+ 249              		.cfi_def_cfa_offset 8
+ 250              		@ sp needed
+ 251 00aa 10BD     		pop	{r4, pc}
+ 252              	.L5:
+ 253              		.align	2
+ 254              	.L4:
+ 255 00ac 00000000 		.word	.LC0
+ 256 00b0 00000000 		.word	rootCA
+ 257 00b4 1D000000 		.word	.LC2
+ 258 00b8 09000000 		.word	.LC1
+ 259 00bc 20000000 		.word	.LC3
+ 260 00c0 30000000 		.word	.LC4
+ 261 00c4 49000000 		.word	.LC5
+ 262              		.cfi_endproc
+ 263              	.LFE5:
+ 265              		.section	.text.isSecureMode,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	isSecureMode
+ 268              		.syntax unified
+ 269              		.thumb
+ 270              		.thumb_func
+ 271              		.fpu softvfp
+ 273              	isSecureMode:
+ 274              	.LFB6:
+ 117:main.c        **** 
+ 118:main.c        **** int isSecureMode() {
+ 275              		.loc 1 118 0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 0
+ 278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+ 119:main.c        ****     // TODO fusing
+ 120:main.c        ****     return 0;
+ 121:main.c        **** }
+ 280              		.loc 1 121 0
+ 281 0000 0020     		movs	r0, #0
+ 282 0002 7047     		bx	lr
+ 283              		.cfi_endproc
+ 284              	.LFE6:
+ 286              		.section	.text.print_bootheader,"ax",%progbits
+ 287              		.align	1
+ 288              		.global	print_bootheader
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 292              		.fpu softvfp
+ 294              	print_bootheader:
+ 295              	.LFB7:
+ 122:main.c        **** 
+ 123:main.c        **** /*
+ 124:main.c        ****     Printable boot header
+ 125:main.c        **** */
+ 126:main.c        **** void print_bootheader() {
+ 296              		.loc 1 126 0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 0
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300 0000 10B5     		push	{r4, lr}
+ 301              		.cfi_def_cfa_offset 8
+ 302              		.cfi_offset 4, -8
+ 303              		.cfi_offset 14, -4
+ 127:main.c        ****     uart_printf("[-------------------------]\n");
+ 304              		.loc 1 127 0
+ 305 0002 0A4C     		ldr	r4, .L8
+ 306 0004 2046     		mov	r0, r4
+ 307 0006 FFF7FEFF 		bl	uart_printf
+ 308              	.LVL30:
+ 128:main.c        ****     uart_printf("Bootloader init!\n");
+ 309              		.loc 1 128 0
+ 310 000a 0948     		ldr	r0, .L8+4
+ 311 000c FFF7FEFF 		bl	uart_printf
+ 312              	.LVL31:
+ 129:main.c        ****     uart_printf("VER: 0x%X REV: 0x%X\n", 0x41, 0x15);
+ 313              		.loc 1 129 0
+ 314 0010 1522     		movs	r2, #21
+ 315 0012 4121     		movs	r1, #65
+ 316 0014 0748     		ldr	r0, .L8+8
+ 317 0016 FFF7FEFF 		bl	uart_printf
+ 318              	.LVL32:
+ 130:main.c        ****     uart_printf("Fusing: %s\n", isSecureMode() ? "Secure":"Insecure");
+ 319              		.loc 1 130 0
+ 320 001a 0748     		ldr	r0, .L8+12
+ 321 001c 0749     		ldr	r1, .L8+16
+ 322 001e FFF7FEFF 		bl	uart_printf
+ 323              	.LVL33:
+ 131:main.c        ****     uart_printf("[-------------------------]\n");
+ 324              		.loc 1 131 0
+ 325 0022 2046     		mov	r0, r4
+ 132:main.c        **** }
+ 326              		.loc 1 132 0
+ 327 0024 BDE81040 		pop	{r4, lr}
+ 328              		.cfi_restore 14
+ 329              		.cfi_restore 4
+ 330              		.cfi_def_cfa_offset 0
+ 131:main.c        ****     uart_printf("[-------------------------]\n");
+ 331              		.loc 1 131 0
+ 332 0028 FFF7FEBF 		b	uart_printf
+ 333              	.LVL34:
+ 334              	.L9:
+ 335              		.align	2
+ 336              	.L8:
+ 337 002c 00000000 		.word	.LC6
+ 338 0030 1D000000 		.word	.LC7
+ 339 0034 2F000000 		.word	.LC8
+ 340 0038 4D000000 		.word	.LC10
+ 341 003c 44000000 		.word	.LC9
+ 342              		.cfi_endproc
+ 343              	.LFE7:
+ 345              		.section	.text.startup.main,"ax",%progbits
+ 346              		.align	1
+ 347              		.global	main
+ 348              		.syntax unified
+ 349              		.thumb
+ 350              		.thumb_func
+ 351              		.fpu softvfp
+ 353              	main:
+ 354              	.LFB8:
+ 133:main.c        **** 
  134:main.c        **** 
- 135:main.c        **** 	// verify chain
- 136:main.c        **** 	debug_print("checking chain...\n");
- 301              		.loc 1 136 0
- 302 002c 2848     		ldr	r0, .L21+8
- 303              	.LVL38:
- 304 002e FFF7FEFF 		bl	uart_printf
- 305              	.LVL39:
- 137:main.c        **** 	ImageObjectHandle imageHandle;
- 138:main.c        ****     int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
- 306              		.loc 1 138 0
- 307 0032 2849     		ldr	r1, .L21+12
- 308 0034 0022     		movs	r2, #0
- 309 0036 03A8     		add	r0, sp, #12
- 310 0038 FFF7FEFF 		bl	imageCheckFromAddress
- 311              	.LVL40:
- 312 003c 0546     		mov	r5, r0
- 313              	.LVL41:
- 139:main.c        ****     debug_print("image check ret: %X\n", ret);
- 314              		.loc 1 139 0
- 315 003e 2946     		mov	r1, r5
- 316 0040 2548     		ldr	r0, .L21+16
- 317              	.LVL42:
- 140:main.c        **** 	switch (ret) // if anything fails to verify we need to kick ourselves into the DFU loop
- 318              		.loc 1 140 0
- 319 0042 023D     		subs	r5, r5, #2
- 139:main.c        ****     debug_print("image check ret: %X\n", ret);
- 320              		.loc 1 139 0
- 321 0044 FFF7FEFF 		bl	uart_printf
- 322              	.LVL43:
- 323              		.loc 1 140 0
- 324 0048 032D     		cmp	r5, #3
- 325 004a 03D8     		bhi	.L7
- 326 004c DFE805F0 		tbb	[pc, r5]
- 327              	.L9:
- 328 0050 10       		.byte	(.L8-.L9)/2
- 329 0051 07       		.byte	(.L10-.L9)/2
- 330 0052 0C       		.byte	(.L11-.L9)/2
- 331 0053 12       		.byte	(.L12-.L9)/2
- 332              		.p2align 1
- 333              	.L7:
- 132:main.c        **** 		no_user_jump = TRUE;
- 334              		.loc 1 132 0
- 335 0054 D4F10104 		rsbs	r4, r4, #1
- 336              	.LVL44:
- 337 0058 38BF     		it	cc
- 338 005a 0024     		movcc	r4, #0
- 339 005c 0EE0     		b	.L13
- 340              	.LVL45:
- 341              	.L10:
- 141:main.c        **** 	{
- 142:main.c        **** 		case kImageImageIsTrusted:
- 143:main.c        **** 			debug_print("Boot OK\n");
- 342              		.loc 1 143 0 discriminator 1
- 343 005e 1F48     		ldr	r0, .L21+20
- 344 0060 FFF7FEFF 		bl	uart_printf
- 345              	.LVL46:
- 144:main.c        **** 			no_user_jump = FALSE;
- 346              		.loc 1 144 0 discriminator 1
- 347 0064 0024     		movs	r4, #0
- 145:main.c        **** 			break;
- 348              		.loc 1 145 0 discriminator 1
- 349 0066 09E0     		b	.L13
- 350              	.LVL47:
- 351              	.L11:
- 146:main.c        **** 
- 147:main.c        **** 		case kImageImageMissingMagic:
- 148:main.c        **** 			transmit_publickey_data();
- 352              		.loc 1 148 0
- 353 0068 FFF7FEFF 		bl	transmit_publickey_data
- 354              	.LVL48:
- 149:main.c        **** 			debug_print("\nFirmware missing... waiting in DFU\n");
- 355              		.loc 1 149 0
- 356 006c 1C48     		ldr	r0, .L21+24
- 357 006e 02E0     		b	.L19
- 358              	.L8:
- 150:main.c        **** 			no_user_jump = TRUE;
- 151:main.c        **** 			break;
- 152:main.c        **** 
- 153:main.c        **** 		case kImageImageRejectSignature:
- 154:main.c        **** 			debug_print("\nSignature unverified... waiting in DFU\n");
- 359              		.loc 1 154 0 discriminator 1
- 360 0070 1C48     		ldr	r0, .L21+28
- 361 0072 00E0     		b	.L19
- 362              	.L12:
- 155:main.c        **** 			no_user_jump = TRUE;
- 156:main.c        **** 			break;
+ 135:main.c        **** /*
+ 136:main.c        ****     Bootloader main
+ 137:main.c        **** */
+ 138:main.c        **** int main() 
+ 139:main.c        **** {
+ 355              		.loc 1 139 0
+ 356              		.cfi_startproc
+ 357              		@ args = 0, pretend = 0, frame = 8
+ 358              		@ frame_needed = 0, uses_anonymous_args = 0
+ 359              	.LVL35:
+ 360 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 361              		.cfi_def_cfa_offset 32
+ 362              		.cfi_offset 4, -16
+ 363              		.cfi_offset 5, -12
+ 364              		.cfi_offset 6, -8
+ 365              		.cfi_offset 14, -4
+ 140:main.c        ****     bool no_user_jump = FALSE;
+ 141:main.c        **** 
+ 142:main.c        ****     // low level hardware init  
+ 143:main.c        ****     systemReset(); // peripherals but not PC
+ 366              		.loc 1 143 0
+ 367 0002 FFF7FEFF 		bl	systemReset
+ 368              	.LVL36:
+ 144:main.c        ****     setupCLK();
+ 369              		.loc 1 144 0
+ 370 0006 FFF7FEFF 		bl	setupCLK
+ 371              	.LVL37:
+ 145:main.c        ****     setupLEDAndButton();
+ 372              		.loc 1 145 0
+ 373 000a FFF7FEFF 		bl	setupLEDAndButton
+ 374              	.LVL38:
+ 146:main.c        ****     setupFLASH();
+ 375              		.loc 1 146 0
+ 376 000e FFF7FEFF 		bl	setupFLASH
+ 377              	.LVL39:
+ 147:main.c        ****     uartInit();
+ 378              		.loc 1 147 0
+ 379 0012 FFF7FEFF 		bl	uartInit
+ 380              	.LVL40:
+ 148:main.c        ****     setupUSB();
+ 381              		.loc 1 148 0
+ 382 0016 FFF7FEFF 		bl	setupUSB
+ 383              	.LVL41:
+ 149:main.c        **** 
+ 150:main.c        ****     print_bootheader();
+ 384              		.loc 1 150 0
+ 385 001a FFF7FEFF 		bl	print_bootheader
+ 386              	.LVL42:
+ 151:main.c        **** 
+ 152:main.c        ****     if (readPin(GPIOB, 15) == 0x0) // force dfu
+ 387              		.loc 1 152 0
+ 388 001e 0F21     		movs	r1, #15
+ 389 0020 2848     		ldr	r0, .L24
+ 390 0022 FFF7FEFF 		bl	readPin
+ 391              	.LVL43:
+ 153:main.c        ****     {
+ 154:main.c        ****         no_user_jump = TRUE;
+ 155:main.c        ****     } 
+ 156:main.c        ****     strobePin(LED_BANK, LED_PIN, 5, BLINK_FAST,LED_ON_STATE);
+ 392              		.loc 1 156 0
+ 393 0026 0025     		movs	r5, #0
+ 394 0028 4FF4A023 		mov	r3, #327680
+ 395 002c 0522     		movs	r2, #5
+ 396 002e 0D21     		movs	r1, #13
+ 397 0030 0095     		str	r5, [sp]
+ 152:main.c        ****     {
+ 398              		.loc 1 152 0
+ 399 0032 0446     		mov	r4, r0
+ 400              	.LVL44:
+ 401              		.loc 1 156 0
+ 402 0034 2448     		ldr	r0, .L24+4
+ 403 0036 FFF7FEFF 		bl	strobePin
+ 404              	.LVL45:
  157:main.c        **** 
- 158:main.c        **** 		case kImageImageHashCalcFailed:
- 159:main.c        **** 			debug_print("\nHash calculation failed... waiting in DFU\n");
- 363              		.loc 1 159 0 discriminator 1
- 364 0074 1C48     		ldr	r0, .L21+32
- 365              	.L19:
- 366 0076 FFF7FEFF 		bl	uart_printf
- 367              	.LVL49:
- 160:main.c        **** 			no_user_jump = TRUE;
- 368              		.loc 1 160 0 discriminator 1
- 369 007a 0124     		movs	r4, #1
- 370              	.LVL50:
- 371              	.L13:
- 161:main.c        **** 			break;
- 162:main.c        **** 			
- 163:main.c        **** 		default:
- 164:main.c        **** 			break;
- 165:main.c        **** 	}
- 166:main.c        **** 
- 167:main.c        **** 	strobePin(LED_BANK, LED_PIN, 5, BLINK_FAST,LED_ON_STATE);
- 372              		.loc 1 167 0
- 373 007c 0023     		movs	r3, #0
- 374 007e 0093     		str	r3, [sp]
- 375 0080 1A48     		ldr	r0, .L21+36
- 376 0082 0D21     		movs	r1, #13
- 377 0084 0522     		movs	r2, #5
- 378 0086 4FF4A023 		mov	r3, #327680
- 379 008a FFF7FEFF 		bl	strobePin
- 380              	.LVL51:
- 168:main.c        **** 	while (no_user_jump)
- 381              		.loc 1 168 0
- 382 008e 94B1     		cbz	r4, .L14
- 383              	.L16:
- 169:main.c        **** 	{
- 170:main.c        **** 		// we're spinning in DFU waiting for an upload...
- 171:main.c        **** 		strobePin(LED_BANK, LED_PIN, 1, BLINK_SLOW,LED_ON_STATE);
- 384              		.loc 1 171 0
- 385 0090 0023     		movs	r3, #0
- 386 0092 0093     		str	r3, [sp]
- 387 0094 1548     		ldr	r0, .L21+36
- 388 0096 0D21     		movs	r1, #13
- 389 0098 0122     		movs	r2, #1
- 390 009a 4FF48013 		mov	r3, #1048576
- 391 009e FFF7FEFF 		bl	strobePin
- 392              	.LVL52:
- 172:main.c        **** 		if (dfuUploadStarted()) 
- 393              		.loc 1 172 0
- 394 00a2 FFF7FEFF 		bl	dfuUploadStarted
- 395              	.LVL53:
- 396 00a6 0028     		cmp	r0, #0
- 397 00a8 F2D0     		beq	.L16
- 173:main.c        **** 		{
- 174:main.c        **** 			debug_print("DFU finished upload\n");
- 398              		.loc 1 174 0 discriminator 1
- 399 00aa 1148     		ldr	r0, .L21+40
- 400 00ac FFF7FEFF 		bl	uart_printf
- 401              	.LVL54:
- 175:main.c        **** 			dfuFinishUpload(); // systemHardReset from DFU once done
- 402              		.loc 1 175 0 discriminator 1
- 403 00b0 FFF7FEFF 		bl	dfuFinishUpload
- 404              	.LVL55:
- 405 00b4 ECE7     		b	.L16
- 406              	.L14:
- 176:main.c        **** 		}
- 177:main.c        **** 	}
- 178:main.c        **** 
- 179:main.c        **** 	// we have the OS verified so lets jump to it. 
- 180:main.c        **** 	if (no_user_jump == FALSE)
- 181:main.c        **** 	{
- 182:main.c        **** 		debug_print("Jumping to OS.\n");
- 407              		.loc 1 182 0 discriminator 1
- 408 00b6 0F48     		ldr	r0, .L21+44
- 409 00b8 FFF7FEFF 		bl	uart_printf
- 410              	.LVL56:
- 183:main.c        **** 		jumpToUser((USER_CODE_FLASH0X8008000+0x84));	
- 411              		.loc 1 183 0 discriminator 1
- 412 00bc 0E48     		ldr	r0, .L21+48
- 413 00be FFF7FEFF 		bl	jumpToUser
- 414              	.LVL57:
- 184:main.c        **** 	}
- 185:main.c        **** 	
- 186:main.c        **** 	return 0;// Added to please the compiler
- 187:main.c        **** }...
- 415              		.loc 1 187 0 discriminator 1
- 416 00c2 2046     		mov	r0, r4
- 417 00c4 05B0     		add	sp, sp, #20
- 418              		@ sp needed
- 419 00c6 30BD     		pop	{r4, r5, pc}
- 420              	.LVL58:
- 421              	.L22:
- 422              		.align	2
- 423              	.L21:
- 424 00c8 8D000000 		.word	.LC5
- 425 00cc 000C0140 		.word	1073810432
- 426 00d0 A2000000 		.word	.LC6
- 427 00d4 00900008 		.word	134254592
- 428 00d8 B5000000 		.word	.LC7
- 429 00dc CA000000 		.word	.LC8
- 430 00e0 D3000000 		.word	.LC9
- 431 00e4 F8000000 		.word	.LC10
- 432 00e8 21010000 		.word	.LC11
- 433 00ec 00100140 		.word	1073811456
- 434 00f0 4D010000 		.word	.LC12
- 435 00f4 62010000 		.word	.LC13
- 436 00f8 84900008 		.word	134254724
- 437              		.cfi_endproc
- 438              	.LFE3:
- 440              		.comm	rootCA,32,1
- 441              		.comm	wTransferSize,4,4
- 442              		.section	.rodata.str1.1,"aMS",%progbits,1
- 443              	.LC0:
- 444 0000 25582558 		.ascii	"%X%X%X%X\000"
- 444      25582558 
- 444      00
- 445              	.LC1:
- 446 0009 5B424547 		.ascii	"[BEGIN_PUB_DATA][BEGIN_PUB]%s[END_PUB][END_PUB_DATA"
- 446      494E5F50 
- 446      55425F44 
- 446      4154415D 
- 446      5B424547 
- 447 003c 5D00     		.ascii	"]\000"
- 448              	.LC2:
- 449 003e 5B424547 		.ascii	"[BEGIN_SIGNATURE_DATA][BEGIN_SIGNATURE]\000"
- 449      494E5F53 
- 449      49474E41 
- 449      54555245 
- 449      5F444154 
- 450              	.LC3:
- 451 0066 257300   		.ascii	"%s\000"
- 452              	.LC4:
- 453 0069 5B454E44 		.ascii	"[END_SIGNATURE][END_SIGNATURE_DATA]\000"
- 453      5F534947 
- 453      4E415455 
- 453      52455D5B 
- 453      454E445F 
- 454              	.LC5:
- 455 008d 0A426F6F 		.ascii	"\012Bootloader init...\012\000"
- 455      746C6F61 
- 455      64657220 
- 455      696E6974 
- 455      2E2E2E0A 
- 456              	.LC6:
- 457 00a2 63686563 		.ascii	"checking chain...\012\000"
- 457      6B696E67 
- 457      20636861 
- 457      696E2E2E 
- 457      2E0A00
- 458              	.LC7:
- 459 00b5 696D6167 		.ascii	"image check ret: %X\012\000"
- 459      65206368 
- 459      65636B20 
- 459      7265743A 
- 459      2025580A 
- 460              	.LC8:
- 461 00ca 426F6F74 		.ascii	"Boot OK\012\000"
- 461      204F4B0A 
- 461      00
- 462              	.LC9:
- 463 00d3 0A466972 		.ascii	"\012Firmware missing... waiting in DFU\012\000"
- 463      6D776172 
- 463      65206D69 
- 463      7373696E 
- 463      672E2E2E 
- 464              	.LC10:
- 465 00f8 0A536967 		.ascii	"\012Signature unverified... waiting in DFU\012\000"
- 465      6E617475 
- 465      72652075 
- 465      6E766572 
- 465      69666965 
- 466              	.LC11:
- 467 0121 0A486173 		.ascii	"\012Hash calculation failed... waiting in DFU\012\000"
- 467      68206361 
- 467      6C63756C 
- 467      6174696F 
- 467      6E206661 
- 468              	.LC12:
- 469 014d 44465520 		.ascii	"DFU finished upload\012\000"
- 469      66696E69 
- 469      73686564 
- 469      2075706C 
- 469      6F61640A 
- 470              	.LC13:
- 471 0162 4A756D70 		.ascii	"Jumping to OS.\012\000"
- 471      696E6720 
- 471      746F204F 
- 471      532E0A00 
- 472              		.text
- 473              	.Letext0:
- 474              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\lib\\gcc\\arm-none-eabi\\4.8
- 475              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
- 476              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
- 477              		.file 5 "./stm32_lib/stm32f10x_type.h"
- 478              		.file 6 "hardware.h"
- 479              		.file 7 "image.h"
- 480              		.file 8 "./25519/sha256.h"
- 481              		.file 9 "./base64/cencode.h"
- 482              		.file 10 "./base64/cdecode.h"
- 483              		.file 11 "usb.h"
- 484              		.file 12 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\str
- 485              		.file 13 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\std
- 486              		.file 14 "./25519/edsign.h"
- 487              		.file 15 "dfu.h"
+ 158:main.c        ****     // verify chain
+ 159:main.c        ****     debug_print("checking chain...\n");
+ 405              		.loc 1 159 0
+ 406 003a 2448     		ldr	r0, .L24+8
+ 407 003c FFF7FEFF 		bl	uart_printf
+ 408              	.LVL46:
+ 160:main.c        ****     ImageObjectHandle imageHandle;
+ 161:main.c        ****     int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
+ 409              		.loc 1 161 0
+ 410 0040 2A46     		mov	r2, r5
+ 411 0042 2349     		ldr	r1, .L24+12
+ 412 0044 03A8     		add	r0, sp, #12
+ 413 0046 FFF7FEFF 		bl	imageCheckFromAddress
+ 414              	.LVL47:
+ 415 004a 0546     		mov	r5, r0
+ 416              	.LVL48:
+ 162:main.c        ****     debug_print("image check ret: %X\n", ret);
+ 417              		.loc 1 162 0
+ 418 004c 0146     		mov	r1, r0
+ 163:main.c        ****     switch (ret) // if anything fails to verify we need to kick ourselves into the DFU loop
+ 419              		.loc 1 163 0
+ 420 004e 023D     		subs	r5, r5, #2
+ 162:main.c        ****     debug_print("image check ret: %X\n", ret);
+ 421              		.loc 1 162 0
+ 422 0050 2048     		ldr	r0, .L24+16
+ 423              	.LVL49:
+ 424 0052 FFF7FEFF 		bl	uart_printf
+ 425              	.LVL50:
+ 426              		.loc 1 163 0
+ 427 0056 032D     		cmp	r5, #3
+ 428 0058 30D8     		bhi	.L11
+ 429 005a DFE805F0 		tbb	[pc, r5]
+ 430              	.L13:
+ 431 005e 10       		.byte	(.L12-.L13)/2
+ 432 005f 02       		.byte	(.L14-.L13)/2
+ 433 0060 09       		.byte	(.L15-.L13)/2
+ 434 0061 12       		.byte	(.L16-.L13)/2
+ 435              		.p2align 1
+ 436              	.L14:
+ 164:main.c        ****     {
+ 165:main.c        ****         case kImageImageIsTrusted:
+ 166:main.c        ****             debug_print("Boot OK\n");
+ 437              		.loc 1 166 0 discriminator 1
+ 438 0062 1D48     		ldr	r0, .L24+20
+ 439 0064 FFF7FEFF 		bl	uart_printf
+ 440              	.LVL51:
+ 167:main.c        ****             no_user_jump = FALSE;
+ 441              		.loc 1 167 0 discriminator 1
+ 442 0068 0024     		movs	r4, #0
+ 443              	.LVL52:
+ 444              	.L17:
+ 168:main.c        ****             break;
+ 169:main.c        **** 
+ 170:main.c        ****         case kImageImageMissingMagic:
+ 171:main.c        ****             transmit_publickey_data();
+ 172:main.c        ****             debug_print("\nFirmware missing... waiting in DFU\n");
+ 173:main.c        ****             no_user_jump = TRUE;
+ 174:main.c        ****             break;
+ 175:main.c        **** 
+ 176:main.c        ****         case kImageImageRejectSignature:
+ 177:main.c        ****             debug_print("\nSignature validation failed... waiting in DFU\n");
+ 178:main.c        ****             no_user_jump = TRUE;
+ 179:main.c        ****             break;
+ 180:main.c        **** 
+ 181:main.c        ****         case kImageImageHashCalcFailed:
+ 182:main.c        ****             debug_print("\nHash calculation failed... waiting in DFU\n");
+ 183:main.c        ****             no_user_jump = TRUE;
+ 184:main.c        ****             break;
+ 185:main.c        ****             
+ 186:main.c        ****         default:
+ 187:main.c        ****             break;
+ 188:main.c        ****     }
+ 189:main.c        **** 
+ 190:main.c        ****     while (no_user_jump)
+ 191:main.c        ****     {
+ 192:main.c        ****         // we're spinning in DFU waiting for an upload...
+ 193:main.c        ****         strobePin(LED_BANK, LED_PIN, 1, BLINK_SLOW,LED_ON_STATE);
+ 445              		.loc 1 193 0 discriminator 1
+ 446 006a 174D     		ldr	r5, .L24+4
+ 447              	.LVL53:
+ 448 006c 0026     		movs	r6, #0
+ 449 006e 1AE0     		b	.L18
+ 450              	.LVL54:
+ 451              	.L15:
+ 171:main.c        ****             debug_print("\nFirmware missing... waiting in DFU\n");
+ 452              		.loc 1 171 0
+ 453 0070 FFF7FEFF 		bl	transmit_publickey_data
+ 454              	.LVL55:
+ 172:main.c        ****             no_user_jump = TRUE;
+ 455              		.loc 1 172 0
+ 456 0074 1948     		ldr	r0, .L24+24
+ 457              	.L23:
+ 177:main.c        ****             no_user_jump = TRUE;
+ 458              		.loc 1 177 0 discriminator 1
+ 459 0076 FFF7FEFF 		bl	uart_printf
+ 460              	.LVL56:
+ 178:main.c        ****             break;
+ 461              		.loc 1 178 0 discriminator 1
+ 462 007a 0124     		movs	r4, #1
+ 179:main.c        **** 
+ 463              		.loc 1 179 0 discriminator 1
+ 464 007c F5E7     		b	.L17
+ 465              	.LVL57:
+ 466              	.L12:
+ 177:main.c        ****             no_user_jump = TRUE;
+ 467              		.loc 1 177 0 discriminator 1
+ 468 007e 1848     		ldr	r0, .L24+28
+ 469 0080 F9E7     		b	.L23
+ 470              	.L16:
+ 182:main.c        ****             no_user_jump = TRUE;
+ 471              		.loc 1 182 0 discriminator 1
+ 472 0082 1848     		ldr	r0, .L24+32
+ 473 0084 F7E7     		b	.L23
+ 474              	.LVL58:
+ 475              	.L20:
+ 476              		.loc 1 193 0
+ 477 0086 4FF48013 		mov	r3, #1048576
+ 478 008a 0122     		movs	r2, #1
+ 479 008c 0D21     		movs	r1, #13
+ 480 008e 2846     		mov	r0, r5
+ 481 0090 0096     		str	r6, [sp]
+ 482 0092 FFF7FEFF 		bl	strobePin
+ 483              	.LVL59:
+ 194:main.c        ****         if (dfuUploadStarted()) 
+ 484              		.loc 1 194 0
+ 485 0096 FFF7FEFF 		bl	dfuUploadStarted
+ 486              	.LVL60:
+ 487 009a 20B1     		cbz	r0, .L18
+ 195:main.c        ****         {
+ 196:main.c        ****             debug_print("DFU finished upload\n");
+ 488              		.loc 1 196 0 discriminator 1
+ 489 009c 1248     		ldr	r0, .L24+36
+ 490 009e FFF7FEFF 		bl	uart_printf
+ 491              	.LVL61:
+ 197:main.c        ****             dfuFinishUpload(); // systemHardReset from DFU once done
+ 492              		.loc 1 197 0 discriminator 1
+ 493 00a2 FFF7FEFF 		bl	dfuFinishUpload
+ 494              	.LVL62:
+ 495              	.L18:
+ 190:main.c        ****     {
+ 496              		.loc 1 190 0 discriminator 1
+ 497 00a6 002C     		cmp	r4, #0
+ 498 00a8 EDD1     		bne	.L20
+ 198:main.c        ****         }
+ 199:main.c        ****     }
+ 200:main.c        **** 
+ 201:main.c        ****     // we have the OS verified so lets jump to it. 
+ 202:main.c        ****     if (no_user_jump == FALSE)
+ 203:main.c        ****     {
+ 204:main.c        ****         debug_print("Jumping to OS.\n");
+ 499              		.loc 1 204 0 discriminator 1
+ 500 00aa 1048     		ldr	r0, .L24+40
+ 501 00ac FFF7FEFF 		bl	uart_printf
+ 502              	.LVL63:
+ 205:main.c        ****         jumpToUser((USER_CODE_FLASH0X8008000+0x84));    
+ 503              		.loc 1 205 0 discriminator 1
+ 504 00b0 0F48     		ldr	r0, .L24+44
+ 505 00b2 FFF7FEFF 		bl	jumpToUser
+ 506              	.LVL64:
+ 206:main.c        ****     }
+ 207:main.c        ****     
+ 208:main.c        ****     return 0; // Added to please the compiler
+ 209:main.c        **** }...
+ 507              		.loc 1 209 0 discriminator 1
+ 508 00b6 2046     		mov	r0, r4
+ 509 00b8 04B0     		add	sp, sp, #16
+ 510              		.cfi_def_cfa_offset 16
+ 511              		@ sp needed
+ 512 00ba 70BD     		pop	{r4, r5, r6, pc}
+ 513              	.LVL65:
+ 514              	.L11:
+ 140:main.c        ****     bool no_user_jump = FALSE;
+ 515              		.loc 1 140 0
+ 516 00bc B4FA84F4 		clz	r4, r4
+ 517              	.LVL66:
+ 518 00c0 6409     		lsrs	r4, r4, #5
+ 519 00c2 D2E7     		b	.L17
+ 520              	.L25:
+ 521              		.align	2
+ 522              	.L24:
+ 523 00c4 000C0140 		.word	1073810432
+ 524 00c8 00100140 		.word	1073811456
+ 525 00cc 00000000 		.word	.LC11
+ 526 00d0 00900008 		.word	134254592
+ 527 00d4 13000000 		.word	.LC12
+ 528 00d8 28000000 		.word	.LC13
+ 529 00dc 31000000 		.word	.LC14
+ 530 00e0 56000000 		.word	.LC15
+ 531 00e4 86000000 		.word	.LC16
+ 532 00e8 B2000000 		.word	.LC17
+ 533 00ec C7000000 		.word	.LC18
+ 534 00f0 84900008 		.word	134254724
+ 535              		.cfi_endproc
+ 536              	.LFE8:
+ 538              		.comm	rootCA,32,1
+ 539              		.comm	wTransferSize,4,4
+ 540              		.section	.rodata.main.str1.1,"aMS",%progbits,1
+ 541              	.LC11:
+ 542 0000 63686563 		.ascii	"checking chain...\012\000"
+ 542      6B696E67 
+ 542      20636861 
+ 542      696E2E2E 
+ 542      2E0A00
+ 543              	.LC12:
+ 544 0013 696D6167 		.ascii	"image check ret: %X\012\000"
+ 544      65206368 
+ 544      65636B20 
+ 544      7265743A 
+ 544      2025580A 
+ 545              	.LC13:
+ 546 0028 426F6F74 		.ascii	"Boot OK\012\000"
+ 546      204F4B0A 
+ 546      00
+ 547              	.LC14:
+ 548 0031 0A466972 		.ascii	"\012Firmware missing... waiting in DFU\012\000"
+ 548      6D776172 
+ 548      65206D69 
+ 548      7373696E 
+ 548      672E2E2E 
+ 549              	.LC15:
+ 550 0056 0A536967 		.ascii	"\012Signature validation failed... waiting in DFU\012"
+ 550      6E617475 
+ 550      72652076 
+ 550      616C6964 
+ 550      6174696F 
+ 551 0085 00       		.ascii	"\000"
+ 552              	.LC16:
+ 553 0086 0A486173 		.ascii	"\012Hash calculation failed... waiting in DFU\012\000"
+ 553      68206361 
+ 553      6C63756C 
+ 553      6174696F 
+ 553      6E206661 
+ 554              	.LC17:
+ 555 00b2 44465520 		.ascii	"DFU finished upload\012\000"
+ 555      66696E69 
+ 555      73686564 
+ 555      2075706C 
+ 555      6F61640A 
+ 556              	.LC18:
+ 557 00c7 4A756D70 		.ascii	"Jumping to OS.\012\000"
+ 557      696E6720 
+ 557      746F204F 
+ 557      532E0A00 
+ 558              		.section	.rodata.print_bootheader.str1.1,"aMS",%progbits,1
+ 559              	.LC6:
+ 560 0000 5B2D2D2D 		.ascii	"[-------------------------]\012\000"
+ 560      2D2D2D2D 
+ 560      2D2D2D2D 
+ 560      2D2D2D2D 
+ 560      2D2D2D2D 
+ 561              	.LC7:
+ 562 001d 426F6F74 		.ascii	"Bootloader init!\012\000"
+ 562      6C6F6164 
+ 562      65722069 
+ 562      6E697421 
+ 562      0A00
+ 563              	.LC8:
+ 564 002f 5645523A 		.ascii	"VER: 0x%X REV: 0x%X\012\000"
+ 564      20307825 
+ 564      58205245 
+ 564      563A2030 
+ 564      7825580A 
+ 565              	.LC9:
+ 566 0044 496E7365 		.ascii	"Insecure\000"
+ 566      63757265 
+ 566      00
+ 567              	.LC10:
+ 568 004d 46757369 		.ascii	"Fusing: %s\012\000"
+ 568      6E673A20 
+ 568      25730A00 
+ 569              		.section	.rodata.transmit_publickey_data.str1.1,"aMS",%progbits,1
+ 570              	.LC0:
+ 571 0000 25582558 		.ascii	"%X%X%X%X\000"
+ 571      25582558 
+ 571      00
+ 572              	.LC1:
+ 573 0009 0A0A5B42 		.ascii	"\012\012[BEGIN_PUB_DATA]\012\000"
+ 573      4547494E 
+ 573      5F505542 
+ 573      5F444154 
+ 573      415D0A00 
+ 574              	.LC2:
+ 575 001d 257300   		.ascii	"%s\000"
+ 576              	.LC3:
+ 577 0020 5B454E44 		.ascii	"[END_PUB_DATA]\012\000"
+ 577      5F505542 
+ 577      5F444154 
+ 577      415D0A00 
+ 578              	.LC4:
+ 579 0030 0A5B4245 		.ascii	"\012[BEGIN_SIGNATURE_DATA]\012\000"
+ 579      47494E5F 
+ 579      5349474E 
+ 579      41545552 
+ 579      455F4441 
+ 580              	.LC5:
+ 581 0049 5B454E44 		.ascii	"[END_SIGNATURE_DATA]\012\000"
+ 581      5F534947 
+ 581      4E415455 
+ 581      52455F44 
+ 581      4154415D 
+ 582              		.text
+ 583              	.Letext0:
+ 584              		.file 2 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
+ 585              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
+ 586              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
+ 587              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
+ 588              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 589              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
+ 590              		.file 8 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/unistd
+ 591              		.file 9 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/errno.
+ 592              		.file 10 "./stm32_lib/stm32f10x_type.h"
+ 593              		.file 11 "hardware.h"
+ 594              		.file 12 "./usb_lib/usb_regs.h"
+ 595              		.file 13 "./usb_lib/usb_core.h"
+ 596              		.file 14 "./usb_lib/usb_init.h"
+ 597              		.file 15 "usb_descriptor.h"
+ 598              		.file 16 "usb.h"
+ 599              		.file 17 "dfu.h"
+ 600              		.file 18 "image.h"
+ 601              		.file 19 "./25519/sha256.h"
+ 602              		.file 20 "./base64/cencode.h"
+ 603              		.file 21 "./base64/cdecode.h"
+ 604              		.file 22 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/stdio.h"
+ 605              		.file 23 "./25519/edsign.h"
+ 606              		.file 24 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/string.h"
+ 607              		.file 25 "<built-in>"
 DEFINED SYMBOLS
-                            *ABS*:00000000 main.c
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:19     .text.decode_b64:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:24     .text.decode_b64:00000000 decode_b64
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:71     .text.encode_b64:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:76     .text.encode_b64:00000000 encode_b64
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:132    .text.transmit_publickey_data:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:137    .text.transmit_publickey_data:00000000 transmit_publickey_data
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:243    .text.transmit_publickey_data:000000a0 $d
-                            *COM*:00000020 rootCA
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:253    .text.startup.main:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:258    .text.startup.main:00000000 main
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:328    .text.startup.main:00000050 $d
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:332    .text.startup.main:00000054 $t
-C:\Users\haifisch\AppData\Local\Temp\ccIr0ajb.s:424    .text.startup.main:000000c8 $d
-                            *COM*:00000004 wTransferSize
-                     .debug_frame:00000010 $d
+                            *ABS*:0000000000000000 main.c
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:16     .text.decode_b64:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:23     .text.decode_b64:0000000000000000 decode_b64
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:68     .text.encode_b64:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:75     .text.encode_b64:0000000000000000 encode_b64
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:130    .text.transmit_publickey_data:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:137    .text.transmit_publickey_data:0000000000000000 transmit_publickey_data
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:255    .text.transmit_publickey_data:00000000000000ac $d
+                            *COM*:0000000000000020 rootCA
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:266    .text.isSecureMode:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:273    .text.isSecureMode:0000000000000000 isSecureMode
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:287    .text.print_bootheader:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:294    .text.print_bootheader:0000000000000000 print_bootheader
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:337    .text.print_bootheader:000000000000002c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:346    .text.startup.main:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:353    .text.startup.main:0000000000000000 main
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:431    .text.startup.main:000000000000005e $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:435    .text.startup.main:0000000000000062 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccdqaRrS.s:523    .text.startup.main:00000000000000c4 $d
+                            *COM*:0000000000000004 wTransferSize
 
 UNDEFINED SYMBOLS
 base64_init_decodestate
@@ -758,8 +932,8 @@ setupFLASH
 uartInit
 setupUSB
 readPin
-imageCheckFromAddress
 strobePin
+imageCheckFromAddress
 dfuUploadStarted
 dfuFinishUpload
 jumpToUser

@@ -1,28 +1,27 @@
-   1              		.syntax unified
-   2              		.cpu cortex-m3
-   3              		.fpu softvfp
-   4              		.eabi_attribute 20, 1
-   5              		.eabi_attribute 21, 1
-   6              		.eabi_attribute 23, 3
-   7              		.eabi_attribute 24, 1
-   8              		.eabi_attribute 25, 1
-   9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 2
-  11              		.eabi_attribute 34, 1
-  12              		.eabi_attribute 18, 4
-  13              		.thumb
-  14              		.file	"morph25519.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.morph25519_e2m,"ax",%progbits
-  19              		.align	2
-  20              		.global	morph25519_e2m
-  21              		.thumb
-  22              		.thumb_func
-  24              	morph25519_e2m:
-  25              	.LFB2:
-  26              		.file 1 "25519/morph25519.c"
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"morph25519.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.morph25519_e2m,"ax",%progbits
+  16              		.align	1
+  17              		.global	morph25519_e2m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	morph25519_e2m:
+  24              	.LFB2:
+  25              		.file 1 "25519/morph25519.c"
    1:25519/morph25519.c **** /* Montgomery <-> Edwards isomorphism
    2:25519/morph25519.c ****  * Daniel Beer <dlbeer@gmail.com>, 18 Jan 2014
    3:25519/morph25519.c ****  *
@@ -34,86 +33,84 @@
    9:25519/morph25519.c **** 
   10:25519/morph25519.c **** void morph25519_e2m(uint8_t *montgomery, const uint8_t *y)
   11:25519/morph25519.c **** {
-  27              		.loc 1 11 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 64
-  30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31              	.LVL0:
-  32 0000 70B5     		push	{r4, r5, r6, lr}
-  33              		.cfi_def_cfa_offset 16
-  34              		.cfi_offset 4, -16
-  35              		.cfi_offset 5, -12
-  36              		.cfi_offset 6, -8
-  37              		.cfi_offset 14, -4
+  26              		.loc 1 11 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 64
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 70B5     		push	{r4, r5, r6, lr}
+  32              		.cfi_def_cfa_offset 16
+  33              		.cfi_offset 4, -16
+  34              		.cfi_offset 5, -12
+  35              		.cfi_offset 6, -8
+  36              		.cfi_offset 14, -4
+  37 0002 0E46     		mov	r6, r1
+  38 0004 0446     		mov	r4, r0
   12:25519/morph25519.c **** 	uint8_t yplus[F25519_SIZE];
   13:25519/morph25519.c **** 	uint8_t yminus[F25519_SIZE];
   14:25519/morph25519.c **** 
   15:25519/morph25519.c **** 	f25519_sub(yplus, f25519_one, y);
-  38              		.loc 1 15 0
-  39 0002 0E4E     		ldr	r6, .L2
-  11:25519/morph25519.c **** {
-  40              		.loc 1 11 0
-  41 0004 90B0     		sub	sp, sp, #64
-  42              		.cfi_def_cfa_offset 80
-  11:25519/morph25519.c **** {
-  43              		.loc 1 11 0
-  44 0006 0446     		mov	r4, r0
-  45              		.loc 1 15 0
-  46 0008 0A46     		mov	r2, r1
-  11:25519/morph25519.c **** {
-  47              		.loc 1 11 0
-  48 000a 0D46     		mov	r5, r1
-  49              		.loc 1 15 0
-  50 000c 6846     		mov	r0, sp
-  51              	.LVL1:
-  52 000e 3146     		mov	r1, r6
-  53              	.LVL2:
-  54 0010 FFF7FEFF 		bl	f25519_sub
-  55              	.LVL3:
+  39              		.loc 1 15 0
+  40 0006 0D4D     		ldr	r5, .L2
+  11:25519/morph25519.c **** 	uint8_t yplus[F25519_SIZE];
+  41              		.loc 1 11 0
+  42 0008 90B0     		sub	sp, sp, #64
+  43              		.cfi_def_cfa_offset 80
+  44              		.loc 1 15 0
+  45 000a 0A46     		mov	r2, r1
+  46 000c 6846     		mov	r0, sp
+  47              	.LVL1:
+  48 000e 2946     		mov	r1, r5
+  49              	.LVL2:
+  50 0010 FFF7FEFF 		bl	f25519_sub
+  51              	.LVL3:
   16:25519/morph25519.c **** 	f25519_inv__distinct(yminus, yplus);
-  56              		.loc 1 16 0
-  57 0014 6946     		mov	r1, sp
-  58 0016 08A8     		add	r0, sp, #32
-  59 0018 FFF7FEFF 		bl	f25519_inv__distinct
-  60              	.LVL4:
+  52              		.loc 1 16 0
+  53 0014 6946     		mov	r1, sp
+  54 0016 08A8     		add	r0, sp, #32
+  55 0018 FFF7FEFF 		bl	f25519_inv__distinct
+  56              	.LVL4:
   17:25519/morph25519.c **** 	f25519_add(yplus, f25519_one, y);
-  61              		.loc 1 17 0
-  62 001c 6846     		mov	r0, sp
-  63 001e 3146     		mov	r1, r6
-  64 0020 2A46     		mov	r2, r5
-  65 0022 FFF7FEFF 		bl	f25519_add
-  66              	.LVL5:
+  57              		.loc 1 17 0
+  58 001c 3246     		mov	r2, r6
+  59 001e 2946     		mov	r1, r5
+  60 0020 6846     		mov	r0, sp
+  61 0022 FFF7FEFF 		bl	f25519_add
+  62              	.LVL5:
   18:25519/morph25519.c **** 	f25519_mul__distinct(montgomery, yplus, yminus);
-  67              		.loc 1 18 0
-  68 0026 2046     		mov	r0, r4
-  69 0028 6946     		mov	r1, sp
-  70 002a 08AA     		add	r2, sp, #32
-  71 002c FFF7FEFF 		bl	f25519_mul__distinct
-  72              	.LVL6:
+  63              		.loc 1 18 0
+  64 0026 08AA     		add	r2, sp, #32
+  65 0028 6946     		mov	r1, sp
+  66 002a 2046     		mov	r0, r4
+  67 002c FFF7FEFF 		bl	f25519_mul__distinct
+  68              	.LVL6:
   19:25519/morph25519.c **** 	f25519_normalize(montgomery);
-  73              		.loc 1 19 0
-  74 0030 2046     		mov	r0, r4
-  75 0032 FFF7FEFF 		bl	f25519_normalize
-  76              	.LVL7:
+  69              		.loc 1 19 0
+  70 0030 2046     		mov	r0, r4
+  71 0032 FFF7FEFF 		bl	f25519_normalize
+  72              	.LVL7:
   20:25519/morph25519.c **** }
-  77              		.loc 1 20 0
-  78 0036 10B0     		add	sp, sp, #64
-  79              		@ sp needed
-  80 0038 70BD     		pop	{r4, r5, r6, pc}
-  81              	.LVL8:
-  82              	.L3:
-  83 003a 00BF     		.align	2
-  84              	.L2:
-  85 003c 00000000 		.word	f25519_one
-  86              		.cfi_endproc
-  87              	.LFE2:
-  89              		.section	.text.morph25519_m2e,"ax",%progbits
-  90              		.align	2
-  91              		.global	morph25519_m2e
-  92              		.thumb
-  93              		.thumb_func
-  95              	morph25519_m2e:
-  96              	.LFB5:
+  73              		.loc 1 20 0
+  74 0036 10B0     		add	sp, sp, #64
+  75              		.cfi_def_cfa_offset 16
+  76              		@ sp needed
+  77 0038 70BD     		pop	{r4, r5, r6, pc}
+  78              	.LVL8:
+  79              	.L3:
+  80 003a 00BF     		.align	2
+  81              	.L2:
+  82 003c 00000000 		.word	f25519_one
+  83              		.cfi_endproc
+  84              	.LFE2:
+  86              		.section	.text.morph25519_m2e,"ax",%progbits
+  87              		.align	1
+  88              		.global	morph25519_m2e
+  89              		.syntax unified
+  90              		.thumb
+  91              		.thumb_func
+  92              		.fpu softvfp
+  94              	morph25519_m2e:
+  95              	.LFB5:
   21:25519/morph25519.c **** 
   22:25519/morph25519.c **** static void mx2ey(uint8_t *ey, const uint8_t *mx)
   23:25519/morph25519.c **** {
@@ -171,250 +168,245 @@
   75:25519/morph25519.c **** uint8_t morph25519_m2e(uint8_t *ex, uint8_t *ey,
   76:25519/morph25519.c **** 		       const uint8_t *mx, int parity)
   77:25519/morph25519.c **** {
-  97              		.loc 1 77 0
-  98              		.cfi_startproc
-  99              		@ args = 0, pretend = 0, frame = 96
- 100              		@ frame_needed = 0, uses_anonymous_args = 0
- 101              	.LVL9:
- 102 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 103              		.cfi_def_cfa_offset 24
- 104              		.cfi_offset 4, -24
- 105              		.cfi_offset 5, -20
- 106              		.cfi_offset 6, -16
- 107              		.cfi_offset 7, -12
- 108              		.cfi_offset 8, -8
- 109              		.cfi_offset 14, -4
- 110              	.LBB6:
- 111              	.LBB7:
-  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
- 112              		.loc 1 27 0
- 113 0004 314E     		ldr	r6, .L5
- 114              	.LBE7:
- 115              	.LBE6:
- 116              		.loc 1 77 0
- 117 0006 98B0     		sub	sp, sp, #96
- 118              		.cfi_def_cfa_offset 120
- 119              		.loc 1 77 0
- 120 0008 1746     		mov	r7, r2
- 121 000a 0546     		mov	r5, r0
- 122 000c 0C46     		mov	r4, r1
- 123              	.LVL10:
- 124              	.LBB10:
- 125              	.LBB8:
-  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
- 126              		.loc 1 27 0
- 127 000e 3246     		mov	r2, r6
- 128              	.LVL11:
- 129 0010 3946     		mov	r1, r7
- 130              	.LVL12:
- 131 0012 08A8     		add	r0, sp, #32
- 132              	.LVL13:
- 133              	.LBE8:
- 134              	.LBE10:
- 135              		.loc 1 77 0
- 136 0014 9846     		mov	r8, r3
- 137              	.LBB11:
- 138              	.LBB9:
-  27:25519/morph25519.c **** 	f25519_add(n, mx, f25519_one);
- 139              		.loc 1 27 0
- 140 0016 FFF7FEFF 		bl	f25519_add
- 141              	.LVL14:
-  28:25519/morph25519.c **** 	f25519_inv__distinct(d, n);
- 142              		.loc 1 28 0
- 143 001a 08A9     		add	r1, sp, #32
- 144 001c 10A8     		add	r0, sp, #64
- 145 001e FFF7FEFF 		bl	f25519_inv__distinct
- 146              	.LVL15:
-  29:25519/morph25519.c **** 	f25519_sub(n, mx, f25519_one);
- 147              		.loc 1 29 0
- 148 0022 08A8     		add	r0, sp, #32
- 149 0024 3946     		mov	r1, r7
- 150 0026 3246     		mov	r2, r6
- 151 0028 FFF7FEFF 		bl	f25519_sub
- 152              	.LVL16:
-  30:25519/morph25519.c **** 	f25519_mul__distinct(ey, n, d);
- 153              		.loc 1 30 0
- 154 002c 2046     		mov	r0, r4
- 155 002e 08A9     		add	r1, sp, #32
- 156 0030 10AA     		add	r2, sp, #64
- 157 0032 FFF7FEFF 		bl	f25519_mul__distinct
- 158              	.LVL17:
- 159              	.LBE9:
- 160              	.LBE11:
- 161              	.LBB12:
- 162              	.LBB13:
-  47:25519/morph25519.c **** 	f25519_mul__distinct(c, y, y);
- 163              		.loc 1 47 0
- 164 0036 10A8     		add	r0, sp, #64
- 165 0038 2146     		mov	r1, r4
- 166 003a 2246     		mov	r2, r4
- 167 003c FFF7FEFF 		bl	f25519_mul__distinct
- 168              	.LVL18:
-  50:25519/morph25519.c **** 	f25519_mul__distinct(b, c, d);
- 169              		.loc 1 50 0
- 170 0040 08A8     		add	r0, sp, #32
- 171 0042 10A9     		add	r1, sp, #64
- 172 0044 224A     		ldr	r2, .L5+4
- 173 0046 FFF7FEFF 		bl	f25519_mul__distinct
- 174              	.LVL19:
-  51:25519/morph25519.c **** 	f25519_add(a, b, f25519_one);
- 175              		.loc 1 51 0
- 176 004a 3246     		mov	r2, r6
- 177 004c 08A9     		add	r1, sp, #32
- 178 004e 6846     		mov	r0, sp
- 179 0050 FFF7FEFF 		bl	f25519_add
- 180              	.LVL20:
-  52:25519/morph25519.c **** 	f25519_inv__distinct(b, a);
- 181              		.loc 1 52 0
- 182 0054 08A8     		add	r0, sp, #32
- 183 0056 6946     		mov	r1, sp
- 184 0058 FFF7FEFF 		bl	f25519_inv__distinct
- 185              	.LVL21:
-  55:25519/morph25519.c **** 	f25519_sub(a, c, f25519_one);
- 186              		.loc 1 55 0
- 187 005c 6846     		mov	r0, sp
- 188 005e 10A9     		add	r1, sp, #64
- 189 0060 3246     		mov	r2, r6
- 190 0062 FFF7FEFF 		bl	f25519_sub
- 191              	.LVL22:
-  58:25519/morph25519.c **** 	f25519_mul__distinct(c, a, b);
- 192              		.loc 1 58 0
- 193 0066 08AA     		add	r2, sp, #32
- 194 0068 10A8     		add	r0, sp, #64
- 195 006a 6946     		mov	r1, sp
- 196 006c FFF7FEFF 		bl	f25519_mul__distinct
- 197              	.LVL23:
-  61:25519/morph25519.c **** 	f25519_sqrt(a, c);
- 198              		.loc 1 61 0
- 199 0070 6846     		mov	r0, sp
- 200 0072 10A9     		add	r1, sp, #64
- 201 0074 FFF7FEFF 		bl	f25519_sqrt
- 202              	.LVL24:
-  62:25519/morph25519.c **** 	f25519_neg(b, a);
- 203              		.loc 1 62 0
- 204 0078 08A8     		add	r0, sp, #32
- 205 007a 6946     		mov	r1, sp
- 206 007c FFF7FEFF 		bl	f25519_neg
- 207              	.LVL25:
-  65:25519/morph25519.c **** 	f25519_select(x, a, b, (a[0] ^ parity) & 1);
- 208              		.loc 1 65 0
- 209 0080 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
- 210 0084 08AA     		add	r2, sp, #32
- 211 0086 88EA0303 		eor	r3, r8, r3
- 212 008a 03F00103 		and	r3, r3, #1
- 213 008e 2846     		mov	r0, r5
- 214 0090 6946     		mov	r1, sp
- 215 0092 FFF7FEFF 		bl	f25519_select
- 216              	.LVL26:
-  68:25519/morph25519.c **** 	f25519_mul__distinct(a, x, x);
- 217              		.loc 1 68 0
- 218 0096 2A46     		mov	r2, r5
- 219 0098 2946     		mov	r1, r5
- 220 009a 6846     		mov	r0, sp
- 221 009c FFF7FEFF 		bl	f25519_mul__distinct
- 222              	.LVL27:
-  69:25519/morph25519.c **** 	f25519_normalize(a);
- 223              		.loc 1 69 0
- 224 00a0 6846     		mov	r0, sp
- 225 00a2 FFF7FEFF 		bl	f25519_normalize
- 226              	.LVL28:
-  70:25519/morph25519.c **** 	f25519_normalize(c);
- 227              		.loc 1 70 0
- 228 00a6 10A8     		add	r0, sp, #64
- 229 00a8 FFF7FEFF 		bl	f25519_normalize
- 230              	.LVL29:
-  72:25519/morph25519.c **** 	return f25519_eq(a, c);
- 231              		.loc 1 72 0
- 232 00ac 10A9     		add	r1, sp, #64
- 233 00ae 6846     		mov	r0, sp
- 234 00b0 FFF7FEFF 		bl	f25519_eq
- 235              	.LVL30:
- 236 00b4 0646     		mov	r6, r0
- 237              	.LBE13:
- 238              	.LBE12:
+  96              		.loc 1 77 0
+  97              		.cfi_startproc
+  98              		@ args = 0, pretend = 0, frame = 96
+  99              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100              	.LVL9:
+ 101 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 102              		.cfi_def_cfa_offset 24
+ 103              		.cfi_offset 4, -24
+ 104              		.cfi_offset 5, -20
+ 105              		.cfi_offset 6, -16
+ 106              		.cfi_offset 7, -12
+ 107              		.cfi_offset 8, -8
+ 108              		.cfi_offset 14, -4
+ 109 0004 1746     		mov	r7, r2
+ 110 0006 0C46     		mov	r4, r1
+ 111              	.LVL10:
+ 112 0008 9846     		mov	r8, r3
+ 113 000a 0546     		mov	r5, r0
+ 114              	.LBB6:
+ 115              	.LBB7:
+  27:25519/morph25519.c **** 	f25519_inv__distinct(d, n);
+ 116              		.loc 1 27 0
+ 117 000c 2F4E     		ldr	r6, .L5
+ 118              	.LBE7:
+ 119              	.LBE6:
+ 120              		.loc 1 77 0
+ 121 000e 98B0     		sub	sp, sp, #96
+ 122              		.cfi_def_cfa_offset 120
+ 123              	.LBB9:
+ 124              	.LBB8:
+  27:25519/morph25519.c **** 	f25519_inv__distinct(d, n);
+ 125              		.loc 1 27 0
+ 126 0010 3246     		mov	r2, r6
+ 127              	.LVL11:
+ 128 0012 3946     		mov	r1, r7
+ 129              	.LVL12:
+ 130 0014 08A8     		add	r0, sp, #32
+ 131              	.LVL13:
+ 132 0016 FFF7FEFF 		bl	f25519_add
+ 133              	.LVL14:
+  28:25519/morph25519.c **** 	f25519_sub(n, mx, f25519_one);
+ 134              		.loc 1 28 0
+ 135 001a 08A9     		add	r1, sp, #32
+ 136 001c 10A8     		add	r0, sp, #64
+ 137 001e FFF7FEFF 		bl	f25519_inv__distinct
+ 138              	.LVL15:
+  29:25519/morph25519.c **** 	f25519_mul__distinct(ey, n, d);
+ 139              		.loc 1 29 0
+ 140 0022 3246     		mov	r2, r6
+ 141 0024 3946     		mov	r1, r7
+ 142 0026 08A8     		add	r0, sp, #32
+ 143 0028 FFF7FEFF 		bl	f25519_sub
+ 144              	.LVL16:
+  30:25519/morph25519.c **** }
+ 145              		.loc 1 30 0
+ 146 002c 10AA     		add	r2, sp, #64
+ 147 002e 08A9     		add	r1, sp, #32
+ 148 0030 2046     		mov	r0, r4
+ 149 0032 FFF7FEFF 		bl	f25519_mul__distinct
+ 150              	.LVL17:
+ 151              	.LBE8:
+ 152              	.LBE9:
+ 153              	.LBB10:
+ 154              	.LBB11:
+  47:25519/morph25519.c **** 
+ 155              		.loc 1 47 0
+ 156 0036 2246     		mov	r2, r4
+ 157 0038 2146     		mov	r1, r4
+ 158 003a 10A8     		add	r0, sp, #64
+ 159 003c FFF7FEFF 		bl	f25519_mul__distinct
+ 160              	.LVL18:
+  50:25519/morph25519.c **** 	f25519_add(a, b, f25519_one);
+ 161              		.loc 1 50 0
+ 162 0040 10A9     		add	r1, sp, #64
+ 163 0042 08A8     		add	r0, sp, #32
+ 164 0044 224A     		ldr	r2, .L5+4
+ 165 0046 FFF7FEFF 		bl	f25519_mul__distinct
+ 166              	.LVL19:
+  51:25519/morph25519.c **** 	f25519_inv__distinct(b, a);
+ 167              		.loc 1 51 0
+ 168 004a 3246     		mov	r2, r6
+ 169 004c 08A9     		add	r1, sp, #32
+ 170 004e 6846     		mov	r0, sp
+ 171 0050 FFF7FEFF 		bl	f25519_add
+ 172              	.LVL20:
+  52:25519/morph25519.c **** 
+ 173              		.loc 1 52 0
+ 174 0054 6946     		mov	r1, sp
+ 175 0056 08A8     		add	r0, sp, #32
+ 176 0058 FFF7FEFF 		bl	f25519_inv__distinct
+ 177              	.LVL21:
+  55:25519/morph25519.c **** 
+ 178              		.loc 1 55 0
+ 179 005c 3246     		mov	r2, r6
+ 180 005e 10A9     		add	r1, sp, #64
+ 181 0060 6846     		mov	r0, sp
+ 182 0062 FFF7FEFF 		bl	f25519_sub
+ 183              	.LVL22:
+  58:25519/morph25519.c **** 
+ 184              		.loc 1 58 0
+ 185 0066 08AA     		add	r2, sp, #32
+ 186 0068 6946     		mov	r1, sp
+ 187 006a 10A8     		add	r0, sp, #64
+ 188 006c FFF7FEFF 		bl	f25519_mul__distinct
+ 189              	.LVL23:
+  61:25519/morph25519.c **** 	f25519_neg(b, a);
+ 190              		.loc 1 61 0
+ 191 0070 10A9     		add	r1, sp, #64
+ 192 0072 6846     		mov	r0, sp
+ 193 0074 FFF7FEFF 		bl	f25519_sqrt
+ 194              	.LVL24:
+  62:25519/morph25519.c **** 
+ 195              		.loc 1 62 0
+ 196 0078 6946     		mov	r1, sp
+ 197 007a 08A8     		add	r0, sp, #32
+ 198 007c FFF7FEFF 		bl	f25519_neg
+ 199              	.LVL25:
+  65:25519/morph25519.c **** 
+ 200              		.loc 1 65 0
+ 201 0080 9DF80020 		ldrb	r2, [sp]	@ zero_extendqisi2
+ 202 0084 6946     		mov	r1, sp
+ 203 0086 82EA0803 		eor	r3, r2, r8
+ 204 008a 03F00103 		and	r3, r3, #1
+ 205 008e 08AA     		add	r2, sp, #32
+ 206 0090 2846     		mov	r0, r5
+ 207 0092 FFF7FEFF 		bl	f25519_select
+ 208              	.LVL26:
+  68:25519/morph25519.c **** 	f25519_normalize(a);
+ 209              		.loc 1 68 0
+ 210 0096 2A46     		mov	r2, r5
+ 211 0098 2946     		mov	r1, r5
+ 212 009a 6846     		mov	r0, sp
+ 213 009c FFF7FEFF 		bl	f25519_mul__distinct
+ 214              	.LVL27:
+  69:25519/morph25519.c **** 	f25519_normalize(c);
+ 215              		.loc 1 69 0
+ 216 00a0 6846     		mov	r0, sp
+ 217 00a2 FFF7FEFF 		bl	f25519_normalize
+ 218              	.LVL28:
+  70:25519/morph25519.c **** 
+ 219              		.loc 1 70 0
+ 220 00a6 10A8     		add	r0, sp, #64
+ 221 00a8 FFF7FEFF 		bl	f25519_normalize
+ 222              	.LVL29:
+  72:25519/morph25519.c **** }
+ 223              		.loc 1 72 0
+ 224 00ac 10A9     		add	r1, sp, #64
+ 225 00ae 6846     		mov	r0, sp
+ 226 00b0 FFF7FEFF 		bl	f25519_eq
+ 227              	.LVL30:
+ 228 00b4 0646     		mov	r6, r0
+ 229              	.LVL31:
+ 230              	.LBE11:
+ 231              	.LBE10:
   78:25519/morph25519.c **** 	uint8_t ok;
   79:25519/morph25519.c **** 
   80:25519/morph25519.c **** 	mx2ey(ey, mx);
   81:25519/morph25519.c **** 	ok = ey2ex(ex, ey, parity);
   82:25519/morph25519.c **** 
   83:25519/morph25519.c **** 	f25519_normalize(ex);
- 239              		.loc 1 83 0
- 240 00b6 2846     		mov	r0, r5
- 241 00b8 FFF7FEFF 		bl	f25519_normalize
- 242              	.LVL31:
+ 232              		.loc 1 83 0
+ 233 00b6 2846     		mov	r0, r5
+ 234 00b8 FFF7FEFF 		bl	f25519_normalize
+ 235              	.LVL32:
   84:25519/morph25519.c **** 	f25519_normalize(ey);
- 243              		.loc 1 84 0
- 244 00bc 2046     		mov	r0, r4
- 245 00be FFF7FEFF 		bl	f25519_normalize
- 246              	.LVL32:
+ 236              		.loc 1 84 0
+ 237 00bc 2046     		mov	r0, r4
+ 238 00be FFF7FEFF 		bl	f25519_normalize
+ 239              	.LVL33:
   85:25519/morph25519.c **** 
   86:25519/morph25519.c **** 	return ok;
   87:25519/morph25519.c **** }
- 247              		.loc 1 87 0
- 248 00c2 3046     		mov	r0, r6
- 249 00c4 18B0     		add	sp, sp, #96
- 250              		@ sp needed
- 251 00c6 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 252              	.LVL33:
- 253              	.L6:
- 254 00ca 00BF     		.align	2
- 255              	.L5:
- 256 00cc 00000000 		.word	f25519_one
- 257 00d0 00000000 		.word	.LANCHOR0
- 258              		.cfi_endproc
- 259              	.LFE5:
- 261              		.section	.rodata.d.4520,"a",%progbits
- 262              		.align	2
- 263              		.set	.LANCHOR0,. + 0
- 266              	d.4520:
- 267 0000 A3       		.byte	-93
- 268 0001 78       		.byte	120
- 269 0002 59       		.byte	89
- 270 0003 13       		.byte	19
- 271 0004 CA       		.byte	-54
- 272 0005 4D       		.byte	77
- 273 0006 EB       		.byte	-21
- 274 0007 75       		.byte	117
- 275 0008 AB       		.byte	-85
- 276 0009 D8       		.byte	-40
- 277 000a 41       		.byte	65
- 278 000b 41       		.byte	65
- 279 000c 4D       		.byte	77
- 280 000d 0A       		.byte	10
- 281 000e 70       		.byte	112
- 282 000f 00       		.byte	0
- 283 0010 98       		.byte	-104
- 284 0011 E8       		.byte	-24
- 285 0012 79       		.byte	121
- 286 0013 77       		.byte	119
- 287 0014 79       		.byte	121
- 288 0015 40       		.byte	64
- 289 0016 C7       		.byte	-57
- 290 0017 8C       		.byte	-116
- 291 0018 73       		.byte	115
- 292 0019 FE       		.byte	-2
- 293 001a 6F       		.byte	111
- 294 001b 2B       		.byte	43
- 295 001c EE       		.byte	-18
- 296 001d 6C       		.byte	108
- 297 001e 03       		.byte	3
- 298 001f 52       		.byte	82
- 299              		.text
- 300              	.Letext0:
- 301              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\mach
- 302              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\4.8 2014q3\\arm-none-eabi\\include\\stdi
- 303              		.file 4 "25519/f25519.h"
+ 240              		.loc 1 87 0
+ 241 00c2 3046     		mov	r0, r6
+ 242 00c4 18B0     		add	sp, sp, #96
+ 243              		.cfi_def_cfa_offset 24
+ 244              		@ sp needed
+ 245 00c6 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 246              	.LVL34:
+ 247              	.L6:
+ 248 00ca 00BF     		.align	2
+ 249              	.L5:
+ 250 00cc 00000000 		.word	f25519_one
+ 251 00d0 00000000 		.word	.LANCHOR0
+ 252              		.cfi_endproc
+ 253              	.LFE5:
+ 255              		.section	.rodata.d.4633,"a",%progbits
+ 256              		.set	.LANCHOR0,. + 0
+ 259              	d.4633:
+ 260 0000 A3       		.byte	-93
+ 261 0001 78       		.byte	120
+ 262 0002 59       		.byte	89
+ 263 0003 13       		.byte	19
+ 264 0004 CA       		.byte	-54
+ 265 0005 4D       		.byte	77
+ 266 0006 EB       		.byte	-21
+ 267 0007 75       		.byte	117
+ 268 0008 AB       		.byte	-85
+ 269 0009 D8       		.byte	-40
+ 270 000a 41       		.byte	65
+ 271 000b 41       		.byte	65
+ 272 000c 4D       		.byte	77
+ 273 000d 0A       		.byte	10
+ 274 000e 70       		.byte	112
+ 275 000f 00       		.byte	0
+ 276 0010 98       		.byte	-104
+ 277 0011 E8       		.byte	-24
+ 278 0012 79       		.byte	121
+ 279 0013 77       		.byte	119
+ 280 0014 79       		.byte	121
+ 281 0015 40       		.byte	64
+ 282 0016 C7       		.byte	-57
+ 283 0017 8C       		.byte	-116
+ 284 0018 73       		.byte	115
+ 285 0019 FE       		.byte	-2
+ 286 001a 6F       		.byte	111
+ 287 001b 2B       		.byte	43
+ 288 001c EE       		.byte	-18
+ 289 001d 6C       		.byte	108
+ 290 001e 03       		.byte	3
+ 291 001f 52       		.byte	82
+ 292              		.text
+ 293              	.Letext0:
+ 294              		.file 2 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/machine/_d
+ 295              		.file 3 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_stdin
+ 296              		.file 4 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/lock.h
+ 297              		.file 5 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/_types
+ 298              		.file 6 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/lib/gcc/arm-none-eabi/7.3.1/incl
+ 299              		.file 7 "/usr/local/Cellar/arm-none-eabi-gcc/7-2018-q2-update/gcc/arm-none-eabi/include/sys/reent.
+ 300              		.file 8 "25519/f25519.h"
 DEFINED SYMBOLS
-                            *ABS*:00000000 morph25519.c
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:19     .text.morph25519_e2m:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:24     .text.morph25519_e2m:00000000 morph25519_e2m
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:85     .text.morph25519_e2m:0000003c $d
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:90     .text.morph25519_m2e:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:95     .text.morph25519_m2e:00000000 morph25519_m2e
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:256    .text.morph25519_m2e:000000cc $d
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:262    .rodata.d.4520:00000000 $d
-C:\Users\haifisch\AppData\Local\Temp\ccwVngUV.s:266    .rodata.d.4520:00000000 d.4520
-                     .debug_frame:00000010 $d
+                            *ABS*:0000000000000000 morph25519.c
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:16     .text.morph25519_e2m:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:23     .text.morph25519_e2m:0000000000000000 morph25519_e2m
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:82     .text.morph25519_e2m:000000000000003c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:87     .text.morph25519_m2e:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:94     .text.morph25519_m2e:0000000000000000 morph25519_m2e
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:250    .text.morph25519_m2e:00000000000000cc $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//ccsXSf15.s:259    .rodata.d.4633:0000000000000000 d.4633
 
 UNDEFINED SYMBOLS
 f25519_sub

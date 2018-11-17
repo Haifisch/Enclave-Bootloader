@@ -45,7 +45,7 @@
 #include "cencode.h"
 #include "cdecode.h"
 /*
-	Base64 functions
+    Base64 functions
 */
 size_t decode_b64(const char* input, char* output)
 {
@@ -77,111 +77,133 @@ size_t encode_b64(const char* input, char* output, int blocksize)
   the device is probably in DFU when this is needed -- the restore tool should use this to request a signed firmware from the signing server.
 */
 void transmit_publickey_data() {
-  struct u_id id;
-  unsigned char uniqueID[0x17];
-  unsigned char sha256sum[0x20];  
-  char signature[EDSIGN_SIGNATURE_SIZE];
-  char publickey[EDSIGN_PUBLIC_KEY_SIZE];
-  char base64_pub[256];
-  char base64_signature[256];
+    struct u_id id;
+    unsigned char uniqueID[0x17];
+    unsigned char sha256sum[0x20];  
+    char signature[EDSIGN_SIGNATURE_SIZE];
+    char publickey[EDSIGN_PUBLIC_KEY_SIZE];
+    char base64_pub[256];
+    char base64_signature[256];
 
-  // read our unique id
-  uid_read(&id);
-  sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
-  // start sha256 context
-  sha256_context ctx;
-  sha256_starts(&ctx);
-  // hash in our unique id
-  sha256_update(&ctx, uniqueID, 0x17);
-  sha256_finish(&ctx, sha256sum);
-  // get our public key
-  memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
-  edsign_sec_to_pub((unsigned char*)publickey, sha256sum);
-  encode_b64(publickey, base64_pub, 0x20);
+    // read our unique id
+    uid_read(&id);
+    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+    // start sha256 context
+    sha256_context ctx;
+    sha256_starts(&ctx);
+    // hash in our unique id
+    sha256_update(&ctx, uniqueID, 0x17);
+    sha256_finish(&ctx, sha256sum);
+    // get our public key
+    memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
+    edsign_sec_to_pub((unsigned char*)publickey, sha256sum);
+    encode_b64(publickey, base64_pub, 0x20);
 
-  memset(signature, 0, EDSIGN_SIGNATURE_SIZE);
-  // sign the pub
-  edsign_sign((uint8_t*)signature, rootCA, sha256sum, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE);
-  
-  encode_b64(signature, base64_signature, 0x64);
+    memset(signature, 0, EDSIGN_SIGNATURE_SIZE);
+    // sign the pub
+    edsign_sign((uint8_t*)signature, rootCA, sha256sum, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE);
 
-  debug_print("[BEGIN_PUB_DATA][BEGIN_PUB]%s[END_PUB][END_PUB_DATA]", base64_pub);
-  debug_print("[BEGIN_SIGNATURE_DATA][BEGIN_SIGNATURE]");
-  debug_print("%s", base64_signature);
-  debug_print("[END_SIGNATURE][END_SIGNATURE_DATA]");
+    encode_b64(signature, base64_signature, 0x64);
+
+    // spit the base64 publickey
+    debug_print("\n\n[BEGIN_PUB_DATA]\n");
+    debug_print("%s", base64_pub);
+    debug_print("[END_PUB_DATA]\n");
+    // sput the base64 signature
+    debug_print("\n[BEGIN_SIGNATURE_DATA]\n");
+    debug_print("%s", base64_signature);
+    debug_print("[END_SIGNATURE_DATA]\n");
+}
+
+int isSecureMode() {
+    // TODO fusing
+    return 0;
 }
 
 /*
-	Bootloader main
+    Printable boot header
+*/
+void print_bootheader() {
+    uart_printf("[-------------------------]\n");
+    uart_printf("Bootloader init!\n");
+    uart_printf("VER: 0x%X REV: 0x%X\n", 0x41, 0x15);
+    uart_printf("Fusing: %s\n", isSecureMode() ? "Secure":"Insecure");
+    uart_printf("[-------------------------]\n");
+}
+
+
+/*
+    Bootloader main
 */
 int main() 
 {
-	bool no_user_jump = FALSE;
+    bool no_user_jump = FALSE;
 
-	// low level hardware init	
+    // low level hardware init  
     systemReset(); // peripherals but not PC
     setupCLK();
     setupLEDAndButton();
     setupFLASH();
     uartInit();
-	setupUSB();
+    setupUSB();
 
-	uart_printf("\nBootloader init...\n");
+    print_bootheader();
+
     if (readPin(GPIOB, 15) == 0x0) // force dfu
-	{
-		no_user_jump = TRUE;
-	} 
+    {
+        no_user_jump = TRUE;
+    } 
+    strobePin(LED_BANK, LED_PIN, 5, BLINK_FAST,LED_ON_STATE);
 
-	// verify chain
-	debug_print("checking chain...\n");
-	ImageObjectHandle imageHandle;
+    // verify chain
+    debug_print("checking chain...\n");
+    ImageObjectHandle imageHandle;
     int ret = imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0);
     debug_print("image check ret: %X\n", ret);
-	switch (ret) // if anything fails to verify we need to kick ourselves into the DFU loop
-	{
-		case kImageImageIsTrusted:
-			debug_print("Boot OK\n");
-			no_user_jump = FALSE;
-			break;
+    switch (ret) // if anything fails to verify we need to kick ourselves into the DFU loop
+    {
+        case kImageImageIsTrusted:
+            debug_print("Boot OK\n");
+            no_user_jump = FALSE;
+            break;
 
-		case kImageImageMissingMagic:
-			transmit_publickey_data();
-			debug_print("\nFirmware missing... waiting in DFU\n");
-			no_user_jump = TRUE;
-			break;
+        case kImageImageMissingMagic:
+            transmit_publickey_data();
+            debug_print("\nFirmware missing... waiting in DFU\n");
+            no_user_jump = TRUE;
+            break;
 
-		case kImageImageRejectSignature:
-			debug_print("\nSignature validation failed... waiting in DFU\n");
-			no_user_jump = TRUE;
-			break;
+        case kImageImageRejectSignature:
+            debug_print("\nSignature validation failed... waiting in DFU\n");
+            no_user_jump = TRUE;
+            break;
 
-		case kImageImageHashCalcFailed:
-			debug_print("\nHash calculation failed... waiting in DFU\n");
-			no_user_jump = TRUE;
-			break;
-			
-		default:
-			break;
-	}
+        case kImageImageHashCalcFailed:
+            debug_print("\nHash calculation failed... waiting in DFU\n");
+            no_user_jump = TRUE;
+            break;
+            
+        default:
+            break;
+    }
 
-	strobePin(LED_BANK, LED_PIN, 5, BLINK_FAST,LED_ON_STATE);
-	while (no_user_jump)
-	{
-		// we're spinning in DFU waiting for an upload...
-		strobePin(LED_BANK, LED_PIN, 1, BLINK_SLOW,LED_ON_STATE);
-		if (dfuUploadStarted()) 
-		{
-			debug_print("DFU finished upload\n");
-			dfuFinishUpload(); // systemHardReset from DFU once done
-		}
-	}
+    while (no_user_jump)
+    {
+        // we're spinning in DFU waiting for an upload...
+        strobePin(LED_BANK, LED_PIN, 1, BLINK_SLOW,LED_ON_STATE);
+        if (dfuUploadStarted()) 
+        {
+            debug_print("DFU finished upload\n");
+            dfuFinishUpload(); // systemHardReset from DFU once done
+        }
+    }
 
-	// we have the OS verified so lets jump to it. 
-	if (no_user_jump == FALSE)
-	{
-		debug_print("Jumping to OS.\n");
-		jumpToUser((USER_CODE_FLASH0X8008000+0x84));	
-	}
-	
-	return 0;// Added to please the compiler
+    // we have the OS verified so lets jump to it. 
+    if (no_user_jump == FALSE)
+    {
+        debug_print("Jumping to OS.\n");
+        jumpToUser((USER_CODE_FLASH0X8008000+0x84));    
+    }
+    
+    return 0; // Added to please the compiler
 }

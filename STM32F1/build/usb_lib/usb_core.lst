@@ -1,28 +1,27 @@
-   1              		.syntax unified
-   2              		.cpu cortex-m3
-   3              		.fpu softvfp
-   4              		.eabi_attribute 20, 1
-   5              		.eabi_attribute 21, 1
-   6              		.eabi_attribute 23, 3
-   7              		.eabi_attribute 24, 1
-   8              		.eabi_attribute 25, 1
-   9              		.eabi_attribute 26, 1
-  10              		.eabi_attribute 30, 4
-  11              		.eabi_attribute 34, 1
-  12              		.eabi_attribute 18, 4
-  13              		.thumb
-  14              		.file	"usb_core.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.Standard_GetConfiguration,"ax",%progbits
-  19              		.align	1
-  20              		.global	Standard_GetConfiguration
-  21              		.thumb
-  22              		.thumb_func
-  24              	Standard_GetConfiguration:
-  25              	.LFB0:
-  26              		.file 1 "usb_lib/usb_core.c"
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"usb_core.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.Standard_GetConfiguration,"ax",%progbits
+  16              		.align	1
+  17              		.global	Standard_GetConfiguration
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	Standard_GetConfiguration:
+  24              	.LFB0:
+  25              		.file 1 "usb_lib/usb_core.c"
    1:usb_lib/usb_core.c **** /******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
    2:usb_lib/usb_core.c **** * File Name          : usb_core.c
    3:usb_lib/usb_core.c **** * Author             : MCD Application Team
@@ -77,59 +76,65 @@
   52:usb_lib/usb_core.c **** *******************************************************************************/
   53:usb_lib/usb_core.c **** u8 *Standard_GetConfiguration(u16 Length)
   54:usb_lib/usb_core.c **** {
-  27              		.loc 1 54 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 0, uses_anonymous_args = 0
-  31              	.LVL0:
-  32 0000 10B5     		push	{r4, lr}
-  33              		.cfi_def_cfa_offset 8
-  34              		.cfi_offset 4, -8
-  35              		.cfi_offset 14, -4
-  36 0002 064C     		ldr	r4, .L5
+  26              		.loc 1 54 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 10B5     		push	{r4, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 4, -8
+  34              		.cfi_offset 14, -4
+  35 0002 064C     		ldr	r4, .L4
   55:usb_lib/usb_core.c ****   if (Length == 0)
-  37              		.loc 1 55 0
-  38 0004 18B9     		cbnz	r0, .L2
+  36              		.loc 1 55 0
+  37 0004 18B9     		cbnz	r0, .L2
   56:usb_lib/usb_core.c ****   {
   57:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.Usb_wLength =
-  39              		.loc 1 57 0
-  40 0006 2368     		ldr	r3, [r4]
-  41 0008 0122     		movs	r2, #1
-  42 000a 1A82     		strh	r2, [r3, #16]	@ movhi
+  38              		.loc 1 57 0
+  39 0006 0122     		movs	r2, #1
+  40 0008 2368     		ldr	r3, [r4]
+  41 000a 1A82     		strh	r2, [r3, #16]	@ movhi
+  42              	.LVL1:
+  43              	.L1:
   58:usb_lib/usb_core.c ****       sizeof(pInformation->Current_Configuration);
   59:usb_lib/usb_core.c ****     return 0;
-  43              		.loc 1 59 0
-  44 000c 10BD     		pop	{r4, pc}
-  45              	.L2:
   60:usb_lib/usb_core.c ****   }
   61:usb_lib/usb_core.c ****   pUser_Standard_Requests->User_GetConfiguration();
-  46              		.loc 1 61 0
-  47 000e 044B     		ldr	r3, .L5+4
-  48 0010 1B68     		ldr	r3, [r3]
-  49 0012 1B68     		ldr	r3, [r3]
-  50 0014 9847     		blx	r3
-  51              	.LVL1:
   62:usb_lib/usb_core.c ****   return (u8 *)&pInformation->Current_Configuration;
-  52              		.loc 1 62 0
-  53 0016 2068     		ldr	r0, [r4]
-  54 0018 0A30     		adds	r0, r0, #10
   63:usb_lib/usb_core.c **** }
-  55              		.loc 1 63 0
-  56 001a 10BD     		pop	{r4, pc}
-  57              	.L6:
-  58              		.align	2
-  59              	.L5:
-  60 001c 00000000 		.word	pInformation
-  61 0020 00000000 		.word	pUser_Standard_Requests
-  62              		.cfi_endproc
-  63              	.LFE0:
-  65              		.section	.text.Standard_GetInterface,"ax",%progbits
-  66              		.align	1
-  67              		.global	Standard_GetInterface
-  68              		.thumb
-  69              		.thumb_func
-  71              	Standard_GetInterface:
-  72              	.LFB2:
+  44              		.loc 1 63 0
+  45 000c 10BD     		pop	{r4, pc}
+  46              	.LVL2:
+  47              	.L2:
+  61:usb_lib/usb_core.c ****   return (u8 *)&pInformation->Current_Configuration;
+  48              		.loc 1 61 0
+  49 000e 044B     		ldr	r3, .L4+4
+  50 0010 1B68     		ldr	r3, [r3]
+  51 0012 1B68     		ldr	r3, [r3]
+  52 0014 9847     		blx	r3
+  53              	.LVL3:
+  62:usb_lib/usb_core.c **** }
+  54              		.loc 1 62 0
+  55 0016 2068     		ldr	r0, [r4]
+  56 0018 0A30     		adds	r0, r0, #10
+  57 001a F7E7     		b	.L1
+  58              	.L5:
+  59              		.align	2
+  60              	.L4:
+  61 001c 00000000 		.word	pInformation
+  62 0020 00000000 		.word	pUser_Standard_Requests
+  63              		.cfi_endproc
+  64              	.LFE0:
+  66              		.section	.text.Standard_GetInterface,"ax",%progbits
+  67              		.align	1
+  68              		.global	Standard_GetInterface
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  72              		.fpu softvfp
+  74              	Standard_GetInterface:
+  75              	.LFB2:
   64:usb_lib/usb_core.c **** 
   65:usb_lib/usb_core.c **** /*******************************************************************************
   66:usb_lib/usb_core.c **** * Function Name  : Standard_SetConfiguration.
@@ -167,59 +172,65 @@
   98:usb_lib/usb_core.c **** *******************************************************************************/
   99:usb_lib/usb_core.c **** u8 *Standard_GetInterface(u16 Length)
  100:usb_lib/usb_core.c **** {
-  73              		.loc 1 100 0
-  74              		.cfi_startproc
-  75              		@ args = 0, pretend = 0, frame = 0
-  76              		@ frame_needed = 0, uses_anonymous_args = 0
-  77              	.LVL2:
-  78 0000 10B5     		push	{r4, lr}
-  79              		.cfi_def_cfa_offset 8
-  80              		.cfi_offset 4, -8
-  81              		.cfi_offset 14, -4
-  82 0002 064C     		ldr	r4, .L10
+  76              		.loc 1 100 0
+  77              		.cfi_startproc
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80              	.LVL4:
+  81 0000 10B5     		push	{r4, lr}
+  82              		.cfi_def_cfa_offset 8
+  83              		.cfi_offset 4, -8
+  84              		.cfi_offset 14, -4
+  85 0002 064C     		ldr	r4, .L9
  101:usb_lib/usb_core.c ****   if (Length == 0)
-  83              		.loc 1 101 0
-  84 0004 18B9     		cbnz	r0, .L8
+  86              		.loc 1 101 0
+  87 0004 18B9     		cbnz	r0, .L7
  102:usb_lib/usb_core.c ****   {
  103:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.Usb_wLength =
-  85              		.loc 1 103 0
-  86 0006 2368     		ldr	r3, [r4]
-  87 0008 0122     		movs	r2, #1
-  88 000a 1A82     		strh	r2, [r3, #16]	@ movhi
+  88              		.loc 1 103 0
+  89 0006 0122     		movs	r2, #1
+  90 0008 2368     		ldr	r3, [r4]
+  91 000a 1A82     		strh	r2, [r3, #16]	@ movhi
+  92              	.LVL5:
+  93              	.L6:
  104:usb_lib/usb_core.c ****       sizeof(pInformation->Current_AlternateSetting);
  105:usb_lib/usb_core.c ****     return 0;
-  89              		.loc 1 105 0
-  90 000c 10BD     		pop	{r4, pc}
-  91              	.L8:
  106:usb_lib/usb_core.c ****   }
  107:usb_lib/usb_core.c ****   pUser_Standard_Requests->User_GetInterface();
-  92              		.loc 1 107 0
-  93 000e 044B     		ldr	r3, .L10+4
-  94 0010 1B68     		ldr	r3, [r3]
-  95 0012 9B68     		ldr	r3, [r3, #8]
-  96 0014 9847     		blx	r3
-  97              	.LVL3:
  108:usb_lib/usb_core.c ****   return (u8 *)&pInformation->Current_AlternateSetting;
-  98              		.loc 1 108 0
-  99 0016 2068     		ldr	r0, [r4]
- 100 0018 0C30     		adds	r0, r0, #12
  109:usb_lib/usb_core.c **** }
- 101              		.loc 1 109 0
- 102 001a 10BD     		pop	{r4, pc}
- 103              	.L11:
- 104              		.align	2
- 105              	.L10:
- 106 001c 00000000 		.word	pInformation
- 107 0020 00000000 		.word	pUser_Standard_Requests
- 108              		.cfi_endproc
- 109              	.LFE2:
- 111              		.section	.text.Standard_GetStatus,"ax",%progbits
- 112              		.align	1
- 113              		.global	Standard_GetStatus
- 114              		.thumb
- 115              		.thumb_func
- 117              	Standard_GetStatus:
- 118              	.LFB4:
+  94              		.loc 1 109 0
+  95 000c 10BD     		pop	{r4, pc}
+  96              	.LVL6:
+  97              	.L7:
+ 107:usb_lib/usb_core.c ****   return (u8 *)&pInformation->Current_AlternateSetting;
+  98              		.loc 1 107 0
+  99 000e 044B     		ldr	r3, .L9+4
+ 100 0010 1B68     		ldr	r3, [r3]
+ 101 0012 9B68     		ldr	r3, [r3, #8]
+ 102 0014 9847     		blx	r3
+ 103              	.LVL7:
+ 108:usb_lib/usb_core.c **** }
+ 104              		.loc 1 108 0
+ 105 0016 2068     		ldr	r0, [r4]
+ 106 0018 0C30     		adds	r0, r0, #12
+ 107 001a F7E7     		b	.L6
+ 108              	.L10:
+ 109              		.align	2
+ 110              	.L9:
+ 111 001c 00000000 		.word	pInformation
+ 112 0020 00000000 		.word	pUser_Standard_Requests
+ 113              		.cfi_endproc
+ 114              	.LFE2:
+ 116              		.section	.text.Standard_GetStatus,"ax",%progbits
+ 117              		.align	1
+ 118              		.global	Standard_GetStatus
+ 119              		.syntax unified
+ 120              		.thumb
+ 121              		.thumb_func
+ 122              		.fpu softvfp
+ 124              	Standard_GetStatus:
+ 125              	.LFB4:
  110:usb_lib/usb_core.c **** 
  111:usb_lib/usb_core.c **** /*******************************************************************************
  112:usb_lib/usb_core.c **** * Function Name  : Standard_SetInterface.
@@ -267,162 +278,79 @@
  154:usb_lib/usb_core.c **** *******************************************************************************/
  155:usb_lib/usb_core.c **** u8 *Standard_GetStatus(u16 Length)
  156:usb_lib/usb_core.c **** {
- 119              		.loc 1 156 0
- 120              		.cfi_startproc
- 121              		@ args = 0, pretend = 0, frame = 0
- 122              		@ frame_needed = 0, uses_anonymous_args = 0
- 123              	.LVL4:
- 124 0000 10B5     		push	{r4, lr}
- 125              		.cfi_def_cfa_offset 8
- 126              		.cfi_offset 4, -8
- 127              		.cfi_offset 14, -4
- 128 0002 204B     		ldr	r3, .L31
+ 126              		.loc 1 156 0
+ 127              		.cfi_startproc
+ 128              		@ args = 0, pretend = 0, frame = 0
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              	.LVL8:
+ 131 0000 1E4B     		ldr	r3, .L30
+ 132 0002 10B5     		push	{r4, lr}
+ 133              		.cfi_def_cfa_offset 8
+ 134              		.cfi_offset 4, -8
+ 135              		.cfi_offset 14, -4
+ 136 0004 1C68     		ldr	r4, [r3]
+ 137 0006 0023     		movs	r3, #0
  157:usb_lib/usb_core.c ****   if (Length == 0)
- 129              		.loc 1 157 0
- 130 0004 18B9     		cbnz	r0, .L13
+ 138              		.loc 1 157 0
+ 139 0008 10B9     		cbnz	r0, .L12
  158:usb_lib/usb_core.c ****   {
  159:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.Usb_wLength = 2;
- 131              		.loc 1 159 0
- 132 0006 1B68     		ldr	r3, [r3]
- 133 0008 0222     		movs	r2, #2
- 134 000a 1A82     		strh	r2, [r3, #16]	@ movhi
+ 140              		.loc 1 159 0
+ 141 000a 0223     		movs	r3, #2
+ 142 000c 2382     		strh	r3, [r4, #16]	@ movhi
+ 143              	.LVL9:
+ 144              	.L11:
  160:usb_lib/usb_core.c ****     return 0;
- 135              		.loc 1 160 0
- 136 000c 10BD     		pop	{r4, pc}
- 137              	.L13:
  161:usb_lib/usb_core.c ****   }
  162:usb_lib/usb_core.c **** 
  163:usb_lib/usb_core.c ****   StatusInfo.w = 0;
- 138              		.loc 1 163 0
- 139 000e 1E4A     		ldr	r2, .L31+4
  164:usb_lib/usb_core.c ****   /* Reset Status Information */
  165:usb_lib/usb_core.c **** 
  166:usb_lib/usb_core.c ****   if (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT))
- 140              		.loc 1 166 0
- 141 0010 1968     		ldr	r1, [r3]
- 163:usb_lib/usb_core.c ****   StatusInfo.w = 0;
- 142              		.loc 1 163 0
- 143 0012 0020     		movs	r0, #0
- 144              	.LVL5:
- 145 0014 1080     		strh	r0, [r2]	@ movhi
- 146              		.loc 1 166 0
- 147 0016 0C78     		ldrb	r4, [r1]	@ zero_extendqisi2
- 148 0018 1346     		mov	r3, r2
- 149 001a 14F07F04 		ands	r4, r4, #127
- 150 001e 0DD1     		bne	.L15
- 151              	.LBB2:
  167:usb_lib/usb_core.c ****   {
  168:usb_lib/usb_core.c ****     /*Get Device Status */
  169:usb_lib/usb_core.c ****     u8 Feature = pInformation->Current_Feature;
- 152              		.loc 1 169 0
- 153 0020 4A7A     		ldrb	r2, [r1, #9]	@ zero_extendqisi2
- 154              	.LVL6:
  170:usb_lib/usb_core.c **** 
  171:usb_lib/usb_core.c ****     /* Remote Wakeup enabled */
  172:usb_lib/usb_core.c ****     if (ValBit(Feature, 5))
- 155              		.loc 1 172 0
- 156 0022 9106     		lsls	r1, r2, #26
- 157              	.LVL7:
  173:usb_lib/usb_core.c ****     {
  174:usb_lib/usb_core.c ****       SetBit(StatusInfo0, 1);
- 158              		.loc 1 174 0
- 159 0024 44BF     		itt	mi
- 160 0026 0221     		movmi	r1, #2
- 161 0028 1970     		strbmi	r1, [r3]
  175:usb_lib/usb_core.c ****     }
  176:usb_lib/usb_core.c **** 
  177:usb_lib/usb_core.c ****     /* Bus-powered */
  178:usb_lib/usb_core.c ****     if (ValBit(Feature, 6))
- 162              		.loc 1 178 0
- 163 002a 12F0400F 		tst	r2, #64
  179:usb_lib/usb_core.c ****     {
  180:usb_lib/usb_core.c ****       ClrBit(StatusInfo0, 0);
- 164              		.loc 1 180 0
- 165 002e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 166 0030 14BF     		ite	ne
- 167 0032 22F00102 		bicne	r2, r2, #1
  181:usb_lib/usb_core.c ****     }
  182:usb_lib/usb_core.c ****     else /* Self-powered */
  183:usb_lib/usb_core.c ****     {
  184:usb_lib/usb_core.c ****       SetBit(StatusInfo0, 0);
- 168              		.loc 1 184 0
- 169 0036 42F00102 		orreq	r2, r2, #1
- 170 003a 14E0     		b	.L30
- 171              	.LVL8:
- 172              	.L15:
- 173              	.LBE2:
  185:usb_lib/usb_core.c ****     }
  186:usb_lib/usb_core.c ****   }
  187:usb_lib/usb_core.c ****   /*Interface Status*/
  188:usb_lib/usb_core.c ****   else if (Type_Recipient == (STANDARD_REQUEST | INTERFACE_RECIPIENT))
- 174              		.loc 1 188 0
- 175 003c 012C     		cmp	r4, #1
- 176 003e 1FD0     		beq	.L21
  189:usb_lib/usb_core.c ****   {
  190:usb_lib/usb_core.c ****     return (u8 *)&StatusInfo;
  191:usb_lib/usb_core.c ****   }
  192:usb_lib/usb_core.c ****   /*Get EndPoint Status*/
  193:usb_lib/usb_core.c ****   else if (Type_Recipient == (STANDARD_REQUEST | ENDPOINT_RECIPIENT))
- 177              		.loc 1 193 0
- 178 0040 022C     		cmp	r4, #2
- 179 0042 1ED1     		bne	.L14
- 180              	.LBB3:
  194:usb_lib/usb_core.c ****   {
  195:usb_lib/usb_core.c ****     u8 Related_Endpoint;
  196:usb_lib/usb_core.c ****     u8 wIndex0 = pInformation->USBwIndex0;
- 181              		.loc 1 196 0
- 182 0044 0979     		ldrb	r1, [r1, #4]	@ zero_extendqisi2
- 183              	.LVL9:
  197:usb_lib/usb_core.c **** 
  198:usb_lib/usb_core.c ****     Related_Endpoint = (wIndex0 & 0x0f);
- 184              		.loc 1 198 0
- 185 0046 01F00F02 		and	r2, r1, #15
- 186              	.LVL10:
- 187 004a 9200     		lsls	r2, r2, #2
- 188              	.LVL11:
  199:usb_lib/usb_core.c ****     if (ValBit(wIndex0, 7))
  200:usb_lib/usb_core.c ****     {
  201:usb_lib/usb_core.c ****       /* IN endpoint */
  202:usb_lib/usb_core.c ****       if (_GetTxStallStatus(Related_Endpoint))
- 189              		.loc 1 202 0
- 190 004c 02F18042 		add	r2, r2, #1073741824
- 191 0050 02F5B842 		add	r2, r2, #23552
- 199:usb_lib/usb_core.c ****     if (ValBit(wIndex0, 7))
- 192              		.loc 1 199 0
- 193 0054 11F0800F 		tst	r1, #128
- 194              		.loc 1 202 0
- 195 0058 1268     		ldr	r2, [r2]
- 199:usb_lib/usb_core.c ****     if (ValBit(wIndex0, 7))
- 196              		.loc 1 199 0
- 197 005a 06D0     		beq	.L19
- 198              		.loc 1 202 0
- 199 005c 02F03002 		and	r2, r2, #48
- 200 0060 102A     		cmp	r2, #16
- 201              	.L29:
- 202 0062 07D1     		bne	.L18
  203:usb_lib/usb_core.c ****       {
  204:usb_lib/usb_core.c ****         SetBit(StatusInfo0, 0); /* IN Endpoint stalled */
- 203              		.loc 1 204 0
- 204 0064 0122     		movs	r2, #1
- 205              	.LVL12:
- 206              	.L30:
- 207 0066 1A70     		strb	r2, [r3]
- 208 0068 04E0     		b	.L18
- 209              	.LVL13:
- 210              	.L19:
  205:usb_lib/usb_core.c ****       }
  206:usb_lib/usb_core.c ****     }
  207:usb_lib/usb_core.c ****     else
  208:usb_lib/usb_core.c ****     {
  209:usb_lib/usb_core.c ****       /* OUT endpoint */
  210:usb_lib/usb_core.c ****       if (_GetRxStallStatus(Related_Endpoint))
- 211              		.loc 1 210 0
- 212 006a 02F44052 		and	r2, r2, #12288
- 213 006e B2F5805F 		cmp	r2, #4096
- 214 0072 F6E7     		b	.L29
- 215              	.LVL14:
- 216              	.L18:
- 217              	.LBE3:
  211:usb_lib/usb_core.c ****       {
  212:usb_lib/usb_core.c ****         SetBit(StatusInfo0, 0); /* OUT Endpoint stalled */
  213:usb_lib/usb_core.c ****       }
@@ -434,38 +362,134 @@
  219:usb_lib/usb_core.c ****     return NULL;
  220:usb_lib/usb_core.c ****   }
  221:usb_lib/usb_core.c ****   pUser_Standard_Requests->User_GetStatus();
- 218              		.loc 1 221 0
- 219 0074 054B     		ldr	r3, .L31+8
- 220 0076 1B68     		ldr	r3, [r3]
- 221 0078 1B69     		ldr	r3, [r3, #16]
- 222 007a 9847     		blx	r3
- 223              	.LVL15:
  222:usb_lib/usb_core.c ****   return (u8 *)&StatusInfo;
- 224              		.loc 1 222 0
- 225 007c 0248     		ldr	r0, .L31+4
- 226 007e 10BD     		pop	{r4, pc}
- 227              	.L21:
- 190:usb_lib/usb_core.c ****     return (u8 *)&StatusInfo;
- 228              		.loc 1 190 0
- 229 0080 1046     		mov	r0, r2
- 230              	.L14:
  223:usb_lib/usb_core.c **** }
- 231              		.loc 1 223 0
- 232 0082 10BD     		pop	{r4, pc}
- 233              	.L32:
- 234              		.align	2
- 235              	.L31:
- 236 0084 00000000 		.word	pInformation
- 237 0088 00000000 		.word	StatusInfo
- 238 008c 00000000 		.word	pUser_Standard_Requests
- 239              		.cfi_endproc
- 240              	.LFE4:
- 242              		.section	.text.DataStageIn,"ax",%progbits
- 243              		.align	1
- 244              		.thumb
- 245              		.thumb_func
- 247              	DataStageIn:
- 248              	.LFB10:
+ 145              		.loc 1 223 0
+ 146 000e 10BD     		pop	{r4, pc}
+ 147              	.LVL10:
+ 148              	.L12:
+ 163:usb_lib/usb_core.c ****   /* Reset Status Information */
+ 149              		.loc 1 163 0
+ 150 0010 1B48     		ldr	r0, .L30+4
+ 151              	.LVL11:
+ 152 0012 0380     		strh	r3, [r0]	@ movhi
+ 153 0014 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 154 0016 0246     		mov	r2, r0
+ 166:usb_lib/usb_core.c ****   {
+ 155              		.loc 1 166 0
+ 156 0018 11F07F01 		ands	r1, r1, #127
+ 157 001c 12D1     		bne	.L14
+ 158              	.LBB2:
+ 169:usb_lib/usb_core.c **** 
+ 159              		.loc 1 169 0
+ 160 001e 617A     		ldrb	r1, [r4, #9]	@ zero_extendqisi2
+ 161              	.LVL12:
+ 172:usb_lib/usb_core.c ****     {
+ 162              		.loc 1 172 0
+ 163 0020 8C06     		lsls	r4, r1, #26
+ 174:usb_lib/usb_core.c ****     }
+ 164              		.loc 1 174 0
+ 165 0022 44BF     		itt	mi
+ 166 0024 0223     		movmi	r3, #2
+ 167 0026 0370     		strbmi	r3, [r0]
+ 168 0028 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 178:usb_lib/usb_core.c ****     {
+ 169              		.loc 1 178 0
+ 170 002a 4806     		lsls	r0, r1, #25
+ 180:usb_lib/usb_core.c ****     }
+ 171              		.loc 1 180 0
+ 172 002c 4CBF     		ite	mi
+ 173 002e 23F00103 		bicmi	r3, r3, #1
+ 184:usb_lib/usb_core.c ****     }
+ 174              		.loc 1 184 0
+ 175 0032 43F00103 		orrpl	r3, r3, #1
+ 176              	.LVL13:
+ 177              	.L29:
+ 178              	.LBE2:
+ 179              	.LBB3:
+ 204:usb_lib/usb_core.c ****       }
+ 180              		.loc 1 204 0
+ 181 0036 1370     		strb	r3, [r2]
+ 182              	.L17:
+ 183              	.LBE3:
+ 221:usb_lib/usb_core.c ****   return (u8 *)&StatusInfo;
+ 184              		.loc 1 221 0
+ 185 0038 124B     		ldr	r3, .L30+8
+ 186 003a 1B68     		ldr	r3, [r3]
+ 187 003c 1B69     		ldr	r3, [r3, #16]
+ 188 003e 9847     		blx	r3
+ 189              	.LVL14:
+ 222:usb_lib/usb_core.c **** }
+ 190              		.loc 1 222 0
+ 191 0040 0F48     		ldr	r0, .L30+4
+ 192 0042 E4E7     		b	.L11
+ 193              	.L14:
+ 188:usb_lib/usb_core.c ****   {
+ 194              		.loc 1 188 0
+ 195 0044 0129     		cmp	r1, #1
+ 196 0046 E2D0     		beq	.L11
+ 193:usb_lib/usb_core.c ****   {
+ 197              		.loc 1 193 0
+ 198 0048 0229     		cmp	r1, #2
+ 199 004a 15D1     		bne	.L21
+ 200              	.LBB4:
+ 196:usb_lib/usb_core.c **** 
+ 201              		.loc 1 196 0
+ 202 004c 2179     		ldrb	r1, [r4, #4]	@ zero_extendqisi2
+ 203              	.LVL15:
+ 204 004e 01F00F03 		and	r3, r1, #15
+ 205 0052 9B00     		lsls	r3, r3, #2
+ 206 0054 03F18043 		add	r3, r3, #1073741824
+ 207 0058 03F5B843 		add	r3, r3, #23552
+ 199:usb_lib/usb_core.c ****     {
+ 208              		.loc 1 199 0
+ 209 005c 0906     		lsls	r1, r1, #24
+ 210              	.LVL16:
+ 202:usb_lib/usb_core.c ****       {
+ 211              		.loc 1 202 0
+ 212 005e 1B68     		ldr	r3, [r3]
+ 199:usb_lib/usb_core.c ****     {
+ 213              		.loc 1 199 0
+ 214 0060 05D5     		bpl	.L18
+ 202:usb_lib/usb_core.c ****       {
+ 215              		.loc 1 202 0
+ 216 0062 03F03003 		and	r3, r3, #48
+ 217 0066 102B     		cmp	r3, #16
+ 218              	.L28:
+ 219 0068 E6D1     		bne	.L17
+ 204:usb_lib/usb_core.c ****       }
+ 220              		.loc 1 204 0
+ 221 006a 0123     		movs	r3, #1
+ 222 006c E3E7     		b	.L29
+ 223              	.L18:
+ 210:usb_lib/usb_core.c ****       {
+ 224              		.loc 1 210 0
+ 225 006e 03F44053 		and	r3, r3, #12288
+ 226 0072 B3F5805F 		cmp	r3, #4096
+ 227 0076 F7E7     		b	.L28
+ 228              	.LVL17:
+ 229              	.L21:
+ 230              	.LBE4:
+ 219:usb_lib/usb_core.c ****   }
+ 231              		.loc 1 219 0
+ 232 0078 1846     		mov	r0, r3
+ 233 007a C8E7     		b	.L11
+ 234              	.L31:
+ 235              		.align	2
+ 236              	.L30:
+ 237 007c 00000000 		.word	pInformation
+ 238 0080 00000000 		.word	StatusInfo
+ 239 0084 00000000 		.word	pUser_Standard_Requests
+ 240              		.cfi_endproc
+ 241              	.LFE4:
+ 243              		.section	.text.DataStageIn,"ax",%progbits
+ 244              		.align	1
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu softvfp
+ 250              	DataStageIn:
+ 251              	.LFB10:
  224:usb_lib/usb_core.c **** 
  225:usb_lib/usb_core.c **** /*******************************************************************************
  226:usb_lib/usb_core.c **** * Function Name  : Standard_ClearFeature.
@@ -724,16 +748,11 @@
  479:usb_lib/usb_core.c **** *******************************************************************************/
  480:usb_lib/usb_core.c **** void DataStageIn(void)
  481:usb_lib/usb_core.c **** {
- 249              		.loc 1 481 0
- 250              		.cfi_startproc
- 251              		@ args = 0, pretend = 0, frame = 0
- 252              		@ frame_needed = 0, uses_anonymous_args = 0
- 482:usb_lib/usb_core.c ****   ENDPOINT_INFO *pEPinfo = &pInformation->Ctrl_Info;
- 253              		.loc 1 482 0
- 254 0000 234A     		ldr	r2, .L39
- 481:usb_lib/usb_core.c **** {
- 255              		.loc 1 481 0
- 256 0002 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 252              		.loc 1 481 0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
  257              		.cfi_def_cfa_offset 32
  258              		.cfi_offset 3, -32
  259              		.cfi_offset 4, -28
@@ -743,89 +762,70 @@
  263              		.cfi_offset 8, -12
  264              		.cfi_offset 9, -8
  265              		.cfi_offset 14, -4
+ 482:usb_lib/usb_core.c ****   ENDPOINT_INFO *pEPinfo = &pInformation->Ctrl_Info;
  266              		.loc 1 482 0
- 267 0006 1468     		ldr	r4, [r2]
- 268              	.LVL16:
- 269 0008 9046     		mov	r8, r2
+ 267 0004 234F     		ldr	r7, .L38
+ 268 0006 DFF8A080 		ldr	r8, .L38+20
+ 269 000a 3D68     		ldr	r5, [r7]
+ 270              	.LVL18:
  483:usb_lib/usb_core.c ****   u32 save_wLength = pEPinfo->Usb_wLength;
- 270              		.loc 1 483 0
- 271 000a 238A     		ldrh	r3, [r4, #16]
- 272              	.LVL17:
+ 271              		.loc 1 483 0
+ 272 000c 2C8A     		ldrh	r4, [r5, #16]
+ 273              	.LVL19:
  484:usb_lib/usb_core.c ****   u32 ControlState = pInformation->ControlState;
- 273              		.loc 1 484 0
- 274 000c 267A     		ldrb	r6, [r4, #8]	@ zero_extendqisi2
- 275              	.LVL18:
- 276 000e 214F     		ldr	r7, .L39+4
  485:usb_lib/usb_core.c **** 
  486:usb_lib/usb_core.c ****   u8 *DataBuffer;
  487:usb_lib/usb_core.c ****   u32 Length;
  488:usb_lib/usb_core.c **** 
  489:usb_lib/usb_core.c ****   if ((save_wLength == 0) && (ControlState == LAST_IN_DATA))
- 277              		.loc 1 489 0
- 278 0010 A3B9     		cbnz	r3, .L34
- 279              		.loc 1 489 0 is_stmt 0 discriminator 1
- 280 0012 042E     		cmp	r6, #4
- 281 0014 12D1     		bne	.L34
+ 274              		.loc 1 489 0
+ 275 000e D4B9     		cbnz	r4, .L33
+ 276              		.loc 1 489 0 is_stmt 0 discriminator 1
+ 277 0010 2E7A     		ldrb	r6, [r5, #8]	@ zero_extendqisi2
+ 278 0012 042E     		cmp	r6, #4
+ 279 0014 17D1     		bne	.L33
  490:usb_lib/usb_core.c ****   {
  491:usb_lib/usb_core.c ****     if(Data_Mul_MaxPacketSize == TRUE)
- 282              		.loc 1 491 0 is_stmt 1
- 283 0016 2049     		ldr	r1, .L39+8
- 284 0018 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
- 285 001a 012A     		cmp	r2, #1
- 286 001c 0AD1     		bne	.L35
+ 280              		.loc 1 491 0 is_stmt 1
+ 281 0016 2049     		ldr	r1, .L38+4
+ 282 0018 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 283 001a 012B     		cmp	r3, #1
+ 284 001c 0ED1     		bne	.L34
  492:usb_lib/usb_core.c ****     {
  493:usb_lib/usb_core.c ****       /* No more data to send and empty packet */
  494:usb_lib/usb_core.c ****       Send0LengthData();
- 287              		.loc 1 494 0
- 288 001e 1F4A     		ldr	r2, .L39+12
- 289 0020 1068     		ldr	r0, [r2]
- 290 0022 1F4A     		ldr	r2, .L39+16
- 291 0024 80B2     		uxth	r0, r0
- 292 0026 0244     		add	r2, r2, r0
- 293 0028 5200     		lsls	r2, r2, #1
- 294 002a 1360     		str	r3, [r2]
- 295 002c 3022     		movs	r2, #48
- 296 002e 3A80     		strh	r2, [r7]	@ movhi
- 297              	.LVL19:
+ 285              		.loc 1 494 0
+ 286 001e 1F4B     		ldr	r3, .L38+8
+ 287 0020 1A68     		ldr	r2, [r3]
+ 288 0022 1F4B     		ldr	r3, .L38+12
+ 289 0024 92B2     		uxth	r2, r2
+ 290 0026 1344     		add	r3, r3, r2
+ 291 0028 5B00     		lsls	r3, r3, #1
+ 292 002a 1C60     		str	r4, [r3]
+ 293              	.LVL20:
+ 294 002c 3023     		movs	r3, #48
  495:usb_lib/usb_core.c ****       ControlState = LAST_IN_DATA;
  496:usb_lib/usb_core.c ****       Data_Mul_MaxPacketSize = FALSE;
- 298              		.loc 1 496 0
- 299 0030 0B70     		strb	r3, [r1]
- 300 0032 27E0     		b	.L36
- 301              	.LVL20:
- 302              	.L35:
+ 295              		.loc 1 496 0
+ 296 002e 0C70     		strb	r4, [r1]
+ 494:usb_lib/usb_core.c ****       ControlState = LAST_IN_DATA;
+ 297              		.loc 1 494 0
+ 298 0030 A8F80030 		strh	r3, [r8]	@ movhi
+ 299              	.LVL21:
+ 300              	.L35:
  497:usb_lib/usb_core.c ****     }
  498:usb_lib/usb_core.c ****     else
  499:usb_lib/usb_core.c ****     {
  500:usb_lib/usb_core.c ****       /* No more data to send so STALL the TX Status*/
  501:usb_lib/usb_core.c ****       ControlState = WAIT_STATUS_OUT;
  502:usb_lib/usb_core.c ****       vSetEPTxStatus(EP_TX_STALL);
- 303              		.loc 1 502 0
- 304 0034 1023     		movs	r3, #16
- 305              	.LVL21:
- 306 0036 3B80     		strh	r3, [r7]	@ movhi
- 501:usb_lib/usb_core.c ****       ControlState = WAIT_STATUS_OUT;
- 307              		.loc 1 501 0
- 308 0038 0726     		movs	r6, #7
- 309 003a 23E0     		b	.L36
- 310              	.LVL22:
- 311              	.L34:
  503:usb_lib/usb_core.c ****     }
  504:usb_lib/usb_core.c **** 
  505:usb_lib/usb_core.c ****     goto Expect_Status_Out;
  506:usb_lib/usb_core.c ****   }
  507:usb_lib/usb_core.c **** 
  508:usb_lib/usb_core.c ****   Length = pEPinfo->PacketSize;
- 312              		.loc 1 508 0
- 313 003c A58A     		ldrh	r5, [r4, #20]
- 314              	.LVL23:
  509:usb_lib/usb_core.c ****   ControlState = (save_wLength <= Length) ? LAST_IN_DATA : IN_DATA;
- 315              		.loc 1 509 0
- 316 003e AB42     		cmp	r3, r5
- 317 0040 8CBF     		ite	hi
- 318 0042 0226     		movhi	r6, #2
- 319 0044 0426     		movls	r6, #4
- 320              	.LVL24:
  510:usb_lib/usb_core.c **** 
  511:usb_lib/usb_core.c ****   if (Length > save_wLength)
  512:usb_lib/usb_core.c ****   {
@@ -833,96 +833,129 @@
  514:usb_lib/usb_core.c ****   }
  515:usb_lib/usb_core.c **** 
  516:usb_lib/usb_core.c ****   DataBuffer = (*pEPinfo->CopyData)(Length);
- 321              		.loc 1 516 0
- 322 0046 9D42     		cmp	r5, r3
- 323 0048 28BF     		it	cs
- 324 004a 1D46     		movcs	r5, r3
- 325              	.LVL25:
- 326 004c 2846     		mov	r0, r5
- 327 004e A369     		ldr	r3, [r4, #24]
- 328              	.LVL26:
- 329 0050 9847     		blx	r3
- 330              	.LVL27:
- 331 0052 8146     		mov	r9, r0
- 332              	.LVL28:
  517:usb_lib/usb_core.c **** 
  518:usb_lib/usb_core.c ****   UserToPMABufferCopy(DataBuffer, GetEPTxAddr(ENDP0), Length);
- 333              		.loc 1 518 0
- 334 0054 0020     		movs	r0, #0
- 335              	.LVL29:
- 336 0056 FFF7FEFF 		bl	GetEPTxAddr
- 337              	.LVL30:
- 338 005a 2A46     		mov	r2, r5
- 339 005c 0146     		mov	r1, r0
- 340 005e 4846     		mov	r0, r9
- 341 0060 FFF7FEFF 		bl	UserToPMABufferCopy
- 342              	.LVL31:
  519:usb_lib/usb_core.c **** 
  520:usb_lib/usb_core.c ****   SetEPTxCount(ENDP0, Length);
- 343              		.loc 1 520 0
- 344 0064 2946     		mov	r1, r5
- 345 0066 0020     		movs	r0, #0
- 346 0068 FFF7FEFF 		bl	SetEPTxCount
- 347              	.LVL32:
  521:usb_lib/usb_core.c **** 
  522:usb_lib/usb_core.c ****   pEPinfo->Usb_wLength -= Length;
- 348              		.loc 1 522 0
- 349 006c 238A     		ldrh	r3, [r4, #16]
  523:usb_lib/usb_core.c ****   pEPinfo->Usb_wOffset += Length;
  524:usb_lib/usb_core.c ****   vSetEPTxStatus(EP_TX_VALID);
  525:usb_lib/usb_core.c **** 
  526:usb_lib/usb_core.c ****   USB_StatusOut();/* Expect the host to abort the data IN stage */
- 350              		.loc 1 526 0
- 351 006e 4FF44052 		mov	r2, #12288
- 522:usb_lib/usb_core.c ****   pEPinfo->Usb_wLength -= Length;
- 352              		.loc 1 522 0
- 353 0072 5B1B     		subs	r3, r3, r5
- 354 0074 2382     		strh	r3, [r4, #16]	@ movhi
- 523:usb_lib/usb_core.c ****   pEPinfo->Usb_wOffset += Length;
- 355              		.loc 1 523 0
- 356 0076 638A     		ldrh	r3, [r4, #18]
- 357 0078 1D44     		add	r5, r5, r3
- 358              	.LVL33:
- 524:usb_lib/usb_core.c ****   vSetEPTxStatus(EP_TX_VALID);
- 359              		.loc 1 524 0
- 360 007a 3023     		movs	r3, #48
- 361 007c 3B80     		strh	r3, [r7]	@ movhi
- 362              		.loc 1 526 0
- 363 007e 094B     		ldr	r3, .L39+20
- 523:usb_lib/usb_core.c ****   pEPinfo->Usb_wOffset += Length;
- 364              		.loc 1 523 0
- 365 0080 6582     		strh	r5, [r4, #18]	@ movhi
- 366              		.loc 1 526 0
- 367 0082 1A80     		strh	r2, [r3]	@ movhi
- 368              	.LVL34:
- 369              	.L36:
  527:usb_lib/usb_core.c **** 
  528:usb_lib/usb_core.c **** Expect_Status_Out:
  529:usb_lib/usb_core.c ****   pInformation->ControlState = ControlState;
- 370              		.loc 1 529 0
- 371 0084 D8F80030 		ldr	r3, [r8]
- 372 0088 1E72     		strb	r6, [r3, #8]
- 373 008a BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
- 374              	.LVL35:
- 375              	.L40:
- 376 008e 00BF     		.align	2
- 377              	.L39:
- 378 0090 00000000 		.word	pInformation
- 379 0094 00000000 		.word	SaveTState
- 380 0098 00000000 		.word	.LANCHOR0
- 381 009c 505C0040 		.word	1073765456
- 382 00a0 02300020 		.word	536883202
- 383 00a4 00000000 		.word	SaveRState
- 384              		.cfi_endproc
- 385              	.LFE10:
- 387              		.section	.text.Standard_SetConfiguration,"ax",%progbits
- 388              		.align	1
- 389              		.global	Standard_SetConfiguration
- 390              		.thumb
- 391              		.thumb_func
+ 301              		.loc 1 529 0
+ 302 0034 3B68     		ldr	r3, [r7]
+ 303 0036 1E72     		strb	r6, [r3, #8]
+ 530:usb_lib/usb_core.c **** }
+ 304              		.loc 1 530 0
+ 305 0038 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 306              	.LVL22:
+ 307              	.L34:
+ 502:usb_lib/usb_core.c ****     }
+ 308              		.loc 1 502 0
+ 309 003c 1023     		movs	r3, #16
+ 501:usb_lib/usb_core.c ****       vSetEPTxStatus(EP_TX_STALL);
+ 310              		.loc 1 501 0
+ 311 003e 0726     		movs	r6, #7
+ 502:usb_lib/usb_core.c ****     }
+ 312              		.loc 1 502 0
+ 313 0040 A8F80030 		strh	r3, [r8]	@ movhi
+ 314 0044 F6E7     		b	.L35
+ 315              	.LVL23:
+ 316              	.L33:
+ 508:usb_lib/usb_core.c ****   ControlState = (save_wLength <= Length) ? LAST_IN_DATA : IN_DATA;
+ 317              		.loc 1 508 0
+ 318 0046 AB8A     		ldrh	r3, [r5, #20]
+ 319              	.LVL24:
+ 509:usb_lib/usb_core.c **** 
+ 320              		.loc 1 509 0
+ 321 0048 9C42     		cmp	r4, r3
+ 322 004a 94BF     		ite	ls
+ 323 004c 0426     		movls	r6, #4
+ 324 004e 0226     		movhi	r6, #2
+ 325              	.LVL25:
+ 516:usb_lib/usb_core.c **** 
+ 326              		.loc 1 516 0
+ 327 0050 9C42     		cmp	r4, r3
+ 328 0052 28BF     		it	cs
+ 329 0054 1C46     		movcs	r4, r3
+ 330              	.LVL26:
+ 331 0056 AB69     		ldr	r3, [r5, #24]
+ 332              	.LVL27:
+ 333 0058 2046     		mov	r0, r4
+ 334 005a 9847     		blx	r3
+ 335              	.LVL28:
+ 336 005c 8146     		mov	r9, r0
+ 337              	.LVL29:
+ 518:usb_lib/usb_core.c **** 
+ 338              		.loc 1 518 0
+ 339 005e 0020     		movs	r0, #0
+ 340              	.LVL30:
+ 341 0060 FFF7FEFF 		bl	GetEPTxAddr
+ 342              	.LVL31:
+ 343 0064 2246     		mov	r2, r4
+ 344 0066 0146     		mov	r1, r0
+ 345 0068 4846     		mov	r0, r9
+ 346 006a FFF7FEFF 		bl	UserToPMABufferCopy
+ 347              	.LVL32:
+ 520:usb_lib/usb_core.c **** 
+ 348              		.loc 1 520 0
+ 349 006e 2146     		mov	r1, r4
+ 350 0070 0020     		movs	r0, #0
+ 351 0072 FFF7FEFF 		bl	SetEPTxCount
+ 352              	.LVL33:
+ 522:usb_lib/usb_core.c ****   pEPinfo->Usb_wOffset += Length;
+ 353              		.loc 1 522 0
+ 354 0076 2B8A     		ldrh	r3, [r5, #16]
+ 526:usb_lib/usb_core.c **** 
+ 355              		.loc 1 526 0
+ 356 0078 4FF44052 		mov	r2, #12288
+ 522:usb_lib/usb_core.c ****   pEPinfo->Usb_wOffset += Length;
+ 357              		.loc 1 522 0
+ 358 007c 1B1B     		subs	r3, r3, r4
+ 359 007e 2B82     		strh	r3, [r5, #16]	@ movhi
+ 523:usb_lib/usb_core.c ****   vSetEPTxStatus(EP_TX_VALID);
+ 360              		.loc 1 523 0
+ 361 0080 6B8A     		ldrh	r3, [r5, #18]
+ 362 0082 1C44     		add	r4, r4, r3
+ 524:usb_lib/usb_core.c **** 
+ 363              		.loc 1 524 0
+ 364 0084 3023     		movs	r3, #48
+ 365 0086 A8F80030 		strh	r3, [r8]	@ movhi
+ 526:usb_lib/usb_core.c **** 
+ 366              		.loc 1 526 0
+ 367 008a 064B     		ldr	r3, .L38+16
+ 523:usb_lib/usb_core.c ****   vSetEPTxStatus(EP_TX_VALID);
+ 368              		.loc 1 523 0
+ 369 008c 6C82     		strh	r4, [r5, #18]	@ movhi
+ 526:usb_lib/usb_core.c **** 
+ 370              		.loc 1 526 0
+ 371 008e 1A80     		strh	r2, [r3]	@ movhi
+ 372 0090 D0E7     		b	.L35
+ 373              	.L39:
+ 374 0092 00BF     		.align	2
+ 375              	.L38:
+ 376 0094 00000000 		.word	pInformation
+ 377 0098 00000000 		.word	.LANCHOR0
+ 378 009c 505C0040 		.word	1073765456
+ 379 00a0 02300020 		.word	536883202
+ 380 00a4 00000000 		.word	SaveRState
+ 381 00a8 00000000 		.word	SaveTState
+ 382              		.cfi_endproc
+ 383              	.LFE10:
+ 385              		.section	.text.Standard_SetConfiguration,"ax",%progbits
+ 386              		.align	1
+ 387              		.global	Standard_SetConfiguration
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 391              		.fpu softvfp
  393              	Standard_SetConfiguration:
  394              	.LFB1:
-  75:usb_lib/usb_core.c **** {
+  75:usb_lib/usb_core.c **** 
  395              		.loc 1 75 0
  396              		.cfi_startproc
  397              		@ args = 0, pretend = 0, frame = 0
@@ -931,585 +964,615 @@
  400              		.cfi_def_cfa_offset 8
  401              		.cfi_offset 4, -8
  402              		.cfi_offset 14, -4
-  77:usb_lib/usb_core.c ****   if ((pInformation->USBwValue0 <=
+  77:usb_lib/usb_core.c ****       Device_Table.Total_Configuration) && (pInformation->USBwValue1 == 0)
  403              		.loc 1 77 0
- 404 0002 0A4B     		ldr	r3, .L46
-  78:usb_lib/usb_core.c ****       Device_Table.Total_Configuration) && (pInformation->USBwValue1 == 0)
+ 404 0002 0A4B     		ldr	r3, .L45
+  78:usb_lib/usb_core.c ****       && (pInformation->USBwIndex == 0)) /*call Back usb spec 2.0*/
  405              		.loc 1 78 0
- 406 0004 0A49     		ldr	r1, .L46+4
-  77:usb_lib/usb_core.c ****   if ((pInformation->USBwValue0 <=
+ 406 0004 0A49     		ldr	r1, .L45+4
+  77:usb_lib/usb_core.c ****       Device_Table.Total_Configuration) && (pInformation->USBwValue1 == 0)
  407              		.loc 1 77 0
  408 0006 1B68     		ldr	r3, [r3]
  409 0008 4978     		ldrb	r1, [r1, #1]	@ zero_extendqisi2
  410 000a 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
  411 000c 9142     		cmp	r1, r2
- 412 000e 0AD3     		bcc	.L45
-  78:usb_lib/usb_core.c ****       Device_Table.Total_Configuration) && (pInformation->USBwValue1 == 0)
+ 412 000e 0AD3     		bcc	.L44
+  78:usb_lib/usb_core.c ****       && (pInformation->USBwIndex == 0)) /*call Back usb spec 2.0*/
  413              		.loc 1 78 0
  414 0010 D978     		ldrb	r1, [r3, #3]	@ zero_extendqisi2
- 415 0012 41B9     		cbnz	r1, .L45
-  79:usb_lib/usb_core.c ****       && (pInformation->USBwIndex == 0)) /*call Back usb spec 2.0*/
+ 415 0012 41B9     		cbnz	r1, .L44
+  79:usb_lib/usb_core.c ****   {
  416              		.loc 1 79 0
  417 0014 9C88     		ldrh	r4, [r3, #4]
- 418 0016 34B9     		cbnz	r4, .L45
-  81:usb_lib/usb_core.c ****     pInformation->Current_Configuration = pInformation->USBwValue0;
+ 418 0016 34B9     		cbnz	r4, .L44
+  81:usb_lib/usb_core.c ****     pUser_Standard_Requests->User_SetConfiguration();
  419              		.loc 1 81 0
  420 0018 9A72     		strb	r2, [r3, #10]
-  82:usb_lib/usb_core.c ****     pUser_Standard_Requests->User_SetConfiguration();
+  82:usb_lib/usb_core.c ****     return USB_SUCCESS;
  421              		.loc 1 82 0
- 422 001a 064B     		ldr	r3, .L46+8
+ 422 001a 064B     		ldr	r3, .L45+8
  423 001c 1B68     		ldr	r3, [r3]
  424 001e 5B68     		ldr	r3, [r3, #4]
  425 0020 9847     		blx	r3
- 426              	.LVL36:
-  83:usb_lib/usb_core.c ****     return USB_SUCCESS;
+ 426              	.LVL34:
+  83:usb_lib/usb_core.c ****   }
  427              		.loc 1 83 0
  428 0022 2046     		mov	r0, r4
- 429 0024 10BD     		pop	{r4, pc}
- 430              	.L45:
-  87:usb_lib/usb_core.c ****     return USB_UNSUPPORT;
- 431              		.loc 1 87 0
- 432 0026 0220     		movs	r0, #2
-  89:usb_lib/usb_core.c **** }
- 433              		.loc 1 89 0
- 434 0028 10BD     		pop	{r4, pc}
- 435              	.L47:
- 436 002a 00BF     		.align	2
- 437              	.L46:
- 438 002c 00000000 		.word	pInformation
- 439 0030 00000000 		.word	Device_Table
- 440 0034 00000000 		.word	pUser_Standard_Requests
- 441              		.cfi_endproc
- 442              	.LFE1:
- 444              		.section	.text.Standard_SetInterface,"ax",%progbits
- 445              		.align	1
- 446              		.global	Standard_SetInterface
- 447              		.thumb
- 448              		.thumb_func
- 450              	Standard_SetInterface:
- 451              	.LFB3:
- 121:usb_lib/usb_core.c **** {
- 452              		.loc 1 121 0
- 453              		.cfi_startproc
- 454              		@ args = 0, pretend = 0, frame = 0
- 455              		@ frame_needed = 0, uses_anonymous_args = 0
- 456 0000 38B5     		push	{r3, r4, r5, lr}
- 457              		.cfi_def_cfa_offset 16
- 458              		.cfi_offset 3, -16
- 459              		.cfi_offset 4, -12
- 460              		.cfi_offset 5, -8
- 461              		.cfi_offset 14, -4
- 125:usb_lib/usb_core.c ****   Re = (*pProperty->Class_Get_Interface_Setting)(pInformation->USBwIndex0, pInformation->USBwValue0
- 462              		.loc 1 125 0
- 463 0002 0E4A     		ldr	r2, .L54
- 464 0004 0E4C     		ldr	r4, .L54+4
- 465 0006 1268     		ldr	r2, [r2]
- 466 0008 2368     		ldr	r3, [r4]
- 467 000a 9269     		ldr	r2, [r2, #24]
- 468 000c 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
- 469 000e 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
- 470 0010 9047     		blx	r2
- 471              	.LVL37:
- 127:usb_lib/usb_core.c ****   if (pInformation->Current_Configuration != 0)
- 472              		.loc 1 127 0
- 473 0012 2368     		ldr	r3, [r4]
- 474 0014 9A7A     		ldrb	r2, [r3, #10]	@ zero_extendqisi2
- 475 0016 7AB1     		cbz	r2, .L53
- 129:usb_lib/usb_core.c ****     if ((Re != USB_SUCCESS) || (pInformation->USBwIndex1 != 0)
- 476              		.loc 1 129 0
- 477 0018 70B9     		cbnz	r0, .L53
- 129:usb_lib/usb_core.c ****     if ((Re != USB_SUCCESS) || (pInformation->USBwIndex1 != 0)
- 478              		.loc 1 129 0 is_stmt 0 discriminator 1
- 479 001a 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
- 480 001c 62B9     		cbnz	r2, .L53
- 130:usb_lib/usb_core.c ****         || (pInformation->USBwValue1 != 0))
- 481              		.loc 1 130 0 is_stmt 1
- 482 001e DD78     		ldrb	r5, [r3, #3]	@ zero_extendqisi2
- 483 0020 55B9     		cbnz	r5, .L53
- 136:usb_lib/usb_core.c ****       pUser_Standard_Requests->User_SetInterface();
- 484              		.loc 1 136 0
- 485 0022 084B     		ldr	r3, .L54+8
- 486 0024 1B68     		ldr	r3, [r3]
- 487 0026 DB68     		ldr	r3, [r3, #12]
- 488 0028 9847     		blx	r3
- 489              	.LVL38:
- 137:usb_lib/usb_core.c ****       pInformation->Current_Interface = pInformation->USBwIndex0;
- 490              		.loc 1 137 0
- 491 002a 2368     		ldr	r3, [r4]
- 139:usb_lib/usb_core.c ****       return USB_SUCCESS;
- 492              		.loc 1 139 0
- 493 002c 2846     		mov	r0, r5
- 137:usb_lib/usb_core.c ****       pInformation->Current_Interface = pInformation->USBwIndex0;
- 494              		.loc 1 137 0
- 495 002e 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
- 496 0030 DA72     		strb	r2, [r3, #11]
- 138:usb_lib/usb_core.c ****       pInformation->Current_AlternateSetting = pInformation->USBwValue0;
- 497              		.loc 1 138 0
- 498 0032 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
- 499 0034 1A73     		strb	r2, [r3, #12]
- 139:usb_lib/usb_core.c ****       return USB_SUCCESS;
- 500              		.loc 1 139 0
- 501 0036 38BD     		pop	{r3, r4, r5, pc}
- 502              	.LVL39:
- 503              	.L53:
- 144:usb_lib/usb_core.c ****   return USB_UNSUPPORT;
- 504              		.loc 1 144 0
- 505 0038 0220     		movs	r0, #2
- 506              	.LVL40:
- 145:usb_lib/usb_core.c **** }
- 507              		.loc 1 145 0
- 508 003a 38BD     		pop	{r3, r4, r5, pc}
- 509              	.L55:
- 510              		.align	2
- 511              	.L54:
- 512 003c 00000000 		.word	pProperty
- 513 0040 00000000 		.word	pInformation
- 514 0044 00000000 		.word	pUser_Standard_Requests
- 515              		.cfi_endproc
- 516              	.LFE3:
- 518              		.section	.text.Standard_ClearFeature,"ax",%progbits
- 519              		.align	1
- 520              		.global	Standard_ClearFeature
- 521              		.thumb
- 522              		.thumb_func
- 524              	Standard_ClearFeature:
- 525              	.LFB5:
- 234:usb_lib/usb_core.c **** {
- 526              		.loc 1 234 0
- 527              		.cfi_startproc
- 528              		@ args = 0, pretend = 0, frame = 0
- 529              		@ frame_needed = 0, uses_anonymous_args = 0
- 530 0000 38B5     		push	{r3, r4, r5, lr}
- 531              		.cfi_def_cfa_offset 16
- 532              		.cfi_offset 3, -16
- 533              		.cfi_offset 4, -12
- 534              		.cfi_offset 5, -8
- 535              		.cfi_offset 14, -4
- 235:usb_lib/usb_core.c ****   u32     Type_Rec = Type_Recipient;
- 536              		.loc 1 235 0
- 537 0002 2F4B     		ldr	r3, .L71
- 538 0004 1B68     		ldr	r3, [r3]
- 539 0006 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 540              	.LVL41:
- 239:usb_lib/usb_core.c ****   if (Type_Rec == (STANDARD_REQUEST | DEVICE_RECIPIENT))
- 541              		.loc 1 239 0
- 542 0008 10F07F00 		ands	r0, r0, #127
- 543              	.LVL42:
- 544 000c 04D1     		bne	.L57
- 241:usb_lib/usb_core.c ****     ClrBit(pInformation->Current_Feature, 5);
- 545              		.loc 1 241 0
- 546 000e 5A7A     		ldrb	r2, [r3, #9]	@ zero_extendqisi2
- 547 0010 22F02002 		bic	r2, r2, #32
- 548 0014 5A72     		strb	r2, [r3, #9]
- 242:usb_lib/usb_core.c ****     return USB_SUCCESS;
- 549              		.loc 1 242 0
- 550 0016 38BD     		pop	{r3, r4, r5, pc}
- 551              	.L57:
- 244:usb_lib/usb_core.c ****   else if (Type_Rec == (STANDARD_REQUEST | ENDPOINT_RECIPIENT))
- 552              		.loc 1 244 0
- 553 0018 0228     		cmp	r0, #2
- 554 001a 4ED1     		bne	.L69
- 555              	.LBB4:
- 251:usb_lib/usb_core.c ****     if ((pInformation->USBwValue != ENDPOINT_STALL)
- 556              		.loc 1 251 0
- 557 001c 5A88     		ldrh	r2, [r3, #2]
- 558 001e 002A     		cmp	r2, #0
- 559 0020 4CD1     		bne	.L58
- 252:usb_lib/usb_core.c ****         || (pInformation->USBwIndex1 != 0))
- 560              		.loc 1 252 0
- 561 0022 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
- 562 0024 002A     		cmp	r2, #0
- 563 0026 49D1     		bne	.L58
- 564              	.LVL43:
- 258:usb_lib/usb_core.c ****     wIndex0 = pInformation->USBwIndex0;
- 565              		.loc 1 258 0
- 566 0028 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
- 567              	.LVL44:
- 273:usb_lib/usb_core.c ****     if ((rEP >= pDev->Total_Endpoint) || (Status == 0)
- 568              		.loc 1 273 0
- 569 002a 264D     		ldr	r5, .L71+4
- 259:usb_lib/usb_core.c ****     rEP = wIndex0 & ~0x80;
- 570              		.loc 1 259 0
- 571 002c 22F08000 		bic	r0, r2, #128
- 572              	.LVL45:
- 573 0030 8400     		lsls	r4, r0, #2
- 266:usb_lib/usb_core.c ****       Status = _GetEPTxStatus(Related_Endpoint);
- 574              		.loc 1 266 0
- 575 0032 04F18041 		add	r1, r4, #1073741824
- 576 0036 01F5B841 		add	r1, r1, #23552
- 577 003a 0968     		ldr	r1, [r1]
- 273:usb_lib/usb_core.c ****     if ((rEP >= pDev->Total_Endpoint) || (Status == 0)
- 578              		.loc 1 273 0
- 579 003c 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
- 262:usb_lib/usb_core.c ****     if (ValBit(pInformation->USBwIndex0, 7))
- 580              		.loc 1 262 0
- 581 003e 12F0800F 		tst	r2, #128
- 266:usb_lib/usb_core.c ****       Status = _GetEPTxStatus(Related_Endpoint);
- 582              		.loc 1 266 0
- 583 0042 14BF     		ite	ne
- 584 0044 01F03001 		andne	r1, r1, #48
- 585              	.LVL46:
- 270:usb_lib/usb_core.c ****       Status = _GetEPRxStatus(Related_Endpoint);
- 586              		.loc 1 270 0
- 587 0048 01F44051 		andeq	r1, r1, #12288
- 588              	.LVL47:
- 273:usb_lib/usb_core.c ****     if ((rEP >= pDev->Total_Endpoint) || (Status == 0)
- 589              		.loc 1 273 0
- 590 004c A842     		cmp	r0, r5
- 591 004e 34D2     		bcs	.L69
- 273:usb_lib/usb_core.c ****     if ((rEP >= pDev->Total_Endpoint) || (Status == 0)
- 592              		.loc 1 273 0 is_stmt 0 discriminator 1
- 593 0050 0029     		cmp	r1, #0
- 594 0052 32D0     		beq	.L69
- 274:usb_lib/usb_core.c ****         || (pInformation->Current_Configuration == 0))
- 595              		.loc 1 274 0 is_stmt 1
- 596 0054 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
- 597              	.LVL48:
- 598 0056 83B3     		cbz	r3, .L69
- 283:usb_lib/usb_core.c ****       if (_GetTxStallStatus(Related_Endpoint ))
- 599              		.loc 1 283 0
- 600 0058 04F18044 		add	r4, r4, #1073741824
- 601 005c 04F5B844 		add	r4, r4, #23552
- 280:usb_lib/usb_core.c ****     if (wIndex0 & 0x80)
- 602              		.loc 1 280 0
- 603 0060 1206     		lsls	r2, r2, #24
- 604              	.LVL49:
- 283:usb_lib/usb_core.c ****       if (_GetTxStallStatus(Related_Endpoint ))
- 605              		.loc 1 283 0
- 606 0062 2368     		ldr	r3, [r4]
- 280:usb_lib/usb_core.c ****     if (wIndex0 & 0x80)
- 607              		.loc 1 280 0
- 608 0064 0CD5     		bpl	.L61
- 283:usb_lib/usb_core.c ****       if (_GetTxStallStatus(Related_Endpoint ))
- 609              		.loc 1 283 0
- 610 0066 03F03003 		and	r3, r3, #48
- 611 006a 102B     		cmp	r3, #16
- 612 006c 1FD1     		bne	.L62
- 285:usb_lib/usb_core.c ****         ClearDTOG_TX(Related_Endpoint);
- 613              		.loc 1 285 0
- 614 006e C4B2     		uxtb	r4, r0
- 615 0070 2046     		mov	r0, r4
- 616              	.LVL50:
- 617 0072 FFF7FEFF 		bl	ClearDTOG_TX
- 618              	.LVL51:
- 286:usb_lib/usb_core.c ****         SetEPTxStatus(Related_Endpoint, EP_TX_VALID);
- 619              		.loc 1 286 0
- 620 0076 2046     		mov	r0, r4
- 621 0078 3021     		movs	r1, #48
- 622 007a FFF7FEFF 		bl	SetEPTxStatus
- 623              	.LVL52:
- 624 007e 16E0     		b	.L62
- 625              	.LVL53:
- 626              	.L61:
- 292:usb_lib/usb_core.c ****       if (_GetRxStallStatus(Related_Endpoint))
- 627              		.loc 1 292 0
- 628 0080 03F44053 		and	r3, r3, #12288
- 629 0084 B3F5805F 		cmp	r3, #4096
- 630 0088 11D1     		bne	.L62
- 294:usb_lib/usb_core.c ****         if (Related_Endpoint == ENDP0)
- 631              		.loc 1 294 0
- 632 008a 28B9     		cbnz	r0, .L63
- 297:usb_lib/usb_core.c ****           SetEPRxCount(Related_Endpoint, Device_Property.MaxPacketSize);
- 633              		.loc 1 297 0
- 634 008c 0E4B     		ldr	r3, .L71+8
- 635 008e 93F83010 		ldrb	r1, [r3, #48]	@ zero_extendqisi2
- 636              	.LVL54:
- 637 0092 FFF7FEFF 		bl	SetEPRxCount
- 638              	.LVL55:
- 639 0096 01E0     		b	.L70
- 640              	.LVL56:
- 641              	.L63:
- 302:usb_lib/usb_core.c ****           ClearDTOG_RX(Related_Endpoint);
- 642              		.loc 1 302 0
- 643 0098 FFF7FEFF 		bl	ClearDTOG_RX
- 644              	.LVL57:
- 645              	.L70:
- 646              	.LBB5:
- 303:usb_lib/usb_core.c ****           _SetEPRxStatus(Related_Endpoint, EP_RX_VALID);
- 647              		.loc 1 303 0
- 648 009c 2368     		ldr	r3, [r4]
- 649 009e 23F48043 		bic	r3, r3, #16384
- 650 00a2 23F07003 		bic	r3, r3, #112
- 651 00a6 9BB2     		uxth	r3, r3
- 652              	.LVL58:
- 653 00a8 83F44053 		eor	r3, r3, #12288
- 654              	.LVL59:
- 655 00ac 2360     		str	r3, [r4]
- 656              	.LVL60:
- 657              	.L62:
- 658              	.LBE5:
- 307:usb_lib/usb_core.c ****     pUser_Standard_Requests->User_ClearFeature();
- 659              		.loc 1 307 0
- 660 00ae 074B     		ldr	r3, .L71+12
- 661 00b0 1B68     		ldr	r3, [r3]
- 662 00b2 5B69     		ldr	r3, [r3, #20]
- 663 00b4 9847     		blx	r3
- 664              	.LVL61:
- 308:usb_lib/usb_core.c ****     return USB_SUCCESS;
- 665              		.loc 1 308 0
- 666 00b6 0020     		movs	r0, #0
- 667 00b8 38BD     		pop	{r3, r4, r5, pc}
- 668              	.LVL62:
- 669              	.L69:
- 670              	.LBE4:
- 311:usb_lib/usb_core.c ****   return USB_UNSUPPORT;
- 671              		.loc 1 311 0
- 672 00ba 0220     		movs	r0, #2
- 673              	.L58:
- 312:usb_lib/usb_core.c **** }
- 674              		.loc 1 312 0
- 675 00bc 38BD     		pop	{r3, r4, r5, pc}
- 676              	.L72:
- 677 00be 00BF     		.align	2
- 678              	.L71:
- 679 00c0 00000000 		.word	pInformation
- 680 00c4 00000000 		.word	Device_Table
- 681 00c8 00000000 		.word	Device_Property
- 682 00cc 00000000 		.word	pUser_Standard_Requests
- 683              		.cfi_endproc
- 684              	.LFE5:
- 686              		.section	.text.Standard_SetEndPointFeature,"ax",%progbits
- 687              		.align	1
- 688              		.global	Standard_SetEndPointFeature
- 689              		.thumb
- 690              		.thumb_func
- 692              	Standard_SetEndPointFeature:
- 693              	.LFB6:
- 323:usb_lib/usb_core.c **** {
- 694              		.loc 1 323 0
- 695              		.cfi_startproc
- 696              		@ args = 0, pretend = 0, frame = 0
- 697              		@ frame_needed = 0, uses_anonymous_args = 0
- 698 0000 38B5     		push	{r3, r4, r5, lr}
- 699              		.cfi_def_cfa_offset 16
- 700              		.cfi_offset 3, -16
- 701              		.cfi_offset 4, -12
- 702              		.cfi_offset 5, -8
- 703              		.cfi_offset 14, -4
- 329:usb_lib/usb_core.c ****   wIndex0 = pInformation->USBwIndex0;
- 704              		.loc 1 329 0
- 705 0002 1D4B     		ldr	r3, .L84
- 344:usb_lib/usb_core.c ****   if (Related_Endpoint >= Device_Table.Total_Endpoint
- 706              		.loc 1 344 0
- 707 0004 1D4D     		ldr	r5, .L84+4
- 329:usb_lib/usb_core.c ****   wIndex0 = pInformation->USBwIndex0;
- 708              		.loc 1 329 0
- 709 0006 1968     		ldr	r1, [r3]
- 344:usb_lib/usb_core.c ****   if (Related_Endpoint >= Device_Table.Total_Endpoint
- 710              		.loc 1 344 0
- 711 0008 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
- 329:usb_lib/usb_core.c ****   wIndex0 = pInformation->USBwIndex0;
- 712              		.loc 1 329 0
- 713 000a 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
- 714              	.LVL63:
- 330:usb_lib/usb_core.c ****   rEP = wIndex0 & ~0x80;
- 715              		.loc 1 330 0
- 716 000c 22F08004 		bic	r4, r2, #128
- 717              	.LVL64:
- 718 0010 A300     		lsls	r3, r4, #2
- 337:usb_lib/usb_core.c ****     Status = _GetEPTxStatus(Related_Endpoint);
- 719              		.loc 1 337 0
- 720 0012 03F18040 		add	r0, r3, #1073741824
- 721 0016 00F5B840 		add	r0, r0, #23552
- 722 001a 0068     		ldr	r0, [r0]
- 333:usb_lib/usb_core.c ****   if (ValBit(pInformation->USBwIndex0, 7))
- 723              		.loc 1 333 0
- 724 001c 12F0800F 		tst	r2, #128
- 337:usb_lib/usb_core.c ****     Status = _GetEPTxStatus(Related_Endpoint);
- 725              		.loc 1 337 0
- 726 0020 14BF     		ite	ne
- 727 0022 00F03000 		andne	r0, r0, #48
- 728              	.LVL65:
- 341:usb_lib/usb_core.c ****     Status = _GetEPRxStatus(Related_Endpoint);
- 729              		.loc 1 341 0
- 730 0026 00F44050 		andeq	r0, r0, #12288
- 731              	.LVL66:
- 344:usb_lib/usb_core.c ****   if (Related_Endpoint >= Device_Table.Total_Endpoint
- 732              		.loc 1 344 0
- 733 002a AC42     		cmp	r4, r5
- 734 002c 22D2     		bcs	.L82
- 345:usb_lib/usb_core.c ****       || pInformation->USBwValue != 0 || Status == 0
- 735              		.loc 1 345 0
- 736 002e 4C88     		ldrh	r4, [r1, #2]
- 737              	.LVL67:
- 738 0030 04BB     		cbnz	r4, .L82
- 345:usb_lib/usb_core.c ****       || pInformation->USBwValue != 0 || Status == 0
- 739              		.loc 1 345 0 is_stmt 0 discriminator 1
- 740 0032 F8B1     		cbz	r0, .L82
- 346:usb_lib/usb_core.c ****       || pInformation->Current_Configuration == 0)
- 741              		.loc 1 346 0 is_stmt 1
- 742 0034 897A     		ldrb	r1, [r1, #10]	@ zero_extendqisi2
- 743 0036 E9B1     		cbz	r1, .L82
- 744              	.LBB6:
- 355:usb_lib/usb_core.c ****       _SetEPTxStatus(Related_Endpoint, EP_TX_STALL);
- 745              		.loc 1 355 0
- 746 0038 03F18043 		add	r3, r3, #1073741824
- 747 003c 03F5B843 		add	r3, r3, #23552
- 748              	.LBE6:
- 352:usb_lib/usb_core.c ****     if (wIndex0 & 0x80)
- 749              		.loc 1 352 0
- 750 0040 12F0800F 		tst	r2, #128
- 751              	.LBB7:
- 355:usb_lib/usb_core.c ****       _SetEPTxStatus(Related_Endpoint, EP_TX_STALL);
- 752              		.loc 1 355 0
- 753 0044 1A68     		ldr	r2, [r3]
- 754              	.LVL68:
- 755              	.LBE7:
- 352:usb_lib/usb_core.c ****     if (wIndex0 & 0x80)
- 756              		.loc 1 352 0
- 757 0046 07D0     		beq	.L77
- 758              	.LBB8:
- 355:usb_lib/usb_core.c ****       _SetEPTxStatus(Related_Endpoint, EP_TX_STALL);
- 759              		.loc 1 355 0
- 760 0048 22F4E042 		bic	r2, r2, #28672
- 761 004c 22F04002 		bic	r2, r2, #64
- 762 0050 92B2     		uxth	r2, r2
- 763              	.LVL69:
- 764 0052 82F01002 		eor	r2, r2, #16
- 765              	.LVL70:
- 766 0056 06E0     		b	.L83
- 767              	.LVL71:
- 768              	.L77:
- 769              	.LBE8:
- 770              	.LBB9:
- 361:usb_lib/usb_core.c ****       _SetEPRxStatus(Related_Endpoint, EP_RX_STALL);
- 771              		.loc 1 361 0
- 772 0058 22F48042 		bic	r2, r2, #16384
- 773 005c 22F07002 		bic	r2, r2, #112
- 774 0060 92B2     		uxth	r2, r2
- 775              	.LVL72:
- 776 0062 82F48052 		eor	r2, r2, #4096
- 777              	.LVL73:
- 778              	.L83:
- 779 0066 1A60     		str	r2, [r3]
- 780              	.LVL74:
- 781              	.LBE9:
- 364:usb_lib/usb_core.c ****   pUser_Standard_Requests->User_SetEndPointFeature();
- 782              		.loc 1 364 0
- 783 0068 054B     		ldr	r3, .L84+8
- 784 006a 1B68     		ldr	r3, [r3]
- 785 006c 9B69     		ldr	r3, [r3, #24]
- 786 006e 9847     		blx	r3
- 787              	.LVL75:
- 365:usb_lib/usb_core.c ****   return USB_SUCCESS;
- 788              		.loc 1 365 0
- 789 0070 0020     		movs	r0, #0
- 790 0072 38BD     		pop	{r3, r4, r5, pc}
- 791              	.LVL76:
- 792              	.L82:
- 348:usb_lib/usb_core.c ****     return USB_UNSUPPORT;
- 793              		.loc 1 348 0
- 794 0074 0220     		movs	r0, #2
- 795              	.LVL77:
- 366:usb_lib/usb_core.c **** }
- 796              		.loc 1 366 0
- 797 0076 38BD     		pop	{r3, r4, r5, pc}
- 798              	.L85:
- 799              		.align	2
- 800              	.L84:
- 801 0078 00000000 		.word	pInformation
- 802 007c 00000000 		.word	Device_Table
- 803 0080 00000000 		.word	pUser_Standard_Requests
- 804              		.cfi_endproc
- 805              	.LFE6:
- 807              		.section	.text.Standard_SetDeviceFeature,"ax",%progbits
- 808              		.align	1
- 809              		.global	Standard_SetDeviceFeature
- 810              		.thumb
- 811              		.thumb_func
- 813              	Standard_SetDeviceFeature:
- 814              	.LFB7:
- 377:usb_lib/usb_core.c **** {
- 815              		.loc 1 377 0
- 816              		.cfi_startproc
- 817              		@ args = 0, pretend = 0, frame = 0
- 818              		@ frame_needed = 0, uses_anonymous_args = 0
- 819 0000 08B5     		push	{r3, lr}
- 820              		.cfi_def_cfa_offset 8
- 821              		.cfi_offset 3, -8
- 822              		.cfi_offset 14, -4
- 378:usb_lib/usb_core.c ****   SetBit(pInformation->Current_Feature, 5);
- 823              		.loc 1 378 0
- 824 0002 064B     		ldr	r3, .L87
- 825 0004 1B68     		ldr	r3, [r3]
- 826 0006 5A7A     		ldrb	r2, [r3, #9]	@ zero_extendqisi2
- 827 0008 42F02002 		orr	r2, r2, #32
- 828 000c 5A72     		strb	r2, [r3, #9]
- 379:usb_lib/usb_core.c ****   pUser_Standard_Requests->User_SetDeviceFeature();
- 829              		.loc 1 379 0
- 830 000e 044B     		ldr	r3, .L87+4
- 831 0010 1B68     		ldr	r3, [r3]
- 832 0012 DB69     		ldr	r3, [r3, #28]
- 833 0014 9847     		blx	r3
- 834              	.LVL78:
- 381:usb_lib/usb_core.c **** }
- 835              		.loc 1 381 0
- 836 0016 0020     		movs	r0, #0
- 837 0018 08BD     		pop	{r3, pc}
- 838              	.L88:
- 839 001a 00BF     		.align	2
- 840              	.L87:
- 841 001c 00000000 		.word	pInformation
- 842 0020 00000000 		.word	pUser_Standard_Requests
- 843              		.cfi_endproc
- 844              	.LFE7:
- 846              		.section	.text.Standard_GetDescriptorData,"ax",%progbits
- 847              		.align	1
- 848              		.global	Standard_GetDescriptorData
- 849              		.thumb
- 850              		.thumb_func
- 852              	Standard_GetDescriptorData:
- 853              	.LFB8:
- 403:usb_lib/usb_core.c **** {
- 854              		.loc 1 403 0
- 855              		.cfi_startproc
- 856              		@ args = 0, pretend = 0, frame = 0
- 857              		@ frame_needed = 0, uses_anonymous_args = 0
- 858              		@ link register save eliminated.
- 859              	.LVL79:
- 406:usb_lib/usb_core.c ****   wOffset = pInformation->Ctrl_Info.Usb_wOffset;
- 860              		.loc 1 406 0
- 861 0000 054B     		ldr	r3, .L92
- 862 0002 1A68     		ldr	r2, [r3]
- 863 0004 538A     		ldrh	r3, [r2, #18]
- 864              	.LVL80:
- 407:usb_lib/usb_core.c ****   if (Length == 0)
- 865              		.loc 1 407 0
- 866 0006 18B9     		cbnz	r0, .L90
- 409:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.Usb_wLength = pDesc->Descriptor_Size - wOffset;
- 867              		.loc 1 409 0
- 868 0008 8988     		ldrh	r1, [r1, #4]
- 869              	.LVL81:
- 870 000a CB1A     		subs	r3, r1, r3
- 871              	.LVL82:
- 872 000c 1382     		strh	r3, [r2, #16]	@ movhi
- 410:usb_lib/usb_core.c ****     return 0;
- 873              		.loc 1 410 0
- 874 000e 7047     		bx	lr
- 875              	.LVL83:
- 876              	.L90:
- 413:usb_lib/usb_core.c ****   return pDesc->Descriptor + wOffset;
- 877              		.loc 1 413 0
- 878 0010 0868     		ldr	r0, [r1]
- 879              	.LVL84:
- 880 0012 1844     		add	r0, r0, r3
- 414:usb_lib/usb_core.c **** }
- 881              		.loc 1 414 0
- 882 0014 7047     		bx	lr
- 883              	.L93:
- 884 0016 00BF     		.align	2
- 885              	.L92:
- 886 0018 00000000 		.word	pInformation
- 887              		.cfi_endproc
- 888              	.LFE8:
- 890              		.section	.text.Post0_Process,"ax",%progbits
- 891              		.align	1
- 892              		.global	Post0_Process
- 893              		.thumb
- 894              		.thumb_func
- 896              	Post0_Process:
- 897              	.LFB16:
- 530:usb_lib/usb_core.c **** }
+ 429              	.L41:
+  89:usb_lib/usb_core.c **** 
+ 430              		.loc 1 89 0
+ 431 0024 10BD     		pop	{r4, pc}
+ 432              	.L44:
+  87:usb_lib/usb_core.c ****   }
+ 433              		.loc 1 87 0
+ 434 0026 0220     		movs	r0, #2
+ 435 0028 FCE7     		b	.L41
+ 436              	.L46:
+ 437 002a 00BF     		.align	2
+ 438              	.L45:
+ 439 002c 00000000 		.word	pInformation
+ 440 0030 00000000 		.word	Device_Table
+ 441 0034 00000000 		.word	pUser_Standard_Requests
+ 442              		.cfi_endproc
+ 443              	.LFE1:
+ 445              		.section	.text.Standard_SetInterface,"ax",%progbits
+ 446              		.align	1
+ 447              		.global	Standard_SetInterface
+ 448              		.syntax unified
+ 449              		.thumb
+ 450              		.thumb_func
+ 451              		.fpu softvfp
+ 453              	Standard_SetInterface:
+ 454              	.LFB3:
+ 121:usb_lib/usb_core.c ****   RESULT Re;
+ 455              		.loc 1 121 0
+ 456              		.cfi_startproc
+ 457              		@ args = 0, pretend = 0, frame = 0
+ 458              		@ frame_needed = 0, uses_anonymous_args = 0
+ 459 0000 38B5     		push	{r3, r4, r5, lr}
+ 460              		.cfi_def_cfa_offset 16
+ 461              		.cfi_offset 3, -16
+ 462              		.cfi_offset 4, -12
+ 463              		.cfi_offset 5, -8
+ 464              		.cfi_offset 14, -4
+ 125:usb_lib/usb_core.c **** 
+ 465              		.loc 1 125 0
+ 466 0002 0F4A     		ldr	r2, .L53
+ 467 0004 0F4D     		ldr	r5, .L53+4
+ 468 0006 1268     		ldr	r2, [r2]
+ 469 0008 2B68     		ldr	r3, [r5]
+ 470 000a 9269     		ldr	r2, [r2, #24]
+ 471 000c 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 472 000e 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 473 0010 9047     		blx	r2
+ 474              	.LVL35:
+ 127:usb_lib/usb_core.c ****   {
+ 475              		.loc 1 127 0
+ 476 0012 2B68     		ldr	r3, [r5]
+ 125:usb_lib/usb_core.c **** 
+ 477              		.loc 1 125 0
+ 478 0014 0446     		mov	r4, r0
+ 479              	.LVL36:
+ 127:usb_lib/usb_core.c ****   {
+ 480              		.loc 1 127 0
+ 481 0016 9A7A     		ldrb	r2, [r3, #10]	@ zero_extendqisi2
+ 482 0018 7AB1     		cbz	r2, .L52
+ 129:usb_lib/usb_core.c ****         || (pInformation->USBwValue1 != 0))
+ 483              		.loc 1 129 0
+ 484 001a 70B9     		cbnz	r0, .L52
+ 129:usb_lib/usb_core.c ****         || (pInformation->USBwValue1 != 0))
+ 485              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 486 001c 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
+ 487 001e 62B9     		cbnz	r2, .L52
+ 130:usb_lib/usb_core.c ****     {
+ 488              		.loc 1 130 0 is_stmt 1
+ 489 0020 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 490 0022 53B9     		cbnz	r3, .L52
+ 491              	.LBB7:
+ 492              	.LBB8:
+ 136:usb_lib/usb_core.c ****       pInformation->Current_Interface = pInformation->USBwIndex0;
+ 493              		.loc 1 136 0
+ 494 0024 084B     		ldr	r3, .L53+8
+ 495 0026 1B68     		ldr	r3, [r3]
+ 496 0028 DB68     		ldr	r3, [r3, #12]
+ 497 002a 9847     		blx	r3
+ 498              	.LVL37:
+ 137:usb_lib/usb_core.c ****       pInformation->Current_AlternateSetting = pInformation->USBwValue0;
+ 499              		.loc 1 137 0
+ 500 002c 2B68     		ldr	r3, [r5]
+ 501 002e 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
+ 502 0030 DA72     		strb	r2, [r3, #11]
+ 138:usb_lib/usb_core.c ****       return USB_SUCCESS;
+ 503              		.loc 1 138 0
+ 504 0032 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 505 0034 1A73     		strb	r2, [r3, #12]
+ 506              	.L48:
+ 507              	.LBE8:
+ 508              	.LBE7:
+ 145:usb_lib/usb_core.c **** 
+ 509              		.loc 1 145 0
+ 510 0036 2046     		mov	r0, r4
+ 511 0038 38BD     		pop	{r3, r4, r5, pc}
+ 512              	.LVL38:
+ 513              	.L52:
+ 144:usb_lib/usb_core.c **** }
+ 514              		.loc 1 144 0
+ 515 003a 0224     		movs	r4, #2
+ 516 003c FBE7     		b	.L48
+ 517              	.L54:
+ 518 003e 00BF     		.align	2
+ 519              	.L53:
+ 520 0040 00000000 		.word	pProperty
+ 521 0044 00000000 		.word	pInformation
+ 522 0048 00000000 		.word	pUser_Standard_Requests
+ 523              		.cfi_endproc
+ 524              	.LFE3:
+ 526              		.section	.text.Standard_ClearFeature,"ax",%progbits
+ 527              		.align	1
+ 528              		.global	Standard_ClearFeature
+ 529              		.syntax unified
+ 530              		.thumb
+ 531              		.thumb_func
+ 532              		.fpu softvfp
+ 534              	Standard_ClearFeature:
+ 535              	.LFB5:
+ 234:usb_lib/usb_core.c ****   u32     Type_Rec = Type_Recipient;
+ 536              		.loc 1 234 0
+ 537              		.cfi_startproc
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 540 0000 38B5     		push	{r3, r4, r5, lr}
+ 541              		.cfi_def_cfa_offset 16
+ 542              		.cfi_offset 3, -16
+ 543              		.cfi_offset 4, -12
+ 544              		.cfi_offset 5, -8
+ 545              		.cfi_offset 14, -4
+ 235:usb_lib/usb_core.c ****   u32     Status;
+ 546              		.loc 1 235 0
+ 547 0002 2B4B     		ldr	r3, .L70
+ 548 0004 1B68     		ldr	r3, [r3]
+ 549 0006 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 550              	.LVL39:
+ 239:usb_lib/usb_core.c ****   {/*Device Clear Feature*/
+ 551              		.loc 1 239 0
+ 552 0008 10F07F00 		ands	r0, r0, #127
+ 553              	.LVL40:
+ 554 000c 04D1     		bne	.L56
+ 241:usb_lib/usb_core.c ****     return USB_SUCCESS;
+ 555              		.loc 1 241 0
+ 556 000e 5A7A     		ldrb	r2, [r3, #9]	@ zero_extendqisi2
+ 557 0010 22F02002 		bic	r2, r2, #32
+ 558 0014 5A72     		strb	r2, [r3, #9]
+ 559              	.LVL41:
+ 560              	.L57:
+ 312:usb_lib/usb_core.c **** 
+ 561              		.loc 1 312 0
+ 562 0016 38BD     		pop	{r3, r4, r5, pc}
+ 563              	.LVL42:
+ 564              	.L56:
+ 244:usb_lib/usb_core.c ****   {/*EndPoint Clear Feature*/
+ 565              		.loc 1 244 0
+ 566 0018 0228     		cmp	r0, #2
+ 567 001a 47D1     		bne	.L68
+ 568              	.LBB9:
+ 251:usb_lib/usb_core.c ****         || (pInformation->USBwIndex1 != 0))
+ 569              		.loc 1 251 0
+ 570 001c 5A88     		ldrh	r2, [r3, #2]
+ 571 001e 002A     		cmp	r2, #0
+ 572 0020 F9D1     		bne	.L57
+ 252:usb_lib/usb_core.c ****     {
+ 573              		.loc 1 252 0
+ 574 0022 5A79     		ldrb	r2, [r3, #5]	@ zero_extendqisi2
+ 575 0024 002A     		cmp	r2, #0
+ 576 0026 F6D1     		bne	.L57
+ 577              	.LVL43:
+ 258:usb_lib/usb_core.c ****     rEP = wIndex0 & ~0x80;
+ 578              		.loc 1 258 0
+ 579 0028 1979     		ldrb	r1, [r3, #4]	@ zero_extendqisi2
+ 580              	.LVL44:
+ 273:usb_lib/usb_core.c ****         || (pInformation->Current_Configuration == 0))
+ 581              		.loc 1 273 0
+ 582 002a 224D     		ldr	r5, .L70+4
+ 259:usb_lib/usb_core.c ****     Related_Endpoint = ENDP0 + rEP;
+ 583              		.loc 1 259 0
+ 584 002c 21F08000 		bic	r0, r1, #128
+ 585              	.LVL45:
+ 586 0030 8400     		lsls	r4, r0, #2
+ 587 0032 04F18044 		add	r4, r4, #1073741824
+ 588 0036 04F5B844 		add	r4, r4, #23552
+ 266:usb_lib/usb_core.c ****     }
+ 589              		.loc 1 266 0
+ 590 003a 2268     		ldr	r2, [r4]
+ 262:usb_lib/usb_core.c ****     {
+ 591              		.loc 1 262 0
+ 592 003c 49B2     		sxtb	r1, r1
+ 273:usb_lib/usb_core.c ****         || (pInformation->Current_Configuration == 0))
+ 593              		.loc 1 273 0
+ 594 003e 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 262:usb_lib/usb_core.c ****     {
+ 595              		.loc 1 262 0
+ 596 0040 0029     		cmp	r1, #0
+ 266:usb_lib/usb_core.c ****     }
+ 597              		.loc 1 266 0
+ 598 0042 B4BF     		ite	lt
+ 599 0044 02F03002 		andlt	r2, r2, #48
+ 600              	.LVL46:
+ 270:usb_lib/usb_core.c ****     }
+ 601              		.loc 1 270 0
+ 602 0048 02F44052 		andge	r2, r2, #12288
+ 603              	.LVL47:
+ 273:usb_lib/usb_core.c ****         || (pInformation->Current_Configuration == 0))
+ 604              		.loc 1 273 0
+ 605 004c 8542     		cmp	r5, r0
+ 606 004e 2DD9     		bls	.L68
+ 273:usb_lib/usb_core.c ****         || (pInformation->Current_Configuration == 0))
+ 607              		.loc 1 273 0 is_stmt 0 discriminator 1
+ 608 0050 62B3     		cbz	r2, .L68
+ 274:usb_lib/usb_core.c ****     {
+ 609              		.loc 1 274 0 is_stmt 1
+ 610 0052 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 611              	.LVL48:
+ 612 0054 53B3     		cbz	r3, .L68
+ 280:usb_lib/usb_core.c ****     {
+ 613              		.loc 1 280 0
+ 614 0056 0029     		cmp	r1, #0
+ 283:usb_lib/usb_core.c ****       {
+ 615              		.loc 1 283 0
+ 616 0058 2368     		ldr	r3, [r4]
+ 280:usb_lib/usb_core.c ****     {
+ 617              		.loc 1 280 0
+ 618 005a 11DA     		bge	.L60
+ 283:usb_lib/usb_core.c ****       {
+ 619              		.loc 1 283 0
+ 620 005c 03F03003 		and	r3, r3, #48
+ 621 0060 102B     		cmp	r3, #16
+ 622 0062 07D1     		bne	.L61
+ 285:usb_lib/usb_core.c ****         SetEPTxStatus(Related_Endpoint, EP_TX_VALID);
+ 623              		.loc 1 285 0
+ 624 0064 C4B2     		uxtb	r4, r0
+ 625 0066 2046     		mov	r0, r4
+ 626              	.LVL49:
+ 627 0068 FFF7FEFF 		bl	ClearDTOG_TX
+ 628              	.LVL50:
+ 286:usb_lib/usb_core.c ****       }
+ 629              		.loc 1 286 0
+ 630 006c 3021     		movs	r1, #48
+ 631 006e 2046     		mov	r0, r4
+ 632 0070 FFF7FEFF 		bl	SetEPTxStatus
+ 633              	.LVL51:
+ 634              	.L61:
+ 307:usb_lib/usb_core.c ****     return USB_SUCCESS;
+ 635              		.loc 1 307 0
+ 636 0074 104B     		ldr	r3, .L70+8
+ 637 0076 1B68     		ldr	r3, [r3]
+ 638 0078 5B69     		ldr	r3, [r3, #20]
+ 639 007a 9847     		blx	r3
+ 640              	.LVL52:
+ 308:usb_lib/usb_core.c ****   }
+ 641              		.loc 1 308 0
+ 642 007c 0020     		movs	r0, #0
+ 643 007e CAE7     		b	.L57
+ 644              	.LVL53:
+ 645              	.L60:
+ 292:usb_lib/usb_core.c ****       {
+ 646              		.loc 1 292 0
+ 647 0080 03F44053 		and	r3, r3, #12288
+ 648 0084 B3F5805F 		cmp	r3, #4096
+ 649 0088 F4D1     		bne	.L61
+ 650 008a 0C4D     		ldr	r5, .L70+12
+ 294:usb_lib/usb_core.c ****         {
+ 651              		.loc 1 294 0
+ 652 008c 58B9     		cbnz	r0, .L62
+ 297:usb_lib/usb_core.c ****           _SetEPRxStatus(Related_Endpoint, EP_RX_VALID);
+ 653              		.loc 1 297 0
+ 654 008e 0C4B     		ldr	r3, .L70+16
+ 655 0090 93F83010 		ldrb	r1, [r3, #48]	@ zero_extendqisi2
+ 656              	.LVL54:
+ 657 0094 FFF7FEFF 		bl	SetEPRxCount
+ 658              	.LVL55:
+ 659              	.L69:
+ 660              	.LBB10:
+ 303:usb_lib/usb_core.c ****         }
+ 661              		.loc 1 303 0
+ 662 0098 2368     		ldr	r3, [r4]
+ 663 009a 2B40     		ands	r3, r3, r5
+ 664 009c 9BB2     		uxth	r3, r3
+ 665              	.LVL56:
+ 666 009e 83F44053 		eor	r3, r3, #12288
+ 667              	.LVL57:
+ 668 00a2 2360     		str	r3, [r4]
+ 669 00a4 E6E7     		b	.L61
+ 670              	.LVL58:
+ 671              	.L62:
+ 672              	.LBE10:
+ 302:usb_lib/usb_core.c ****           _SetEPRxStatus(Related_Endpoint, EP_RX_VALID);
+ 673              		.loc 1 302 0
+ 674 00a6 FFF7FEFF 		bl	ClearDTOG_RX
+ 675              	.LVL59:
+ 676 00aa F5E7     		b	.L69
+ 677              	.LVL60:
+ 678              	.L68:
+ 679              	.LBE9:
+ 311:usb_lib/usb_core.c **** }
+ 680              		.loc 1 311 0
+ 681 00ac 0220     		movs	r0, #2
+ 682 00ae B2E7     		b	.L57
+ 683              	.L71:
+ 684              		.align	2
+ 685              	.L70:
+ 686 00b0 00000000 		.word	pInformation
+ 687 00b4 00000000 		.word	Device_Table
+ 688 00b8 00000000 		.word	pUser_Standard_Requests
+ 689 00bc 8FBFFFFF 		.word	-16497
+ 690 00c0 00000000 		.word	Device_Property
+ 691              		.cfi_endproc
+ 692              	.LFE5:
+ 694              		.section	.text.Standard_SetEndPointFeature,"ax",%progbits
+ 695              		.align	1
+ 696              		.global	Standard_SetEndPointFeature
+ 697              		.syntax unified
+ 698              		.thumb
+ 699              		.thumb_func
+ 700              		.fpu softvfp
+ 702              	Standard_SetEndPointFeature:
+ 703              	.LFB6:
+ 323:usb_lib/usb_core.c ****   u32    wIndex0;
+ 704              		.loc 1 323 0
+ 705              		.cfi_startproc
+ 706              		@ args = 0, pretend = 0, frame = 0
+ 707              		@ frame_needed = 0, uses_anonymous_args = 0
+ 708 0000 38B5     		push	{r3, r4, r5, lr}
+ 709              		.cfi_def_cfa_offset 16
+ 710              		.cfi_offset 3, -16
+ 711              		.cfi_offset 4, -12
+ 712              		.cfi_offset 5, -8
+ 713              		.cfi_offset 14, -4
+ 329:usb_lib/usb_core.c ****   rEP = wIndex0 & ~0x80;
+ 714              		.loc 1 329 0
+ 715 0002 1B4B     		ldr	r3, .L83
+ 344:usb_lib/usb_core.c ****       || pInformation->USBwValue != 0 || Status == 0
+ 716              		.loc 1 344 0
+ 717 0004 1B4D     		ldr	r5, .L83+4
+ 329:usb_lib/usb_core.c ****   rEP = wIndex0 & ~0x80;
+ 718              		.loc 1 329 0
+ 719 0006 1868     		ldr	r0, [r3]
+ 344:usb_lib/usb_core.c ****       || pInformation->USBwValue != 0 || Status == 0
+ 720              		.loc 1 344 0
+ 721 0008 2D78     		ldrb	r5, [r5]	@ zero_extendqisi2
+ 329:usb_lib/usb_core.c ****   rEP = wIndex0 & ~0x80;
+ 722              		.loc 1 329 0
+ 723 000a 0179     		ldrb	r1, [r0, #4]	@ zero_extendqisi2
+ 724              	.LVL61:
+ 330:usb_lib/usb_core.c ****   Related_Endpoint = ENDP0 + rEP;
+ 725              		.loc 1 330 0
+ 726 000c 21F08004 		bic	r4, r1, #128
+ 727              	.LVL62:
+ 728 0010 A300     		lsls	r3, r4, #2
+ 729 0012 03F18043 		add	r3, r3, #1073741824
+ 730 0016 03F5B843 		add	r3, r3, #23552
+ 337:usb_lib/usb_core.c ****   }
+ 731              		.loc 1 337 0
+ 732 001a 1A68     		ldr	r2, [r3]
+ 333:usb_lib/usb_core.c ****   {
+ 733              		.loc 1 333 0
+ 734 001c 49B2     		sxtb	r1, r1
+ 735 001e 0029     		cmp	r1, #0
+ 337:usb_lib/usb_core.c ****   }
+ 736              		.loc 1 337 0
+ 737 0020 B4BF     		ite	lt
+ 738 0022 02F03002 		andlt	r2, r2, #48
+ 739              	.LVL63:
+ 341:usb_lib/usb_core.c ****   }
+ 740              		.loc 1 341 0
+ 741 0026 02F44052 		andge	r2, r2, #12288
+ 742              	.LVL64:
+ 344:usb_lib/usb_core.c ****       || pInformation->USBwValue != 0 || Status == 0
+ 743              		.loc 1 344 0
+ 744 002a A542     		cmp	r5, r4
+ 745 002c 1DD9     		bls	.L81
+ 345:usb_lib/usb_core.c ****       || pInformation->Current_Configuration == 0)
+ 746              		.loc 1 345 0
+ 747 002e 4488     		ldrh	r4, [r0, #2]
+ 748              	.LVL65:
+ 749 0030 DCB9     		cbnz	r4, .L81
+ 345:usb_lib/usb_core.c ****       || pInformation->Current_Configuration == 0)
+ 750              		.loc 1 345 0 is_stmt 0 discriminator 1
+ 751 0032 D2B1     		cbz	r2, .L81
+ 346:usb_lib/usb_core.c ****   {
+ 752              		.loc 1 346 0 is_stmt 1
+ 753 0034 827A     		ldrb	r2, [r0, #10]	@ zero_extendqisi2
+ 754              	.LVL66:
+ 755 0036 C2B1     		cbz	r2, .L81
+ 756              	.LBB11:
+ 355:usb_lib/usb_core.c ****     }
+ 757              		.loc 1 355 0
+ 758 0038 1A68     		ldr	r2, [r3]
+ 759              	.LBE11:
+ 352:usb_lib/usb_core.c ****     {
+ 760              		.loc 1 352 0
+ 761 003a 0029     		cmp	r1, #0
+ 762              	.LBB12:
+ 355:usb_lib/usb_core.c ****     }
+ 763              		.loc 1 355 0
+ 764 003c B5BF     		itete	lt
+ 765 003e 22F4E042 		biclt	r2, r2, #28672
+ 766              	.LBE12:
+ 767              	.LBB13:
+ 361:usb_lib/usb_core.c ****     }
+ 768              		.loc 1 361 0
+ 769 0042 22F48042 		bicge	r2, r2, #16384
+ 770              	.LBE13:
+ 771              	.LBB14:
+ 355:usb_lib/usb_core.c ****     }
+ 772              		.loc 1 355 0
+ 773 0046 22F04002 		biclt	r2, r2, #64
+ 774              	.LBE14:
+ 775              	.LBB15:
+ 361:usb_lib/usb_core.c ****     }
+ 776              		.loc 1 361 0
+ 777 004a 22F07002 		bicge	r2, r2, #112
+ 778              	.LBE15:
+ 779              	.LBB16:
+ 355:usb_lib/usb_core.c ****     }
+ 780              		.loc 1 355 0
+ 781 004e B5BF     		itete	lt
+ 782 0050 92B2     		uxthlt	r2, r2
+ 783              	.LBE16:
+ 784              	.LBB17:
+ 361:usb_lib/usb_core.c ****     }
+ 785              		.loc 1 361 0
+ 786 0052 92B2     		uxthge	r2, r2
+ 787              	.LBE17:
+ 788              	.LBB18:
+ 355:usb_lib/usb_core.c ****     }
+ 789              		.loc 1 355 0
+ 790 0054 82F01002 		eorlt	r2, r2, #16
+ 791              	.LVL67:
+ 792              	.LBE18:
+ 793              	.LBB19:
+ 361:usb_lib/usb_core.c ****     }
+ 794              		.loc 1 361 0
+ 795 0058 82F48052 		eorge	r2, r2, #4096
+ 796              	.LVL68:
+ 797 005c 1A60     		str	r2, [r3]
+ 798              	.LBE19:
+ 364:usb_lib/usb_core.c ****   return USB_SUCCESS;
+ 799              		.loc 1 364 0
+ 800 005e 064B     		ldr	r3, .L83+8
+ 801 0060 1B68     		ldr	r3, [r3]
+ 802 0062 9B69     		ldr	r3, [r3, #24]
+ 803 0064 9847     		blx	r3
+ 804              	.LVL69:
+ 365:usb_lib/usb_core.c **** }
+ 805              		.loc 1 365 0
+ 806 0066 0020     		movs	r0, #0
+ 807              	.L75:
+ 366:usb_lib/usb_core.c **** 
+ 808              		.loc 1 366 0
+ 809 0068 38BD     		pop	{r3, r4, r5, pc}
+ 810              	.LVL70:
+ 811              	.L81:
+ 348:usb_lib/usb_core.c ****   }
+ 812              		.loc 1 348 0
+ 813 006a 0220     		movs	r0, #2
+ 814              	.LVL71:
+ 815 006c FCE7     		b	.L75
+ 816              	.L84:
+ 817 006e 00BF     		.align	2
+ 818              	.L83:
+ 819 0070 00000000 		.word	pInformation
+ 820 0074 00000000 		.word	Device_Table
+ 821 0078 00000000 		.word	pUser_Standard_Requests
+ 822              		.cfi_endproc
+ 823              	.LFE6:
+ 825              		.section	.text.Standard_SetDeviceFeature,"ax",%progbits
+ 826              		.align	1
+ 827              		.global	Standard_SetDeviceFeature
+ 828              		.syntax unified
+ 829              		.thumb
+ 830              		.thumb_func
+ 831              		.fpu softvfp
+ 833              	Standard_SetDeviceFeature:
+ 834              	.LFB7:
+ 377:usb_lib/usb_core.c ****   SetBit(pInformation->Current_Feature, 5);
+ 835              		.loc 1 377 0
+ 836              		.cfi_startproc
+ 837              		@ args = 0, pretend = 0, frame = 0
+ 838              		@ frame_needed = 0, uses_anonymous_args = 0
+ 839 0000 08B5     		push	{r3, lr}
+ 840              		.cfi_def_cfa_offset 8
+ 841              		.cfi_offset 3, -8
+ 842              		.cfi_offset 14, -4
+ 378:usb_lib/usb_core.c ****   pUser_Standard_Requests->User_SetDeviceFeature();
+ 843              		.loc 1 378 0
+ 844 0002 064B     		ldr	r3, .L86
+ 845 0004 1A68     		ldr	r2, [r3]
+ 846 0006 537A     		ldrb	r3, [r2, #9]	@ zero_extendqisi2
+ 847 0008 43F02003 		orr	r3, r3, #32
+ 848 000c 5372     		strb	r3, [r2, #9]
+ 379:usb_lib/usb_core.c ****   return USB_SUCCESS;
+ 849              		.loc 1 379 0
+ 850 000e 044B     		ldr	r3, .L86+4
+ 851 0010 1B68     		ldr	r3, [r3]
+ 852 0012 DB69     		ldr	r3, [r3, #28]
+ 853 0014 9847     		blx	r3
+ 854              	.LVL72:
+ 381:usb_lib/usb_core.c **** 
+ 855              		.loc 1 381 0
+ 856 0016 0020     		movs	r0, #0
+ 857 0018 08BD     		pop	{r3, pc}
+ 858              	.L87:
+ 859 001a 00BF     		.align	2
+ 860              	.L86:
+ 861 001c 00000000 		.word	pInformation
+ 862 0020 00000000 		.word	pUser_Standard_Requests
+ 863              		.cfi_endproc
+ 864              	.LFE7:
+ 866              		.section	.text.Standard_GetDescriptorData,"ax",%progbits
+ 867              		.align	1
+ 868              		.global	Standard_GetDescriptorData
+ 869              		.syntax unified
+ 870              		.thumb
+ 871              		.thumb_func
+ 872              		.fpu softvfp
+ 874              	Standard_GetDescriptorData:
+ 875              	.LFB8:
+ 403:usb_lib/usb_core.c ****   u32  wOffset;
+ 876              		.loc 1 403 0
+ 877              		.cfi_startproc
+ 878              		@ args = 0, pretend = 0, frame = 0
+ 879              		@ frame_needed = 0, uses_anonymous_args = 0
+ 880              	.LVL73:
+ 406:usb_lib/usb_core.c ****   if (Length == 0)
+ 881              		.loc 1 406 0
+ 882 0000 054B     		ldr	r3, .L91
+ 403:usb_lib/usb_core.c ****   u32  wOffset;
+ 883              		.loc 1 403 0
+ 884 0002 10B5     		push	{r4, lr}
+ 885              		.cfi_def_cfa_offset 8
+ 886              		.cfi_offset 4, -8
+ 887              		.cfi_offset 14, -4
+ 406:usb_lib/usb_core.c ****   if (Length == 0)
+ 888              		.loc 1 406 0
+ 889 0004 1C68     		ldr	r4, [r3]
+ 890 0006 628A     		ldrh	r2, [r4, #18]
+ 891              	.LVL74:
+ 407:usb_lib/usb_core.c ****   {
+ 892              		.loc 1 407 0
+ 893 0008 18B9     		cbnz	r0, .L89
+ 409:usb_lib/usb_core.c ****     return 0;
+ 894              		.loc 1 409 0
+ 895 000a 8B88     		ldrh	r3, [r1, #4]
+ 896 000c 9B1A     		subs	r3, r3, r2
+ 897 000e 2382     		strh	r3, [r4, #16]	@ movhi
+ 898              	.LVL75:
+ 899              	.L88:
+ 414:usb_lib/usb_core.c **** 
+ 900              		.loc 1 414 0
+ 901 0010 10BD     		pop	{r4, pc}
+ 902              	.LVL76:
+ 903              	.L89:
+ 413:usb_lib/usb_core.c **** }
+ 904              		.loc 1 413 0
+ 905 0012 0868     		ldr	r0, [r1]
+ 906              	.LVL77:
+ 907 0014 1044     		add	r0, r0, r2
+ 908 0016 FBE7     		b	.L88
+ 909              	.L92:
+ 910              		.align	2
+ 911              	.L91:
+ 912 0018 00000000 		.word	pInformation
+ 913              		.cfi_endproc
+ 914              	.LFE8:
+ 916              		.section	.text.Post0_Process,"ax",%progbits
+ 917              		.align	1
+ 918              		.global	Post0_Process
+ 919              		.syntax unified
+ 920              		.thumb
+ 921              		.thumb_func
+ 922              		.fpu softvfp
+ 924              	Post0_Process:
+ 925              	.LFB16:
  531:usb_lib/usb_core.c **** 
  532:usb_lib/usb_core.c **** /*******************************************************************************
  533:usb_lib/usb_core.c **** * Function Name  : NoData_Setup0.
@@ -1950,970 +2013,985 @@
  968:usb_lib/usb_core.c **** *******************************************************************************/
  969:usb_lib/usb_core.c **** u8 Post0_Process(void)
  970:usb_lib/usb_core.c **** {
- 898              		.loc 1 970 0
- 899              		.cfi_startproc
- 900              		@ args = 0, pretend = 0, frame = 0
- 901              		@ frame_needed = 0, uses_anonymous_args = 0
- 902 0000 08B5     		push	{r3, lr}
- 903              		.cfi_def_cfa_offset 8
- 904              		.cfi_offset 3, -8
- 905              		.cfi_offset 14, -4
+ 926              		.loc 1 970 0
+ 927              		.cfi_startproc
+ 928              		@ args = 0, pretend = 0, frame = 0
+ 929              		@ frame_needed = 0, uses_anonymous_args = 0
+ 930 0000 08B5     		push	{r3, lr}
+ 931              		.cfi_def_cfa_offset 8
+ 932              		.cfi_offset 3, -8
+ 933              		.cfi_offset 14, -4
  971:usb_lib/usb_core.c ****   SetEPRxCount(ENDP0, Device_Property.MaxPacketSize);
- 906              		.loc 1 971 0
- 907 0002 0B4B     		ldr	r3, .L96
- 908 0004 0020     		movs	r0, #0
- 909 0006 93F83010 		ldrb	r1, [r3, #48]	@ zero_extendqisi2
- 910 000a FFF7FEFF 		bl	SetEPRxCount
- 911              	.LVL85:
+ 934              		.loc 1 971 0
+ 935 0002 0B4B     		ldr	r3, .L95
+ 936 0004 0020     		movs	r0, #0
+ 937 0006 93F83010 		ldrb	r1, [r3, #48]	@ zero_extendqisi2
+ 938 000a FFF7FEFF 		bl	SetEPRxCount
+ 939              	.LVL78:
  972:usb_lib/usb_core.c **** 
  973:usb_lib/usb_core.c ****   if (pInformation->ControlState == STALLED)
- 912              		.loc 1 973 0
- 913 000e 094B     		ldr	r3, .L96+4
- 914 0010 1B68     		ldr	r3, [r3]
- 915 0012 187A     		ldrb	r0, [r3, #8]	@ zero_extendqisi2
- 916 0014 0828     		cmp	r0, #8
- 917 0016 06D1     		bne	.L95
+ 940              		.loc 1 973 0
+ 941 000e 094B     		ldr	r3, .L95+4
+ 942 0010 1B68     		ldr	r3, [r3]
+ 943 0012 187A     		ldrb	r0, [r3, #8]	@ zero_extendqisi2
+ 944 0014 0828     		cmp	r0, #8
+ 945 0016 06D1     		bne	.L94
  974:usb_lib/usb_core.c ****   {
  975:usb_lib/usb_core.c ****     vSetEPRxStatus(EP_RX_STALL);
- 918              		.loc 1 975 0
- 919 0018 074B     		ldr	r3, .L96+8
- 920 001a 4FF48052 		mov	r2, #4096
- 921 001e 1A80     		strh	r2, [r3]	@ movhi
+ 946              		.loc 1 975 0
+ 947 0018 4FF48052 		mov	r2, #4096
+ 948 001c 064B     		ldr	r3, .L95+8
+ 949 001e 1A80     		strh	r2, [r3]	@ movhi
  976:usb_lib/usb_core.c ****     vSetEPTxStatus(EP_TX_STALL);
- 922              		.loc 1 976 0
- 923 0020 064B     		ldr	r3, .L96+12
- 924 0022 1022     		movs	r2, #16
- 925 0024 1A80     		strh	r2, [r3]	@ movhi
- 926              	.L95:
+ 950              		.loc 1 976 0
+ 951 0020 1022     		movs	r2, #16
+ 952 0022 064B     		ldr	r3, .L95+12
+ 953 0024 1A80     		strh	r2, [r3]	@ movhi
+ 954              	.L94:
  977:usb_lib/usb_core.c ****   }
  978:usb_lib/usb_core.c **** 
  979:usb_lib/usb_core.c ****   return (pInformation->ControlState == PAUSE);
  980:usb_lib/usb_core.c **** }
- 927              		.loc 1 980 0
- 928 0026 B0F10903 		subs	r3, r0, #9
- 929 002a 5842     		rsbs	r0, r3, #0
- 930 002c 5841     		adcs	r0, r0, r3
- 931 002e 08BD     		pop	{r3, pc}
- 932              	.L97:
- 933              		.align	2
- 934              	.L96:
- 935 0030 00000000 		.word	Device_Property
- 936 0034 00000000 		.word	pInformation
- 937 0038 00000000 		.word	SaveRState
- 938 003c 00000000 		.word	SaveTState
- 939              		.cfi_endproc
- 940              	.LFE16:
- 942              		.section	.text.Setup0_Process,"ax",%progbits
- 943              		.align	1
- 944              		.global	Setup0_Process
- 945              		.thumb
- 946              		.thumb_func
- 948              	Setup0_Process:
- 949              	.LFB13:
- 845:usb_lib/usb_core.c **** {
- 950              		.loc 1 845 0
- 951              		.cfi_startproc
- 952              		@ args = 0, pretend = 0, frame = 8
- 953              		@ frame_needed = 0, uses_anonymous_args = 0
- 954 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
- 955              		.cfi_def_cfa_offset 24
- 956              		.cfi_offset 0, -24
- 957              		.cfi_offset 1, -20
- 958              		.cfi_offset 4, -16
- 959              		.cfi_offset 5, -12
- 960              		.cfi_offset 6, -8
- 961              		.cfi_offset 14, -4
- 853:usb_lib/usb_core.c ****   pBuf.b = PMAAddr + (u8 *)(_GetEPRxAddr(ENDP0) * 2); /* *2 for 32 bits addr */
- 962              		.loc 1 853 0
- 963 0002 964E     		ldr	r6, .L174
- 964 0004 964B     		ldr	r3, .L174+4
- 965 0006 3268     		ldr	r2, [r6]
- 855:usb_lib/usb_core.c ****   if (pInformation->ControlState != PAUSE)
- 966              		.loc 1 855 0
- 967 0008 964D     		ldr	r5, .L174+8
- 968 000a 92B2     		uxth	r2, r2
- 853:usb_lib/usb_core.c ****   pBuf.b = PMAAddr + (u8 *)(_GetEPRxAddr(ENDP0) * 2); /* *2 for 32 bits addr */
- 969              		.loc 1 853 0
- 970 000c 1344     		add	r3, r3, r2
- 971 000e 5B00     		lsls	r3, r3, #1
- 972 0010 1A68     		ldr	r2, [r3]
- 973              	.LVL86:
- 855:usb_lib/usb_core.c ****   if (pInformation->ControlState != PAUSE)
- 974              		.loc 1 855 0
- 975 0012 2B68     		ldr	r3, [r5]
- 976 0014 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
- 977 0016 0929     		cmp	r1, #9
- 978 0018 0FD0     		beq	.L99
- 979 001a 92B2     		uxth	r2, r2
- 980              	.LVL87:
- 853:usb_lib/usb_core.c ****   pBuf.b = PMAAddr + (u8 *)(_GetEPRxAddr(ENDP0) * 2); /* *2 for 32 bits addr */
- 981              		.loc 1 853 0
- 982 001c 5200     		lsls	r2, r2, #1
- 983 001e 02F18042 		add	r2, r2, #1073741824
- 984 0022 02F5C042 		add	r2, r2, #24576
- 857:usb_lib/usb_core.c ****     pInformation->USBbmRequestType = *pBuf.b++; /* bmRequestType */
- 985              		.loc 1 857 0
- 986 0026 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
- 987 0028 1970     		strb	r1, [r3]
- 858:usb_lib/usb_core.c ****     pInformation->USBbRequest = *pBuf.b++; /* bRequest */
- 988              		.loc 1 858 0
- 989 002a 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
- 990 002c 5970     		strb	r1, [r3, #1]
- 860:usb_lib/usb_core.c ****     pInformation->USBwValue = *pBuf.w++; /* wValue in Little Endian */
- 991              		.loc 1 860 0
- 992 002e 9188     		ldrh	r1, [r2, #4]
- 993 0030 5980     		strh	r1, [r3, #2]	@ movhi
- 862:usb_lib/usb_core.c ****     pInformation->USBwIndex  = *pBuf.w++; /* wIndex in Little Endian */
- 994              		.loc 1 862 0
- 995 0032 1189     		ldrh	r1, [r2, #8]
- 996 0034 9980     		strh	r1, [r3, #4]	@ movhi
- 864:usb_lib/usb_core.c ****     pInformation->USBwLength = *pBuf.w; /* wLength in Little Endian */
- 997              		.loc 1 864 0
- 998 0036 9289     		ldrh	r2, [r2, #12]
- 999 0038 DA80     		strh	r2, [r3, #6]	@ movhi
- 1000              	.L99:
- 867:usb_lib/usb_core.c ****   pInformation->ControlState = SETTING_UP;
- 1001              		.loc 1 867 0
- 1002 003a 0122     		movs	r2, #1
- 1003 003c 1A72     		strb	r2, [r3, #8]
- 868:usb_lib/usb_core.c ****   if (pInformation->USBwLength == 0)
- 1004              		.loc 1 868 0
- 1005 003e DA88     		ldrh	r2, [r3, #6]
- 1006 0040 5C78     		ldrb	r4, [r3, #1]	@ zero_extendqisi2
- 1007 0042 002A     		cmp	r2, #0
- 1008 0044 61D1     		bne	.L100
- 1009              	.LVL88:
- 1010              	.LBB16:
- 1011              	.LBB17:
- 545:usb_lib/usb_core.c ****   if (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT))
- 1012              		.loc 1 545 0
- 1013 0046 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 1014 0048 12F07F02 		ands	r2, r2, #127
- 1015 004c 3AD1     		bne	.L101
- 549:usb_lib/usb_core.c ****     if (RequestNo == SET_CONFIGURATION)
- 1016              		.loc 1 549 0
- 1017 004e 092C     		cmp	r4, #9
- 1018 0050 02D1     		bne	.L102
- 551:usb_lib/usb_core.c ****       Result = Standard_SetConfiguration();
- 1019              		.loc 1 551 0
- 1020 0052 FFF7FEFF 		bl	Standard_SetConfiguration
- 1021              	.LVL89:
- 1022 0056 44E0     		b	.L103
- 1023              	.LVL90:
- 1024              	.L102:
- 555:usb_lib/usb_core.c ****     else if (RequestNo == SET_ADDRESS)
- 1025              		.loc 1 555 0
- 1026 0058 052C     		cmp	r4, #5
- 1027 005a 0FD1     		bne	.L104
- 557:usb_lib/usb_core.c ****       if ((pInformation->USBwValue0 > 127) || (pInformation->USBwValue1 != 0)
- 1028              		.loc 1 557 0
- 1029 005c 93F90220 		ldrsb	r2, [r3, #2]
- 1030 0060 002A     		cmp	r2, #0
- 1031 0062 01DA     		bge	.L105
- 1032              	.LVL91:
- 1033              	.L107:
- 562:usb_lib/usb_core.c ****         ControlState = STALLED;
- 1034              		.loc 1 562 0
- 1035 0064 0823     		movs	r3, #8
- 1036 0066 4DE0     		b	.L106
- 1037              	.LVL92:
- 1038              	.L105:
- 557:usb_lib/usb_core.c ****       if ((pInformation->USBwValue0 > 127) || (pInformation->USBwValue1 != 0)
- 1039              		.loc 1 557 0
- 1040 0068 DA78     		ldrb	r2, [r3, #3]	@ zero_extendqisi2
- 1041 006a 002A     		cmp	r2, #0
- 1042 006c FAD1     		bne	.L107
- 558:usb_lib/usb_core.c ****           || (pInformation->USBwIndex != 0)
- 1043              		.loc 1 558 0
- 1044 006e 9A88     		ldrh	r2, [r3, #4]
- 1045 0070 002A     		cmp	r2, #0
- 1046 0072 F7D1     		bne	.L107
- 559:usb_lib/usb_core.c ****           || (pInformation->Current_Configuration != 0))
- 1047              		.loc 1 559 0
- 1048 0074 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
- 1049 0076 002B     		cmp	r3, #0
- 1050 0078 37D0     		beq	.L139
- 1051 007a F3E7     		b	.L107
- 1052              	.L104:
- 571:usb_lib/usb_core.c ****     else if (RequestNo == SET_FEATURE)
- 1053              		.loc 1 571 0
- 1054 007c 032C     		cmp	r4, #3
- 1055 007e 13D1     		bne	.L109
- 573:usb_lib/usb_core.c ****       if ((pInformation->USBwValue0 == DEVICE_REMOTE_WAKEUP)
- 1056              		.loc 1 573 0
- 1057 0080 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
- 1058 0082 012A     		cmp	r2, #1
- 1059 0084 07D0     		beq	.L110
- 1060              	.LVL93:
- 1061              	.L112:
- 633:usb_lib/usb_core.c ****     Result = (*pProperty->Class_NoData_Setup)(RequestNo);
- 1062              		.loc 1 633 0
- 1063 0086 784B     		ldr	r3, .L174+12
- 1064 0088 2046     		mov	r0, r4
- 1065 008a 1B68     		ldr	r3, [r3]
- 1066 008c 5B69     		ldr	r3, [r3, #20]
- 1067 008e 9847     		blx	r3
- 1068              	.LVL94:
- 634:usb_lib/usb_core.c ****     if (Result == USB_NOT_READY)
- 1069              		.loc 1 634 0
- 1070 0090 0328     		cmp	r0, #3
- 1071 0092 28D1     		bne	.L168
- 1072 0094 35E0     		b	.L173
- 1073              	.LVL95:
- 1074              	.L110:
- 574:usb_lib/usb_core.c ****           && (pInformation->USBwIndex == 0)
- 1075              		.loc 1 574 0
- 1076 0096 9A88     		ldrh	r2, [r3, #4]
- 1077 0098 002A     		cmp	r2, #0
- 1078 009a F4D1     		bne	.L112
- 575:usb_lib/usb_core.c ****           && (ValBit(pInformation->Current_Feature, 5)))
- 1079              		.loc 1 575 0
- 1080 009c 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
- 1081 009e 9806     		lsls	r0, r3, #26
- 1082 00a0 F1D5     		bpl	.L112
- 577:usb_lib/usb_core.c ****         Result = Standard_SetDeviceFeature();
- 1083              		.loc 1 577 0
- 1084 00a2 FFF7FEFF 		bl	Standard_SetDeviceFeature
- 1085              	.LVL96:
- 1086 00a6 1CE0     		b	.L103
- 1087              	.LVL97:
- 1088              	.L109:
- 585:usb_lib/usb_core.c ****     else if (RequestNo == CLEAR_FEATURE)
- 1089              		.loc 1 585 0
- 1090 00a8 012C     		cmp	r4, #1
- 1091 00aa ECD1     		bne	.L112
- 587:usb_lib/usb_core.c ****       if (pInformation->USBwValue0 == DEVICE_REMOTE_WAKEUP
- 1092              		.loc 1 587 0
- 1093 00ac 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
- 1094 00ae 012A     		cmp	r2, #1
- 1095 00b0 E9D1     		bne	.L112
- 588:usb_lib/usb_core.c ****           && pInformation->USBwIndex == 0
- 1096              		.loc 1 588 0
- 1097 00b2 9A88     		ldrh	r2, [r3, #4]
- 1098 00b4 002A     		cmp	r2, #0
- 1099 00b6 E6D1     		bne	.L112
- 589:usb_lib/usb_core.c ****           && ValBit(pInformation->Current_Feature, 5))
- 1100              		.loc 1 589 0
- 1101 00b8 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
- 1102 00ba 9906     		lsls	r1, r3, #26
- 1103 00bc E3D5     		bpl	.L112
- 1104              	.L114:
- 591:usb_lib/usb_core.c ****         Result = Standard_ClearFeature();
- 1105              		.loc 1 591 0
- 1106 00be FFF7FEFF 		bl	Standard_ClearFeature
- 1107              	.LVL98:
- 1108 00c2 0EE0     		b	.L103
- 1109              	.LVL99:
- 1110              	.L101:
- 602:usb_lib/usb_core.c ****   else if (Type_Recipient == (STANDARD_REQUEST | INTERFACE_RECIPIENT))
- 1111              		.loc 1 602 0
- 1112 00c4 012A     		cmp	r2, #1
- 1113 00c6 04D1     		bne	.L113
- 605:usb_lib/usb_core.c ****     if (RequestNo == SET_INTERFACE)
- 1114              		.loc 1 605 0
- 1115 00c8 0B2C     		cmp	r4, #11
- 1116 00ca DCD1     		bne	.L112
- 607:usb_lib/usb_core.c ****       Result = Standard_SetInterface();
- 1117              		.loc 1 607 0
- 1118 00cc FFF7FEFF 		bl	Standard_SetInterface
- 1119              	.LVL100:
- 1120 00d0 07E0     		b	.L103
- 1121              	.LVL101:
- 1122              	.L113:
- 612:usb_lib/usb_core.c ****   else if (Type_Recipient == (STANDARD_REQUEST | ENDPOINT_RECIPIENT))
- 1123              		.loc 1 612 0
- 1124 00d2 022A     		cmp	r2, #2
- 1125 00d4 D7D1     		bne	.L112
- 615:usb_lib/usb_core.c ****     if (RequestNo == CLEAR_FEATURE)
- 1126              		.loc 1 615 0
- 1127 00d6 012C     		cmp	r4, #1
- 1128 00d8 F1D0     		beq	.L114
- 620:usb_lib/usb_core.c ****     else if (RequestNo == SET_FEATURE)
- 1129              		.loc 1 620 0
- 1130 00da 032C     		cmp	r4, #3
- 1131 00dc D3D1     		bne	.L112
- 622:usb_lib/usb_core.c ****       Result = Standard_SetEndPointFeature();
- 1132              		.loc 1 622 0
- 1133 00de FFF7FEFF 		bl	Standard_SetEndPointFeature
- 1134              	.LVL102:
- 1135              	.L103:
- 631:usb_lib/usb_core.c ****   if (Result != USB_SUCCESS)
- 1136              		.loc 1 631 0
- 1137 00e2 10B1     		cbz	r0, .L139
- 1138 00e4 CFE7     		b	.L112
- 1139              	.L168:
- 641:usb_lib/usb_core.c ****   if (Result != USB_SUCCESS)
- 1140              		.loc 1 641 0
- 1141 00e6 0028     		cmp	r0, #0
- 1142 00e8 BCD1     		bne	.L107
- 1143              	.LVL103:
- 1144              	.L139:
- 649:usb_lib/usb_core.c ****   USB_StatusIn();
- 1145              		.loc 1 649 0
- 1146 00ea 3268     		ldr	r2, [r6]
- 1147 00ec 5F4B     		ldr	r3, .L174+16
- 1148 00ee 92B2     		uxth	r2, r2
- 1149 00f0 1344     		add	r3, r3, r2
- 1150 00f2 5B00     		lsls	r3, r3, #1
- 1151 00f4 0022     		movs	r2, #0
- 1152 00f6 1A60     		str	r2, [r3]
- 1153 00f8 5D4B     		ldr	r3, .L174+20
- 1154 00fa 3022     		movs	r2, #48
- 1155 00fc 1A80     		strh	r2, [r3]	@ movhi
- 647:usb_lib/usb_core.c ****   ControlState = WAIT_STATUS_IN;/* After no data stage SETUP */
- 1156              		.loc 1 647 0
- 1157 00fe 0623     		movs	r3, #6
- 1158 0100 00E0     		b	.L106
- 1159              	.LVL104:
- 1160              	.L173:
- 636:usb_lib/usb_core.c ****       ControlState = PAUSE;
- 1161              		.loc 1 636 0
- 1162 0102 0923     		movs	r3, #9
- 1163              	.LVL105:
- 1164              	.L106:
- 652:usb_lib/usb_core.c ****   pInformation->ControlState = ControlState;
- 1165              		.loc 1 652 0
- 1166 0104 2A68     		ldr	r2, [r5]
- 1167 0106 1372     		strb	r3, [r2, #8]
- 1168 0108 D4E0     		b	.L115
- 1169              	.LVL106:
- 1170              	.L100:
- 1171              	.LBE17:
- 1172              	.LBE16:
- 1173              	.LBB18:
- 1174              	.LBB19:
- 677:usb_lib/usb_core.c ****   if (Request_No == GET_DESCRIPTOR)
- 1175              		.loc 1 677 0
- 1176 010a 062C     		cmp	r4, #6
- 1177 010c 18D1     		bne	.L116
- 679:usb_lib/usb_core.c ****     if (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT))
- 1178              		.loc 1 679 0
- 1179 010e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 1180 0110 5206     		lsls	r2, r2, #25
- 1181 0112 7CD1     		bne	.L130
- 1182              	.LBB20:
- 681:usb_lib/usb_core.c ****       u8 wValue1 = pInformation->USBwValue1;
- 1183              		.loc 1 681 0
- 1184 0114 DA78     		ldrb	r2, [r3, #3]	@ zero_extendqisi2
- 1185              	.LVL107:
- 1186 0116 544B     		ldr	r3, .L174+12
- 1187              	.LVL108:
- 682:usb_lib/usb_core.c ****       if (wValue1 == DEVICE_DESCRIPTOR)
- 1188              		.loc 1 682 0
- 1189 0118 012A     		cmp	r2, #1
- 1190 011a 02D1     		bne	.L118
- 684:usb_lib/usb_core.c ****         CopyRoutine = pProperty->GetDeviceDescriptor;
- 1191              		.loc 1 684 0
- 1192 011c 1B68     		ldr	r3, [r3]
- 1193 011e DB69     		ldr	r3, [r3, #28]
- 1194              	.LVL109:
- 1195 0120 6CE0     		b	.L119
- 1196              	.LVL110:
- 1197              	.L118:
- 686:usb_lib/usb_core.c ****       else if (wValue1 == CONFIG_DESCRIPTOR)
- 1198              		.loc 1 686 0
- 1199 0122 022A     		cmp	r2, #2
- 1200 0124 02D1     		bne	.L120
- 688:usb_lib/usb_core.c ****         CopyRoutine = pProperty->GetConfigDescriptor;
- 1201              		.loc 1 688 0
- 1202 0126 1B68     		ldr	r3, [r3]
- 1203 0128 1B6A     		ldr	r3, [r3, #32]
- 1204              	.LVL111:
- 1205 012a 67E0     		b	.L119
- 1206              	.LVL112:
- 1207              	.L120:
- 690:usb_lib/usb_core.c ****       else if (wValue1 == STRING_DESCRIPTOR)
- 1208              		.loc 1 690 0
- 1209 012c 032A     		cmp	r2, #3
- 1210 012e 02D1     		bne	.L121
- 692:usb_lib/usb_core.c ****         CopyRoutine = pProperty->GetStringDescriptor;
- 1211              		.loc 1 692 0
- 1212 0130 1B68     		ldr	r3, [r3]
- 1213 0132 5B6A     		ldr	r3, [r3, #36]
- 1214              	.LVL113:
- 1215 0134 62E0     		b	.L119
- 1216              	.LVL114:
- 1217              	.L121:
- 693:usb_lib/usb_core.c ****       } else if (wValue1 == 0x21) /* added to support functional descriptors */
- 1218              		.loc 1 693 0
- 1219 0136 212A     		cmp	r2, #33
- 1220 0138 69D1     		bne	.L130
- 695:usb_lib/usb_core.c **** 	CopyRoutine = pProperty->GetFunctionalDescriptor;
- 1221              		.loc 1 695 0
- 1222 013a 1B68     		ldr	r3, [r3]
- 1223 013c 9B6A     		ldr	r3, [r3, #40]
- 1224              	.LVL115:
- 1225 013e 5DE0     		b	.L119
- 1226              	.LVL116:
- 1227              	.L116:
- 1228              	.LBE20:
- 701:usb_lib/usb_core.c ****   else if ((Request_No == GET_STATUS) && (pInformation->USBwValue == 0)
- 1229              		.loc 1 701 0
- 1230 0140 002C     		cmp	r4, #0
- 1231 0142 3CD1     		bne	.L122
- 1232 0144 5988     		ldrh	r1, [r3, #2]
- 1233 0146 0029     		cmp	r1, #0
- 1234 0148 61D1     		bne	.L130
- 703:usb_lib/usb_core.c ****            && (pInformation->USBwIndex1 == 0))
- 1235              		.loc 1 703 0
- 1236 014a 5A68     		ldr	r2, [r3, #4]
- 1237 014c 22F0FF02 		bic	r2, r2, #255
- 1238 0150 B2F5003F 		cmp	r2, #131072
- 1239 0154 5BD1     		bne	.L130
- 706:usb_lib/usb_core.c ****     if ((Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT))
- 1240              		.loc 1 706 0
- 1241 0156 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 1242 0158 12F07F02 		ands	r2, r2, #127
- 1243 015c 04D1     		bne	.L123
- 707:usb_lib/usb_core.c ****         && (pInformation->USBwIndex == 0))
- 1244              		.loc 1 707 0
- 1245 015e 9B88     		ldrh	r3, [r3, #4]
- 1246 0160 002B     		cmp	r3, #0
- 1247 0162 00F0AB80 		beq	.L124
- 1248 0166 52E0     		b	.L130
- 1249              	.L123:
- 713:usb_lib/usb_core.c ****     else if (Type_Recipient == (STANDARD_REQUEST | INTERFACE_RECIPIENT))
- 1250              		.loc 1 713 0
- 1251 0168 012A     		cmp	r2, #1
- 1252 016a 0CD1     		bne	.L125
- 715:usb_lib/usb_core.c ****       if (((*pProperty->Class_Get_Interface_Setting)(pInformation->USBwIndex0, 0) == USB_SUCCESS)
- 1253              		.loc 1 715 0
- 1254 016c 3E4A     		ldr	r2, .L174+12
- 1255 016e 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
- 1256 0170 1268     		ldr	r2, [r2]
- 1257 0172 9269     		ldr	r2, [r2, #24]
- 1258 0174 9047     		blx	r2
- 1259              	.LVL117:
- 1260 0176 0028     		cmp	r0, #0
- 1261 0178 49D1     		bne	.L130
- 716:usb_lib/usb_core.c ****           && (pInformation->Current_Configuration != 0))
- 1262              		.loc 1 716 0
- 1263 017a 2B68     		ldr	r3, [r5]
- 1264 017c 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
- 1265 017e 002B     		cmp	r3, #0
- 1266 0180 40F09C80 		bne	.L124
- 1267 0184 43E0     		b	.L130
- 1268              	.L125:
- 723:usb_lib/usb_core.c ****     else if (Type_Recipient == (STANDARD_REQUEST | ENDPOINT_RECIPIENT))
- 1269              		.loc 1 723 0
- 1270 0186 022A     		cmp	r2, #2
- 1271 0188 41D1     		bne	.L130
- 725:usb_lib/usb_core.c ****       Related_Endpoint = (pInformation->USBwIndex0 & 0x0f);
- 1272              		.loc 1 725 0
- 1273 018a 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 739:usb_lib/usb_core.c ****       if ((Related_Endpoint < Device_Table.Total_Endpoint) && (Reserved == 0)
- 1274              		.loc 1 739 0
- 1275 018c 3948     		ldr	r0, .L174+24
- 725:usb_lib/usb_core.c ****       Related_Endpoint = (pInformation->USBwIndex0 & 0x0f);
- 1276              		.loc 1 725 0
- 1277 018e 03F00F01 		and	r1, r3, #15
- 1278              	.LVL118:
- 1279 0192 8A00     		lsls	r2, r1, #2
- 732:usb_lib/usb_core.c ****         Status = _GetEPTxStatus(Related_Endpoint);
- 1280              		.loc 1 732 0
- 1281 0194 02F18042 		add	r2, r2, #1073741824
- 1282 0198 02F5B842 		add	r2, r2, #23552
- 1283 019c 1268     		ldr	r2, [r2]
- 739:usb_lib/usb_core.c ****       if ((Related_Endpoint < Device_Table.Total_Endpoint) && (Reserved == 0)
- 1284              		.loc 1 739 0
- 1285 019e 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
- 728:usb_lib/usb_core.c ****       if (ValBit(pInformation->USBwIndex0, 7))
- 1286              		.loc 1 728 0
- 1287 01a0 13F0800F 		tst	r3, #128
- 732:usb_lib/usb_core.c ****         Status = _GetEPTxStatus(Related_Endpoint);
- 1288              		.loc 1 732 0
- 1289 01a4 14BF     		ite	ne
- 1290 01a6 02F03002 		andne	r2, r2, #48
- 1291              	.LVL119:
- 736:usb_lib/usb_core.c ****         Status = _GetEPRxStatus(Related_Endpoint);
- 1292              		.loc 1 736 0
- 1293 01aa 02F44052 		andeq	r2, r2, #12288
- 1294              	.LVL120:
- 739:usb_lib/usb_core.c ****       if ((Related_Endpoint < Device_Table.Total_Endpoint) && (Reserved == 0)
- 1295              		.loc 1 739 0
- 1296 01ae 8142     		cmp	r1, r0
- 1297 01b0 2DD2     		bcs	.L130
- 1298 01b2 13F0700F 		tst	r3, #112
- 1299 01b6 2AD1     		bne	.L130
- 740:usb_lib/usb_core.c ****           && (Status != 0))
- 1300              		.loc 1 740 0
- 1301 01b8 002A     		cmp	r2, #0
- 1302 01ba 7FD1     		bne	.L124
- 1303 01bc 27E0     		b	.L130
- 1304              	.LVL121:
- 1305              	.L122:
- 749:usb_lib/usb_core.c ****   else if (Request_No == GET_CONFIGURATION)
- 1306              		.loc 1 749 0
- 1307 01be 082C     		cmp	r4, #8
- 1308 01c0 03D1     		bne	.L128
- 751:usb_lib/usb_core.c ****     if (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT))
- 1309              		.loc 1 751 0
- 1310 01c2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1311 01c4 5B06     		lsls	r3, r3, #25
- 1312 01c6 7BD0     		beq	.L142
- 1313 01c8 21E0     		b	.L130
- 1314              	.L128:
- 757:usb_lib/usb_core.c ****   else if (Request_No == GET_INTERFACE)
- 1315              		.loc 1 757 0
- 1316 01ca 0A2C     		cmp	r4, #10
- 1317 01cc 1FD1     		bne	.L130
- 759:usb_lib/usb_core.c ****     if ((Type_Recipient == (STANDARD_REQUEST | INTERFACE_RECIPIENT))
- 1318              		.loc 1 759 0
- 1319 01ce 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 1320 01d0 02F07F02 		and	r2, r2, #127
- 1321 01d4 012A     		cmp	r2, #1
- 1322 01d6 1AD1     		bne	.L130
- 760:usb_lib/usb_core.c ****         && (pInformation->Current_Configuration != 0) && (pInformation->USBwValue == 0)
- 1323              		.loc 1 760 0
- 1324 01d8 9A7A     		ldrb	r2, [r3, #10]	@ zero_extendqisi2
- 1325 01da C2B1     		cbz	r2, .L130
- 1326 01dc 5988     		ldrh	r1, [r3, #2]
- 1327 01de B1B9     		cbnz	r1, .L130
- 761:usb_lib/usb_core.c ****         && (pInformation->USBwIndex1 == 0) && (pInformation->USBwLength == 0x0001)
- 1328              		.loc 1 761 0
- 1329 01e0 5A68     		ldr	r2, [r3, #4]
- 1330 01e2 22F0FF02 		bic	r2, r2, #255
- 1331 01e6 B2F5803F 		cmp	r2, #65536
- 1332 01ea 10D1     		bne	.L130
- 762:usb_lib/usb_core.c ****         && ((*pProperty->Class_Get_Interface_Setting)(pInformation->USBwIndex0, 0) == USB_SUCCESS))
- 1333              		.loc 1 762 0
- 1334 01ec 1E4A     		ldr	r2, .L174+12
- 1335 01ee 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
- 1336 01f0 1268     		ldr	r2, [r2]
- 1337 01f2 9269     		ldr	r2, [r2, #24]
- 1338 01f4 9047     		blx	r2
- 1339              	.LVL122:
- 1340 01f6 0028     		cmp	r0, #0
- 1341 01f8 64D0     		beq	.L143
- 1342 01fa 08E0     		b	.L130
- 1343              	.LVL123:
- 1344              	.L119:
- 769:usb_lib/usb_core.c ****   if (CopyRoutine)
- 1345              		.loc 1 769 0
- 1346 01fc 3BB1     		cbz	r3, .L130
- 1347              	.LVL124:
- 1348              	.L140:
- 771:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.Usb_wOffset = wOffset;
- 1349              		.loc 1 771 0
- 1350 01fe 2A68     		ldr	r2, [r5]
- 1351 0200 0024     		movs	r4, #0
- 1352              	.LVL125:
- 1353 0202 5482     		strh	r4, [r2, #18]	@ movhi
- 772:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.CopyData = CopyRoutine;
- 1354              		.loc 1 772 0
- 1355 0204 9361     		str	r3, [r2, #24]
- 775:usb_lib/usb_core.c ****     (*CopyRoutine)(0);
- 1356              		.loc 1 775 0
- 1357 0206 2046     		mov	r0, r4
- 1358 0208 9847     		blx	r3
- 1359              	.LVL126:
- 776:usb_lib/usb_core.c ****     Result = USB_SUCCESS;
- 1360              		.loc 1 776 0
- 1361 020a 2046     		mov	r0, r4
- 1362 020c 0AE0     		b	.L131
- 1363              	.LVL127:
- 1364              	.L130:
- 780:usb_lib/usb_core.c ****     Result = (*pProperty->Class_Data_Setup)(pInformation->USBbRequest);
- 1365              		.loc 1 780 0
- 1366 020e 164B     		ldr	r3, .L174+12
- 1367 0210 1A68     		ldr	r2, [r3]
- 1368 0212 2B68     		ldr	r3, [r5]
- 1369 0214 1269     		ldr	r2, [r2, #16]
- 1370 0216 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 1371 0218 9047     		blx	r2
- 1372              	.LVL128:
- 781:usb_lib/usb_core.c ****     if (Result == USB_NOT_READY)
- 1373              		.loc 1 781 0
- 1374 021a 0328     		cmp	r0, #3
- 1375 021c 02D1     		bne	.L131
- 783:usb_lib/usb_core.c ****       pInformation->ControlState = PAUSE;
- 1376              		.loc 1 783 0
- 1377 021e 114B     		ldr	r3, .L174+8
- 1378 0220 1B68     		ldr	r3, [r3]
- 1379 0222 05E0     		b	.L172
- 1380              	.LVL129:
- 1381              	.L131:
- 788:usb_lib/usb_core.c ****   if (pInformation->Ctrl_Info.Usb_wLength == 0xFFFF)
- 1382              		.loc 1 788 0
- 1383 0224 2B68     		ldr	r3, [r5]
- 1384 0226 4FF6FF71 		movw	r1, #65535
- 1385 022a 1A8A     		ldrh	r2, [r3, #16]
- 1386 022c 8A42     		cmp	r2, r1
- 1387 022e 01D1     		bne	.L132
- 1388              	.LVL130:
- 1389              	.L172:
- 791:usb_lib/usb_core.c ****     pInformation->ControlState = PAUSE;
- 1390              		.loc 1 791 0
- 1391 0230 0922     		movs	r2, #9
- 1392 0232 03E0     		b	.L171
- 1393              	.LVL131:
- 1394              	.L132:
- 794:usb_lib/usb_core.c ****   if ((Result == USB_UNSUPPORT) || (pInformation->Ctrl_Info.Usb_wLength == 0))
- 1395              		.loc 1 794 0
- 1396 0234 0228     		cmp	r0, #2
- 1397 0236 00D0     		beq	.L133
- 1398 0238 12B9     		cbnz	r2, .L134
- 1399              	.L133:
- 797:usb_lib/usb_core.c ****     pInformation->ControlState = STALLED;
- 1400              		.loc 1 797 0
- 1401 023a 0822     		movs	r2, #8
- 1402              	.LVL132:
- 1403              	.L171:
- 1404 023c 1A72     		strb	r2, [r3, #8]
- 1405 023e 39E0     		b	.L115
- 1406              	.LVL133:
- 1407              	.L134:
- 802:usb_lib/usb_core.c ****   if (ValBit(pInformation->USBbmRequestType, 7))
- 1408              		.loc 1 802 0
- 1409 0240 93F90010 		ldrsb	r1, [r3]
- 1410 0244 0029     		cmp	r1, #0
- 1411 0246 2FDA     		bge	.L135
- 1412              	.LBB21:
- 805:usb_lib/usb_core.c ****     vu32 wLength = pInformation->USBwLength;
- 1413              		.loc 1 805 0
- 1414 0248 D988     		ldrh	r1, [r3, #6]
- 1415 024a 0191     		str	r1, [sp, #4]
- 808:usb_lib/usb_core.c ****     if (pInformation->Ctrl_Info.Usb_wLength > wLength)
- 1416              		.loc 1 808 0
- 1417 024c 0198     		ldr	r0, [sp, #4]
- 1418              	.LVL134:
- 1419 024e 8242     		cmp	r2, r0
- 1420 0250 0548     		ldr	r0, .L174+12
- 1421 0252 11D9     		bls	.L136
- 810:usb_lib/usb_core.c ****       pInformation->Ctrl_Info.Usb_wLength = wLength;
- 1422              		.loc 1 810 0
- 1423 0254 019A     		ldr	r2, [sp, #4]
- 1424 0256 1A82     		strh	r2, [r3, #16]	@ movhi
- 1425 0258 1FE0     		b	.L137
- 1426              	.L175:
- 1427 025a 00BF     		.align	2
- 1428              	.L174:
- 1429 025c 505C0040 		.word	1073765456
- 1430 0260 04300020 		.word	536883204
- 1431 0264 00000000 		.word	pInformation
- 1432 0268 00000000 		.word	pProperty
- 1433 026c 02300020 		.word	536883202
- 1434 0270 00000000 		.word	SaveTState
- 1435 0274 00000000 		.word	Device_Table
- 1436              	.L136:
- 813:usb_lib/usb_core.c ****     else if (pInformation->Ctrl_Info.Usb_wLength < pInformation->USBwLength)
- 1437              		.loc 1 813 0
- 1438 0278 8A42     		cmp	r2, r1
- 1439 027a 0ED2     		bcs	.L137
- 815:usb_lib/usb_core.c ****       if (pInformation->Ctrl_Info.Usb_wLength < pProperty->MaxPacketSize)
- 1440              		.loc 1 815 0
- 1441 027c 0168     		ldr	r1, [r0]
- 1442 027e 91F83010 		ldrb	r1, [r1, #48]	@ zero_extendqisi2
- 1443 0282 8A42     		cmp	r2, r1
- 1444 0284 01D2     		bcs	.L138
- 817:usb_lib/usb_core.c ****         Data_Mul_MaxPacketSize = FALSE;
- 1445              		.loc 1 817 0
- 1446 0286 0021     		movs	r1, #0
- 1447 0288 05E0     		b	.L170
- 1448              	.L138:
- 819:usb_lib/usb_core.c ****       else if ((pInformation->Ctrl_Info.Usb_wLength % pProperty->MaxPacketSize) == 0)
- 1449              		.loc 1 819 0
- 1450 028a 92FBF1F4 		sdiv	r4, r2, r1
- 1451 028e 01FB1422 		mls	r2, r1, r4, r2
- 1452 0292 12B9     		cbnz	r2, .L137
- 821:usb_lib/usb_core.c ****         Data_Mul_MaxPacketSize = TRUE;
- 1453              		.loc 1 821 0
- 1454 0294 0121     		movs	r1, #1
- 1455              	.L170:
- 1456 0296 0C4A     		ldr	r2, .L176
- 1457 0298 1170     		strb	r1, [r2]
- 1458              	.L137:
- 825:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.PacketSize = pProperty->MaxPacketSize;
- 1459              		.loc 1 825 0
- 1460 029a 0268     		ldr	r2, [r0]
- 1461 029c 92F83020 		ldrb	r2, [r2, #48]	@ zero_extendqisi2
- 1462 02a0 9A82     		strh	r2, [r3, #20]	@ movhi
- 826:usb_lib/usb_core.c ****     DataStageIn();
- 1463              		.loc 1 826 0
- 1464 02a2 FFF7FEFF 		bl	DataStageIn
- 1465              	.LVL135:
- 1466 02a6 05E0     		b	.L115
- 1467              	.LVL136:
- 1468              	.L135:
- 1469              	.LBE21:
- 830:usb_lib/usb_core.c ****     pInformation->ControlState = OUT_DATA;
- 1470              		.loc 1 830 0
- 1471 02a8 0322     		movs	r2, #3
- 1472 02aa 1A72     		strb	r2, [r3, #8]
- 831:usb_lib/usb_core.c ****     vSetEPRxStatus(EP_RX_VALID); /* enable for next data reception */
- 1473              		.loc 1 831 0
- 1474 02ac 074B     		ldr	r3, .L176+4
- 1475 02ae 4FF44052 		mov	r2, #12288
- 1476 02b2 1A80     		strh	r2, [r3]	@ movhi
- 1477              	.LVL137:
- 1478              	.L115:
- 1479              	.LBE19:
- 1480              	.LBE18:
- 878:usb_lib/usb_core.c ****   return Post0_Process();
- 1481              		.loc 1 878 0
- 1482 02b4 FFF7FEFF 		bl	Post0_Process
- 1483              	.LVL138:
- 879:usb_lib/usb_core.c **** }
- 1484              		.loc 1 879 0
- 1485 02b8 02B0     		add	sp, sp, #8
- 1486              		@ sp needed
- 1487 02ba 70BD     		pop	{r4, r5, r6, pc}
- 1488              	.LVL139:
- 1489              	.L124:
- 1490              	.LBB23:
- 1491              	.LBB22:
- 709:usb_lib/usb_core.c ****       CopyRoutine = Standard_GetStatus;
- 1492              		.loc 1 709 0
- 1493 02bc 044B     		ldr	r3, .L176+8
- 1494 02be 9EE7     		b	.L140
- 1495              	.L142:
- 753:usb_lib/usb_core.c ****       CopyRoutine = Standard_GetConfiguration;
- 1496              		.loc 1 753 0
- 1497 02c0 044B     		ldr	r3, .L176+12
- 1498 02c2 9CE7     		b	.L140
- 1499              	.L143:
- 764:usb_lib/usb_core.c ****       CopyRoutine = Standard_GetInterface;
- 1500              		.loc 1 764 0
- 1501 02c4 044B     		ldr	r3, .L176+16
- 1502              	.LVL140:
- 1503 02c6 9AE7     		b	.L140
- 1504              	.L177:
- 1505              		.align	2
- 1506              	.L176:
- 1507 02c8 00000000 		.word	.LANCHOR0
- 1508 02cc 00000000 		.word	SaveRState
- 1509 02d0 00000000 		.word	Standard_GetStatus
- 1510 02d4 00000000 		.word	Standard_GetConfiguration
- 1511 02d8 00000000 		.word	Standard_GetInterface
- 1512              	.LBE22:
- 1513              	.LBE23:
- 1514              		.cfi_endproc
- 1515              	.LFE13:
- 1517              		.section	.text.Out0_Process,"ax",%progbits
- 1518              		.align	1
- 1519              		.global	Out0_Process
- 1520              		.thumb
- 1521              		.thumb_func
- 1523              	Out0_Process:
- 1524              	.LFB15:
- 929:usb_lib/usb_core.c **** {
- 1525              		.loc 1 929 0
- 1526              		.cfi_startproc
- 1527              		@ args = 0, pretend = 0, frame = 0
- 1528              		@ frame_needed = 0, uses_anonymous_args = 0
- 1529 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 1530              		.cfi_def_cfa_offset 24
- 1531              		.cfi_offset 3, -24
- 1532              		.cfi_offset 4, -20
- 1533              		.cfi_offset 5, -16
- 1534              		.cfi_offset 6, -12
- 1535              		.cfi_offset 7, -8
- 1536              		.cfi_offset 14, -4
- 930:usb_lib/usb_core.c ****   u32 ControlState = pInformation->ControlState;
- 1537              		.loc 1 930 0
- 1538 0002 2B4D     		ldr	r5, .L201
- 1539 0004 2C68     		ldr	r4, [r5]
- 1540 0006 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
- 1541              	.LVL141:
- 932:usb_lib/usb_core.c ****   if ((ControlState == OUT_DATA) || (ControlState == LAST_OUT_DATA))
- 1542              		.loc 1 932 0
- 1543 0008 032B     		cmp	r3, #3
- 1544 000a 01D0     		beq	.L179
- 932:usb_lib/usb_core.c ****   if ((ControlState == OUT_DATA) || (ControlState == LAST_OUT_DATA))
- 1545              		.loc 1 932 0 is_stmt 0 discriminator 1
- 1546 000c 052B     		cmp	r3, #5
- 1547 000e 41D1     		bne	.L180
- 1548              	.L179:
- 1549              	.LVL142:
- 1550              	.LBB27:
- 1551              	.LBB28:
- 430:usb_lib/usb_core.c ****   if (pEPinfo->CopyData && save_rLength)
- 1552              		.loc 1 430 0 is_stmt 1
- 1553 0010 A369     		ldr	r3, [r4, #24]
- 1554              	.LVL143:
- 428:usb_lib/usb_core.c ****   save_rLength = pEPinfo->Usb_rLength;
- 1555              		.loc 1 428 0
- 1556 0012 228A     		ldrh	r2, [r4, #16]
- 1557              	.LVL144:
- 430:usb_lib/usb_core.c ****   if (pEPinfo->CopyData && save_rLength)
- 1558              		.loc 1 430 0
- 1559 0014 ABB1     		cbz	r3, .L181
- 1560 0016 A2B1     		cbz	r2, .L181
- 1561              	.LBB29:
- 435:usb_lib/usb_core.c ****     Length = pEPinfo->PacketSize;
- 1562              		.loc 1 435 0
- 1563 0018 A68A     		ldrh	r6, [r4, #20]
- 1564              	.LVL145:
- 441:usb_lib/usb_core.c ****     Buffer = (*pEPinfo->CopyData)(Length);
- 1565              		.loc 1 441 0
- 1566 001a 9642     		cmp	r6, r2
- 1567 001c 28BF     		it	cs
- 1568 001e 1646     		movcs	r6, r2
- 1569              	.LVL146:
- 1570 0020 3046     		mov	r0, r6
- 1571 0022 9847     		blx	r3
- 1572              	.LVL147:
- 442:usb_lib/usb_core.c ****     pEPinfo->Usb_rLength -= Length;
- 1573              		.loc 1 442 0
- 1574 0024 238A     		ldrh	r3, [r4, #16]
- 441:usb_lib/usb_core.c ****     Buffer = (*pEPinfo->CopyData)(Length);
- 1575              		.loc 1 441 0
- 1576 0026 0746     		mov	r7, r0
- 1577              	.LVL148:
- 442:usb_lib/usb_core.c ****     pEPinfo->Usb_rLength -= Length;
- 1578              		.loc 1 442 0
- 1579 0028 9B1B     		subs	r3, r3, r6
- 1580 002a 2382     		strh	r3, [r4, #16]	@ movhi
- 443:usb_lib/usb_core.c ****     pEPinfo->Usb_rOffset += Length;
- 1581              		.loc 1 443 0
- 1582 002c 638A     		ldrh	r3, [r4, #18]
- 445:usb_lib/usb_core.c ****     PMAToUserBufferCopy(Buffer, GetEPRxAddr(ENDP0), Length);
- 1583              		.loc 1 445 0
- 1584 002e 0020     		movs	r0, #0
- 1585              	.LVL149:
- 443:usb_lib/usb_core.c ****     pEPinfo->Usb_rOffset += Length;
- 1586              		.loc 1 443 0
- 1587 0030 3344     		add	r3, r3, r6
- 1588 0032 6382     		strh	r3, [r4, #18]	@ movhi
- 445:usb_lib/usb_core.c ****     PMAToUserBufferCopy(Buffer, GetEPRxAddr(ENDP0), Length);
- 1589              		.loc 1 445 0
- 1590 0034 FFF7FEFF 		bl	GetEPRxAddr
- 1591              	.LVL150:
- 1592 0038 3246     		mov	r2, r6
- 1593 003a 0146     		mov	r1, r0
- 1594 003c 3846     		mov	r0, r7
- 1595 003e FFF7FEFF 		bl	PMAToUserBufferCopy
- 1596              	.LVL151:
- 1597              	.L181:
- 1598              	.LBE29:
- 448:usb_lib/usb_core.c ****   if (pEPinfo->Usb_rLength != 0)
- 1599              		.loc 1 448 0
- 1600 0042 238A     		ldrh	r3, [r4, #16]
- 1601 0044 53B1     		cbz	r3, .L182
- 450:usb_lib/usb_core.c ****     vSetEPRxStatus(EP_RX_VALID);/* re-enable for next data reception */
- 1602              		.loc 1 450 0
- 1603 0046 1B4B     		ldr	r3, .L201+4
- 451:usb_lib/usb_core.c ****     SetEPTxCount(ENDP0, 0);
- 1604              		.loc 1 451 0
- 1605 0048 0020     		movs	r0, #0
- 450:usb_lib/usb_core.c ****     vSetEPRxStatus(EP_RX_VALID);/* re-enable for next data reception */
- 1606              		.loc 1 450 0
- 1607 004a 4FF44052 		mov	r2, #12288
- 451:usb_lib/usb_core.c ****     SetEPTxCount(ENDP0, 0);
- 1608              		.loc 1 451 0
- 1609 004e 0146     		mov	r1, r0
- 450:usb_lib/usb_core.c ****     vSetEPRxStatus(EP_RX_VALID);/* re-enable for next data reception */
- 1610              		.loc 1 450 0
- 1611 0050 1A80     		strh	r2, [r3]	@ movhi
- 451:usb_lib/usb_core.c ****     SetEPTxCount(ENDP0, 0);
- 1612              		.loc 1 451 0
- 1613 0052 FFF7FEFF 		bl	SetEPTxCount
- 1614              	.LVL152:
- 452:usb_lib/usb_core.c ****     vSetEPTxStatus(EP_TX_VALID);/* Expect the host to abort the data OUT stage */
- 1615              		.loc 1 452 0
- 1616 0056 184B     		ldr	r3, .L201+8
- 1617 0058 3022     		movs	r2, #48
- 1618 005a 1A80     		strh	r2, [r3]	@ movhi
- 1619              	.L182:
- 455:usb_lib/usb_core.c ****   if (pEPinfo->Usb_rLength >= pEPinfo->PacketSize)
- 1620              		.loc 1 455 0
- 1621 005c 238A     		ldrh	r3, [r4, #16]
- 1622 005e A28A     		ldrh	r2, [r4, #20]
- 1623 0060 9A42     		cmp	r2, r3
- 1624 0062 02D8     		bhi	.L183
- 457:usb_lib/usb_core.c ****     pInformation->ControlState = OUT_DATA;
- 1625              		.loc 1 457 0
- 1626 0064 2B68     		ldr	r3, [r5]
- 1627 0066 0322     		movs	r2, #3
- 1628 0068 02E0     		b	.L200
- 1629              	.L183:
- 461:usb_lib/usb_core.c ****     if (pEPinfo->Usb_rLength > 0)
- 1630              		.loc 1 461 0
- 1631 006a 1BB1     		cbz	r3, .L185
- 463:usb_lib/usb_core.c ****       pInformation->ControlState = LAST_OUT_DATA;
- 1632              		.loc 1 463 0
- 1633 006c 2B68     		ldr	r3, [r5]
- 1634 006e 0522     		movs	r2, #5
- 1635              	.L200:
- 1636 0070 1A72     		strb	r2, [r3, #8]
- 1637 0072 0CE0     		b	.L184
- 1638              	.L185:
- 467:usb_lib/usb_core.c ****       pInformation->ControlState = WAIT_STATUS_IN;
- 1639              		.loc 1 467 0
- 1640 0074 2A68     		ldr	r2, [r5]
- 1641 0076 0621     		movs	r1, #6
- 1642 0078 1172     		strb	r1, [r2, #8]
- 468:usb_lib/usb_core.c ****       USB_StatusIn();
- 1643              		.loc 1 468 0
- 1644 007a 104A     		ldr	r2, .L201+12
- 1645 007c 1168     		ldr	r1, [r2]
- 1646 007e 104A     		ldr	r2, .L201+16
- 1647 0080 89B2     		uxth	r1, r1
- 1648 0082 0A44     		add	r2, r2, r1
- 1649 0084 5200     		lsls	r2, r2, #1
- 1650 0086 1360     		str	r3, [r2]
- 1651 0088 0B4B     		ldr	r3, .L201+8
- 1652 008a 3022     		movs	r2, #48
- 1653 008c 1A80     		strh	r2, [r3]	@ movhi
- 1654              	.L184:
- 1655              	.LBE28:
- 1656              	.LBE27:
- 935:usb_lib/usb_core.c ****     ControlState = pInformation->ControlState; /* may be changed outside the function */
- 1657              		.loc 1 935 0
- 1658 008e 2B68     		ldr	r3, [r5]
- 1659 0090 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
- 1660              	.LVL153:
- 1661 0092 06E0     		b	.L186
- 1662              	.LVL154:
- 1663              	.L180:
- 938:usb_lib/usb_core.c ****   else if (ControlState == WAIT_STATUS_OUT)
- 1664              		.loc 1 938 0
- 1665 0094 072B     		cmp	r3, #7
- 1666 0096 03D1     		bne	.L187
- 940:usb_lib/usb_core.c ****     (*pProperty->Process_Status_OUT)();
- 1667              		.loc 1 940 0
- 1668 0098 0A4B     		ldr	r3, .L201+20
- 1669              	.LVL155:
- 1670 009a 1B68     		ldr	r3, [r3]
- 1671 009c DB68     		ldr	r3, [r3, #12]
- 1672 009e 9847     		blx	r3
- 1673              	.LVL156:
- 1674              	.L187:
- 947:usb_lib/usb_core.c ****     ControlState = STALLED;
- 1675              		.loc 1 947 0
- 1676 00a0 0823     		movs	r3, #8
- 1677              	.L186:
- 1678              	.LVL157:
- 956:usb_lib/usb_core.c ****   pInformation->ControlState = ControlState;
- 1679              		.loc 1 956 0
- 1680 00a2 2A68     		ldr	r2, [r5]
- 1681 00a4 1372     		strb	r3, [r2, #8]
- 959:usb_lib/usb_core.c **** }
- 1682              		.loc 1 959 0
- 1683 00a6 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
- 1684              	.LVL158:
- 958:usb_lib/usb_core.c ****   return Post0_Process();
- 1685              		.loc 1 958 0
- 1686 00aa FFF7FEBF 		b	Post0_Process
- 1687              	.LVL159:
- 1688              	.L202:
- 1689 00ae 00BF     		.align	2
- 1690              	.L201:
- 1691 00b0 00000000 		.word	pInformation
- 1692 00b4 00000000 		.word	SaveRState
- 1693 00b8 00000000 		.word	SaveTState
- 1694 00bc 505C0040 		.word	1073765456
- 1695 00c0 02300020 		.word	536883202
- 1696 00c4 00000000 		.word	pProperty
- 1697              		.cfi_endproc
- 1698              	.LFE15:
- 1700              		.section	.text.SetDeviceAddress,"ax",%progbits
- 1701              		.align	1
- 1702              		.global	SetDeviceAddress
- 1703              		.thumb
- 1704              		.thumb_func
- 1706              	SetDeviceAddress:
- 1707              	.LFB17:
+ 955              		.loc 1 980 0
+ 956 0026 A0F10903 		sub	r3, r0, #9
+ 957 002a 5842     		rsbs	r0, r3, #0
+ 958 002c 5841     		adcs	r0, r0, r3
+ 959 002e 08BD     		pop	{r3, pc}
+ 960              	.L96:
+ 961              		.align	2
+ 962              	.L95:
+ 963 0030 00000000 		.word	Device_Property
+ 964 0034 00000000 		.word	pInformation
+ 965 0038 00000000 		.word	SaveRState
+ 966 003c 00000000 		.word	SaveTState
+ 967              		.cfi_endproc
+ 968              	.LFE16:
+ 970              		.section	.text.Setup0_Process,"ax",%progbits
+ 971              		.align	1
+ 972              		.global	Setup0_Process
+ 973              		.syntax unified
+ 974              		.thumb
+ 975              		.thumb_func
+ 976              		.fpu softvfp
+ 978              	Setup0_Process:
+ 979              	.LFB13:
+ 845:usb_lib/usb_core.c **** 
+ 980              		.loc 1 845 0
+ 981              		.cfi_startproc
+ 982              		@ args = 0, pretend = 0, frame = 8
+ 983              		@ frame_needed = 0, uses_anonymous_args = 0
+ 984 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 985              		.cfi_def_cfa_offset 24
+ 986              		.cfi_offset 4, -16
+ 987              		.cfi_offset 5, -12
+ 988              		.cfi_offset 6, -8
+ 989              		.cfi_offset 14, -4
+ 855:usb_lib/usb_core.c ****   {
+ 990              		.loc 1 855 0
+ 991 0002 964D     		ldr	r5, .L166
+ 853:usb_lib/usb_core.c **** 
+ 992              		.loc 1 853 0
+ 993 0004 964E     		ldr	r6, .L166+4
+ 855:usb_lib/usb_core.c ****   {
+ 994              		.loc 1 855 0
+ 995 0006 2B68     		ldr	r3, [r5]
+ 853:usb_lib/usb_core.c **** 
+ 996              		.loc 1 853 0
+ 997 0008 3168     		ldr	r1, [r6]
+ 998              	.LVL79:
+ 855:usb_lib/usb_core.c ****   {
+ 999              		.loc 1 855 0
+ 1000 000a 1A7A     		ldrb	r2, [r3, #8]	@ zero_extendqisi2
+ 1001 000c 092A     		cmp	r2, #9
+ 1002 000e 13D0     		beq	.L98
+ 853:usb_lib/usb_core.c **** 
+ 1003              		.loc 1 853 0
+ 1004 0010 944A     		ldr	r2, .L166+8
+ 1005 0012 89B2     		uxth	r1, r1
+ 1006              	.LVL80:
+ 1007 0014 0A44     		add	r2, r2, r1
+ 1008 0016 5200     		lsls	r2, r2, #1
+ 1009 0018 1288     		ldrh	r2, [r2]
+ 1010 001a 5200     		lsls	r2, r2, #1
+ 1011 001c 02F18042 		add	r2, r2, #1073741824
+ 1012 0020 02F5C042 		add	r2, r2, #24576
+ 857:usb_lib/usb_core.c ****     pInformation->USBbRequest = *pBuf.b++; /* bRequest */
+ 1013              		.loc 1 857 0
+ 1014 0024 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 1015 0026 1970     		strb	r1, [r3]
+ 858:usb_lib/usb_core.c ****     pBuf.w++;  /* word not accessed because of 32 bits addressing */
+ 1016              		.loc 1 858 0
+ 1017 0028 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 1018 002a 5970     		strb	r1, [r3, #1]
+ 860:usb_lib/usb_core.c ****     pBuf.w++;  /* word not accessed because of 32 bits addressing */
+ 1019              		.loc 1 860 0
+ 1020 002c 9188     		ldrh	r1, [r2, #4]
+ 1021 002e 5980     		strh	r1, [r3, #2]	@ movhi
+ 862:usb_lib/usb_core.c ****     pBuf.w++;  /* word not accessed because of 32 bits addressing */
+ 1022              		.loc 1 862 0
+ 1023 0030 1189     		ldrh	r1, [r2, #8]
+ 1024 0032 9980     		strh	r1, [r3, #4]	@ movhi
+ 864:usb_lib/usb_core.c ****   }
+ 1025              		.loc 1 864 0
+ 1026 0034 9289     		ldrh	r2, [r2, #12]
+ 1027 0036 DA80     		strh	r2, [r3, #6]	@ movhi
+ 1028              	.L98:
+ 867:usb_lib/usb_core.c ****   if (pInformation->USBwLength == 0)
+ 1029              		.loc 1 867 0
+ 1030 0038 0122     		movs	r2, #1
+ 1031 003a 1A72     		strb	r2, [r3, #8]
+ 868:usb_lib/usb_core.c ****   {
+ 1032              		.loc 1 868 0
+ 1033 003c DA88     		ldrh	r2, [r3, #6]
+ 1034 003e 5C78     		ldrb	r4, [r3, #1]	@ zero_extendqisi2
+ 1035 0040 002A     		cmp	r2, #0
+ 1036 0042 64D1     		bne	.L99
+ 1037              	.LVL81:
+ 1038 0044 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1039              	.LBB26:
+ 1040              	.LBB27:
+ 545:usb_lib/usb_core.c ****   {
+ 1041              		.loc 1 545 0
+ 1042 0046 12F07F02 		ands	r2, r2, #127
+ 1043 004a 4DD1     		bne	.L100
+ 549:usb_lib/usb_core.c ****     {
+ 1044              		.loc 1 549 0
+ 1045 004c 092C     		cmp	r4, #9
+ 1046 004e 03D1     		bne	.L101
+ 551:usb_lib/usb_core.c ****     }
+ 1047              		.loc 1 551 0
+ 1048 0050 FFF7FEFF 		bl	Standard_SetConfiguration
+ 1049              	.LVL82:
+ 1050              	.L102:
+ 631:usb_lib/usb_core.c ****   {
+ 1051              		.loc 1 631 0
+ 1052 0054 40BB     		cbnz	r0, .L110
+ 1053 0056 16E0     		b	.L113
+ 1054              	.LVL83:
+ 1055              	.L101:
+ 555:usb_lib/usb_core.c ****     {
+ 1056              		.loc 1 555 0
+ 1057 0058 052C     		cmp	r4, #5
+ 1058 005a 20D1     		bne	.L103
+ 557:usb_lib/usb_core.c ****           || (pInformation->USBwIndex != 0)
+ 1059              		.loc 1 557 0
+ 1060 005c 93F90220 		ldrsb	r2, [r3, #2]
+ 1061 0060 002A     		cmp	r2, #0
+ 1062 0062 07DA     		bge	.L104
+ 1063              	.LVL84:
+ 1064              	.L106:
+ 562:usb_lib/usb_core.c ****         goto exit_NoData_Setup0;
+ 1065              		.loc 1 562 0
+ 1066 0064 0823     		movs	r3, #8
+ 1067              	.L105:
+ 1068              	.LVL85:
+ 652:usb_lib/usb_core.c ****   return;
+ 1069              		.loc 1 652 0
+ 1070 0066 2A68     		ldr	r2, [r5]
+ 1071 0068 1372     		strb	r3, [r2, #8]
+ 1072              	.LVL86:
+ 1073              	.L114:
+ 1074              	.LBE27:
+ 1075              	.LBE26:
+ 879:usb_lib/usb_core.c **** 
+ 1076              		.loc 1 879 0
+ 1077 006a 02B0     		add	sp, sp, #8
+ 1078              		.cfi_remember_state
+ 1079              		.cfi_def_cfa_offset 16
+ 1080              		@ sp needed
+ 1081 006c BDE87040 		pop	{r4, r5, r6, lr}
+ 1082              		.cfi_restore 14
+ 1083              		.cfi_restore 6
+ 1084              		.cfi_restore 5
+ 1085              		.cfi_restore 4
+ 1086              		.cfi_def_cfa_offset 0
+ 878:usb_lib/usb_core.c **** }
+ 1087              		.loc 1 878 0
+ 1088 0070 FFF7FEBF 		b	Post0_Process
+ 1089              	.LVL87:
+ 1090              	.L104:
+ 1091              		.cfi_restore_state
+ 1092              	.LBB29:
+ 1093              	.LBB28:
+ 557:usb_lib/usb_core.c ****           || (pInformation->USBwIndex != 0)
+ 1094              		.loc 1 557 0
+ 1095 0074 DA78     		ldrb	r2, [r3, #3]	@ zero_extendqisi2
+ 1096 0076 002A     		cmp	r2, #0
+ 1097 0078 F4D1     		bne	.L106
+ 558:usb_lib/usb_core.c ****           || (pInformation->Current_Configuration != 0))
+ 1098              		.loc 1 558 0
+ 1099 007a 9A88     		ldrh	r2, [r3, #4]
+ 1100 007c 002A     		cmp	r2, #0
+ 1101 007e F1D1     		bne	.L106
+ 559:usb_lib/usb_core.c ****         /* Device Address should be 127 or less*/
+ 1102              		.loc 1 559 0
+ 1103 0080 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 1104              	.LVL88:
+ 1105 0082 002B     		cmp	r3, #0
+ 1106 0084 EED1     		bne	.L106
+ 1107              	.LVL89:
+ 1108              	.L113:
+ 649:usb_lib/usb_core.c **** 
+ 1109              		.loc 1 649 0
+ 1110 0086 3268     		ldr	r2, [r6]
+ 1111 0088 774B     		ldr	r3, .L166+12
+ 1112 008a 92B2     		uxth	r2, r2
+ 1113 008c 1344     		add	r3, r3, r2
+ 1114 008e 0022     		movs	r2, #0
+ 1115 0090 5B00     		lsls	r3, r3, #1
+ 1116 0092 1A60     		str	r2, [r3]
+ 1117 0094 3022     		movs	r2, #48
+ 1118 0096 754B     		ldr	r3, .L166+16
+ 1119 0098 1A80     		strh	r2, [r3]	@ movhi
+ 647:usb_lib/usb_core.c **** 
+ 1120              		.loc 1 647 0
+ 1121 009a 0623     		movs	r3, #6
+ 1122 009c E3E7     		b	.L105
+ 1123              	.LVL90:
+ 1124              	.L103:
+ 571:usb_lib/usb_core.c ****     {
+ 1125              		.loc 1 571 0
+ 1126 009e 032C     		cmp	r4, #3
+ 1127 00a0 14D1     		bne	.L107
+ 573:usb_lib/usb_core.c ****           && (pInformation->USBwIndex == 0)
+ 1128              		.loc 1 573 0
+ 1129 00a2 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 1130 00a4 012A     		cmp	r2, #1
+ 1131 00a6 08D0     		beq	.L108
+ 1132              	.LVL91:
+ 1133              	.L110:
+ 633:usb_lib/usb_core.c ****     if (Result == USB_NOT_READY)
+ 1134              		.loc 1 633 0
+ 1135 00a8 714B     		ldr	r3, .L166+20
+ 1136 00aa 2046     		mov	r0, r4
+ 1137 00ac 1B68     		ldr	r3, [r3]
+ 1138 00ae 5B69     		ldr	r3, [r3, #20]
+ 1139 00b0 9847     		blx	r3
+ 1140              	.LVL92:
+ 634:usb_lib/usb_core.c ****     {
+ 1141              		.loc 1 634 0
+ 1142 00b2 0328     		cmp	r0, #3
+ 1143 00b4 28D1     		bne	.L161
+ 636:usb_lib/usb_core.c ****       goto exit_NoData_Setup0;
+ 1144              		.loc 1 636 0
+ 1145 00b6 0923     		movs	r3, #9
+ 1146 00b8 D5E7     		b	.L105
+ 1147              	.LVL93:
+ 1148              	.L108:
+ 574:usb_lib/usb_core.c ****           && (ValBit(pInformation->Current_Feature, 5)))
+ 1149              		.loc 1 574 0
+ 1150 00ba 9A88     		ldrh	r2, [r3, #4]
+ 1151 00bc 002A     		cmp	r2, #0
+ 1152 00be F3D1     		bne	.L110
+ 575:usb_lib/usb_core.c ****       {
+ 1153              		.loc 1 575 0
+ 1154 00c0 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 1155              	.LVL94:
+ 1156 00c2 9A06     		lsls	r2, r3, #26
+ 1157 00c4 F0D5     		bpl	.L110
+ 577:usb_lib/usb_core.c ****       }
+ 1158              		.loc 1 577 0
+ 1159 00c6 FFF7FEFF 		bl	Standard_SetDeviceFeature
+ 1160              	.LVL95:
+ 1161 00ca C3E7     		b	.L102
+ 1162              	.LVL96:
+ 1163              	.L107:
+ 585:usb_lib/usb_core.c ****     {
+ 1164              		.loc 1 585 0
+ 1165 00cc 012C     		cmp	r4, #1
+ 1166 00ce EBD1     		bne	.L110
+ 587:usb_lib/usb_core.c ****           && pInformation->USBwIndex == 0
+ 1167              		.loc 1 587 0
+ 1168 00d0 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 1169 00d2 012A     		cmp	r2, #1
+ 1170 00d4 E8D1     		bne	.L110
+ 588:usb_lib/usb_core.c ****           && ValBit(pInformation->Current_Feature, 5))
+ 1171              		.loc 1 588 0
+ 1172 00d6 9A88     		ldrh	r2, [r3, #4]
+ 1173 00d8 002A     		cmp	r2, #0
+ 1174 00da E5D1     		bne	.L110
+ 589:usb_lib/usb_core.c ****       {
+ 1175              		.loc 1 589 0
+ 1176 00dc 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 1177              	.LVL97:
+ 1178 00de 9B06     		lsls	r3, r3, #26
+ 1179 00e0 E2D5     		bpl	.L110
+ 1180              	.L112:
+ 591:usb_lib/usb_core.c ****       }
+ 1181              		.loc 1 591 0
+ 1182 00e2 FFF7FEFF 		bl	Standard_ClearFeature
+ 1183              	.LVL98:
+ 1184 00e6 B5E7     		b	.L102
+ 1185              	.LVL99:
+ 1186              	.L100:
+ 602:usb_lib/usb_core.c ****   {
+ 1187              		.loc 1 602 0
+ 1188 00e8 012A     		cmp	r2, #1
+ 1189 00ea 04D1     		bne	.L111
+ 605:usb_lib/usb_core.c ****     {
+ 1190              		.loc 1 605 0
+ 1191 00ec 0B2C     		cmp	r4, #11
+ 1192 00ee DBD1     		bne	.L110
+ 607:usb_lib/usb_core.c ****     }
+ 1193              		.loc 1 607 0
+ 1194 00f0 FFF7FEFF 		bl	Standard_SetInterface
+ 1195              	.LVL100:
+ 1196 00f4 AEE7     		b	.L102
+ 1197              	.LVL101:
+ 1198              	.L111:
+ 612:usb_lib/usb_core.c ****   {
+ 1199              		.loc 1 612 0
+ 1200 00f6 022A     		cmp	r2, #2
+ 1201 00f8 D6D1     		bne	.L110
+ 615:usb_lib/usb_core.c ****     {
+ 1202              		.loc 1 615 0
+ 1203 00fa 012C     		cmp	r4, #1
+ 1204 00fc F1D0     		beq	.L112
+ 620:usb_lib/usb_core.c ****     {
+ 1205              		.loc 1 620 0
+ 1206 00fe 032C     		cmp	r4, #3
+ 1207 0100 D2D1     		bne	.L110
+ 622:usb_lib/usb_core.c ****     }
+ 1208              		.loc 1 622 0
+ 1209 0102 FFF7FEFF 		bl	Standard_SetEndPointFeature
+ 1210              	.LVL102:
+ 1211 0106 A5E7     		b	.L102
+ 1212              	.L161:
+ 641:usb_lib/usb_core.c ****   {
+ 1213              		.loc 1 641 0
+ 1214 0108 0028     		cmp	r0, #0
+ 1215 010a ABD1     		bne	.L106
+ 1216 010c BBE7     		b	.L113
+ 1217              	.LVL103:
+ 1218              	.L99:
+ 1219              	.LBE28:
+ 1220              	.LBE29:
+ 1221              	.LBB30:
+ 1222              	.LBB31:
+ 677:usb_lib/usb_core.c ****   {
+ 1223              		.loc 1 677 0
+ 1224 010e 062C     		cmp	r4, #6
+ 1225 0110 16D1     		bne	.L115
+ 679:usb_lib/usb_core.c ****     {
+ 1226              		.loc 1 679 0
+ 1227 0112 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1228 0114 5406     		lsls	r4, r2, #25
+ 1229 0116 5ED1     		bne	.L116
+ 1230              	.LBB32:
+ 681:usb_lib/usb_core.c ****       if (wValue1 == DEVICE_DESCRIPTOR)
+ 1231              		.loc 1 681 0
+ 1232 0118 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 1233              	.LVL104:
+ 1234 011a 554A     		ldr	r2, .L166+20
+ 682:usb_lib/usb_core.c ****       {
+ 1235              		.loc 1 682 0
+ 1236 011c 012B     		cmp	r3, #1
+ 1237 011e 1268     		ldr	r2, [r2]
+ 1238 0120 02D1     		bne	.L117
+ 684:usb_lib/usb_core.c ****       }
+ 1239              		.loc 1 684 0
+ 1240 0122 D369     		ldr	r3, [r2, #28]
+ 1241              	.LVL105:
+ 1242              	.L118:
+ 1243              	.LBE32:
+ 769:usb_lib/usb_core.c ****   {
+ 1244              		.loc 1 769 0
+ 1245 0124 FBB9     		cbnz	r3, .L123
+ 1246 0126 56E0     		b	.L116
+ 1247              	.LVL106:
+ 1248              	.L117:
+ 1249              	.LBB33:
+ 686:usb_lib/usb_core.c ****       {
+ 1250              		.loc 1 686 0
+ 1251 0128 022B     		cmp	r3, #2
+ 1252 012a 01D1     		bne	.L119
+ 688:usb_lib/usb_core.c ****       }
+ 1253              		.loc 1 688 0
+ 1254 012c 136A     		ldr	r3, [r2, #32]
+ 1255              	.LVL107:
+ 1256 012e F9E7     		b	.L118
+ 1257              	.LVL108:
+ 1258              	.L119:
+ 690:usb_lib/usb_core.c ****       {
+ 1259              		.loc 1 690 0
+ 1260 0130 032B     		cmp	r3, #3
+ 1261 0132 01D1     		bne	.L120
+ 692:usb_lib/usb_core.c ****       } else if (wValue1 == 0x21) /* added to support functional descriptors */
+ 1262              		.loc 1 692 0
+ 1263 0134 536A     		ldr	r3, [r2, #36]
+ 1264              	.LVL109:
+ 1265 0136 F5E7     		b	.L118
+ 1266              	.LVL110:
+ 1267              	.L120:
+ 693:usb_lib/usb_core.c ****       {
+ 1268              		.loc 1 693 0
+ 1269 0138 212B     		cmp	r3, #33
+ 1270 013a 4CD1     		bne	.L116
+ 695:usb_lib/usb_core.c ****       } /* End of GET_DESCRIPTOR */
+ 1271              		.loc 1 695 0
+ 1272 013c 936A     		ldr	r3, [r2, #40]
+ 1273              	.LVL111:
+ 1274 013e F1E7     		b	.L118
+ 1275              	.LVL112:
+ 1276              	.L115:
+ 1277              	.LBE33:
+ 701:usb_lib/usb_core.c ****            && (pInformation->USBwLength == 0x0002)
+ 1278              		.loc 1 701 0
+ 1279 0140 002C     		cmp	r4, #0
+ 1280 0142 54D1     		bne	.L121
+ 1281 0144 5988     		ldrh	r1, [r3, #2]
+ 1282 0146 0029     		cmp	r1, #0
+ 1283 0148 45D1     		bne	.L116
+ 703:usb_lib/usb_core.c ****   {
+ 1284              		.loc 1 703 0
+ 1285 014a 5A68     		ldr	r2, [r3, #4]
+ 1286 014c 22F0FF02 		bic	r2, r2, #255
+ 1287 0150 B2F5003F 		cmp	r2, #131072
+ 1288 0154 3FD1     		bne	.L116
+ 1289 0156 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 706:usb_lib/usb_core.c ****         && (pInformation->USBwIndex == 0))
+ 1290              		.loc 1 706 0
+ 1291 0158 12F07F02 		ands	r2, r2, #127
+ 1292 015c 16D1     		bne	.L122
+ 707:usb_lib/usb_core.c ****     {
+ 1293              		.loc 1 707 0
+ 1294 015e 9B88     		ldrh	r3, [r3, #4]
+ 1295              	.LVL113:
+ 1296 0160 002B     		cmp	r3, #0
+ 1297 0162 38D1     		bne	.L116
+ 1298              	.L125:
+ 709:usb_lib/usb_core.c ****     }
+ 1299              		.loc 1 709 0
+ 1300 0164 434B     		ldr	r3, .L166+24
+ 1301              	.LVL114:
+ 1302              	.L123:
+ 771:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.CopyData = CopyRoutine;
+ 1303              		.loc 1 771 0
+ 1304 0166 0024     		movs	r4, #0
+ 1305 0168 2A68     		ldr	r2, [r5]
+ 775:usb_lib/usb_core.c ****     Result = USB_SUCCESS;
+ 1306              		.loc 1 775 0
+ 1307 016a 2046     		mov	r0, r4
+ 771:usb_lib/usb_core.c ****     pInformation->Ctrl_Info.CopyData = CopyRoutine;
+ 1308              		.loc 1 771 0
+ 1309 016c 5482     		strh	r4, [r2, #18]	@ movhi
+ 772:usb_lib/usb_core.c ****     /* sb in the original the cast to word was directly */
+ 1310              		.loc 1 772 0
+ 1311 016e 9361     		str	r3, [r2, #24]
+ 775:usb_lib/usb_core.c ****     Result = USB_SUCCESS;
+ 1312              		.loc 1 775 0
+ 1313 0170 9847     		blx	r3
+ 1314              	.LVL115:
+ 776:usb_lib/usb_core.c ****   }
+ 1315              		.loc 1 776 0
+ 1316 0172 2046     		mov	r0, r4
+ 1317              	.LVL116:
+ 1318              	.L129:
+ 788:usb_lib/usb_core.c ****   {
+ 1319              		.loc 1 788 0
+ 1320 0174 4FF6FF71 		movw	r1, #65535
+ 1321 0178 2B68     		ldr	r3, [r5]
+ 1322 017a 1A8A     		ldrh	r2, [r3, #16]
+ 1323 017c 8A42     		cmp	r2, r1
+ 1324 017e 33D0     		beq	.L165
+ 794:usb_lib/usb_core.c ****   {
+ 1325              		.loc 1 794 0
+ 1326 0180 0228     		cmp	r0, #2
+ 1327 0182 01D0     		beq	.L131
+ 1328 0184 002A     		cmp	r2, #0
+ 1329 0186 55D1     		bne	.L132
+ 1330              	.L131:
+ 797:usb_lib/usb_core.c ****     return;
+ 1331              		.loc 1 797 0
+ 1332 0188 0822     		movs	r2, #8
+ 1333 018a 2EE0     		b	.L164
+ 1334              	.LVL117:
+ 1335              	.L122:
+ 713:usb_lib/usb_core.c ****     {
+ 1336              		.loc 1 713 0
+ 1337 018c 012A     		cmp	r2, #1
+ 1338 018e 0AD1     		bne	.L124
+ 715:usb_lib/usb_core.c ****           && (pInformation->Current_Configuration != 0))
+ 1339              		.loc 1 715 0
+ 1340 0190 374A     		ldr	r2, .L166+20
+ 1341 0192 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 1342 0194 1268     		ldr	r2, [r2]
+ 1343 0196 9269     		ldr	r2, [r2, #24]
+ 1344 0198 9047     		blx	r2
+ 1345              	.LVL118:
+ 1346 019a E0B9     		cbnz	r0, .L116
+ 716:usb_lib/usb_core.c ****       {
+ 1347              		.loc 1 716 0
+ 1348 019c 2B68     		ldr	r3, [r5]
+ 1349 019e 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 1350              	.L162:
+ 740:usb_lib/usb_core.c ****       {
+ 1351              		.loc 1 740 0
+ 1352 01a0 002B     		cmp	r3, #0
+ 1353 01a2 DFD1     		bne	.L125
+ 1354 01a4 17E0     		b	.L116
+ 1355              	.LVL119:
+ 1356              	.L124:
+ 723:usb_lib/usb_core.c ****     {
+ 1357              		.loc 1 723 0
+ 1358 01a6 022A     		cmp	r2, #2
+ 1359 01a8 15D1     		bne	.L116
+ 725:usb_lib/usb_core.c ****       Reserved = pInformation->USBwIndex0 & 0x70;
+ 1360              		.loc 1 725 0
+ 1361 01aa 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
+ 1362 01ac 02F00F01 		and	r1, r2, #15
+ 1363              	.LVL120:
+ 1364 01b0 8B00     		lsls	r3, r1, #2
+ 1365              	.LVL121:
+ 728:usb_lib/usb_core.c ****       {
+ 1366              		.loc 1 728 0
+ 1367 01b2 1006     		lsls	r0, r2, #24
+ 1368 01b4 03F18043 		add	r3, r3, #1073741824
+ 739:usb_lib/usb_core.c ****           && (Status != 0))
+ 1369              		.loc 1 739 0
+ 1370 01b8 2F48     		ldr	r0, .L166+28
+ 1371 01ba 03F5B843 		add	r3, r3, #23552
+ 732:usb_lib/usb_core.c ****       }
+ 1372              		.loc 1 732 0
+ 1373 01be 1B68     		ldr	r3, [r3]
+ 739:usb_lib/usb_core.c ****           && (Status != 0))
+ 1374              		.loc 1 739 0
+ 1375 01c0 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 732:usb_lib/usb_core.c ****       }
+ 1376              		.loc 1 732 0
+ 1377 01c2 4CBF     		ite	mi
+ 1378 01c4 03F03003 		andmi	r3, r3, #48
+ 1379              	.LVL122:
+ 736:usb_lib/usb_core.c ****       }
+ 1380              		.loc 1 736 0
+ 1381 01c8 03F44053 		andpl	r3, r3, #12288
+ 1382              	.LVL123:
+ 739:usb_lib/usb_core.c ****           && (Status != 0))
+ 1383              		.loc 1 739 0
+ 1384 01cc 8842     		cmp	r0, r1
+ 1385 01ce 02D9     		bls	.L116
+ 1386 01d0 12F0700F 		tst	r2, #112
+ 1387 01d4 E4D0     		beq	.L162
+ 1388              	.LVL124:
+ 1389              	.L116:
+ 780:usb_lib/usb_core.c ****     if (Result == USB_NOT_READY)
+ 1390              		.loc 1 780 0
+ 1391 01d6 264B     		ldr	r3, .L166+20
+ 1392 01d8 2A68     		ldr	r2, [r5]
+ 1393 01da 1B68     		ldr	r3, [r3]
+ 1394 01dc 5078     		ldrb	r0, [r2, #1]	@ zero_extendqisi2
+ 1395 01de 1B69     		ldr	r3, [r3, #16]
+ 1396 01e0 9847     		blx	r3
+ 1397              	.LVL125:
+ 781:usb_lib/usb_core.c ****     {
+ 1398              		.loc 1 781 0
+ 1399 01e2 0328     		cmp	r0, #3
+ 1400 01e4 C6D1     		bne	.L129
+ 783:usb_lib/usb_core.c ****       return;
+ 1401              		.loc 1 783 0
+ 1402 01e6 2B68     		ldr	r3, [r5]
+ 1403              	.L165:
+ 791:usb_lib/usb_core.c ****     return;
+ 1404              		.loc 1 791 0
+ 1405 01e8 0922     		movs	r2, #9
+ 1406              	.L164:
+ 797:usb_lib/usb_core.c ****     return;
+ 1407              		.loc 1 797 0
+ 1408 01ea 1A72     		strb	r2, [r3, #8]
+ 1409 01ec 3DE7     		b	.L114
+ 1410              	.LVL126:
+ 1411              	.L121:
+ 749:usb_lib/usb_core.c ****   {
+ 1412              		.loc 1 749 0
+ 1413 01ee 082C     		cmp	r4, #8
+ 1414 01f0 04D1     		bne	.L128
+ 751:usb_lib/usb_core.c ****     {
+ 1415              		.loc 1 751 0
+ 1416 01f2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1417              	.LVL127:
+ 1418 01f4 5B06     		lsls	r3, r3, #25
+ 1419 01f6 EED1     		bne	.L116
+ 753:usb_lib/usb_core.c ****     }
+ 1420              		.loc 1 753 0
+ 1421 01f8 204B     		ldr	r3, .L166+32
+ 1422 01fa B4E7     		b	.L123
+ 1423              	.LVL128:
+ 1424              	.L128:
+ 757:usb_lib/usb_core.c ****   {
+ 1425              		.loc 1 757 0
+ 1426 01fc 0A2C     		cmp	r4, #10
+ 1427 01fe EAD1     		bne	.L116
+ 759:usb_lib/usb_core.c ****         && (pInformation->Current_Configuration != 0) && (pInformation->USBwValue == 0)
+ 1428              		.loc 1 759 0
+ 1429 0200 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1430 0202 02F07F02 		and	r2, r2, #127
+ 1431 0206 012A     		cmp	r2, #1
+ 1432 0208 E5D1     		bne	.L116
+ 760:usb_lib/usb_core.c ****         && (pInformation->USBwIndex1 == 0) && (pInformation->USBwLength == 0x0001)
+ 1433              		.loc 1 760 0
+ 1434 020a 9A7A     		ldrb	r2, [r3, #10]	@ zero_extendqisi2
+ 1435 020c 002A     		cmp	r2, #0
+ 1436 020e E2D0     		beq	.L116
+ 1437 0210 5988     		ldrh	r1, [r3, #2]
+ 1438 0212 0029     		cmp	r1, #0
+ 1439 0214 DFD1     		bne	.L116
+ 761:usb_lib/usb_core.c ****         && ((*pProperty->Class_Get_Interface_Setting)(pInformation->USBwIndex0, 0) == USB_SUCCESS))
+ 1440              		.loc 1 761 0
+ 1441 0216 5A68     		ldr	r2, [r3, #4]
+ 1442 0218 22F0FF02 		bic	r2, r2, #255
+ 1443 021c B2F5803F 		cmp	r2, #65536
+ 1444 0220 D9D1     		bne	.L116
+ 762:usb_lib/usb_core.c ****     {
+ 1445              		.loc 1 762 0
+ 1446 0222 134A     		ldr	r2, .L166+20
+ 1447 0224 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 1448 0226 1268     		ldr	r2, [r2]
+ 1449 0228 9269     		ldr	r2, [r2, #24]
+ 1450 022a 9047     		blx	r2
+ 1451              	.LVL129:
+ 1452 022c 0028     		cmp	r0, #0
+ 1453 022e D2D1     		bne	.L116
+ 764:usb_lib/usb_core.c ****     }
+ 1454              		.loc 1 764 0
+ 1455 0230 134B     		ldr	r3, .L166+36
+ 1456 0232 98E7     		b	.L123
+ 1457              	.LVL130:
+ 1458              	.L132:
+ 802:usb_lib/usb_core.c ****   {
+ 1459              		.loc 1 802 0
+ 1460 0234 93F90010 		ldrsb	r1, [r3]
+ 1461 0238 0029     		cmp	r1, #0
+ 1462 023a 34DA     		bge	.L133
+ 1463              	.LBB34:
+ 805:usb_lib/usb_core.c **** 
+ 1464              		.loc 1 805 0
+ 1465 023c D988     		ldrh	r1, [r3, #6]
+ 1466 023e 0C48     		ldr	r0, .L166+20
+ 1467              	.LVL131:
+ 1468 0240 0191     		str	r1, [sp, #4]
+ 1469 0242 0068     		ldr	r0, [r0]
+ 808:usb_lib/usb_core.c ****     {
+ 1470              		.loc 1 808 0
+ 1471 0244 019D     		ldr	r5, [sp, #4]
+ 1472 0246 90F83000 		ldrb	r0, [r0, #48]	@ zero_extendqisi2
+ 1473 024a AA42     		cmp	r2, r5
+ 1474 024c 84B2     		uxth	r4, r0
+ 1475 024e 19D9     		bls	.L134
+ 810:usb_lib/usb_core.c ****     }
+ 1476              		.loc 1 810 0
+ 1477 0250 019A     		ldr	r2, [sp, #4]
+ 1478 0252 1A82     		strh	r2, [r3, #16]	@ movhi
+ 1479              	.L135:
+ 825:usb_lib/usb_core.c ****     DataStageIn();
+ 1480              		.loc 1 825 0
+ 1481 0254 9C82     		strh	r4, [r3, #20]	@ movhi
+ 826:usb_lib/usb_core.c ****   }
+ 1482              		.loc 1 826 0
+ 1483 0256 FFF7FEFF 		bl	DataStageIn
+ 1484              	.LVL132:
+ 1485 025a 06E7     		b	.L114
+ 1486              	.L167:
+ 1487              		.align	2
+ 1488              	.L166:
+ 1489 025c 00000000 		.word	pInformation
+ 1490 0260 505C0040 		.word	1073765456
+ 1491 0264 04300020 		.word	536883204
+ 1492 0268 02300020 		.word	536883202
+ 1493 026c 00000000 		.word	SaveTState
+ 1494 0270 00000000 		.word	pProperty
+ 1495 0274 00000000 		.word	Standard_GetStatus
+ 1496 0278 00000000 		.word	Device_Table
+ 1497 027c 00000000 		.word	Standard_GetConfiguration
+ 1498 0280 00000000 		.word	Standard_GetInterface
+ 1499              	.L134:
+ 813:usb_lib/usb_core.c ****     {
+ 1500              		.loc 1 813 0
+ 1501 0284 8A42     		cmp	r2, r1
+ 1502 0286 E5D2     		bcs	.L135
+ 815:usb_lib/usb_core.c ****       {
+ 1503              		.loc 1 815 0
+ 1504 0288 A242     		cmp	r2, r4
+ 1505 028a 03D2     		bcs	.L136
+ 817:usb_lib/usb_core.c ****       }
+ 1506              		.loc 1 817 0
+ 1507 028c 0021     		movs	r1, #0
+ 1508 028e 094A     		ldr	r2, .L168
+ 1509              	.L163:
+ 821:usb_lib/usb_core.c ****       }
+ 1510              		.loc 1 821 0
+ 1511 0290 1170     		strb	r1, [r2]
+ 1512 0292 DFE7     		b	.L135
+ 1513              	.L136:
+ 819:usb_lib/usb_core.c ****       {
+ 1514              		.loc 1 819 0
+ 1515 0294 92FBF0F1 		sdiv	r1, r2, r0
+ 1516 0298 00FB1122 		mls	r2, r0, r1, r2
+ 1517 029c 002A     		cmp	r2, #0
+ 1518 029e D9D1     		bne	.L135
+ 821:usb_lib/usb_core.c ****       }
+ 1519              		.loc 1 821 0
+ 1520 02a0 044A     		ldr	r2, .L168
+ 1521 02a2 0121     		movs	r1, #1
+ 1522 02a4 F4E7     		b	.L163
+ 1523              	.LVL133:
+ 1524              	.L133:
+ 1525              	.LBE34:
+ 830:usb_lib/usb_core.c ****     vSetEPRxStatus(EP_RX_VALID); /* enable for next data reception */
+ 1526              		.loc 1 830 0
+ 1527 02a6 0322     		movs	r2, #3
+ 1528 02a8 1A72     		strb	r2, [r3, #8]
+ 831:usb_lib/usb_core.c ****   }
+ 1529              		.loc 1 831 0
+ 1530 02aa 4FF44052 		mov	r2, #12288
+ 1531 02ae 024B     		ldr	r3, .L168+4
+ 1532 02b0 1A80     		strh	r2, [r3]	@ movhi
+ 1533 02b2 DAE6     		b	.L114
+ 1534              	.L169:
+ 1535              		.align	2
+ 1536              	.L168:
+ 1537 02b4 00000000 		.word	.LANCHOR0
+ 1538 02b8 00000000 		.word	SaveRState
+ 1539              	.LBE31:
+ 1540              	.LBE30:
+ 1541              		.cfi_endproc
+ 1542              	.LFE13:
+ 1544              		.section	.text.Out0_Process,"ax",%progbits
+ 1545              		.align	1
+ 1546              		.global	Out0_Process
+ 1547              		.syntax unified
+ 1548              		.thumb
+ 1549              		.thumb_func
+ 1550              		.fpu softvfp
+ 1552              	Out0_Process:
+ 1553              	.LFB15:
+ 929:usb_lib/usb_core.c ****   u32 ControlState = pInformation->ControlState;
+ 1554              		.loc 1 929 0
+ 1555              		.cfi_startproc
+ 1556              		@ args = 0, pretend = 0, frame = 0
+ 1557              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1558 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1559              		.cfi_def_cfa_offset 24
+ 1560              		.cfi_offset 3, -24
+ 1561              		.cfi_offset 4, -20
+ 1562              		.cfi_offset 5, -16
+ 1563              		.cfi_offset 6, -12
+ 1564              		.cfi_offset 7, -8
+ 1565              		.cfi_offset 14, -4
+ 930:usb_lib/usb_core.c **** 
+ 1566              		.loc 1 930 0
+ 1567 0002 294E     		ldr	r6, .L193
+ 1568 0004 3468     		ldr	r4, [r6]
+ 1569 0006 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 1570              	.LVL134:
+ 932:usb_lib/usb_core.c ****   {
+ 1571              		.loc 1 932 0
+ 1572 0008 032B     		cmp	r3, #3
+ 1573 000a 01D0     		beq	.L171
+ 932:usb_lib/usb_core.c ****   {
+ 1574              		.loc 1 932 0 is_stmt 0 discriminator 1
+ 1575 000c 052B     		cmp	r3, #5
+ 1576 000e 43D1     		bne	.L172
+ 1577              	.L171:
+ 1578              	.LVL135:
+ 1579              	.LBB38:
+ 1580              	.LBB39:
+ 430:usb_lib/usb_core.c ****   {
+ 1581              		.loc 1 430 0 is_stmt 1
+ 1582 0010 A369     		ldr	r3, [r4, #24]
+ 1583              	.LVL136:
+ 1584 0012 B3B1     		cbz	r3, .L173
+ 428:usb_lib/usb_core.c **** 
+ 1585              		.loc 1 428 0
+ 1586 0014 258A     		ldrh	r5, [r4, #16]
+ 430:usb_lib/usb_core.c ****   {
+ 1587              		.loc 1 430 0
+ 1588 0016 A5B1     		cbz	r5, .L173
+ 1589              	.LBB40:
+ 435:usb_lib/usb_core.c ****     if (Length > save_rLength)
+ 1590              		.loc 1 435 0
+ 1591 0018 A28A     		ldrh	r2, [r4, #20]
+ 1592              	.LVL137:
+ 441:usb_lib/usb_core.c ****     pEPinfo->Usb_rLength -= Length;
+ 1593              		.loc 1 441 0
+ 1594 001a 9542     		cmp	r5, r2
+ 1595 001c 28BF     		it	cs
+ 1596 001e 1546     		movcs	r5, r2
+ 1597              	.LVL138:
+ 1598 0020 2846     		mov	r0, r5
+ 1599 0022 9847     		blx	r3
+ 1600              	.LVL139:
+ 442:usb_lib/usb_core.c ****     pEPinfo->Usb_rOffset += Length;
+ 1601              		.loc 1 442 0
+ 1602 0024 238A     		ldrh	r3, [r4, #16]
+ 441:usb_lib/usb_core.c ****     pEPinfo->Usb_rLength -= Length;
+ 1603              		.loc 1 441 0
+ 1604 0026 0746     		mov	r7, r0
+ 1605              	.LVL140:
+ 442:usb_lib/usb_core.c ****     pEPinfo->Usb_rOffset += Length;
+ 1606              		.loc 1 442 0
+ 1607 0028 5B1B     		subs	r3, r3, r5
+ 1608 002a 2382     		strh	r3, [r4, #16]	@ movhi
+ 443:usb_lib/usb_core.c **** 
+ 1609              		.loc 1 443 0
+ 1610 002c 638A     		ldrh	r3, [r4, #18]
+ 445:usb_lib/usb_core.c ****   }
+ 1611              		.loc 1 445 0
+ 1612 002e 0020     		movs	r0, #0
+ 1613              	.LVL141:
+ 443:usb_lib/usb_core.c **** 
+ 1614              		.loc 1 443 0
+ 1615 0030 2B44     		add	r3, r3, r5
+ 1616 0032 6382     		strh	r3, [r4, #18]	@ movhi
+ 445:usb_lib/usb_core.c ****   }
+ 1617              		.loc 1 445 0
+ 1618 0034 FFF7FEFF 		bl	GetEPRxAddr
+ 1619              	.LVL142:
+ 1620 0038 2A46     		mov	r2, r5
+ 1621 003a 0146     		mov	r1, r0
+ 1622 003c 3846     		mov	r0, r7
+ 1623 003e FFF7FEFF 		bl	PMAToUserBufferCopy
+ 1624              	.LVL143:
+ 1625              	.L173:
+ 1626              	.LBE40:
+ 448:usb_lib/usb_core.c ****   {
+ 1627              		.loc 1 448 0
+ 1628 0042 238A     		ldrh	r3, [r4, #16]
+ 1629 0044 53B1     		cbz	r3, .L174
+ 451:usb_lib/usb_core.c ****     vSetEPTxStatus(EP_TX_VALID);/* Expect the host to abort the data OUT stage */
+ 1630              		.loc 1 451 0
+ 1631 0046 0021     		movs	r1, #0
+ 450:usb_lib/usb_core.c ****     SetEPTxCount(ENDP0, 0);
+ 1632              		.loc 1 450 0
+ 1633 0048 4FF44052 		mov	r2, #12288
+ 1634 004c 174B     		ldr	r3, .L193+4
+ 451:usb_lib/usb_core.c ****     vSetEPTxStatus(EP_TX_VALID);/* Expect the host to abort the data OUT stage */
+ 1635              		.loc 1 451 0
+ 1636 004e 0846     		mov	r0, r1
+ 450:usb_lib/usb_core.c ****     SetEPTxCount(ENDP0, 0);
+ 1637              		.loc 1 450 0
+ 1638 0050 1A80     		strh	r2, [r3]	@ movhi
+ 451:usb_lib/usb_core.c ****     vSetEPTxStatus(EP_TX_VALID);/* Expect the host to abort the data OUT stage */
+ 1639              		.loc 1 451 0
+ 1640 0052 FFF7FEFF 		bl	SetEPTxCount
+ 1641              	.LVL144:
+ 452:usb_lib/usb_core.c ****   }
+ 1642              		.loc 1 452 0
+ 1643 0056 3022     		movs	r2, #48
+ 1644 0058 154B     		ldr	r3, .L193+8
+ 1645 005a 1A80     		strh	r2, [r3]	@ movhi
+ 1646              	.L174:
+ 455:usb_lib/usb_core.c ****   {
+ 1647              		.loc 1 455 0
+ 1648 005c 218A     		ldrh	r1, [r4, #16]
+ 1649 005e A38A     		ldrh	r3, [r4, #20]
+ 1650 0060 3268     		ldr	r2, [r6]
+ 1651 0062 8B42     		cmp	r3, r1
+ 1652 0064 08D8     		bhi	.L175
+ 457:usb_lib/usb_core.c ****   }
+ 1653              		.loc 1 457 0
+ 1654 0066 0323     		movs	r3, #3
+ 1655              	.L192:
+ 463:usb_lib/usb_core.c ****     }
+ 1656              		.loc 1 463 0
+ 1657 0068 1372     		strb	r3, [r2, #8]
+ 1658              	.L176:
+ 1659              	.LBE39:
+ 1660              	.LBE38:
+ 935:usb_lib/usb_core.c ****   }
+ 1661              		.loc 1 935 0
+ 1662 006a 137A     		ldrb	r3, [r2, #8]	@ zero_extendqisi2
+ 1663              	.LVL145:
+ 1664              	.L178:
+ 956:usb_lib/usb_core.c **** 
+ 1665              		.loc 1 956 0
+ 1666 006c 3268     		ldr	r2, [r6]
+ 1667 006e 1372     		strb	r3, [r2, #8]
+ 959:usb_lib/usb_core.c **** 
+ 1668              		.loc 1 959 0
+ 1669 0070 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 1670              		.cfi_remember_state
+ 1671              		.cfi_restore 14
+ 1672              		.cfi_restore 7
+ 1673              		.cfi_restore 6
+ 1674              		.cfi_restore 5
+ 1675              		.cfi_restore 4
+ 1676              		.cfi_restore 3
+ 1677              		.cfi_def_cfa_offset 0
+ 1678              	.LVL146:
+ 958:usb_lib/usb_core.c **** }
+ 1679              		.loc 1 958 0
+ 1680 0074 FFF7FEBF 		b	Post0_Process
+ 1681              	.LVL147:
+ 1682              	.L175:
+ 1683              		.cfi_restore_state
+ 1684              	.LBB42:
+ 1685              	.LBB41:
+ 461:usb_lib/usb_core.c ****     {
+ 1686              		.loc 1 461 0
+ 1687 0078 09B1     		cbz	r1, .L177
+ 463:usb_lib/usb_core.c ****     }
+ 1688              		.loc 1 463 0
+ 1689 007a 0523     		movs	r3, #5
+ 1690 007c F4E7     		b	.L192
+ 1691              	.L177:
+ 467:usb_lib/usb_core.c ****       USB_StatusIn();
+ 1692              		.loc 1 467 0
+ 1693 007e 0623     		movs	r3, #6
+ 1694 0080 1372     		strb	r3, [r2, #8]
+ 468:usb_lib/usb_core.c ****     }
+ 1695              		.loc 1 468 0
+ 1696 0082 0C4B     		ldr	r3, .L193+12
+ 1697 0084 1868     		ldr	r0, [r3]
+ 1698 0086 0C4B     		ldr	r3, .L193+16
+ 1699 0088 80B2     		uxth	r0, r0
+ 1700 008a 0344     		add	r3, r3, r0
+ 1701 008c 5B00     		lsls	r3, r3, #1
+ 1702 008e 1960     		str	r1, [r3]
+ 1703 0090 3021     		movs	r1, #48
+ 1704 0092 074B     		ldr	r3, .L193+8
+ 1705 0094 1980     		strh	r1, [r3]	@ movhi
+ 1706 0096 E8E7     		b	.L176
+ 1707              	.LVL148:
+ 1708              	.L172:
+ 1709              	.LBE41:
+ 1710              	.LBE42:
+ 938:usb_lib/usb_core.c ****   {
+ 1711              		.loc 1 938 0
+ 1712 0098 072B     		cmp	r3, #7
+ 1713 009a 03D1     		bne	.L179
+ 940:usb_lib/usb_core.c ****     ControlState = STALLED;
+ 1714              		.loc 1 940 0
+ 1715 009c 074B     		ldr	r3, .L193+20
+ 1716              	.LVL149:
+ 1717 009e 1B68     		ldr	r3, [r3]
+ 1718 00a0 DB68     		ldr	r3, [r3, #12]
+ 1719 00a2 9847     		blx	r3
+ 1720              	.LVL150:
+ 1721              	.L179:
+ 947:usb_lib/usb_core.c ****   }
+ 1722              		.loc 1 947 0
+ 1723 00a4 0823     		movs	r3, #8
+ 1724 00a6 E1E7     		b	.L178
+ 1725              	.L194:
+ 1726              		.align	2
+ 1727              	.L193:
+ 1728 00a8 00000000 		.word	pInformation
+ 1729 00ac 00000000 		.word	SaveRState
+ 1730 00b0 00000000 		.word	SaveTState
+ 1731 00b4 505C0040 		.word	1073765456
+ 1732 00b8 02300020 		.word	536883202
+ 1733 00bc 00000000 		.word	pProperty
+ 1734              		.cfi_endproc
+ 1735              	.LFE15:
+ 1737              		.section	.text.SetDeviceAddress,"ax",%progbits
+ 1738              		.align	1
+ 1739              		.global	SetDeviceAddress
+ 1740              		.syntax unified
+ 1741              		.thumb
+ 1742              		.thumb_func
+ 1743              		.fpu softvfp
+ 1745              	SetDeviceAddress:
+ 1746              	.LFB17:
  981:usb_lib/usb_core.c **** 
  982:usb_lib/usb_core.c **** /*******************************************************************************
  983:usb_lib/usb_core.c **** * Function Name  : SetDeviceAddress.
@@ -2924,179 +3002,187 @@
  988:usb_lib/usb_core.c **** *******************************************************************************/
  989:usb_lib/usb_core.c **** void SetDeviceAddress(u8 Val)
  990:usb_lib/usb_core.c **** {
- 1708              		.loc 1 990 0
- 1709              		.cfi_startproc
- 1710              		@ args = 0, pretend = 0, frame = 0
- 1711              		@ frame_needed = 0, uses_anonymous_args = 0
- 1712              	.LVL160:
- 1713 0000 30B5     		push	{r4, r5, lr}
- 1714              		.cfi_def_cfa_offset 12
- 1715              		.cfi_offset 4, -12
- 1716              		.cfi_offset 5, -8
- 1717              		.cfi_offset 14, -4
+ 1747              		.loc 1 990 0
+ 1748              		.cfi_startproc
+ 1749              		@ args = 0, pretend = 0, frame = 0
+ 1750              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1751              	.LVL151:
+ 1752 0000 30B5     		push	{r4, r5, lr}
+ 1753              		.cfi_def_cfa_offset 12
+ 1754              		.cfi_offset 4, -12
+ 1755              		.cfi_offset 5, -8
+ 1756              		.cfi_offset 14, -4
  991:usb_lib/usb_core.c ****   u32 i;
  992:usb_lib/usb_core.c ****   u32 nEP = Device_Table.Total_Endpoint;
- 1718              		.loc 1 992 0
- 1719 0002 0B4B     		ldr	r3, .L207
- 1720 0004 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
- 1721              	.LVL161:
  993:usb_lib/usb_core.c **** 
  994:usb_lib/usb_core.c ****   /* set address in every used endpoint */
  995:usb_lib/usb_core.c ****   for (i = 0; i < nEP; i++)
- 1722              		.loc 1 995 0
- 1723 0006 0023     		movs	r3, #0
- 1724              	.LVL162:
- 1725              	.L204:
- 1726              		.loc 1 995 0 is_stmt 0 discriminator 1
- 1727 0008 A342     		cmp	r3, r4
- 1728 000a 0CD2     		bcs	.L206
- 1729 000c 03F18052 		add	r2, r3, #268435456
- 1730 0010 02F5B852 		add	r2, r2, #5888
- 1731 0014 9100     		lsls	r1, r2, #2
+ 1757              		.loc 1 995 0
+ 1758 0002 0022     		movs	r2, #0
  996:usb_lib/usb_core.c ****   {
  997:usb_lib/usb_core.c ****     _SetEPAddress((u8)i, (u8)i);
- 1732              		.loc 1 997 0 is_stmt 1 discriminator 2
- 1733 0016 0D68     		ldr	r5, [r1]
- 1734 0018 48F68F72 		movw	r2, #36751
- 1735 001c 2A40     		ands	r2, r2, r5
- 1736 001e 1A43     		orrs	r2, r2, r3
- 1737 0020 0A60     		str	r2, [r1]
- 995:usb_lib/usb_core.c ****   for (i = 0; i < nEP; i++)
- 1738              		.loc 1 995 0 discriminator 2
- 1739 0022 0133     		adds	r3, r3, #1
- 1740              	.LVL163:
- 1741 0024 F0E7     		b	.L204
- 1742              	.L206:
+ 1759              		.loc 1 997 0
+ 1760 0004 48F68F75 		movw	r5, #36751
+ 992:usb_lib/usb_core.c **** 
+ 1761              		.loc 1 992 0
+ 1762 0008 094B     		ldr	r3, .L198
+ 1763 000a 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 1764              	.LVL152:
+ 1765              	.L196:
+ 995:usb_lib/usb_core.c ****   {
+ 1766              		.loc 1 995 0 discriminator 1
+ 1767 000c A242     		cmp	r2, r4
+ 1768 000e 04D3     		bcc	.L197
  998:usb_lib/usb_core.c ****   } /* for */
  999:usb_lib/usb_core.c ****   _SetDADDR(Val | DADDR_EF); /* set device address and enable function */
- 1743              		.loc 1 999 0
- 1744 0026 034B     		ldr	r3, .L207+4
- 1745              	.LVL164:
- 1746 0028 40F08000 		orr	r0, r0, #128
- 1747              	.LVL165:
- 1748 002c 1860     		str	r0, [r3]
- 1749 002e 30BD     		pop	{r4, r5, pc}
- 1750              	.LVL166:
- 1751              	.L208:
- 1752              		.align	2
- 1753              	.L207:
- 1754 0030 00000000 		.word	Device_Table
- 1755 0034 4C5C0040 		.word	1073765452
- 1756              		.cfi_endproc
- 1757              	.LFE17:
- 1759              		.section	.text.In0_Process,"ax",%progbits
- 1760              		.align	1
- 1761              		.global	In0_Process
- 1762              		.thumb
- 1763              		.thumb_func
- 1765              	In0_Process:
- 1766              	.LFB14:
- 889:usb_lib/usb_core.c **** {
- 1767              		.loc 1 889 0
- 1768              		.cfi_startproc
- 1769              		@ args = 0, pretend = 0, frame = 0
- 1770              		@ frame_needed = 0, uses_anonymous_args = 0
- 1771 0000 10B5     		push	{r4, lr}
- 1772              		.cfi_def_cfa_offset 8
- 1773              		.cfi_offset 4, -8
- 1774              		.cfi_offset 14, -4
- 890:usb_lib/usb_core.c ****   u32 ControlState = pInformation->ControlState;
- 1775              		.loc 1 890 0
- 1776 0002 134C     		ldr	r4, .L218
- 1777 0004 2368     		ldr	r3, [r4]
- 1778 0006 1A7A     		ldrb	r2, [r3, #8]	@ zero_extendqisi2
- 1779              	.LVL167:
- 892:usb_lib/usb_core.c ****   if ((ControlState == IN_DATA) || (ControlState == LAST_IN_DATA))
- 1780              		.loc 1 892 0
- 1781 0008 022A     		cmp	r2, #2
- 1782 000a 01D0     		beq	.L210
- 892:usb_lib/usb_core.c ****   if ((ControlState == IN_DATA) || (ControlState == LAST_IN_DATA))
- 1783              		.loc 1 892 0 is_stmt 0 discriminator 1
- 1784 000c 042A     		cmp	r2, #4
- 1785 000e 04D1     		bne	.L211
- 1786              	.L210:
- 894:usb_lib/usb_core.c ****     DataStageIn();
- 1787              		.loc 1 894 0 is_stmt 1
- 1788 0010 FFF7FEFF 		bl	DataStageIn
- 1789              	.LVL168:
- 896:usb_lib/usb_core.c ****     ControlState = pInformation->ControlState;
- 1790              		.loc 1 896 0
- 1791 0014 2368     		ldr	r3, [r4]
- 1792 0016 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
- 1793              	.LVL169:
- 1794 0018 13E0     		b	.L212
- 1795              	.LVL170:
- 1796              	.L211:
- 899:usb_lib/usb_core.c ****   else if (ControlState == WAIT_STATUS_IN)
- 1797              		.loc 1 899 0
- 1798 001a 062A     		cmp	r2, #6
- 1799 001c 10D1     		bne	.L214
- 901:usb_lib/usb_core.c ****     if ((pInformation->USBbRequest == SET_ADDRESS) &&
- 1800              		.loc 1 901 0
- 1801 001e 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
- 1802              	.LVL171:
- 1803 0020 052A     		cmp	r2, #5
- 1804 0022 09D1     		bne	.L213
- 902:usb_lib/usb_core.c ****         (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT)))
- 1805              		.loc 1 902 0 discriminator 1
- 1806 0024 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 901:usb_lib/usb_core.c ****     if ((pInformation->USBbRequest == SET_ADDRESS) &&
- 1807              		.loc 1 901 0 discriminator 1
- 1808 0026 5206     		lsls	r2, r2, #25
- 1809 0028 06D1     		bne	.L213
- 904:usb_lib/usb_core.c ****       SetDeviceAddress(pInformation->USBwValue0);
- 1810              		.loc 1 904 0
- 1811 002a 9878     		ldrb	r0, [r3, #2]	@ zero_extendqisi2
- 1812 002c FFF7FEFF 		bl	SetDeviceAddress
- 1813              	.LVL172:
- 905:usb_lib/usb_core.c ****       pUser_Standard_Requests->User_SetDeviceAddress();
- 1814              		.loc 1 905 0
- 1815 0030 084B     		ldr	r3, .L218+4
- 1816 0032 1B68     		ldr	r3, [r3]
- 1817 0034 1B6A     		ldr	r3, [r3, #32]
- 1818 0036 9847     		blx	r3
- 1819              	.LVL173:
- 1820              	.L213:
- 907:usb_lib/usb_core.c ****     (*pProperty->Process_Status_IN)();
- 1821              		.loc 1 907 0
- 1822 0038 074B     		ldr	r3, .L218+8
- 1823 003a 1B68     		ldr	r3, [r3]
- 1824 003c 9B68     		ldr	r3, [r3, #8]
- 1825 003e 9847     		blx	r3
- 1826              	.LVL174:
- 1827              	.L214:
- 913:usb_lib/usb_core.c ****     ControlState = STALLED;
- 1828              		.loc 1 913 0
- 1829 0040 0823     		movs	r3, #8
- 1830              	.L212:
- 1831              	.LVL175:
- 916:usb_lib/usb_core.c ****   pInformation->ControlState = ControlState;
- 1832              		.loc 1 916 0
- 1833 0042 2268     		ldr	r2, [r4]
- 1834 0044 1372     		strb	r3, [r2, #8]
- 919:usb_lib/usb_core.c **** }
- 1835              		.loc 1 919 0
- 1836 0046 BDE81040 		pop	{r4, lr}
- 918:usb_lib/usb_core.c ****   return Post0_Process();
- 1837              		.loc 1 918 0
- 1838 004a FFF7FEBF 		b	Post0_Process
- 1839              	.LVL176:
- 1840              	.L219:
- 1841 004e 00BF     		.align	2
- 1842              	.L218:
- 1843 0050 00000000 		.word	pInformation
- 1844 0054 00000000 		.word	pUser_Standard_Requests
- 1845 0058 00000000 		.word	pProperty
- 1846              		.cfi_endproc
- 1847              	.LFE14:
- 1849              		.section	.text.NOP_Process,"ax",%progbits
- 1850              		.align	1
- 1851              		.global	NOP_Process
- 1852              		.thumb
- 1853              		.thumb_func
- 1855              	NOP_Process:
- 1856              	.LFB18:
+ 1769              		.loc 1 999 0
+ 1770 0010 084B     		ldr	r3, .L198+4
+ 1771 0012 40F08000 		orr	r0, r0, #128
+ 1772              	.LVL153:
+ 1773 0016 1860     		str	r0, [r3]
 1000:usb_lib/usb_core.c **** }
+ 1774              		.loc 1 1000 0
+ 1775 0018 30BD     		pop	{r4, r5, pc}
+ 1776              	.LVL154:
+ 1777              	.L197:
+ 1778 001a 02F18053 		add	r3, r2, #268435456
+ 1779 001e 03F5B853 		add	r3, r3, #5888
+ 1780 0022 9B00     		lsls	r3, r3, #2
+ 997:usb_lib/usb_core.c ****   } /* for */
+ 1781              		.loc 1 997 0 discriminator 3
+ 1782 0024 1968     		ldr	r1, [r3]
+ 1783 0026 2940     		ands	r1, r1, r5
+ 1784 0028 1143     		orrs	r1, r1, r2
+ 1785 002a 1960     		str	r1, [r3]
+ 995:usb_lib/usb_core.c ****   {
+ 1786              		.loc 1 995 0 discriminator 3
+ 1787 002c 0132     		adds	r2, r2, #1
+ 1788              	.LVL155:
+ 1789 002e EDE7     		b	.L196
+ 1790              	.L199:
+ 1791              		.align	2
+ 1792              	.L198:
+ 1793 0030 00000000 		.word	Device_Table
+ 1794 0034 4C5C0040 		.word	1073765452
+ 1795              		.cfi_endproc
+ 1796              	.LFE17:
+ 1798              		.section	.text.In0_Process,"ax",%progbits
+ 1799              		.align	1
+ 1800              		.global	In0_Process
+ 1801              		.syntax unified
+ 1802              		.thumb
+ 1803              		.thumb_func
+ 1804              		.fpu softvfp
+ 1806              	In0_Process:
+ 1807              	.LFB14:
+ 889:usb_lib/usb_core.c ****   u32 ControlState = pInformation->ControlState;
+ 1808              		.loc 1 889 0
+ 1809              		.cfi_startproc
+ 1810              		@ args = 0, pretend = 0, frame = 0
+ 1811              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1812 0000 10B5     		push	{r4, lr}
+ 1813              		.cfi_def_cfa_offset 8
+ 1814              		.cfi_offset 4, -8
+ 1815              		.cfi_offset 14, -4
+ 890:usb_lib/usb_core.c **** 
+ 1816              		.loc 1 890 0
+ 1817 0002 134C     		ldr	r4, .L209
+ 1818 0004 2368     		ldr	r3, [r4]
+ 1819 0006 1A7A     		ldrb	r2, [r3, #8]	@ zero_extendqisi2
+ 1820              	.LVL156:
+ 892:usb_lib/usb_core.c ****   {
+ 1821              		.loc 1 892 0
+ 1822 0008 022A     		cmp	r2, #2
+ 1823 000a 01D0     		beq	.L201
+ 892:usb_lib/usb_core.c ****   {
+ 1824              		.loc 1 892 0 is_stmt 0 discriminator 1
+ 1825 000c 042A     		cmp	r2, #4
+ 1826 000e 09D1     		bne	.L202
+ 1827              	.L201:
+ 894:usb_lib/usb_core.c ****     /* ControlState may be changed outside the function */
+ 1828              		.loc 1 894 0 is_stmt 1
+ 1829 0010 FFF7FEFF 		bl	DataStageIn
+ 1830              	.LVL157:
+ 896:usb_lib/usb_core.c ****   }
+ 1831              		.loc 1 896 0
+ 1832 0014 2368     		ldr	r3, [r4]
+ 1833 0016 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 1834              	.LVL158:
+ 1835              	.L203:
+ 916:usb_lib/usb_core.c **** 
+ 1836              		.loc 1 916 0
+ 1837 0018 2268     		ldr	r2, [r4]
+ 1838 001a 1372     		strb	r3, [r2, #8]
+ 919:usb_lib/usb_core.c **** 
+ 1839              		.loc 1 919 0
+ 1840 001c BDE81040 		pop	{r4, lr}
+ 1841              		.cfi_remember_state
+ 1842              		.cfi_restore 14
+ 1843              		.cfi_restore 4
+ 1844              		.cfi_def_cfa_offset 0
+ 918:usb_lib/usb_core.c **** }
+ 1845              		.loc 1 918 0
+ 1846 0020 FFF7FEBF 		b	Post0_Process
+ 1847              	.LVL159:
+ 1848              	.L202:
+ 1849              		.cfi_restore_state
+ 899:usb_lib/usb_core.c ****   {
+ 1850              		.loc 1 899 0
+ 1851 0024 062A     		cmp	r2, #6
+ 1852 0026 10D1     		bne	.L205
+ 901:usb_lib/usb_core.c ****         (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT)))
+ 1853              		.loc 1 901 0
+ 1854 0028 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 1855              	.LVL160:
+ 1856 002a 052A     		cmp	r2, #5
+ 1857 002c 09D1     		bne	.L204
+ 901:usb_lib/usb_core.c ****         (Type_Recipient == (STANDARD_REQUEST | DEVICE_RECIPIENT)))
+ 1858              		.loc 1 901 0 is_stmt 0 discriminator 1
+ 1859 002e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1860 0030 5206     		lsls	r2, r2, #25
+ 1861 0032 06D1     		bne	.L204
+ 904:usb_lib/usb_core.c ****       pUser_Standard_Requests->User_SetDeviceAddress();
+ 1862              		.loc 1 904 0 is_stmt 1
+ 1863 0034 9878     		ldrb	r0, [r3, #2]	@ zero_extendqisi2
+ 1864 0036 FFF7FEFF 		bl	SetDeviceAddress
+ 1865              	.LVL161:
+ 905:usb_lib/usb_core.c ****     }
+ 1866              		.loc 1 905 0
+ 1867 003a 064B     		ldr	r3, .L209+4
+ 1868 003c 1B68     		ldr	r3, [r3]
+ 1869 003e 1B6A     		ldr	r3, [r3, #32]
+ 1870 0040 9847     		blx	r3
+ 1871              	.LVL162:
+ 1872              	.L204:
+ 907:usb_lib/usb_core.c ****     ControlState = STALLED;
+ 1873              		.loc 1 907 0
+ 1874 0042 054B     		ldr	r3, .L209+8
+ 1875 0044 1B68     		ldr	r3, [r3]
+ 1876 0046 9B68     		ldr	r3, [r3, #8]
+ 1877 0048 9847     		blx	r3
+ 1878              	.LVL163:
+ 1879              	.L205:
+ 913:usb_lib/usb_core.c ****   }
+ 1880              		.loc 1 913 0
+ 1881 004a 0823     		movs	r3, #8
+ 1882 004c E4E7     		b	.L203
+ 1883              	.L210:
+ 1884 004e 00BF     		.align	2
+ 1885              	.L209:
+ 1886 0050 00000000 		.word	pInformation
+ 1887 0054 00000000 		.word	pUser_Standard_Requests
+ 1888 0058 00000000 		.word	pProperty
+ 1889              		.cfi_endproc
+ 1890              	.LFE14:
+ 1892              		.section	.text.NOP_Process,"ax",%progbits
+ 1893              		.align	1
+ 1894              		.global	NOP_Process
+ 1895              		.syntax unified
+ 1896              		.thumb
+ 1897              		.thumb_func
+ 1898              		.fpu softvfp
+ 1900              	NOP_Process:
+ 1901              	.LFB18:
 1001:usb_lib/usb_core.c **** 
 1002:usb_lib/usb_core.c **** /*******************************************************************************
 1003:usb_lib/usb_core.c **** * Function Name  : NOP_Process
@@ -3107,83 +3193,84 @@
 1008:usb_lib/usb_core.c **** *******************************************************************************/
 1009:usb_lib/usb_core.c **** void NOP_Process(void)
 1010:usb_lib/usb_core.c **** {
- 1857              		.loc 1 1010 0
- 1858              		.cfi_startproc
- 1859              		@ args = 0, pretend = 0, frame = 0
- 1860              		@ frame_needed = 0, uses_anonymous_args = 0
- 1861              		@ link register save eliminated.
- 1862 0000 7047     		bx	lr
- 1863              		.cfi_endproc
- 1864              	.LFE18:
- 1866              		.global	Data_Mul_MaxPacketSize
- 1867              		.comm	StatusInfo,2,2
- 1868              		.section	.bss.Data_Mul_MaxPacketSize,"aw",%nobits
- 1869              		.set	.LANCHOR0,. + 0
- 1872              	Data_Mul_MaxPacketSize:
- 1873 0000 00       		.space	1
- 1874              		.text
- 1875              	.Letext0:
- 1876              		.file 2 "usb_lib/usb_type.h"
- 1877              		.file 3 "usb_lib/usb_def.h"
- 1878              		.file 4 "usb_lib/usb_core.h"
- 1879              		.file 5 "usb_lib/usb_init.h"
- 1880              		.file 6 "usb_lib/usb_mem.h"
- 1881              		.file 7 "usb_lib/usb_regs.h"
+ 1902              		.loc 1 1010 0
+ 1903              		.cfi_startproc
+ 1904              		@ args = 0, pretend = 0, frame = 0
+ 1905              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1906              		@ link register save eliminated.
+1011:usb_lib/usb_core.c **** }
+ 1907              		.loc 1 1011 0
+ 1908 0000 7047     		bx	lr
+ 1909              		.cfi_endproc
+ 1910              	.LFE18:
+ 1912              		.global	Data_Mul_MaxPacketSize
+ 1913              		.comm	StatusInfo,2,2
+ 1914              		.section	.bss.Data_Mul_MaxPacketSize,"aw",%nobits
+ 1915              		.set	.LANCHOR0,. + 0
+ 1918              	Data_Mul_MaxPacketSize:
+ 1919 0000 00       		.space	1
+ 1920              		.text
+ 1921              	.Letext0:
+ 1922              		.file 2 "usb_lib/usb_type.h"
+ 1923              		.file 3 "usb_lib/usb_def.h"
+ 1924              		.file 4 "usb_lib/usb_core.h"
+ 1925              		.file 5 "usb_lib/usb_regs.h"
+ 1926              		.file 6 "usb_lib/usb_init.h"
+ 1927              		.file 7 "usb_lib/usb_mem.h"
 DEFINED SYMBOLS
-                            *ABS*:00000000 usb_core.c
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:19     .text.Standard_GetConfiguration:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:24     .text.Standard_GetConfiguration:00000000 Standard_GetConfiguration
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:60     .text.Standard_GetConfiguration:0000001c $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:66     .text.Standard_GetInterface:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:71     .text.Standard_GetInterface:00000000 Standard_GetInterface
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:106    .text.Standard_GetInterface:0000001c $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:112    .text.Standard_GetStatus:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:117    .text.Standard_GetStatus:00000000 Standard_GetStatus
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:236    .text.Standard_GetStatus:00000084 $d
-                            *COM*:00000002 StatusInfo
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:243    .text.DataStageIn:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:247    .text.DataStageIn:00000000 DataStageIn
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:378    .text.DataStageIn:00000090 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:388    .text.Standard_SetConfiguration:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:393    .text.Standard_SetConfiguration:00000000 Standard_SetConfiguration
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:438    .text.Standard_SetConfiguration:0000002c $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:445    .text.Standard_SetInterface:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:450    .text.Standard_SetInterface:00000000 Standard_SetInterface
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:512    .text.Standard_SetInterface:0000003c $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:519    .text.Standard_ClearFeature:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:524    .text.Standard_ClearFeature:00000000 Standard_ClearFeature
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:679    .text.Standard_ClearFeature:000000c0 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:687    .text.Standard_SetEndPointFeature:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:692    .text.Standard_SetEndPointFeature:00000000 Standard_SetEndPointFeature
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:801    .text.Standard_SetEndPointFeature:00000078 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:808    .text.Standard_SetDeviceFeature:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:813    .text.Standard_SetDeviceFeature:00000000 Standard_SetDeviceFeature
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:841    .text.Standard_SetDeviceFeature:0000001c $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:847    .text.Standard_GetDescriptorData:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:852    .text.Standard_GetDescriptorData:00000000 Standard_GetDescriptorData
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:886    .text.Standard_GetDescriptorData:00000018 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:891    .text.Post0_Process:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:896    .text.Post0_Process:00000000 Post0_Process
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:935    .text.Post0_Process:00000030 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:943    .text.Setup0_Process:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:948    .text.Setup0_Process:00000000 Setup0_Process
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1429   .text.Setup0_Process:0000025c $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1438   .text.Setup0_Process:00000278 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1507   .text.Setup0_Process:000002c8 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1518   .text.Out0_Process:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1523   .text.Out0_Process:00000000 Out0_Process
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1691   .text.Out0_Process:000000b0 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1701   .text.SetDeviceAddress:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1706   .text.SetDeviceAddress:00000000 SetDeviceAddress
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1754   .text.SetDeviceAddress:00000030 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1760   .text.In0_Process:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1765   .text.In0_Process:00000000 In0_Process
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1843   .text.In0_Process:00000050 $d
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1850   .text.NOP_Process:00000000 $t
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1855   .text.NOP_Process:00000000 NOP_Process
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1872   .bss.Data_Mul_MaxPacketSize:00000000 Data_Mul_MaxPacketSize
-C:\Users\haifisch\AppData\Local\Temp\cc82GiMW.s:1873   .bss.Data_Mul_MaxPacketSize:00000000 $d
-                     .debug_frame:00000010 $d
+                            *ABS*:0000000000000000 usb_core.c
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:16     .text.Standard_GetConfiguration:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:23     .text.Standard_GetConfiguration:0000000000000000 Standard_GetConfiguration
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:61     .text.Standard_GetConfiguration:000000000000001c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:67     .text.Standard_GetInterface:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:74     .text.Standard_GetInterface:0000000000000000 Standard_GetInterface
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:111    .text.Standard_GetInterface:000000000000001c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:117    .text.Standard_GetStatus:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:124    .text.Standard_GetStatus:0000000000000000 Standard_GetStatus
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:237    .text.Standard_GetStatus:000000000000007c $d
+                            *COM*:0000000000000002 StatusInfo
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:244    .text.DataStageIn:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:250    .text.DataStageIn:0000000000000000 DataStageIn
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:376    .text.DataStageIn:0000000000000094 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:386    .text.Standard_SetConfiguration:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:393    .text.Standard_SetConfiguration:0000000000000000 Standard_SetConfiguration
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:439    .text.Standard_SetConfiguration:000000000000002c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:446    .text.Standard_SetInterface:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:453    .text.Standard_SetInterface:0000000000000000 Standard_SetInterface
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:520    .text.Standard_SetInterface:0000000000000040 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:527    .text.Standard_ClearFeature:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:534    .text.Standard_ClearFeature:0000000000000000 Standard_ClearFeature
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:686    .text.Standard_ClearFeature:00000000000000b0 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:695    .text.Standard_SetEndPointFeature:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:702    .text.Standard_SetEndPointFeature:0000000000000000 Standard_SetEndPointFeature
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:819    .text.Standard_SetEndPointFeature:0000000000000070 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:826    .text.Standard_SetDeviceFeature:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:833    .text.Standard_SetDeviceFeature:0000000000000000 Standard_SetDeviceFeature
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:861    .text.Standard_SetDeviceFeature:000000000000001c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:867    .text.Standard_GetDescriptorData:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:874    .text.Standard_GetDescriptorData:0000000000000000 Standard_GetDescriptorData
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:912    .text.Standard_GetDescriptorData:0000000000000018 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:917    .text.Post0_Process:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:924    .text.Post0_Process:0000000000000000 Post0_Process
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:963    .text.Post0_Process:0000000000000030 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:971    .text.Setup0_Process:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:978    .text.Setup0_Process:0000000000000000 Setup0_Process
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1489   .text.Setup0_Process:000000000000025c $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1501   .text.Setup0_Process:0000000000000284 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1537   .text.Setup0_Process:00000000000002b4 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1545   .text.Out0_Process:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1552   .text.Out0_Process:0000000000000000 Out0_Process
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1728   .text.Out0_Process:00000000000000a8 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1738   .text.SetDeviceAddress:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1745   .text.SetDeviceAddress:0000000000000000 SetDeviceAddress
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1793   .text.SetDeviceAddress:0000000000000030 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1799   .text.In0_Process:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1806   .text.In0_Process:0000000000000000 In0_Process
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1886   .text.In0_Process:0000000000000050 $d
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1893   .text.NOP_Process:0000000000000000 $t
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1900   .text.NOP_Process:0000000000000000 NOP_Process
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1918   .bss.Data_Mul_MaxPacketSize:0000000000000000 Data_Mul_MaxPacketSize
+/var/folders/gy/ljsb_4sn10j121t6zk2d77mw0000gn/T//cc6Uarmg.s:1919   .bss.Data_Mul_MaxPacketSize:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 pInformation
@@ -3191,8 +3278,8 @@ pUser_Standard_Requests
 GetEPTxAddr
 UserToPMABufferCopy
 SetEPTxCount
-SaveTState
 SaveRState
+SaveTState
 Device_Table
 pProperty
 ClearDTOG_TX
