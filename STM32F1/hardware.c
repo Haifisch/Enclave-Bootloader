@@ -361,10 +361,10 @@ void hexdump(unsigned char *data, size_t size)
 
 void print_hash(unsigned char hash[])
 {
-   int idx;
-   for (idx=0; idx < 32; idx++)
-      debug_print("%02x",hash[idx]);
-   debug_print("\n", 0);
+  int idx;
+  for (idx=0; idx < 32; idx++)
+    debug_print("%02x",hash[idx]);
+  //debug_print("", );
 }
 #endif
 

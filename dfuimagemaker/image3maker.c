@@ -222,11 +222,6 @@ int calc_sha256 (char* path, unsigned char output[SHA256_DIGEST_LENGTH])
     {
         sha256_update(&sha256, buffer, bytesRead);
     }   
-    if (!dontHashInECIDPlease)
-    {
-        print_hex("PUB", uniqueIdentifier, 32);
-        sha256_update(&sha256, uniqueIdentifier, 32);
-    }
     sha256_finish(&sha256, output);
 
     fclose(file);
@@ -506,28 +501,27 @@ static void create_image(void)
     image3core.rootHeader->header.magic = kImageMagic;    
     image3core.rootHeader->header.size = sizeof(ImageRootHeader);
     image3core.rootHeader->signing.imageType = image3core.imageType;
-    
+
+
+    printf("opening input file\n");
     FILE *fp = fopen(inputFile, "rb");
     fseek(fp, 0L, SEEK_END);
     image3core.rootHeader->header.dataSize = ftell(fp);
     fclose(fp);
 
-
     uint8_t pub[EDSIGN_PUBLIC_KEY_SIZE];
     uint8_t signature[EDSIGN_SIGNATURE_SIZE];
-
+/*
     char ticketBuff[92];
     FILE *fp1 = fopen(uniqueIdentifier, "rb");
     fread(pub, 32, 1, fp1);
     fread(signature, 64, 1, fp1);
     fclose(fp1);
 
-
-    memcpy(image3core.rootHeader->signing.imageSignature, (uint8_t*)signature, EDSIGN_SIGNATURE_SIZE);
-/*
-    unsigned char calc_hash[32];
-
-    calc_sha256(inputFile, calc_hash);
+*/
+    printf("running hash\n");
+    unsigned char calc_hash[SHA256_DIGEST_LENGTH];
+    calc_sha256(inputFile, &calc_hash);
     printf("Calculated file hash: ");
     print_hash(calc_hash);
 
@@ -543,11 +537,14 @@ static void create_image(void)
 
     //memcpy(msg, calc_hash, 32);
 
-    print_hex("Hash to sign", calc_hash, sizeof(calc_hash));
-    edsign_sign(signature, pub, secret, calc_hash, 32);
+    print_hex("Hash to sign", calc_hash, SHA256_DIGEST_LENGTH);
+    edsign_sign(signature, pub, secret, calc_hash, SHA256_DIGEST_LENGTH);
     print_hex("GenSig", signature, EDSIGN_SIGNATURE_SIZE);
-    assert(edsign_verify(image3core.rootHeader->signing.imageSignature, pub, calc_hash, 32));
-*/
+
+    memcpy(image3core.rootHeader->signing.imageSignature, signature, EDSIGN_SIGNATURE_SIZE);
+
+    //assert(edsign_verify(image3core.rootHeader->signing.imageSignature, pub, calc_hash, 32));
+
     /* DATA/TYPE tags */
     uint32_t* type;
     void* data;
@@ -617,8 +614,9 @@ static void create_image_preprocess(void)
     image3core.imageVersion = imageVersion;
 
     /* PROD */
+    image3core.imageProductionType = IMAGE_PROD_DEVELOPMENT;
+    /*
     if(imageProduction) {
-        /* lol buffer overflow */
         if(!strcasecmp(imageProduction, "production"))
             image3core.imageProductionType = IMAGE_PROD_PRODUCTION;
         else if(!strcasecmp(imageProduction, "development"))
@@ -627,7 +625,7 @@ static void create_image_preprocess(void)
             printf("invalid production type '%s'\n", imageProduction);
             exit(-1);
         }
-    }
+    }*/
     
     /* Other stuff
     if(uniqueIdentifier) {
@@ -656,11 +654,11 @@ static int process_options(int argc, char* argv[])
             {"imageVersion",    required_argument, 0, 'v'},
             {"imageProduction", required_argument, 0, 'p'},
             {"uniqueIdentifier", required_argument, 0, 'e'},
-            {"dontHashInECID", required_argument, 0, 'q'},
+            {"dontHashInECID", no_argument, 0, 'q'},
             {"aesKey",          required_argument, 0, 'a'},
             {"aesIv",           required_argument, 0, 'i'},
             {"outputFile",      required_argument, 0, 'o'},
-            {"testVerifyImage",      required_argument, 0, 'g'},
+            {"testVerifyImage",      no_argument, 0, 'g'},
             {"help", no_argument, 0, '?'},
         };
         int option_index = 0;

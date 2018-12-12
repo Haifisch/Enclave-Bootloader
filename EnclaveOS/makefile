@@ -28,7 +28,7 @@ DEBUG = 1
 STM32LDR_PORT = /dev/ttyUSB0
 STM32LDR_BAUD = 115200
 # [OPTIONAL] Comment out to disable bootloader verification
-STM32LDR_VERIFY = -v
+#STM32LDR_VERIFY = -v
 
 # [OPTIONAL] Uncomment to use the firmware library
 FWLIB = lib/STM32F10x_StdPeriph_Driver/libstm32fw.a

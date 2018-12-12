@@ -74,9 +74,6 @@ void transmit_publickey_data()
     memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
     // get ed25519 public key from our enclave id
     edsign_sec_to_pub((unsigned char*)publickey, enclaveID); // secret --> enclave id ===> 25519 public key
-    #if DEBUG
-        print_hex("Enclave ID", enclaveID, sizeof(enclaveID));
-    #endif
     // encode the ed25519 public key for transport
     encode_b64(publickey, base64_pub, 0x20);
     // zero out signature memory 
@@ -85,6 +82,12 @@ void transmit_publickey_data()
     edsign_sign((uint8_t*)signature, rootCA, enclaveID, (uint8_t*)publickey, EDSIGN_PUBLIC_KEY_SIZE);
     // encode signature for transport
     encode_b64(signature, base64_signature, 0x64);
+
+#if DEBUG
+    debug_print("\n[ENCLAVE_IDENTIFIER=");
+    print_hash(enclaveID);
+    debug_print("]");
+#endif
 
     // spit the base64 publickey
     debug_print("\n\n[BEGIN_PUB_DATA]\n");
@@ -110,9 +113,9 @@ void print_bootheader()
     letter[4] = "  | |____| | | | (__| | (_| |\\ V /  __/\n";
     letter[5] = "  |______|_| |_|\\___|_|\\__,_| \\_/ \\___|\n\n";
     for (int i = 0; i < 6; ++i) { uart_printf(letter[i]); } // print out
-    debug_print("  %s %s\n", __DATE__, __TIME__);
-    debug_print("  DEVID %08X\n", *((uint32_t *)0x1E0032000)); // 0xE0042000 + 0xFFFF0000
-    debug_print("  VER: 0x%X REV: 0x%X\n", __BUILD_NUMBER, 0x15);
+    debug_print("  BUILD_TAG: %s %s\n", __DATE__, __TIME__);
+    debug_print("  BUILD_VER: 0x%X REV: 0x%X\n", 0x01, 0x15);
+    debug_print("  BUILD_STYLE;\n");
     debug_print("  Security Fusing ::: %s\n", isSecure() ? "Secure":"Insecure");
     debug_print("  Production Fusing ::: %s\n", isProduction() ? "Production":"Development");
     uart_printf("[--------------------------------------------]\n");
@@ -125,7 +128,8 @@ void print_bootheader()
 int main() 
 {
     // default state is true, logically if all else fails we should fallback into DFU and not jump into userland
-    bool refuse_user_jump = TRUE; 
+    bool refuse_user_jump = TRUE; // always default to TRUE if anything doesn't look right
+    bool print_out_key = FALSE;
 
     // low level hardware init  
     systemReset(); // peripherals but not PC
@@ -148,39 +152,47 @@ int main()
     } 
 
     // verify boot chain
-    debug_print("checking chain...\n");
-    // setup image structure 
+    debug_print("validating bootchain integrity...\n");
     ImageObjectHandle imageHandle;
-    // validate flash     
-    switch (imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0)) // if anything fails to verify we need to kick ourselves into the DFU loop
+    /*
+        validate the image flash
+        if anything fails to validate we need to kick ourselves into the DFU loop
+    */  
+    switch (imageCheckFromAddress(&imageHandle, USER_CODE_FLASH0X8008000, 0))
     {
+        case kImageImageWasInstantiated:
+            debug_print("Image was instantiated but was not trusted... waiting in DFU\n");
+            refuse_user_jump = TRUE;
+            break;
+
+        case kImageImageRejectSignature:
+            debug_print("Signature validation failed... waiting in DFU\n");
+            refuse_user_jump = TRUE;
+            break;
+
         case kImageImageIsTrusted:
             debug_print("Boot OK\n");
             refuse_user_jump = FALSE;
             break;
 
         case kImageImageMissingMagic:
-            transmit_publickey_data();
-            debug_print("\nFirmware missing... waiting in DFU\n");
-            refuse_user_jump = TRUE;
-            break;
-
-        case kImageImageRejectSignature:
-            debug_print("\nSignature validation failed... waiting in DFU\n");
+            debug_print("Firmware missing... waiting in DFU\n");
             refuse_user_jump = TRUE;
             break;
 
         case kImageImageHashCalcFailed:
-            debug_print("\nHash calculation failed... waiting in DFU\n");
+            debug_print("Hash calculation failed... waiting in DFU\n");
             refuse_user_jump = TRUE;
             break;
             
         default:
-            debug_print("\n!!! FATAL !!!\n");
+            debug_print("!!! FATAL !!!\n");
             refuse_user_jump = TRUE;
             break;
     }
 
+    if (refuse_user_jump) { transmit_publickey_data(); }
+    
     while (refuse_user_jump) // DFU spinlock
     {
         // we're spinning in DFU waiting for an upload...

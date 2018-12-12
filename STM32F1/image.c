@@ -27,10 +27,7 @@ uint8_t rootCA[32] = { 0x0f, 0x72, 0xeb, 0xd1, 0x64, 0x3e, 0xab, 0x54, 0xc8, 0xc
     				   0x09, 0x52, 0x19, 0xc7, 0x06, 0x6c, 0x72, 0x1d, 0x3c, 0x86 };
 
 // imageCheckFromAddress debugging macro
-#define debug_print_retval(ret) ({ \
-	        debug_print("image check ret: %X\n", ret); \
-	        return 1; \
-	    })
+#define debug_print_retval(ret) ({ debug_print("\nimage check ret: %X\n", ret); })
 
 int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool shouldEraseFlashOnFail)
 {
@@ -45,31 +42,22 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 	hdr = (ImageRootHeader *)imageBuffer;
 	if (bufferSize < sizeof(hdr)) {
 		debug_print("buffer size %X too small for header size %X\n", bufferSize, sizeof(*hdr));
-		if (shouldEraseFlashOnFail)
-		{
-			failErase();
-		}
+		// if (shouldEraseFlashOnFail) { failErase(); }
 		return(EINVAL);		/* buffer too small to really contain header */
 	}
 	if ((hdr->header.magic) != kImageHeaderMagic) {
 		debug_print("bad magic 0x%08x expecting 0x%08x\n", (hdr->header.magic), kImageHeaderMagic);
 		state.flags = kImageImageMissingMagic;
-		if (shouldEraseFlashOnFail)
-		{
-			failErase();
-		}
+		// if (shouldEraseFlashOnFail) { failErase(); }
 		*newHandle = &state;
 		debug_print_retval(kImageImageMissingMagic);
 		return(kImageImageMissingMagic);		/* magic must match */
 	}
 	if ((hdr->signing.imageType) != 0x45444f53)
 	{
-		debug_print("bad magic 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
+		debug_print("bad imageType 0x%08x expecting 0x%X\n", (hdr->signing.imageType), 0x45444f53);
 		state.flags = kImageImageMissingMagic;
-		if (shouldEraseFlashOnFail)
-		{
-			failErase();
-		}
+		// if (shouldEraseFlashOnFail) { failErase(); }
 		*newHandle = &state;
 		debug_print_retval(kImageImageMissingMagic);
 		return(kImageImageMissingMagic);		/* magic must match */
@@ -114,33 +102,32 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
 		return(kImageImageHashCalcFailed);
     }
 
-    if (!QEMU_BUILD)
-    {
-    	struct u_id id;
-		unsigned char uniqueID[0x17];
-		unsigned char temp_sha256sum[32];  
-		uint8_t publickey[EDSIGN_PUBLIC_KEY_SIZE];
-		// read our unique id
-		uid_read(&id);
-		sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
-		// start sha256 context
-		sha256_context ctx2;
-		sha256_starts(&ctx2);
-		// hash in our unique id
-		sha256_update(&ctx2, uniqueID, 0x17);
-		sha256_finish(&ctx2, temp_sha256sum);
-		// get our public key
-		memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
-		edsign_sec_to_pub(publickey, temp_sha256sum);
-		debug_print("publickey:\n");
-		hexdump(publickey, 32);
-    	/*
-    	struct u_id id;
-	    uid_read(&id);
-	    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
-	    */
-	    sha256_update(&ctx, (unsigned char*)publickey, 32);
-    }
+#if !QEMU_BUILD
+	struct u_id id;
+	unsigned char uniqueID[0x17];
+	unsigned char temp_sha256sum[32];  
+	uint8_t publickey[EDSIGN_PUBLIC_KEY_SIZE];
+	// read our unique id
+	uid_read(&id);
+	sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+	// start sha256 context
+	sha256_context ctx2;
+	sha256_starts(&ctx2);
+	// hash in our unique id
+	sha256_update(&ctx2, uniqueID, 0x17);
+	sha256_finish(&ctx2, temp_sha256sum);
+	// get our public key
+	memset(publickey, 0, EDSIGN_PUBLIC_KEY_SIZE);
+	edsign_sec_to_pub(publickey, temp_sha256sum);
+	debug_print("publickey:\n");
+	hexdump(publickey, 32);
+	/*
+	struct u_id id;
+    uid_read(&id);
+    sprintf(uniqueID,"%X%X%X%X", id.off0, id.off2, id.off4, id.off8);
+    */
+    sha256_update(&ctx, (unsigned char*)publickey, 32);
+#endif
 
     //debug_print("%s\n", uniqueID);
     
@@ -171,11 +158,13 @@ int imageCheckFromAddress(ImageObjectHandle *newHandle, vu32 flashAddress, bool 
     	debug_print_retval(kImageImageIsTrusted);
     	return kImageImageIsTrusted;
     }
+
+
 	*newHandle = &state;
 	return(0);
 }
 
-
+/*
 void failErase () {
 	// for whatever reason this only flashes upto 0x08008800
 	flashErasePage((u32)(0x08008000));
@@ -184,4 +173,4 @@ void failErase () {
 	flashErasePage((u32)(0x08008000+(u32)(0x190*3)));
 	flashErasePage((u32)(0x08008000+(u32)(0x190*4)));
 	flashErasePage((u32)(0x08008000+(u32)(0x190*5)));
-}
+}*/
