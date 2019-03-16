@@ -1,5 +1,7 @@
 Enclave Bootloader + OS src tree
 ================================
+Never really got this to where I wanted it to be, whatever I guess. 
+
 
 Getting started
 ---------------
@@ -10,7 +12,7 @@ All the custom build scripts are for Windows and hackily refernce CLI tools such
 ##### General Build Options
 QEMU_BUILD=1 --- Build bootloader for QEMU
 
-DEBUG=1 	 --- Enables UART output along with a few other debug operations
+DEBUG=1 --- Enables UART output along with a few other debug operations
 
 ### QEMU Build Routine
 Make sure you're linking against the qemu.ld script in both the STM32F1 and EnclaveOS subprojects and QEMU_BUILD=1 is set in STM32F1/hardware.h
